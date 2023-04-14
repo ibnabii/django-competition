@@ -1,2 +1,6 @@
-<h1> {{ contest.title }}</h1>
-{{  contest.description | safe }}
+{% extends 'contest/base.html' %}
+{% block content %}
+
+    {{  contest.description | safe }}
+
+{% endblock content %}

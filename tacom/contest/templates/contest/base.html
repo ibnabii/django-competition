@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TAsting COMpetitions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'contest/main.css' %}">
+</head>
+<body>
+<div class="mainContainer">
+    {% include 'contest/head.html' %}
+    <div class="contentContainer">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>

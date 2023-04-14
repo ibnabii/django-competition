@@ -1,0 +1,65 @@
+{%  load i18n %}
+
+<div class="languagebar">
+       <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.path }}" />
+
+        <select class="selectpicker" name="language" style="width: auto;" onchange="this.form.submit()">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as LANGUAGES %}
+          {% get_language_info_list for LANGUAGES as languages %}
+          {% for language in languages %}
+
+              <option
+                value="{{ language.code }}"
+                {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}
+                data-content='<img src="/static/images/flags/{{ language.code }}.gif"></span>
+                <span style="display:inline-block; width:100px; padding-left: 10px; text-shadow:none">
+                  {{ language.name_local }}
+                  <!-- span style="color:#999;">&nbsp;[{{ language.code }}]</span -->
+                </span>'>
+                {{ language.code }}
+              </option>
+
+          {% endfor %}
+        </select>
+    </form>
+
+</div>
+
+<div class="topbar">
+    <div><a href="{% url 'contest:contest_list' %}" class="homelink"><h1>TAsting COMpetitions</h1></a></div>
+    {% if user.is_authenticated %}
+
+
+    <div aling="right">
+        <b>{{user.username}}</b> (<a href="{% url 'account_logout' %}">logout</a>)
+    </div>
+
+    {% else %}
+    <div>
+        <a href="{% url 'account_login' %}">Login</a>
+        or
+        <a href="{% url 'account_signup' %}">Register</a>
+    </div>
+    {% endif %}
+
+</div>
+
+{#{% language 'pl' %}#}
+<div class="navbar">
+    <a href="{% url 'home' %}">
+        {# Translators: Link to homepage #}
+        {% translate "Home" %}
+    </a>
+    {% if user.is_authenticated %}
+
+        <a href="{% url 'admin:index' %}">
+        {# Translators: Link to the admin panel #}
+            {% translate "Admin panel" %}
+        </a>
+
+    {% endif %}
+</div>
+{#{% endlanguage %}#}
