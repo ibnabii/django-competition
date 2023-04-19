@@ -1,0 +1,183 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-19 21:39+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+#: .\contest\admin.py:59
+msgid "Description"
+msgstr "Opis"
+
+#: .\contest\admin.py:73
+msgid "Dates"
+msgstr "Daty"
+
+#: .\contest\admin.py:83
+msgid "Publish competition page"
+msgstr "Opublikuj stronę konkursu"
+
+#: .\contest\admin.py:92
+msgid "Publish competition results"
+msgstr "Opublikuj wyniki konkursu"
+
+#: .\contest\admin.py:101
+msgid "Audit"
+msgstr "Audyt"
+
+#: .\contest\admin.py:181
+msgid "Contest"
+msgstr "Konkurs"
+
+#: .\contest\admin.py:187
+msgid "Style"
+msgstr "Styl"
+
+#. Translators: name of the app that's displayed in admin panel for managing data
+#: .\contest\apps.py:8
+msgid "Competitions"
+msgstr "Konkursy"
+
+#: .\contest\models.py:14
+msgid "Allow to use this category in competitions"
+msgstr "Zezwól na wybór tej kategorii w konkursach"
+
+#: .\contest\models.py:17
+msgid "Require extra information for entries?"
+msgstr "Wymagane dodatkowe dane o zgłoszeniu"
+
+#: .\contest\models.py:21
+msgid "Required information hint"
+msgstr "Informacja o wymaganych danych"
+
+#: .\contest\models.py:22
+msgid ""
+"This will instruct the participants what information they need to provide "
+"for an entry.</br>Fill only if you require extra information for entries"
+msgstr ""
+"Podpowiedź dla uczestnika, jakie dodatkowe dane powinien podać"
+"</br>Wypełnij tylko jeśli wymagasz podania dodatkowych danych."
+
+
+#: .\contest\models.py:47
+msgid "style"
+msgstr "styl"
+
+#: .\contest\models.py:48
+msgid "styles"
+msgstr "style"
+
+#: .\contest\models.py:55
+msgid ""
+"If you require extra information from participants, provide them with a hint!"
+msgstr "Jeśli wymagasz dodatkowych danych od uczestnika, powiedz im jakich"
+
+#: .\contest\models.py:59
+msgid "title"
+msgstr "tytuł"
+
+#: .\contest\models.py:63
+msgid "will be used in contest URL, can be derrived automatically from titile"
+msgstr "będzie użyte do budowy adresu URL konkursu, może powstać automatycznie na bazie tytułu"
+
+#: .\contest\models.py:66
+msgid "Entry registration from"
+msgstr "Rejestracja zgłoszeń od"
+
+#: .\contest\models.py:67 .\contest\models.py:69 .\contest\models.py:71
+msgid "to"
+msgstr "do"
+
+#: .\contest\models.py:68
+msgid "Delivery from"
+msgstr "Dostarczanie od"
+
+#: .\contest\models.py:70
+msgid "Judging sessions from"
+msgstr "Sędziowanie konkursu od"
+
+#: .\contest\models.py:75 .\contest\models.py:86
+msgid "Ignores auto-publish date"
+msgstr "Ignoruje datę automatycznej publikacji"
+
+#: .\contest\models.py:76
+msgid "Competition page is published"
+msgstr "Strona konkursu jest opublikowana"
+
+#: .\contest\models.py:81
+msgid ""
+"Fill only if you want the competition page to be published automatically at "
+"that time"
+msgstr ""
+"Wypełnij tylko, jeśli chcesz, by strona konkursu była automatycznie opublikowana o tej godzinie"
+
+#: .\contest\models.py:82
+msgid "When to publish competition page automatically"
+msgstr "Kiedy automatycznie opublikować stronę konkursu"
+
+#: .\contest\models.py:87
+msgid "Competition results are published"
+msgstr "Wyniki konkursu są opublikowane"
+
+#: .\contest\models.py:92
+msgid ""
+"Fill only if you want the competition <b>results</b> to be published "
+"automatically at that time"
+msgstr ""
+"Wypełnij tylko, jeśli chcesz, by <b>wyniki</b> konkursu były automatycznie opublikowane o tej godzinie"
+
+#: .\contest\models.py:93
+msgid "When to publish results automatically"
+msgstr "Kiedy automatycznie opublikować wyniki konkursu"
+
+#: .\contest\models.py:117
+msgid "contest"
+msgstr "konkurs"
+
+#: .\contest\models.py:118
+msgid "contests"
+msgstr "konkursy"
+
+#: .\contest\models.py:144
+msgid "Entries limit per user"
+msgstr "Limit zgłoszeń na uczestnika"
+
+#: .\contest\models.py:167
+msgid "category"
+msgstr "kategoria"
+
+#: .\contest\models.py:168
+msgid "categories"
+msgstr "kategorie"
+
+#: .\contest\models.py:187
+msgid "entry"
+msgstr "zgłoszenie"
+
+#: .\contest\models.py:188
+msgid "entries"
+msgstr "zgłoszenia"
+
+#. Translators: Link to homepage
+#: .\contest\templates\contest\head.html:54
+msgid "Home"
+msgstr "Home"
+
+#. Translators: Link to the admin panel
+#: .\contest\templates\contest\head.html:60
+msgid "Admin panel"
+msgstr "Panel administracyjny"
