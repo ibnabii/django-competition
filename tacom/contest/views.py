@@ -1,4 +1,7 @@
-from django.views.generic import ListView
+from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, TemplateView
+
 from django.shortcuts import redirect
 
 from .models import Contest
@@ -12,3 +15,19 @@ class ContestListView(ListView):
         if self.queryset.count() == 1:
             return redirect('contest:contest_detail', slug=self.queryset.first().slug)
         return super(ContestListView, self).get(*args, **kwargs)
+
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'contest/profile.html'
+    # user_check_failure_path = reverse_lazy("account_signup")
+
+    def check_user(self, user):
+        if user.is_active:
+            return True
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        user = User.objects.get(id=self.request.user.id)
+        context['user'] = user
+        return context

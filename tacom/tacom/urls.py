@@ -1,9 +1,22 @@
+from allauth.account import views as allauth_views
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
-from django.urls import path, include, reverse
+from django.contrib.auth.decorators import login_required
+from django.urls import path, include, reverse_lazy
 from django.views.generic import RedirectView
 
+
+
 urlpatterns = i18n_patterns(
+    path(
+        'accounts/password/change/',
+        login_required(
+            allauth_views.PasswordChangeView.as_view(
+                success_url=reverse_lazy('contest:profile')
+            )
+        ),
+        name='account_change_password'
+    ),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('contest/', include('contest.urls')),

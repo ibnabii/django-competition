@@ -1,0 +1,25 @@
+{% extends 'contest/base.html' %}
+{% block content %}
+
+
+    <table>
+        <tr>
+            <td>Username:</td>
+            <td> {{  user.username }}</td>
+        </tr>
+        <tr>
+            <td>First name:</td>
+            <td> {{ user.first_name }}</td>
+        </tr>
+        <tr>
+            <td>Last name:</td>
+            <td> {{ user.last_name }}</td>
+        </tr>
+        <tr>
+            <td>email:</td>
+            <td> {{ user.email }}</td>
+        </tr>
+    </table>
+    <a href="{% url 'account_change_password' %}">change password</a>
+
+{% endblock content %}

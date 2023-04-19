@@ -12,4 +12,5 @@ urlpatterns = [
         model=Contest
         ),
         name='contest_detail'),
+    path('profile/', views.ProfileView.as_view(), name='profile')
 ]
