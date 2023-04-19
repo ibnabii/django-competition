@@ -1,0 +1,43 @@
+@startuml
+entity "Contest" as con {
+*name: text
+description: text
+}
+
+entity "Style" as cat {
+*name: text
+description: text
+}
+
+entity "Category" as j {
+id_contest: number <<FK>>
+id_style: number <<FK>>
+}
+
+entity "Entry" as e {
+participant_id: <<FK: User>>
+category_id: <<FK: Category>>
+name
+extra_info
+}
+
+'entity "Entry" as e {
+'participant_id: <<FK: User>>
+'id_contest: <<FK: Contest>>
+'id_category: <<FK: Category>>
+'}
+
+entity "Participant" as p {
+first_name
+last_name
+}
+
+j }o.l.|| con
+j }o.r.|| cat
+e }|..|| p
+
+e }o.u.||j
+'e }o.u.|| con
+'e }o.u.|| cat
+
+@enduml

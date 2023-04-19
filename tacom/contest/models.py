@@ -1,12 +1,13 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 
-class Category(models.Model):
+class Style(models.Model):
     name = models.CharField(max_length=50)
     show = models.BooleanField(default=True, verbose_name=_('Allow to use this category in competitions'))
     extra_info_is_required = models.BooleanField(
@@ -27,7 +28,7 @@ class Category(models.Model):
     created_by = models.ForeignKey(
         User,
         on_delete=models.DO_NOTHING,
-        related_name='created_categories',
+        related_name='created_styles',
         editable=False,
         null=True
     )
@@ -35,14 +36,14 @@ class Category(models.Model):
     modified_by = models.ForeignKey(
         User,
         on_delete=models.DO_NOTHING,
-        related_name='modified_categories',
+        related_name='modified_styles',
         editable=False,
         null=True
     )
 
     class Meta:
-        verbose_name = _('category')
-        verbose_name_plural = _('categories')
+        verbose_name = _('style')
+        verbose_name_plural = _('styles')
 
     def __str__(self):
         return self.name
@@ -50,7 +51,6 @@ class Category(models.Model):
     def clean(self):
         if self.extra_info_is_required and self.extra_info_hint == '':
             raise ValidationError(_('If you require extra information from participants, provide them with a hint!'))
-
 
 
 class Contest(models.Model):
@@ -90,7 +90,8 @@ class Contest(models.Model):
         help_text=_('Fill only if you want the competition <b>results</b> to be published automatically at that time'),
         verbose_name=_('When to publish results automatically')
     )
-    categories = models.ManyToManyField(Category, related_name='contests')
+
+    styles = models.ManyToManyField(Style, through='Category', through_fields=('contest', 'style'))
 
     # audit fields
     created_at = models.DateTimeField(auto_now_add=True)
@@ -127,3 +128,45 @@ class Contest(models.Model):
 
     def get_absolute_url(self):
         return reverse('contest:contest_detail', kwargs={"slug": self.slug})
+
+
+class Category(models.Model):
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE, related_name='categories')
+    style = models.ForeignKey(
+        Style,
+        on_delete=models.CASCADE,
+        related_name='categories',
+        limit_choices_to={"show": True}
+    )
+    entries_limit = models.IntegerField(
+        verbose_name=_('Entries limit per user'),
+        default=1,
+        validators=[MinValueValidator(1)]
+    )
+    # audit fields
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.DO_NOTHING,
+        related_name='created_categories',
+        editable=False,
+        null=True
+    )
+    modified_at = models.DateTimeField(auto_now=True)
+    modified_by = models.ForeignKey(
+        User,
+        on_delete=models.DO_NOTHING,
+        related_name='modified_categories',
+        editable=False,
+        null=True
+    )
+
+    class Meta:
+        verbose_name = _('category')
+        verbose_name_plural = _('categories')
+        ordering = ['contest__title', 'style__name']
+        constraints = [models.UniqueConstraint(fields=['style', 'contest'], name='unique_contest_style')]
+
+    def __str__(self):
+        return f'{self.contest.title} - {self.style.name}'
+
