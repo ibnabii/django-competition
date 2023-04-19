@@ -5,7 +5,7 @@ from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
 
-from .models import Contest, Style
+from .models import Contest, Style, Entry
 
 
 @admin.register(Style)
@@ -148,3 +148,42 @@ class CustomUserAdmin(UserAdmin):
 
 
         return form
+
+
+@admin.register(Entry)
+class EntryAdmin(admin.ModelAdmin):
+    model = Entry
+    list_display = [
+        'get_contest_title',
+        'get_style_name',
+        'brewer',
+        'name',
+        'is_paid',
+        'is_received',
+        'extra_info',
+    ]
+    readonly_fields = [
+        'modified_at',
+    ]
+    list_filter = [
+        'is_paid',
+        'is_received',
+        'category__contest__title',
+        'category__style__name',
+    ]
+    search_fields = [
+        'brewer__username',
+        'brewer__first_name',
+        'brewer__last_name',
+        'brewer__email',
+    ]
+
+    @admin.display(ordering='category__contest__title', description=_('Contest'))
+    def get_contest_title(self, obj):
+        return obj.category.contest.title
+
+
+
+    @admin.display(ordering='category__style__name', description=_('Style'))
+    def get_style_name(self, obj):
+        return obj.category.style.name

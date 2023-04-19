@@ -1,3 +1,5 @@
+from uuid import uuid1
+
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
@@ -170,3 +172,20 @@ class Category(models.Model):
     def __str__(self):
         return f'{self.contest.title} - {self.style.name}'
 
+
+class Entry(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='entries')
+    brewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='entries')
+    name = models.CharField(max_length=50, null=False, blank=False)
+    extra_info = models.CharField(max_length=255, null=False, blank=True)
+    is_paid = models.BooleanField(default=False)
+    is_received = models.BooleanField(default=False)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('entry')
+        verbose_name_plural = _('entries')
+        ordering = ['category__contest__title', 'category__style__name', 'brewer', 'name']
+    def __str__(self):
+        return str(self.id)
