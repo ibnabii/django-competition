@@ -1,0 +1,15 @@
+{% extends "contest/base.html" %}
+
+{% block content %}
+{%  load i18n %}
+<form method="post" action="">
+  {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+  <button type="submit">
+      {% translate "save" %}
+  </button>
+</form>
+
+{% endblock %}

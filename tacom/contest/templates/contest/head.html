@@ -32,9 +32,14 @@
     <div><a href="{% url 'contest:contest_list' %}" class="homelink"><h1>TAsting COMpetitions</h1></a></div>
     {% if user.is_authenticated %}
 
-
+    {% load static %}
     <div aling="right">
-        <b>{{user.username}}</b> (<a href="{% url 'account_logout' %}">logout</a>)
+        <b>{{user.username}}</b>
+        <a href="{%  url 'contest:profile' %}">
+            <img src="{% static 'contest/user-icon.svg' %} " height="25px"><br />
+        </a>
+        (<a href="{% url 'account_logout' %}">logout</a>)
+            </span>
     </div>
 
     {% else %}
@@ -54,10 +59,18 @@
         {% translate "Home" %}
     </a>
     {% if user.is_authenticated %}
+{#        Access to admin for staff#}
+        {%  if user.is_staff %}
+            <a href="{% url 'admin:index' %}">
+            {# Translators: Link to the admin panel #}
+                {% translate "Admin panel" %}
+            </a>
+        {% endif %}
 
-        <a href="{% url 'admin:index' %}">
-        {# Translators: Link to the admin panel #}
-            {% translate "Admin panel" %}
+{#        Link to user profile#}
+        <a href="{% url 'contest:profile' %}">
+            {# Translators: Link to user profile page #}
+            {% translate "My profile" %}
         </a>
 
     {% endif %}

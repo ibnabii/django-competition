@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, TemplateView, UpdateView
 
 from django.shortcuts import redirect
 
@@ -31,3 +32,16 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         user = User.objects.get(id=self.request.user.id)
         context['user'] = user
         return context
+
+class ProfileEditView(LoginRequiredMixin, UpdateView):
+    model = User
+    template_name = 'contest/generic_update.html'
+    fields = [
+        'username',
+        'first_name',
+        'last_name',
+    ]
+    success_url = reverse_lazy('contest:profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user

@@ -1,7 +1,7 @@
 {% extends 'contest/base.html' %}
 {% block content %}
 
-
+    <h2>Profile</h2>
     <table>
         <tr>
             <td>Username:</td>
@@ -16,10 +16,13 @@
             <td> {{ user.last_name }}</td>
         </tr>
         <tr>
-            <td>email:</td>
+            <td>primary email:</td>
             <td> {{ user.email }}</td>
         </tr>
     </table>
-    <a href="{% url 'account_change_password' %}">change password</a>
+    <br />
+    <a href="{% url 'account_change_password' %}">change password</a> <br />
+    <a href="{% url 'account_email' %}">edit email</a> <br />
+    <a href="{% url 'contest:profile-edit' %}">edit profile data</a> <br />
 
 {% endblock content %}
