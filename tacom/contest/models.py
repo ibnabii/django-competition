@@ -11,6 +11,11 @@ from django.utils.translation import gettext_lazy as _
 
 class Style(models.Model):
     name = models.CharField(max_length=50)
+    slug = models.SlugField(
+        unique=True,
+        blank=True,
+        help_text=_('will be used in contest URL, can be derrived automatically from titile')
+    )
     show = models.BooleanField(default=True, verbose_name=_('Allow to use this category in competitions'))
     extra_info_is_required = models.BooleanField(
         default=False,
@@ -53,6 +58,14 @@ class Style(models.Model):
     def clean(self):
         if self.extra_info_is_required and self.extra_info_hint == '':
             raise ValidationError(_('If you require extra information from participants, provide them with a hint!'))
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+            if Style.objects.filter(slug=self.slug).exists():
+                self.slug = slugify(self.name + '-' + str(Style.objects.latest('id').id))
+
+        super(Style, self).save(*args, **kwargs)
 
 
 class Contest(models.Model):

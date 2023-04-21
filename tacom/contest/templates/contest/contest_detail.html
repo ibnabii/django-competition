@@ -1,6 +1,35 @@
 {% extends 'contest/base.html' %}
+{%  load i18n %}
 {% block content %}
 
+    <h1> {{ contest.title }}</h1>
+    <h2>{% translate "Timeline" %}</h2>
+        <b>{% translate "Registration" %}</b>:
+            {{ contest.registration_date_from|default_if_none:"???" }} -
+            {{ contest.registration_date_to|default_if_none:"???" }}
+            <br/>
+
+        <b>{% translate "Samples delivery" %}</b>:
+            {{ contest.delivery_date_from|default_if_none:"???" }} -
+            {{ contest.delivery_date_to|default_if_none:"???" }}
+            <br/>
+
+        <b>{% translate "Judging sessions" %}</b>:
+            {{ contest.judging_date_from|default_if_none:"???" }} -
+            {{ contest.judging_date_to|default_if_none:"???" }}
+            <br/>
+
+    <h2>{% translate "Categories" %}</h2>
+        <ul>
+        {% for category in contest.categories.all %}
+            <li>
+                <a href="{% url 'contest:style_detail' category.style.slug %}">
+                    {{ category.style }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    <h2>{% translate "Competition description" %}</h2>
     {{  contest.description | safe }}
 
 {% endblock content %}
