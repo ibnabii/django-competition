@@ -55,6 +55,9 @@ class Style(models.Model):
     def __str__(self):
         return self.name
 
+    def natural_key(self):
+        return self.slug
+
     def clean(self):
         if self.extra_info_is_required and self.extra_info_hint == '':
             raise ValidationError(_('If you require extra information from participants, provide them with a hint!'))
@@ -129,6 +132,9 @@ class Contest(models.Model):
     class Meta:
         verbose_name = _('contest')
         verbose_name_plural = _('contests')
+
+    def natural_key(self):
+        return self.slug
 
     def save(self, *args, **kwargs):
         if not self.slug:
