@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView, UpdateView
+from django.views.generic import ListView, TemplateView, UpdateView, DetailView
 
 from django.shortcuts import redirect
 
 from .models import Contest
+
 
 class ContestListView(ListView):
     model = Contest
@@ -16,6 +17,11 @@ class ContestListView(ListView):
         if self.queryset.count() == 1:
             return redirect('contest:contest_detail', slug=self.queryset.first().slug)
         return super(ContestListView, self).get(*args, **kwargs)
+
+
+class ContestDetailView(DetailView):
+    model = Contest
+    queryset = Contest.objects.prefetch_related('categories__style')
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -32,6 +38,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         user = User.objects.get(id=self.request.user.id)
         context['user'] = user
         return context
+
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     model = User
