@@ -30,18 +30,6 @@ class ContestDetailView(DetailView):
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'contest/profile.html'
-    # user_check_failure_path = reverse_lazy("account_signup")
-
-    def check_user(self, user):
-        if user.is_active:
-            return True
-        return False
-
-    def get_context_data(self, **kwargs):
-        context = super(ProfileView, self).get_context_data(**kwargs)
-        user = User.objects.get(id=self.request.user.id)
-        context['user'] = user
-        return context
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):

@@ -1,3 +1,4 @@
 /.idea/
 /venv/
 /tacom/db.sqlite3
+/tacom/tacom/.env
