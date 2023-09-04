@@ -206,5 +206,6 @@ class Entry(models.Model):
         verbose_name = _('entry')
         verbose_name_plural = _('entries')
         ordering = ['category__contest__title', 'category__style__name', 'brewer', 'name']
+
     def __str__(self):
         return str(self.id)
