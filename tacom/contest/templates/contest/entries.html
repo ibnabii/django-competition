@@ -1,0 +1,7 @@
+{%  load i18n %}
+<h2>{% translate "My entries:" %}</h2>
+{% for entry in entries %}
+    {{ entry.category.contest }} {{ entry.category.style.name }} <br/>
+{% empty %}
+    {% translate "You do not have any entries" %}
+{% endfor %}

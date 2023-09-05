@@ -1,0 +1,25 @@
+{% extends 'contest/base.html' %}
+{% block content %}
+{% load i18n %}
+
+<h2>{% translate "Contest with open registration:" %}</h2>
+
+<ul>
+    {% for contest in object_list %}
+        <li>
+            <a href = "{% url 'contest:add_entry_contest' contest.slug %}">
+                {{ contest.title }}
+            </a>
+            (
+            <a href = "{% url 'contest:contest_detail' contest.slug %}">
+                {%  translate "contest details" %}
+            </a>
+            )
+        </li>
+
+    {% empty %}
+        {% translate "No contest accepts registration at the moment." %}
+
+    {% endfor %}
+</ul>
+{% endblock content %}

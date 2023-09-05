@@ -1,6 +1,8 @@
 from pathlib import Path
 
+from django.contrib.messages import constants as messages
 from django.core.management.utils import get_random_secret_key
+
 import environ
 
 env = environ.Env()
@@ -40,6 +42,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'debug_toolbar',
+    'bootstrap5',
+    'django_bootstrap_icons',
 ]
 
 MIDDLEWARE = [
@@ -182,3 +186,12 @@ EMAIL_USE_TLS = True
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# bootstrap messages
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }

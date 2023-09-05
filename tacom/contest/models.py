@@ -196,8 +196,8 @@ class Entry(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='entries')
     brewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='entries')
-    name = models.CharField(max_length=50, null=False, blank=False)
-    extra_info = models.CharField(max_length=255, null=False, blank=True)
+    name = models.CharField(max_length=50)
+    extra_info = models.CharField(max_length=25, blank=True, verbose_name=_('Additional information'))
     is_paid = models.BooleanField(default=False)
     is_received = models.BooleanField(default=False)
     modified_at = models.DateTimeField(auto_now=True)
@@ -209,3 +209,7 @@ class Entry(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def clean(self):
+        if self.category.style.extra_info_is_required and self.extra_info == '':
+            raise ValidationError(_(f'Providing "{self.category.style.extra_info_hint}"i is mandatory!'))

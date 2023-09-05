@@ -1,0 +1,21 @@
+{% extends 'contest/base.html' %}
+{% block content %}
+{% load i18n %}
+
+
+<h1>{{ contest.title }}</h1>
+{%  include 'contest/entries.html' %}
+
+<h2>{{ style.name }}</h2>
+<h3>{% translate "Provide entry details:" %}</h3>
+<form method="post" action="">
+  {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+  <button type="submit">
+      {% translate "save" %}
+  </button>
+</form>
+
+{% endblock content %}

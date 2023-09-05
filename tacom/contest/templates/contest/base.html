@@ -3,14 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>TAsting COMpetitions</title>
-    <link href="https://fonts.googleapis.com/css2?family=Commissioner" rel="stylesheet">
+{#    <link href="https://fonts.googleapis.com/css2?family=Commissioner" rel="stylesheet">#}
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    {% load bootstrap5 %}
+    {% load bootstrap_icons %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
     {% load static %}
     <link rel="stylesheet" href="{% static 'contest/main.css' %}">
 </head>
 <body>
+
 <div class="mainContainer">
+
     {% include 'contest/head.html' %}
+
     <div class="contentContainer">
+        {% for message in messages %}
+            <div class="container-fluid p-0">
+              <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert" >
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="True">&times;</span>
+                </button>
+              {% if message.tags == 'alert-warning' or message.tags == 'alert-danger' %}
+                  {% bs_icon 'exclamation-triangle-fill' size='1.5em' %}
+              {% elif message.tags == 'alert-success' %}
+                  {% bs_icon 'check-circle-fill' size='1.5em' %}
+              {% elif message.tags == 'alert-info' %}
+                  {% bs_icon 'info-circle-fill' size='1.5em' %}
+              {% endif %}
+              {{ message }}
+              </div>
+            </div>
+        {% endfor %}
+        <script type="text/javascript">
+            let alert_list = document.querySelectorAll('.alert')
+            alert_list.forEach(function(alert) {
+                new bootstrap.Alert(alert);
+
+                let alert_timeout = alert.getAttribute('data-timeout');
+                setTimeout(() => {
+                    bootstrap.Alert.getInstance(alert).close();
+                }, 5000);
+            });
+        </script>
         {% block content %}
 
         {% endblock %}
