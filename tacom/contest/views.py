@@ -101,13 +101,12 @@ class AddEntryView(LoginRequiredMixin, ContestAcceptsRegistration, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['style'] = get_object_or_404(Category, id=self.kwargs['pk']).style
-            # Category.objects.get(id=self.kwargs['pk']).style
+        context['style'] = get_object_or_404(Category.objects.select_related('style'), id=self.kwargs['pk']).style
         return context
 
     def get_form_kwargs(self):
         form_kwargs = super().get_form_kwargs()
-        category = get_object_or_404(Category, id=self.kwargs['pk'])
+        category = get_object_or_404(Category.objects.select_related('style'), id=self.kwargs['pk'])
         # Category.objects.get(id=self.kwargs['pk'])
         form_kwargs['is_extra_mandatory'] = category.style.extra_info_is_required
         form_kwargs['extra_hint'] = category.style.extra_info_hint
