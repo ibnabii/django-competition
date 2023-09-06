@@ -13,8 +13,14 @@
     <table>
         {{form.as_table}}
     </table>
-  <button type="submit">
-      {% translate "save" %}
+
+    {%  if error %}
+        <a href="{% url 'contest:add_entry_contest' contest.slug %}" class="btn btn-outline-secondary">
+            {% translate "Go back" %}
+        </a>
+    {%  endif %}
+  <button type="submit" class="btn btn-secondary">
+      {% translate "Save" %}
   </button>
 </form>
 

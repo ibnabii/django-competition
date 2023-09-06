@@ -7,11 +7,14 @@ description: text
 entity "Style" as cat {
 *name: text
 description: text
+is_extra_info_mandatory: boolean
+extra_info_hint: text
 }
 
 entity "Category" as j {
 id_contest: number <<FK>>
 id_style: number <<FK>>
+entries_limit: number
 }
 
 entity "Entry" as e {

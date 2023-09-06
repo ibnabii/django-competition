@@ -3,15 +3,15 @@ from datetime import date
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Prefetch, Count
+from django.db.models import Prefetch, Count, F, Q
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView
+from django.views.generic.base import ContextMixin
 
 from .forms import NewEntryForm
 from .models import Contest, Category, Style, Entry
-
 
 
 class PublishedContestListView(ListView):
@@ -36,7 +36,38 @@ class AddEntryContestListView(LoginRequiredMixin, ListView):
     template_name = 'contest/add_entry_contest_list.html'
 
 
-class AddEntryStyleListView(LoginRequiredMixin, ListView):
+class ContestAcceptsRegistration(ContextMixin):
+    """
+    This adds Contest and user's Entries in this Contest to context.
+    Also adds validation if contest accepts registration at the moment.
+    ContextMixin is the base class, as this is the class in the views hierarchy that:
+    1. Adds get_context_data method
+    2. Is the 'youngest' common ancestor for ListView and CreateView (which are view classes used in the process)
+    """
+
+    def get(self, request, *args, **kwargs):
+        self.contest = Contest.objects.get(slug=self.kwargs['slug'])
+        if self.contest.registration_date_to < date.today() or self.contest.registration_date_from > date.today():
+            messages.error(
+                self.request,
+                _('This contest does not allow registration as of today')
+            )
+            return redirect('contest:add_entry')
+        else:
+            return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['contest'] = self.contest
+        context['entries'] = (Entry.objects
+                              .filter(brewer=self.request.user)
+                              .filter(category__contest=context['contest'])
+                              .select_related('category__style', 'category__contest')
+                              )
+        return context
+
+
+class AddEntryStyleListView(LoginRequiredMixin, ContestAcceptsRegistration, ListView):
     """
     Allows selection of the style, to which user wants to register.
     Contest has been already chosen (and is passed via url slug)
@@ -45,48 +76,30 @@ class AddEntryStyleListView(LoginRequiredMixin, ListView):
     template_name = 'contest/add_entry_style_list.html'
     context_object_name = 'styles'
 
-    def get(self, request, *args, **kwargs):
-        contest = Contest.objects.get(slug=self.kwargs['slug'])
-        if contest.registration_date_to < date.today() or contest.registration_date_from > date.today():
-            messages.error(
-                self.request,
-                _('This contest does not allow registration as of today')
-            )
-
-            return redirect('contest:add_entry')
-        else:
-            return super().get(request, *args, **kwargs)
-
     def get_queryset(self):
-        # TODO: cache Contest object?
-        contest = Contest.objects.get(slug=self.kwargs['slug'])
+        full_categories = (Entry.objects
+                           .filter(brewer=self.request.user)
+                           # .select_related('category')
+                           .filter(category__contest=self.contest)
+                           .values('category', 'category__entries_limit')
+                           .annotate(cnt=Count('id'))
+                           .filter(cnt__gte=F('category__entries_limit'))
+                           .values_list('category_id', flat=True)
+                           )
         return (Style.objects
-                .filter(categories__in=Category.objects.filter(contest=contest)
-                # .filter(categories__in=categories_not_full)
-                # TODO: filter out categories in which user reached entries_limit
-                ))
+                .filter(categories__in=Category.objects.filter(contest=self.contest))
+                .exclude(categories__id__in=full_categories)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['contest'] = Contest.objects.get(slug=self.kwargs['slug'])
-        context['entries'] = (Entry.objects
-                              .filter(brewer=self.request.user)
-                              .filter(category__contest=context['contest']))
-        return context
+                )
 
 
-class AddEntryView(LoginRequiredMixin, CreateView):
+class AddEntryView(LoginRequiredMixin, ContestAcceptsRegistration, CreateView):
     model = Entry
     template_name = 'contest/add_entry.html'
     form_class = NewEntryForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['contest'] = Contest.objects.get(slug=self.kwargs['slug'])
-        context['entries'] = (Entry.objects
-                              .filter(brewer=self.request.user)
-                              .filter(category__contest=context['contest']))
-
         context['style'] = Category.objects.get(id=self.kwargs['pk']).style
         return context
 
@@ -105,6 +118,11 @@ class AddEntryView(LoginRequiredMixin, CreateView):
             _('Entry has been added successfully')
         )
         return reverse('contest:add_entry_contest', kwargs={'slug': self.object.category.contest.slug})
+
+    def form_invalid(self, form):
+        return self.render_to_response(
+            self.get_context_data(form=form, error=True)
+        )
 
 
 class ContestDetailView(DetailView):
