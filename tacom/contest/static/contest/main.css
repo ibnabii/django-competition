@@ -71,3 +71,8 @@ body {
 .authorList a {
     color: inherit;
 }
+
+#messages_container {
+    position: absolute;
+    top: 100px;
+}

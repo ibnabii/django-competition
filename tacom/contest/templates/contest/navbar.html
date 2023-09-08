@@ -1,0 +1,107 @@
+{% load bootstrap_icons %}
+{% load static %}
+{% load i18n %}
+
+<nav class="container navbar navbar-expand-sm text-bg-secondary navbar shadow py-1 px-3 sticky-top rounded-bottom">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown me-0">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% bs_icon 'person-lines-fill' size='1.5em' %}
+                    </a>
+
+                    <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownProfile">
+                        {% if user.is_authenticated %}
+                            <li>
+                                <h4 class="dropdown-header">
+                                    {% translate "Logged in as:" %}<br/><small>{{ user.email }}</small>
+                                </h4>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'contest:profile' %}">
+                                    {# Translators: My profile button #}
+                                    {% translate "My profile" %}
+                                </a>
+                            </li>
+
+                            {%  if user.is_staff %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'admin:index' %}">
+                                    {# Translators: Link to the Django admin panel #}
+                                    {% translate "Django admin" %}
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            <li><hr class="dropdown-divider"></hr></li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account_logout' %}">
+                                    {# Translators: Logout button #}
+                                    {% translate "Logout" %}
+                                </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account_login' %}">
+                                    {# Translators: Login button #}
+                                    {% translate "Login" %}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account_signup' %}">
+                                    {# Translators: Register button #}
+                                    {% translate "Register" %}
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown me-0">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% bs_icon 'translate' size='1.5em' %}
+                    </a>
+
+                    <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownMenuLink">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+
+                        <form action="{% url 'set_language' %}" method="post" id="lang-form">
+                        <input name="next" type="hidden" value="{{ request.path }}" />
+                        <input name="language" type="hidden">
+                        {% csrf_token %}
+                        {% for language  in languages %}
+                            <li>
+                                <button type="submit" class="dropdown-item text-capitalize"
+                                onclick="this.form.language.value='{{ language.code }}'">
+                                    {% if language.code == LANGUAGE_CODE %}
+                                        <strong>{{ language.name_local }}</strong>
+                                    {% else %}
+                                        {{ language.name_local }}
+                                    {% endif %}
+                                </button>
+                       {% endfor %}
+                        </form>
+                  </ul>
+                </li>
+{#Regular links start here#}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        {# Translators: Link to homepage #}
+                        {% translate "Home" %}
+                    </a>
+                </li>
+
+
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
