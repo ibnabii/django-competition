@@ -3,7 +3,7 @@ from datetime import date
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Prefetch, Count, F, Q
+from django.db.models import Prefetch, Count, F
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy, reverse
@@ -45,12 +45,15 @@ class ContestAcceptsRegistration(ContextMixin):
     2. Is the 'youngest' common ancestor for ListView and CreateView (which are view classes used in the process)
     """
 
+    def __init__(self):
+        super().__init__()
+        self.contest = None
+
     def get(self, request, *args, **kwargs):
         self.contest = get_object_or_404(Contest, slug=self.kwargs['slug'])
-        #Contest.objects.get(slug=self.kwargs['slug'])
         if self.contest.registration_date_to < date.today() or self.contest.registration_date_from > date.today():
             messages.error(
-                self.request,
+                request,
                 _('This contest does not allow registration as of today')
             )
             return redirect('contest:add_entry')
@@ -99,6 +102,14 @@ class AddEntryView(LoginRequiredMixin, ContestAcceptsRegistration, CreateView):
     template_name = 'contest/add_entry.html'
     form_class = NewEntryForm
 
+    def post(self, request, *args, **kwargs):
+        # save contest
+        self.contest = get_object_or_404(
+            Contest,
+            slug=self.kwargs['slug']
+        )
+        return super().post(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['style'] = get_object_or_404(Category.objects.select_related('style'), id=self.kwargs['pk']).style
@@ -130,7 +141,7 @@ class AddEntryView(LoginRequiredMixin, ContestAcceptsRegistration, CreateView):
 class ContestDetailView(DetailView):
     model = Contest
     # queryset = Contest.objects.prefetch_related('categories__style')  # 2 queries
-    queryset = Contest.objects.prefetch_related(
+    queryset = Contest.objects.filter(competition_is_published=True).prefetch_related(
         Prefetch('categories', queryset=Category.objects.select_related('style'))
     )  # 1 query
 
@@ -140,7 +151,10 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['entries'] = Entry.objects.filter(brewer=self.request.user)
+        context['entries'] = (Entry.objects
+                              .filter(brewer=self.request.user)
+                              .select_related('category__contest', 'category__style')
+                              )
         return context
 
 
