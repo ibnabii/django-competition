@@ -132,6 +132,7 @@ class Contest(models.Model):
     class Meta:
         verbose_name = _('contest')
         verbose_name_plural = _('contests')
+        ordering = ('-judging_date_from', '-delivery_date_to')
 
     def natural_key(self):
         return self.slug
@@ -211,9 +212,6 @@ class Entry(models.Model):
         return str(self.id)
 
     def clean(self):
-        print('clean', self.__dict__)
-        print('limit', self.category.entries_limit)
-        print('jest', Entry.objects.filter(category=self.category).filter(brewer=self.brewer).count())
         if self.category.style.extra_info_is_required and self.extra_info == '':
             raise ValidationError(_(f'Providing "{self.category.style.extra_info_hint}"i is mandatory!'))
         if self.category.entries_limit <= Entry.objects.filter(category=self.category).filter(brewer=self.brewer).count():

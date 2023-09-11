@@ -1,7 +1,80 @@
 {%  load i18n %}
-<h2>{% translate "My entries:" %}</h2>
-{% for entry in entries %}
-    {{ entry.category.contest }} {{ entry.category.style.name }} <br/>
+{% load bootstrap_icons %}
+
+<h3>{% translate "My entries:" %}</h3>
+{% regroup entries by category.contest as entries_by_contest %}
+
+<div id="entries_by_contest">
+{% for contest in entries_by_contest %}
+        <div class="card">
+            <div class="card-header">
+                <a class="btn" data-bs-toggle="collapse" href="#contest{{ contest.grouper.id}}">
+                    <h4>{{ contest.grouper }}</h4>
+                </a>
+            </div>
+            <div id="contest{{ contest.grouper.id}}" class="collapse
+                {% if forloop.counter == 1 %}
+                show
+                {% endif %}
+            " data-bs-parent="#entries_by_contest">
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th title="Is paid">
+                                {% bs_icon 'cash-coin' size='1.5em' %}
+                            </th>
+                            <th title="Is received">
+                                {% bs_icon 'truck' size='1.5em' %}
+                            </th>
+                            <th>
+                                Style
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Additional information
+                            </th>
+                        </tr>
+
+                    {% for entry in contest.list %}
+                        <tr>
+                            <td>
+                                {% if entry.is_paid %}
+                                    {% bs_icon 'check' size='1.5em' %}
+                                {% else %}
+                                    {% bs_icon 'x' size='1.5em' %}
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if entry.is_received %}
+                                    {% bs_icon 'check' size='1.5em' %}
+                                {% else %}
+                                    {% bs_icon 'x' size='1.5em' %}
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {{ entry.category.style }}
+                            </td>
+
+                            <td>
+                                {{ entry.name }}
+                            </td>
+
+                            <td>
+                                {{ entry.extra_info }}
+                            </td>
+                        </tr>
+                    {%  endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
 {% empty %}
     {% translate "You do not have any entries" %}
 {% endfor %}
+
+</div>
+
