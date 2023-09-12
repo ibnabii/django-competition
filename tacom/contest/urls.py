@@ -12,7 +12,7 @@ urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('profile/edit/', views.ProfileEditView.as_view(), name='profile_edit'),
     path('style/<str:slug>/', DetailView.as_view(model=Style), name='style_detail'),
-    path('entry/add/', views.AddEntryContestListView.as_view(), name='add_entry'),
-    path('entry/add/<str:slug>/', views.AddEntryStyleListView.as_view(), name='add_entry_contest'),
-    path('entry/add/<str:slug>/<pk>/', views.AddEntryView.as_view(), name='add_entry_contest_style'),
+    path('add_entry/', views.AddEntryContestListView.as_view(), name='add_entry'),
+    path('add_entry/contest/<str:slug>/', views.AddEntryStyleListView.as_view(), name='add_entry_contest'),
+    path('add_entry/category/<uuid:pk>/', views.AddEntryView.as_view(), name='add_entry_category'),
 ]

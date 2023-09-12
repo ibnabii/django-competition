@@ -3,6 +3,18 @@
 {% block content %}
 
     <h1> {{ contest.title }}</h1>
+    <a class="btn btn-primary
+        {% if not contest.is_registrable %}
+        disabled
+        {% endif %}
+        "
+       href="{% url 'contest:add_entry_contest' contest.slug %}">
+        {% translate "Register your entry" %}
+    </a>
+    <a class="btn btn-primary disabled">
+        {% translate "Check results" %}
+    </a>
+
     <h2>{% translate "Timeline" %}</h2>
         <b>{% translate "Registration" %}</b>:
             {{ contest.registration_date_from|default_if_none:"???" }} -

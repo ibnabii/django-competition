@@ -1,3 +1,4 @@
+from datetime import date
 from uuid import uuid1
 
 from django.db import models
@@ -7,6 +8,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+
+from .managers import StyleManager, ContestManager, RegistrableContestManager, PublishedContestManager, CategoryManager
 
 
 class Style(models.Model):
@@ -29,6 +32,9 @@ class Style(models.Model):
         blank=True
     )
     description = models.TextField(blank=False, null=False)
+
+    # managers
+    objects = StyleManager()
 
     # audit fields
     created_at = models.DateTimeField(auto_now_add=True)
@@ -129,6 +135,15 @@ class Contest(models.Model):
         null=True
     )
 
+    # managers
+    objects = ContestManager()
+    published = PublishedContestManager()
+    registrable = RegistrableContestManager()
+
+    def is_registrable(self):
+        return (self.competition_is_published
+                and self.registration_date_from <= date.today() <= self.registration_date_to)
+
     class Meta:
         verbose_name = _('contest')
         verbose_name_plural = _('contests')
@@ -153,6 +168,7 @@ class Contest(models.Model):
 
 
 class Category(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE, related_name='categories')
     style = models.ForeignKey(
         Style,
@@ -182,6 +198,7 @@ class Category(models.Model):
         editable=False,
         null=True
     )
+    objects = CategoryManager()
 
     class Meta:
         verbose_name = _('category')

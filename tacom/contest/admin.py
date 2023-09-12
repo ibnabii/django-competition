@@ -5,7 +5,7 @@ from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
 
-from .models import Contest, Style, Entry
+from .models import Contest, Style, Entry, Category
 
 
 @admin.register(Style)
@@ -187,3 +187,7 @@ class EntryAdmin(admin.ModelAdmin):
     @admin.display(ordering='category__style__name', description=_('Style'))
     def get_style_name(self, obj):
         return obj.category.style.name
+
+    @admin.register(Category)
+    class CategoryAdmin(admin.ModelAdmin):
+        pass

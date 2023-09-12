@@ -6,24 +6,33 @@
 <h1>{{ contest.title }}</h1>
 {%  include 'contest/entries.html' %}
 
-<h3>{% translate "Entries can be registered in following styles:" %}</h3>
+<h3>{% translate "Select style in which you would like to register an entry" %}</h3>
 
-<ul>
-    {% for style in styles %}
-        <li>
-            <a href = "{% url 'contest:add_entry_contest_style' contest.slug style.id %}">
-                {{ style.name }}
+<table class="table">
+    <tr>
+        <th>Style</th>
+        <th>Maximum entries per brewer</th>
+        <th>Style description</th>
+    </tr>
+    {% for category in categories %}
+        <tr><td>
+
+            <a class="btn btn-outline-primary" href = "{% url 'contest:add_entry_category' category.id %}">
+                {{ category.style.name }}
             </a>
-            (
-            <a href = "{% url 'contest:style_detail' style.slug %}">
+        </td><td>
+            {{ category.entries_limit }}
+        </td><td>
+            <a href = "{% url 'contest:style_detail' category.style.slug %}">
                 {%  translate "style details" %}
             </a>
-            )
-        </li>
+        </td></tr>
+
 
     {% empty %}
         {% translate "You cannot add an entry in any style for this contest" %}
 
     {% endfor %}
-</ul>
+</table>
+
 {% endblock content %}
