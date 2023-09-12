@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-19 21:39+0200\n"
+"POT-Creation-Date: 2023-09-12 23:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,9 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
-"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
-"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
 #: .\contest\admin.py:59
 msgid "Description"
 msgstr "Opis"
@@ -43,7 +44,8 @@ msgstr "Audyt"
 msgid "Contest"
 msgstr "Konkurs"
 
-#: .\contest\admin.py:187
+#: .\contest\admin.py:187 .\contest\templates\contest\entries.html:37
+#: .\contest\templates\contest\entry_confirm_delete.html:8
 msgid "Style"
 msgstr "Styl"
 
@@ -52,132 +54,359 @@ msgstr "Styl"
 msgid "Competitions"
 msgstr "Konkursy"
 
-#: .\contest\models.py:14
+#: .\contest\models.py:20 .\contest\models.py:85
+msgid "will be used in contest URL, can be derrived automatically from titile"
+msgstr ""
+"będzie użyte do budowy adresu URL konkursu, może powstać automatycznie na "
+"bazie tytułu"
+
+#: .\contest\models.py:22
 msgid "Allow to use this category in competitions"
 msgstr "Zezwól na wybór tej kategorii w konkursach"
 
-#: .\contest\models.py:17
+#: .\contest\models.py:25
 msgid "Require extra information for entries?"
 msgstr "Wymagane dodatkowe dane o zgłoszeniu"
 
-#: .\contest\models.py:21
+#: .\contest\models.py:29
 msgid "Required information hint"
 msgstr "Informacja o wymaganych danych"
 
-#: .\contest\models.py:22
+#: .\contest\models.py:30
 msgid ""
 "This will instruct the participants what information they need to provide "
 "for an entry.</br>Fill only if you require extra information for entries"
 msgstr ""
-"Podpowiedź dla uczestnika, jakie dodatkowe dane powinien podać"
-"</br>Wypełnij tylko jeśli wymagasz podania dodatkowych danych."
+"Podpowiedź dla uczestnika, jakie dodatkowe dane powinien podać</br>Wypełnij "
+"tylko jeśli wymagasz podania dodatkowych danych."
 
-
-#: .\contest\models.py:47
+#: .\contest\models.py:58
 msgid "style"
 msgstr "styl"
 
-#: .\contest\models.py:48
+#: .\contest\models.py:59
 msgid "styles"
 msgstr "style"
 
-#: .\contest\models.py:55
+#: .\contest\models.py:69
 msgid ""
 "If you require extra information from participants, provide them with a hint!"
 msgstr "Jeśli wymagasz dodatkowych danych od uczestnika, powiedz im jakich"
 
-#: .\contest\models.py:59
+#: .\contest\models.py:81
 msgid "title"
 msgstr "tytuł"
 
-#: .\contest\models.py:63
-msgid "will be used in contest URL, can be derrived automatically from titile"
-msgstr "będzie użyte do budowy adresu URL konkursu, może powstać automatycznie na bazie tytułu"
-
-#: .\contest\models.py:66
+#: .\contest\models.py:88
 msgid "Entry registration from"
 msgstr "Rejestracja zgłoszeń od"
 
-#: .\contest\models.py:67 .\contest\models.py:69 .\contest\models.py:71
+#: .\contest\models.py:89 .\contest\models.py:91 .\contest\models.py:93
 msgid "to"
 msgstr "do"
 
-#: .\contest\models.py:68
+#: .\contest\models.py:90
 msgid "Delivery from"
 msgstr "Dostarczanie od"
 
-#: .\contest\models.py:70
+#: .\contest\models.py:92
 msgid "Judging sessions from"
 msgstr "Sędziowanie konkursu od"
 
-#: .\contest\models.py:75 .\contest\models.py:86
+#: .\contest\models.py:97 .\contest\models.py:108
 msgid "Ignores auto-publish date"
 msgstr "Ignoruje datę automatycznej publikacji"
 
-#: .\contest\models.py:76
+#: .\contest\models.py:98
 msgid "Competition page is published"
 msgstr "Strona konkursu jest opublikowana"
 
-#: .\contest\models.py:81
+#: .\contest\models.py:103
 msgid ""
 "Fill only if you want the competition page to be published automatically at "
 "that time"
 msgstr ""
-"Wypełnij tylko, jeśli chcesz, by strona konkursu była automatycznie opublikowana o tej godzinie"
+"Wypełnij tylko, jeśli chcesz, by strona konkursu była automatycznie "
+"opublikowana o tej godzinie"
 
-#: .\contest\models.py:82
+#: .\contest\models.py:104
 msgid "When to publish competition page automatically"
 msgstr "Kiedy automatycznie opublikować stronę konkursu"
 
-#: .\contest\models.py:87
+#: .\contest\models.py:109
 msgid "Competition results are published"
 msgstr "Wyniki konkursu są opublikowane"
 
-#: .\contest\models.py:92
+#: .\contest\models.py:114
 msgid ""
 "Fill only if you want the competition <b>results</b> to be published "
 "automatically at that time"
 msgstr ""
-"Wypełnij tylko, jeśli chcesz, by <b>wyniki</b> konkursu były automatycznie opublikowane o tej godzinie"
+"Wypełnij tylko, jeśli chcesz, by <b>wyniki</b> konkursu były automatycznie "
+"opublikowane o tej godzinie"
 
-#: .\contest\models.py:93
+#: .\contest\models.py:115
 msgid "When to publish results automatically"
 msgstr "Kiedy automatycznie opublikować wyniki konkursu"
 
-#: .\contest\models.py:117
+#: .\contest\models.py:148
 msgid "contest"
 msgstr "konkurs"
 
-#: .\contest\models.py:118
+#: .\contest\models.py:149
 msgid "contests"
 msgstr "konkursy"
 
-#: .\contest\models.py:144
+#: .\contest\models.py:180
 msgid "Entries limit per user"
 msgstr "Limit zgłoszeń na uczestnika"
 
-#: .\contest\models.py:167
+#: .\contest\models.py:204
 msgid "category"
 msgstr "kategoria"
 
-#: .\contest\models.py:168
+#: .\contest\models.py:205
 msgid "categories"
 msgstr "kategorie"
 
-#: .\contest\models.py:187
+#: .\contest\models.py:218 .\contest\templates\contest\entries.html:43
+msgid "Additional information"
+msgstr "Dodatkowe inforamacje"
+
+#: .\contest\models.py:224
 msgid "entry"
 msgstr "zgłoszenie"
 
-#: .\contest\models.py:188
+#: .\contest\models.py:225
 msgid "entries"
 msgstr "zgłoszenia"
 
-#. Translators: Link to homepage
-#: .\contest\templates\contest\head.html:54
-msgid "Home"
-msgstr "Home"
+#: .\contest\models.py:233
+#, python-brace-format
+msgid "Providing \"{self.category.style.extra_info_hint}\"i is mandatory!"
+msgstr "Wypełnienie \"{self.category.style.extra_info_hint}\" jest obowiązkowe!"
 
-#. Translators: Link to the admin panel
-#: .\contest\templates\contest\head.html:60
-msgid "Admin panel"
-msgstr "Panel administracyjny"
+#: .\contest\models.py:238
+msgid "Entries that have been received cannot be edited!"
+msgstr "Nie można edytować dostarczonych zgłoszeń"
+
+#: .\contest\models.py:247
+#, python-brace-format
+msgid ""
+"You have reached entry limit for this category ({self.category."
+"entries_limit})! "
+msgstr ""
+"Osiągnięto limit zgłoszeń w tej kategorii ({self.category."
+"entries_limit})! "
+
+#: .\contest\models.py:252
+msgid "Entries that has been paid or received cannot be deleted!"
+msgstr "Nie można usunąć opłaconych zgłoszeń"
+
+#: .\contest\templates\contest\add_entry.html:10
+msgid "Provide entry details:"
+msgstr "Podaj dane zgłoszenia"
+
+#: .\contest\templates\contest\add_entry.html:19
+msgid "Go back"
+msgstr "Powrót"
+
+#: .\contest\templates\contest\add_entry.html:23
+msgid "Save"
+msgstr "Zapisz"
+
+#: .\contest\templates\contest\add_entry_contest_list.html:5
+msgid "Contests with open registration:"
+msgstr "Konkursy z otwartą rejestracją"
+
+#: .\contest\templates\contest\add_entry_contest_list.html:15
+#, fuzzy
+#| msgid "contests"
+msgid "contest details"
+msgstr "szczegóły konkursu"
+
+#: .\contest\templates\contest\add_entry_contest_list.html:21
+msgid "No contest accepts registration at the moment."
+msgstr "W tej chwili nie można się zgłaszać do żadnego konkursu"
+
+#: .\contest\templates\contest\add_entry_style_list.html:9
+msgid "Select style in which you would like to register an entry"
+msgstr "Wybierz styl, w którym chcesz utworzyć zgłoszenie"
+
+#: .\contest\templates\contest\add_entry_style_list.html:30
+#, fuzzy
+#| msgid "styles"
+msgid "style details"
+msgstr "opis stylu"
+
+#: .\contest\templates\contest\add_entry_style_list.html:36
+msgid "You cannot entries for this contest"
+msgstr "Nie możesz zarejestrować zgłoszenia w tym konkursie"
+
+#: .\contest\templates\contest\contest_detail.html:12
+msgid "Register your entry"
+msgstr "Zgłoś się do konkursu"
+
+#: .\contest\templates\contest\contest_detail.html:15
+msgid "Check results"
+msgstr "Sprawdź wyniki konkursu"
+
+#: .\contest\templates\contest\contest_detail.html:18
+msgid "Timeline"
+msgstr "Istotne daty"
+
+#: .\contest\templates\contest\contest_detail.html:19
+#, fuzzy
+#| msgid "Entry registration from"
+msgid "Registration"
+msgstr "Rejestracja zgłoszeń od"
+
+#: .\contest\templates\contest\contest_detail.html:24
+msgid "Samples delivery"
+msgstr "Dostawa zgłoszeń od"
+
+#: .\contest\templates\contest\contest_detail.html:29
+#, fuzzy
+#| msgid "Judging sessions from"
+msgid "Judging sessions"
+msgstr "Sędziowanie konkursu od"
+
+#: .\contest\templates\contest\contest_detail.html:34
+#, fuzzy
+#| msgid "categories"
+msgid "Categories"
+msgstr "kategorie"
+
+#: .\contest\templates\contest\contest_detail.html:44
+#, fuzzy
+#| msgid "Competitions"
+msgid "Competition description"
+msgstr "Konkursy"
+
+#: .\contest\templates\contest\entries.html:4
+#, fuzzy
+#| msgid "entries"
+msgid "My entries:"
+msgstr "zgłoszenia"
+
+#: .\contest\templates\contest\entries.html:30
+msgid "Is paid"
+msgstr "Opłacono"
+
+#: .\contest\templates\contest\entries.html:33
+msgid "Is received"
+msgstr "Dostarczono"
+
+#: .\contest\templates\contest\entries.html:40
+#: .\contest\templates\contest\entry_confirm_delete.html:9
+msgid "Name"
+msgstr "Nazwa"
+
+#: .\contest\templates\contest\entries.html:46
+msgid "Actions"
+msgstr "Akcje"
+
+#: .\contest\templates\contest\entries.html:88
+#, fuzzy
+#| msgid "entry"
+msgid "Edit entry"
+msgstr "Modyfikuj zgłoszenie"
+
+#: .\contest\templates\contest\entries.html:99
+#, fuzzy
+#| msgid "entry"
+msgid "Delete entry"
+msgstr "Usuń zgłoszenie"
+
+#: .\contest\templates\contest\entries.html:112
+msgid "You do not have any entries"
+msgstr "Brak zgłoszeń"
+
+#: .\contest\templates\contest\entry_confirm_delete.html:7
+msgid "Are you sure you want to delete following entry?"
+msgstr "Czy na pewno chcesz usunąć poniższe zgłoszenie?"
+
+#: .\contest\templates\contest\entry_confirm_delete.html:14
+msgid "Delete"
+msgstr "Usuń"
+
+#: .\contest\templates\contest\generic_update.html:11
+msgid "save"
+msgstr "zapisz"
+
+#: .\contest\templates\contest\navbar.html:22
+msgid "Logged in as:"
+msgstr "Zalogowany jako:"
+
+#. Translators: My profile button
+#: .\contest\templates\contest\navbar.html:28
+msgid "My profile"
+msgstr "Moje dane"
+
+#. Translators: Link to the Django admin panel
+#: .\contest\templates\contest\navbar.html:36
+msgid "Django admin"
+msgstr "Django admin"
+
+#. Translators: Logout button
+#: .\contest\templates\contest\navbar.html:45
+msgid "Logout"
+msgstr "Wyloguj"
+
+#. Translators: Login button
+#: .\contest\templates\contest\navbar.html:52
+msgid "Login"
+msgstr "Zaloguj"
+
+#. Translators: Register button
+#: .\contest\templates\contest\navbar.html:58
+msgid "Register"
+msgstr "Zarejestruj"
+
+#. Translators: Link to homepage
+#: .\contest\templates\contest\navbar.html:97
+msgid "Home"
+
+msgstr "Home"
+#: .\contest\templates\contest\profile.html:8
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: .\contest\templates\contest\profile.html:12
+msgid "First name"
+msgstr "Imię"
+
+#: .\contest\templates\contest\profile.html:16
+msgid "Last name"
+msgstr "Nazwisko"
+
+#: .\contest\templates\contest\profile.html:20
+msgid "Primary email"
+msgstr "Email (główny)"
+
+#: .\contest\templates\contest\profile.html:25
+msgid "change password"
+msgstr "zmień hasło"
+
+#: .\contest\templates\contest\profile.html:26
+msgid "edit email"
+msgstr "edycja emaila"
+
+#: .\contest\templates\contest\profile.html:27
+msgid "edit profile data"
+msgstr "edycja danych"
+
+#: .\contest\views.py:124
+msgid "Entry has been added successfully"
+msgstr "Dodano zgłoszenie"
+
+#: .\contest\views.py:155
+msgid "Entry has been updated successfully"
+msgstr "Zmodyfikowano zgłoszenie"
+
+#: .\contest\views.py:183
+msgid "Entry has been deleted"
+msgstr "Usunięto zgłoszenie"
+
+#~ msgid "Admin panel"
+#~ msgstr "Panel administracyjny"

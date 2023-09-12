@@ -96,7 +96,7 @@
                                     {% endif %}
                                     "
                                    data-toggle="tooltip"
-                                   title="{% translate 'Delte entry' %}"
+                                   title="{% translate 'Delete entry' %}"
                                    href="{% url 'contest:entry_delete' entry.id %}?next={{ request.path|urlencode }}"
                                 >
                                     {% bs_icon 'trash3' %}

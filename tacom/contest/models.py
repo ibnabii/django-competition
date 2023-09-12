@@ -230,7 +230,7 @@ class Entry(models.Model):
 
     def clean(self):
         if self.category.style.extra_info_is_required and self.extra_info == '':
-            raise ValidationError(_(f'Providing "{self.category.style.extra_info_hint}"i is mandatory!'))
+            raise ValidationError(_(f'Providing "{self.category.style.extra_info_hint}" is mandatory!'))
 
         if Entry.objects.filter(pk=self.id).exists():
             # update
