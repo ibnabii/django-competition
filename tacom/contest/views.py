@@ -164,7 +164,7 @@ class EditEntryView(UserPassesTestMixin, UpdateView):
         Override method to rise 404 instead of 403
         """
         try:
-            super().handle_no_permission()
+            return super().handle_no_permission()
         except PermissionDenied:
             raise Http404
 
@@ -196,8 +196,9 @@ class DeleteEntryView(UserPassesTestMixin, DeleteView):
         """
         Override method to rise 404 instead of 403
         """
+
         try:
-            super().handle_no_permission()
+            return super().handle_no_permission()
         except PermissionDenied:
             raise Http404
 
