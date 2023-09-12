@@ -169,6 +169,39 @@ class EditEntryView(UserPassesTestMixin, UpdateView):
             raise Http404
 
 
+class DeleteEntryView(UserPassesTestMixin, DeleteView):
+    model = Entry
+    # template_name = 'contest/entry_confirm_delete.html'
+    context_object_name = 'entry'
+
+    def test_func(self):
+        return self.get_object().brewer == self.request.user and self.get_object().can_be_deleted()
+
+    def form_valid(self, form):
+        messages.success(
+            self.request,
+            _('Entry has been deleted')
+        )
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        next_url = self.request.POST.get('next')
+        if next_url:
+            return next_url
+        else:
+            return reverse('contest:add_entry_contest', kwargs={'slug': self.object.category.contest.slug})
+
+    def handle_no_permission(self):
+        """
+        Override method to rise 404 instead of 403
+        """
+        try:
+            super().handle_no_permission()
+        except PermissionDenied:
+            raise Http404
+
+
 class ContestDetailView(DetailView):
     model = Contest
     # queryset = Contest.objects.prefetch_related('categories__style')  # 2 queries

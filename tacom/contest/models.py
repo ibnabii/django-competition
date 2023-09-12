@@ -234,6 +234,8 @@ class Entry(models.Model):
 
         if Entry.objects.filter(pk=self.id).exists():
             # update
+            if not self.can_be_edited():
+                raise ValidationError(_('Entries that have been received cannot be edited!'))
             extra = 0
         else:
             # insert
@@ -242,8 +244,12 @@ class Entry(models.Model):
         if (self.category.entries_limit
                 <
                 Entry.objects.filter(category=self.category).filter(brewer=self.brewer).count() + extra):
-            raise ValidationError(_(f'You have reached entry limit for this category ({self.category.entries_limit}). '
-                                    f'No more entries in this category can be added'))
+            raise ValidationError(_(f'You have reached entry limit for this category ({self.category.entries_limit})! '
+                                    f'No more entries in this category can be added.'))
+
+    def delete(self, using=None, keep_parents=False):
+        if not self.can_be_deleted():
+            raise ValidationError(_('Entries that has been paid or received cannot be deleted!'))
 
     def can_be_deleted(self):
         return not self.is_paid and not self.is_received

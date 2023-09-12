@@ -1,0 +1,18 @@
+{% extends "contest/base.html" %}
+
+{% block content %}
+{%  load i18n %}
+<form method="post" action="">
+  {% csrf_token %}
+    <h3>{% translate "Are you sure you want to delete following entry?" %}</h3>
+    <h4>{% translate 'Style' %}: <small>{{ entry.category.style }}</small></h4>
+    <h4>{% translate 'Name' %}: <small>{{ entry.name }}</small></h4>
+
+    {{ form }}
+    <a class="btn btn-primary" href="{{ view.get_success_url }}">Cancel</a>
+    <button type="submit" class="btn btn-danger">
+      {% translate "Delete" %}
+  </button>
+</form>
+
+{% endblock %}
