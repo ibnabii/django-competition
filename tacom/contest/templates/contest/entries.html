@@ -12,6 +12,13 @@
                     <h4>{{ contest.grouper }}</h4>
                 </a>
             </div>
+            <script>
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip(({
+                        'delay': { show: 1000, hide: 300 }
+                    }))
+                })
+            </script>
             <div id="contest{{ contest.grouper.id}}" class="collapse
                 {% if forloop.counter == 1 %}
                 show
@@ -20,20 +27,23 @@
                 <div class="card-body">
                     <table class="table">
                         <tr>
-                            <th title="Is paid">
+                            <th title="{% translate 'Is paid' %}" data-toggle="tooltip">
                                 {% bs_icon 'cash-coin' size='1.5em' %}
                             </th>
-                            <th title="Is received">
+                            <th title="{% translate 'Is received' %}" data-toggle="tooltip">
                                 {% bs_icon 'truck' size='1.5em' %}
                             </th>
                             <th>
-                                Style
+                                {% translate "Style" %}
                             </th>
                             <th>
-                                Name
+                                {% translate "Name" %}
                             </th>
                             <th>
-                                Additional information
+                                {% translate "Additional information" %}
+                            </th>
+                            <th>
+                                {% translate "Actions" %}
                             </th>
                         </tr>
 
@@ -65,6 +75,31 @@
 
                             <td>
                                 {{ entry.extra_info }}
+                            </td>
+
+                            <td>
+
+                                <a class="btn btn-outline-primary
+                                    {% if not entry.can_be_edited %}
+                                        disabled
+                                    {% endif %}
+                                    "
+                                   data-toggle="tooltip"
+                                   title="{% translate 'Edit entry' %}"
+                                   href="{% url 'contest:entry_edit' entry.id %}?next={{ request.path|urlencode }}"
+                                >
+                                    {% bs_icon 'pencil-square' %}
+                                </a>
+                                <a class="btn btn-outline-danger
+                                    {% if not entry.can_be_deleted %}
+                                        disabled
+                                    {% endif %}
+                                    "
+                                   data-toggle="tooltip"
+                                   title="{% translate 'Delte entry' %}"
+                                >
+                                    {% bs_icon 'trash3' %}
+                                </a>
                             </td>
                         </tr>
                     {%  endfor %}

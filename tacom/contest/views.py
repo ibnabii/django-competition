@@ -1,17 +1,16 @@
-from datetime import date
-
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Prefetch, Count, F
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
+from django.db.models import Prefetch
 from django.shortcuts import redirect, get_object_or_404, Http404
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView
+from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView
 from django.views.generic.base import ContextMixin
 
 from .forms import NewEntryForm
-from .models import Contest, Category, Style, Entry
+from .models import Contest, Category, Entry
 
 
 class PublishedContestListView(ListView):
@@ -130,6 +129,44 @@ class AddEntryView(LoginRequiredMixin, CreateView):
         return self.render_to_response(
             self.get_context_data(form=form, error=True)
         )
+
+
+class EditEntryView(UserPassesTestMixin, UpdateView):
+    model = Entry
+    template_name = 'contest/generic_update.html'
+    form_class = NewEntryForm
+
+    def test_func(self):
+        return self.get_object().brewer == self.request.user and self.get_object().can_be_edited()
+
+    def get_form_kwargs(self):
+        form_kwargs = super().get_form_kwargs()
+        category = self.get_object().category
+        form_kwargs['is_extra_mandatory'] = category.style.extra_info_is_required
+        form_kwargs['extra_hint'] = category.style.extra_info_hint
+        form_kwargs['user'] = self.request.user
+        form_kwargs['category'] = category
+        return form_kwargs
+
+    def get_success_url(self):
+        next_url = self.request.POST.get('next')
+        messages.success(
+            self.request,
+            _('Entry has been updated successfully')
+        )
+        if next_url:
+            return next_url
+        else:
+            return reverse('contest:add_entry_contest', kwargs={'slug': self.object.category.contest.slug})
+
+    def handle_no_permission(self):
+        """
+        Override method to rise 404 instead of 403
+        """
+        try:
+            super().handle_no_permission()
+        except PermissionDenied:
+            raise Http404
 
 
 class ContestDetailView(DetailView):

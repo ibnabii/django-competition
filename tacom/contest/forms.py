@@ -25,3 +25,4 @@ class NewEntryForm(forms.ModelForm):
             self.fields['extra_info'].required = True
         self.instance.brewer = user
         self.instance.category = category
+

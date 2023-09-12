@@ -9,12 +9,15 @@
 <h3>{% translate "Select style in which you would like to register an entry" %}</h3>
 
 <table class="table">
-    <tr>
-        <th>Style</th>
-        <th>Maximum entries per brewer</th>
-        <th>Style description</th>
-    </tr>
     {% for category in categories %}
+        {% if forloop.counter == 1 %}
+
+        <tr>
+            <th>Style</th>
+            <th>Maximum entries per brewer</th>
+            <th>Style description</th>
+        </tr>
+        {% endif %}
         <tr><td>
 
             <a class="btn btn-outline-primary" href = "{% url 'contest:add_entry_category' category.id %}">
@@ -30,7 +33,7 @@
 
 
     {% empty %}
-        {% translate "You cannot add an entry in any style for this contest" %}
+        {% translate "You cannot entries for this contest" %}
 
     {% endfor %}
 </table>

@@ -1,29 +1,31 @@
 {% extends 'contest/base.html' %}
 {% block content %}
 
+    {% load i18n %}
     <h2>Profile</h2>
     <table>
         <tr>
-            <td>Username:</td>
+            <td>{% translate "Username" %}:</td>
             <td> {{  user.username }}</td>
         </tr>
         <tr>
-            <td>First name:</td>
+            <td>{% translate "First name" %}:</td>
             <td> {{ user.first_name }}</td>
         </tr>
         <tr>
-            <td>Last name:</td>
+            <td>{% translate "Last name" %}:</td>
             <td> {{ user.last_name }}</td>
         </tr>
         <tr>
-            <td>Primary email:</td>
+            <td>{% translate "Primary email" %}:</td>
             <td> {{ user.email }}</td>
         </tr>
     </table>
     <br />
-    <a href="{% url 'account_change_password' %}">change password</a> <br />
-    <a href="{% url 'account_email' %}">edit email</a> <br />
-    <a href="{% url 'contest:profile_edit' %}">edit profile data</a> <br />
+    <a class="btn btn-primary" href="{% url 'account_change_password' %}">{% translate "change password" %}</a>
+    <a class="btn btn-primary" href="{% url 'account_email' %}">{% translate "edit email" %}</a>
+    <a class="btn btn-primary" href="{% url 'contest:profile_edit' %}">{% translate "edit profile data" %}</a>
     <br/>
+    <br />
     {% include 'contest/entries.html' %}
 {% endblock content %}
