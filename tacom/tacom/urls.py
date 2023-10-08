@@ -23,6 +23,7 @@ urlpatterns = i18n_patterns(
     path('contest/', include('contest.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
     path('tinymce/', include('tinymce.urls')),
+    path('rosetta/', include('rosetta.urls')),
     path('', RedirectView.as_view(url='/contest'), name='home')
 )
 

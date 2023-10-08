@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'bootstrap5',
     'django_bootstrap_icons',
+    'rosetta',
 ]
 
 MIDDLEWARE = [
