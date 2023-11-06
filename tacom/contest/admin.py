@@ -62,6 +62,13 @@ class ContestAdmin(admin.ModelAdmin):
                 'fields': ['description'],
             }
         ),
+        (
+            _('Delivery address'),
+            {
+                'classes': ['collapse'],
+                'fields': ['delivery_address'],
+            }
+        ),
         # (
         #     _('Categories'),
         #     {

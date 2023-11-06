@@ -1,12 +1,31 @@
 {% extends 'contest/base.html' %}
 {% block content %}
 {% load i18n %}
+{% load bootstrap_icons %}
 
-
-<h1>{{ contest.title }}</h1>
 {%  include 'contest/entries.html' %}
+<br />
+<a class="btn btn-outline-primary">
+    {% bs_icon 'cash-coin' size='1.5em' %}
+    Pay for entries
+</a>
 
-<h3>{% translate "Select style in which you would like to register an entry" %}</h3>
+<a class="btn btn-outline-primary">
+    {% bs_icon 'file-richtext' size='1.5em' %}
+    Print bottle labels
+</a>
+
+<a
+    class="btn btn-outline-primary"
+    href="{% url 'contest:contest_address' contest.slug %}"
+    target="_blank"
+>
+    {% bs_icon 'truck' size='1.5em' %}
+    Print delivery address
+</a>
+
+<br /><br />
+<h3 class="h3">{% translate "Select style in which you would like to register an entry" %}</h3>
 
 <table class="table">
     {% for category in categories %}

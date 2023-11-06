@@ -235,3 +235,9 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class ContestDeliveryAddressView(DetailView):
+    model = Contest
+    template_name = 'contest/contest_delivery_addr.html'
+    queryset = Contest.published

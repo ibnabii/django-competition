@@ -1,7 +1,7 @@
 {%  load i18n %}
 {% load bootstrap_icons %}
 
-<h3>{% translate "My entries:" %}</h3>
+<h3 class="h3">{% translate "My entries:" %}</h3>
 {% regroup entries by category.contest as entries_by_contest %}
 
 <div id="entries_by_contest">

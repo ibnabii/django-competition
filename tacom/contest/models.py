@@ -85,6 +85,7 @@ class Contest(models.Model):
         help_text=_('will be used in contest URL, can be derrived automatically from titile')
     )
     description = models.TextField(blank=False, null=False)
+    delivery_address = models.TextField(blank=False, null=False, verbose_name=_('Delivery address'))
     registration_date_from = models.DateField(blank=True, null=True, verbose_name=_('Entry registration from'))
     registration_date_to = models.DateField(blank=True, null=True, verbose_name=_('to'))
     delivery_date_from = models.DateField(blank=True, null=True, verbose_name=_('Delivery from'))
