@@ -8,8 +8,11 @@
         {{form.as_table}}
     </table>
   <button type="submit" class="btn btn-primary">
-      {% translate "save" %}
+      {% translate "Save" %}
   </button>
+  <a class="btn btn-secondary" href="{{ request.META.HTTP_REFERER }}">
+      {% translate "Cancel" %}
+  </a>
 </form>
 
 {% endblock %}
