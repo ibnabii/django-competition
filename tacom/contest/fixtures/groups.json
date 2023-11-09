@@ -1,0 +1,90 @@
+[
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "competition_full",
+    "permissions": [
+      [
+        "add_category",
+        "contest",
+        "category"
+      ],
+      [
+        "change_category",
+        "contest",
+        "category"
+      ],
+      [
+        "delete_category",
+        "contest",
+        "category"
+      ],
+      [
+        "view_category",
+        "contest",
+        "category"
+      ],
+      [
+        "add_contest",
+        "contest",
+        "contest"
+      ],
+      [
+        "change_contest",
+        "contest",
+        "contest"
+      ],
+      [
+        "delete_contest",
+        "contest",
+        "contest"
+      ],
+      [
+        "view_contest",
+        "contest",
+        "contest"
+      ],
+      [
+        "add_entry",
+        "contest",
+        "entry"
+      ],
+      [
+        "change_entry",
+        "contest",
+        "entry"
+      ],
+      [
+        "delete_entry",
+        "contest",
+        "entry"
+      ],
+      [
+        "view_entry",
+        "contest",
+        "entry"
+      ],
+      [
+        "add_style",
+        "contest",
+        "style"
+      ],
+      [
+        "change_style",
+        "contest",
+        "style"
+      ],
+      [
+        "delete_style",
+        "contest",
+        "style"
+      ],
+      [
+        "view_style",
+        "contest",
+        "style"
+      ]
+    ]
+  }
+}
+]
