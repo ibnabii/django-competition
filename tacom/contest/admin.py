@@ -77,6 +77,14 @@ class ContestAdmin(admin.ModelAdmin):
         #     }
         # ),
         (
+            _('Fees'),
+            {
+                'fields': [
+                    ('entry_fee_amount', 'entry_fee_currency')
+                ]
+            }
+        ),
+        (
             _('Dates'),
             {
                 'fields': [

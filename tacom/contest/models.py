@@ -85,6 +85,8 @@ class Contest(models.Model):
         help_text=_('will be used in contest URL, can be derrived automatically from titile')
     )
     description = models.TextField(blank=False, null=False)
+    entry_fee_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    entry_fee_currency = models.CharField(max_length=3, verbose_name=_('Fee currency code'))
     delivery_address = models.TextField(blank=False, null=False, verbose_name=_('Delivery address'))
     registration_date_from = models.DateField(blank=True, null=True, verbose_name=_('Entry registration from'))
     registration_date_to = models.DateField(blank=True, null=True, verbose_name=_('to'))
