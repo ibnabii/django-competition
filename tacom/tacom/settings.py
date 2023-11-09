@@ -133,7 +133,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-
+STATIC_ROOT = BASE_DIR / "serving_static"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
