@@ -37,12 +37,4 @@ class CategoryManager(models.Manager):
                 )
 
     def not_full(self, user):
-        return (super().get_queryset()
-                .filter(models.Q(entries__brewer=user) | models.Q(entries__isnull=True))
-                .prefetch_related('entries')
-                .annotate(entries_count=models.Count('entries'))
-                .filter(entries_count__lt=models.F('entries_limit'))
-                # |
-                # super().get_queryset().filter(entries)
-                )
-
+        return super().get_queryset().exclude(id__in=self.full(user))

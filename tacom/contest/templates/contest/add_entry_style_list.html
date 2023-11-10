@@ -25,36 +25,44 @@
 </a>
 
 <br /><br />
-<h3 class="h3">{% translate "Select style in which you would like to register an entry" %}</h3>
+{% if contest.global_limit_left is None or contest.global_limit_left %}
+    <h3 class="h3">{% translate "Select style in which you would like to register an entry" %}</h3>
+    {% if contest.global_limit_left %}
+        <h4 class="h4">{% translate "Number of slots left in the contest" %}: {{ contest.global_limit_left }} </h4>
+    {% endif %}
+        <table class="table">
+            {% for category in categories %}
+                {% if forloop.counter == 1 %}
 
-<table class="table">
-    {% for category in categories %}
-        {% if forloop.counter == 1 %}
+                <tr>
+                    <th>Style</th>
+                    <th>Maximum entries per brewer</th>
+                    <th>Style description</th>
+                </tr>
+                {% endif %}
+                <tr><td>
 
-        <tr>
-            <th>Style</th>
-            <th>Maximum entries per brewer</th>
-            <th>Style description</th>
-        </tr>
-        {% endif %}
-        <tr><td>
-
-            <a class="btn btn-outline-primary" href = "{% url 'contest:add_entry_category' category.id %}">
-                {{ category.style.name }}
-            </a>
-        </td><td>
-            {{ category.entries_limit }}
-        </td><td>
-            <a href = "{% url 'contest:style_detail' category.style.slug %}">
-                {%  translate "style details" %}
-            </a>
-        </td></tr>
+                    <a class="btn btn-outline-primary" href = "{% url 'contest:add_entry_category' category.id %}">
+                        {{ category.style.name }}
+                    </a>
+                </td><td>
+                    {{ category.entries_limit }}
+                </td><td>
+                    <a href = "{% url 'contest:style_detail' category.style.slug %}">
+                        {%  translate "style details" %}
+                    </a>
+                </td></tr>
 
 
-    {% empty %}
-        {% translate "You cannot add entries for this contest" %}
+            {% empty %}
+                {% translate "You cannot add entries for this contest" %}
 
-    {% endfor %}
-</table>
+            {% endfor %}
+        </table>
+{% else %}
+    <h3 class="h3">{% translate "This contest has reached limit of entries. No more entries are accepted" %}</h3>
+
+{% endif %}
+
 
 {% endblock content %}

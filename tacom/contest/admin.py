@@ -85,6 +85,14 @@ class ContestAdmin(admin.ModelAdmin):
             }
         ),
         (
+            _('Limits'),
+            {
+                'fields': [
+                    ('entry_global_limit', 'entry_user_limit')
+                ]
+            }
+        ),
+        (
             _('Dates'),
             {
                 'fields': [

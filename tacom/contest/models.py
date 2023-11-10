@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.functional import cached_property
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
@@ -87,6 +88,18 @@ class Contest(models.Model):
     description = models.TextField(blank=False, null=False)
     entry_fee_amount = models.DecimalField(max_digits=10, decimal_places=2)
     entry_fee_currency = models.CharField(max_length=3, verbose_name=_('Fee currency code'))
+    entry_global_limit = models.SmallIntegerField(
+        verbose_name=_('Limit of entries in the contest'),
+        help_text=_('Leave blank if no limit should be applied'),
+        blank=True,
+        null=True
+    )
+    entry_user_limit = models.SmallIntegerField(
+        verbose_name=_('Limit of entries per participant'),
+        help_text=_('Leave blank if no limit should be applied'),
+        blank=True,
+        null=True
+    )
     delivery_address = models.TextField(blank=False, null=False, verbose_name=_('Delivery address'))
     registration_date_from = models.DateField(blank=True, null=True, verbose_name=_('Entry registration from'))
     registration_date_to = models.DateField(blank=True, null=True, verbose_name=_('to'))
@@ -145,7 +158,18 @@ class Contest(models.Model):
 
     def is_registrable(self):
         return (self.competition_is_published
-                and self.registration_date_from <= date.today() <= self.registration_date_to)
+                and self.registration_date_from <= date.today() <= self.registration_date_to
+                and (self.entry_global_limit is None or self.global_limit_left)
+                )
+
+    @cached_property
+    def global_limit_left(self):
+        if self.entry_global_limit is None:
+            return None
+        return max(
+            0,
+            self.entry_global_limit - Entry.objects.filter(category__contest=self).filter(is_paid=True).count()
+        )
 
     class Meta:
         verbose_name = _('contest')
