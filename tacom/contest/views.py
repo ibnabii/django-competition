@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Prefetch
@@ -11,7 +10,7 @@ from django.views.generic import ListView, TemplateView, UpdateView, DetailView,
 from django.views.generic.base import ContextMixin
 
 from .forms import NewEntryForm
-from .models import Contest, Category, Entry
+from .models import Contest, Category, Entry, User
 
 
 class PublishedContestListView(ListView):

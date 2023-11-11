@@ -1,7 +1,6 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
-from .models import Entry, Category
+from .models import Entry
 
 
 class NewEntryForm(forms.ModelForm):

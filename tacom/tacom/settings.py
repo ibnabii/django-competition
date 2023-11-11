@@ -71,6 +71,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 
 ]
+AUTH_USER_MODEL = 'contest.User'
 
 ROOT_URLCONF = 'tacom.urls'
 
@@ -156,7 +157,6 @@ LANGUAGES = [
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 
 
 # Default primary key field type

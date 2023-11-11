@@ -1,11 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
 from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
 
-from .models import Contest, Style, Entry, Category
+from .models import Contest, Style, Entry, Category, User
 
 
 @admin.register(Style)
@@ -151,8 +150,6 @@ class ContestAdmin(admin.ModelAdmin):
 #             obj.created_by = request.user
 #         super().save_model(request, obj, form, change)
 
-admin.site.unregister(User)
-
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     readonly_fields = [
@@ -160,16 +157,14 @@ class CustomUserAdmin(UserAdmin):
         'last_login',
     ]
 
-
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
         is_superuser = request.user.is_superuser
 
-        form.base_fields['user_permissions'].disabled = True
-        form.base_fields['is_staff'].disabled = True
-        form.base_fields['is_superuser'].disabled = True
-
-
+        if not is_superuser:
+            form.base_fields['user_permissions'].disabled = True
+            form.base_fields['is_staff'].disabled = True
+            form.base_fields['is_superuser'].disabled = True
         return form
 
 
