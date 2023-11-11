@@ -5,6 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Prefetch
 from django.shortcuts import redirect, get_object_or_404, Http404
 from django.utils.translation import gettext_lazy as _
+from django.utils.functional import cached_property
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView
 from django.views.generic.base import ContextMixin
@@ -174,8 +175,19 @@ class DeleteEntryView(UserPassesTestMixin, DeleteView):
     # template_name = 'contest/entry_confirm_delete.html'
     context_object_name = 'entry'
 
+    def get_queryset(self):
+        return super().get_queryset().select_related('brewer', 'category')
+
+    def get_object(self, queryset=None):
+        return self.object_cached
+
+    @cached_property
+    def object_cached(self):
+        return super().get_object()
+
     def test_func(self):
-        return self.get_object().brewer == self.request.user and self.get_object().can_be_deleted()
+        entry = self.get_object()
+        return entry.brewer == self.request.user and entry.can_be_deleted()
 
     def form_valid(self, form):
         messages.success(

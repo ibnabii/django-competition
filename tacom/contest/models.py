@@ -268,11 +268,20 @@ class Entry(models.Model):
             # insert
             extra = 1
 
-        if (self.category.entries_limit
-                <
-                Entry.objects.filter(category=self.category).filter(brewer=self.brewer).count() + extra):
-            raise ValidationError(_(f'You have reached entry limit for this category ({self.category.entries_limit})! '
-                                    f'No more entries in this category can be added.'))
+        # validate limits
+        if extra:
+            # verify category limit
+            if (self.category.entries_limit
+                    <
+                    Entry.objects.filter(category=self.category).filter(brewer=self.brewer).count() + extra):
+                raise ValidationError(_(f'You have reached entry limit for this category ({self.category.entries_limit})! '
+                                        f'No more entries in this category can be added.'))
+
+            # verify global limit
+            if self.category.contest.entry_global_limit is not None and self.category.contest.global_limit_left <= 0:
+                raise ValidationError(
+                    _('This contest has reached maximum number of entries, no more entries can be registered.')
+                )
 
     def delete(self, using=None, keep_parents=False):
         if not self.can_be_deleted():
