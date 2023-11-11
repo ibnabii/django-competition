@@ -6,6 +6,9 @@
   {% csrf_token %}
     <table>
         {{form.as_table}}
+        {% if second_form %}
+            {{ second_form.as_table }}
+        {% endif %}
     </table>
   <button type="submit" class="btn btn-primary">
       {% translate "Save" %}

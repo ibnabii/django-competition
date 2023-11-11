@@ -10,7 +10,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView
 from django.views.generic.base import ContextMixin
 
-from .forms import NewEntryForm
+from .forms import NewEntryForm, UserDetailsForm
 from .models import Contest, Category, Entry
 
 
@@ -268,12 +268,19 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
     fields = [
         'username',
         'first_name',
-        'last_name',
+        'last_name'
     ]
     success_url = reverse_lazy('contest:profile')
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['second_form'] = UserDetailsForm()
+        return context
+
+    def form_valid(self, form):
 
 
 class ContestDeliveryAddressView(DetailView):

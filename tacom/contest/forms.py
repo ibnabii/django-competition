@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Entry, Category
+from .models import Entry, UserDetails
 
 
 class NewEntryForm(forms.ModelForm):
@@ -27,3 +27,8 @@ class NewEntryForm(forms.ModelForm):
         self.instance.brewer = user
         self.instance.category = category
 
+
+class UserDetailsForm(forms.ModelForm):
+    class Meta:
+        model = UserDetails
+        exclude = ('id', 'user')

@@ -13,6 +13,11 @@ from django.utils.translation import gettext_lazy as _
 from .managers import StyleManager, ContestManager, RegistrableContestManager, PublishedContestManager, CategoryManager
 
 
+class UserDetails(models.Model):
+    user = models.OneToOneField(User, related_name='details', on_delete=models.CASCADE)
+    phone = models.CharField(max_length=15, verbose_name=_('Phone number'), help_text=_('Include country code'), null=True)
+
+
 class Style(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(
