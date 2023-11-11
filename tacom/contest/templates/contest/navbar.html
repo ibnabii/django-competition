@@ -2,6 +2,8 @@
 {% load static %}
 {% load i18n %}
 
+{% load auth_extras %}
+
 <nav class="container navbar navbar-expand-sm text-bg-secondary navbar shadow py-1 px-3 sticky-top rounded-bottom">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -38,7 +40,7 @@
                             </li>
                             {% endif %}
 
-                            <li><hr class="dropdown-divider"></hr></li>
+                            <li><hr class="dropdown-divider" /></li>
                             <li>
                                 <a class="dropdown-item" href="{% url 'account_logout' %}">
                                     {# Translators: Logout button #}
@@ -86,7 +88,17 @@
                                         {{ language.name_local }}
                                     {% endif %}
                                 </button>
+                            </li>
                        {% endfor %}
+                        {% if request.user|is_translator %}
+                            <li><hr class="dropdown-divider" /></li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'rosetta-file-list' 'third-party' %}">
+                                    {# Translators: Manage translations button in navbar #}
+                                    {% translate "Manage translations" %}
+                                </a>
+                            </li>
+                        {% endif %}
                         </form>
                   </ul>
                 </li>

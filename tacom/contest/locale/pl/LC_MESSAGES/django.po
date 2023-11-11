@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-11 22:48+0100\n"
-"PO-Revision-Date: 2023-11-11 23:02+0100\n"
+"POT-Creation-Date: 2023-11-11 23:15+0100\n"
+"PO-Revision-Date: 2023-11-11 23:23+0100\n"
 "Last-Translator:   <pasieczny.a@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -24,7 +24,6 @@ msgid "Description"
 msgstr "Opis"
 
 #: .\contest\admin.py:66 .\contest\models.py:103
-#| msgid "Delivery from"
 msgid "Delivery address"
 msgstr "Adres do dostawy"
 
@@ -56,7 +55,9 @@ msgstr "Audyt"
 msgid "Contest"
 msgstr "Konkurs"
 
-#: .\contest\admin.py:210 .\contest\templates\contest\entries.html:37
+#: .\contest\admin.py:210
+#: .\contest\templates\contest\add_entry_style_list.html:60
+#: .\contest\templates\contest\entries.html:37
 #: .\contest\templates\contest\entry_confirm_delete.html:8
 msgid "Style"
 msgstr "Styl"
@@ -117,20 +118,19 @@ msgstr "Wpisowe"
 
 #: .\contest\models.py:90
 msgid "Fee currency code"
-msgstr "Waluta wpisowego"
+msgstr "Kod waluty wpisowego"
 
 #: .\contest\models.py:92
-#| msgid "You cannot entries for this contest"
 msgid "Limit of entries in the contest"
-msgstr "Limit zgłoszeń w tym konkursie"
+msgstr "Całkowity limit zgłoszeń w tym konkursie"
 
 #: .\contest\models.py:93 .\contest\models.py:99
 msgid "Leave blank if no limit should be applied"
-msgstr ""
+msgstr "Puste jeśli brak limitu"
 
 #: .\contest\models.py:98
 msgid "Limit of entries per participant"
-msgstr ""
+msgstr "Limit liczby zgłoszeń w konkursie na uczestnika"
 
 #: .\contest\models.py:104
 msgid "Entry registration from"
@@ -206,7 +206,7 @@ msgstr "kategorie"
 
 #: .\contest\models.py:256 .\contest\templates\contest\entries.html:43
 msgid "Additional information"
-msgstr "Dodatkowe inforamacje"
+msgstr "Informacje dodatkowe"
 
 #: .\contest\models.py:262
 msgid "entry"
@@ -217,7 +217,7 @@ msgid "entries"
 msgstr "zgłoszenia"
 
 #: .\contest\models.py:271
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Providing \"{self.category.style.extra_info_hint}\"i is mandatory!"
 msgid "Providing \"{self.category.style.extra_info_hint}\" is mandatory!"
@@ -228,7 +228,7 @@ msgid "Entries that have been received cannot be edited!"
 msgstr "Nie można edytować dostarczonych zgłoszeń"
 
 #: .\contest\models.py:289
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "You have reached entry limit for this category "
 #| "({self.category.entries_limit})! "
@@ -243,11 +243,13 @@ msgid ""
 "This contest has reached maximum number of entries, no more entries can be "
 "registered."
 msgstr ""
+"Konkurs osiągnął maksymalną liczbę zgłoszeń, nie można już rejestrować "
+"kolejnych."
 
 #: .\contest\models.py:302
 msgid ""
 "You have reached maximum number of entries per user in this competition."
-msgstr ""
+msgstr "Osiągnięto limit liczby zgłoszeń na uczestnika."
 
 #: .\contest\models.py:307
 msgid "Entries that has been paid or received cannot be deleted!"
@@ -276,7 +278,6 @@ msgid "Contests with open registration:"
 msgstr "Konkursy z otwartą rejestracją"
 
 #: .\contest\templates\contest\add_entry_contest_list.html:15
-#, fuzzy
 #| msgid "contests"
 msgid "contest details"
 msgstr "szczegóły konkursu"
@@ -291,39 +292,48 @@ msgstr "Wybierz styl, w którym chcesz utworzyć zgłoszenie"
 
 #: .\contest\templates\contest\add_entry_style_list.html:33
 msgid "Number of slots left in the contest"
-msgstr ""
+msgstr "Liczba pozostałych miejsc w konkursie, ze względu na jego limit"
 
 #: .\contest\templates\contest\add_entry_style_list.html:36
 msgid ""
 "You will be able to register and pay for your entries as long as there is at"
 " least one slot left."
 msgstr ""
+"Możesz rejestrować i opłacać zgłoszenia tak długo, jak zostało przynajmniej "
+"jedno miejsce"
 
 #: .\contest\templates\contest\add_entry_style_list.html:45
 msgid "Number of slots left towards participant limit"
 msgstr ""
+"Liczba zgłoszeń, które możesz jeszcze dodać ze względu na limit na "
+"uczestnika"
 
 #: .\contest\templates\contest\add_entry_style_list.html:48
 msgid "is the maximum number of entries per participant in this competition"
-msgstr ""
+msgstr "jest maksymalną liczbą zgłoszeń na uczestnika w tym konkursie"
+
+#: .\contest\templates\contest\add_entry_style_list.html:61
+msgid "Maximum entries per brewer"
+msgstr "Limit zgłoszeń na uczestnika"
+
+#: .\contest\templates\contest\add_entry_style_list.html:62
+#| msgid "Description"
+msgid "Style description"
+msgstr "Opis stylu"
 
 #: .\contest\templates\contest\add_entry_style_list.html:74
-#, fuzzy
-#| msgid "styles"
 msgid "style details"
 msgstr "opis stylu"
 
 #: .\contest\templates\contest\add_entry_style_list.html:80
-#, fuzzy
 #| msgid "You cannot entries for this contest"
 msgid "You cannot add entries for this contest"
 msgstr "Nie możesz zarejestrować zgłoszenia w tym konkursie"
 
 #: .\contest\templates\contest\add_entry_style_list.html:85
-#, fuzzy
 #| msgid "You cannot entries for this contest"
 msgid "You cannot register entries anymore."
-msgstr "Nie możesz zarejestrować zgłoszenia w tym konkursie"
+msgstr "Nie możesz już rejestrować zgłoszeń w tym konkursie"
 
 #: .\contest\templates\contest\contest_detail.html:12
 #: .\contest\templates\contest\profile.html:40
@@ -339,35 +349,28 @@ msgid "Timeline"
 msgstr "Istotne daty"
 
 #: .\contest\templates\contest\contest_detail.html:19
-#, fuzzy
 #| msgid "Entry registration from"
 msgid "Registration"
-msgstr "Rejestracja zgłoszeń od"
+msgstr "Rejestracja zgłoszeń"
 
 #: .\contest\templates\contest\contest_detail.html:24
 msgid "Samples delivery"
-msgstr "Dostawa zgłoszeń od"
+msgstr "Dostawa zgłoszeń"
 
 #: .\contest\templates\contest\contest_detail.html:29
-#, fuzzy
 #| msgid "Judging sessions from"
 msgid "Judging sessions"
-msgstr "Sędziowanie konkursu od"
+msgstr "Sędziowanie konkursu"
 
 #: .\contest\templates\contest\contest_detail.html:34
-#, fuzzy
-#| msgid "categories"
 msgid "Categories"
-msgstr "kategorie"
+msgstr "Kategorie"
 
 #: .\contest\templates\contest\contest_detail.html:44
-#, fuzzy
-#| msgid "Competitions"
 msgid "Competition description"
-msgstr "Konkursy"
+msgstr "Opis konkursu"
 
 #: .\contest\templates\contest\entries.html:4
-#| msgid "entries"
 msgid "My entries:"
 msgstr "Moje zgłoszenia:"
 
@@ -389,13 +392,11 @@ msgid "Actions"
 msgstr "Akcje"
 
 #: .\contest\templates\contest\entries.html:93
-#, fuzzy
 #| msgid "entry"
 msgid "Edit entry"
 msgstr "Modyfikuj zgłoszenie"
 
 #: .\contest\templates\contest\entries.html:104
-#, fuzzy
 #| msgid "entry"
 msgid "Delete entry"
 msgstr "Usuń zgłoszenie"
@@ -444,7 +445,7 @@ msgstr "Zarejestruj"
 #. Translators: Manage translations button in navbar
 #: .\contest\templates\contest\navbar.html:98
 msgid "Manage translations"
-msgstr ""
+msgstr "Tłumaczenia"
 
 #. Translators: Link to homepage
 #: .\contest\templates\contest\navbar.html:109
@@ -481,11 +482,11 @@ msgstr "edycja danych"
 
 #: .\contest\views.py:97
 msgid "You have reached the limit of entries allowed per participant."
-msgstr ""
+msgstr "Osiągnięto limit liczby zgłoszeń na uczestnika"
 
 #: .\contest\views.py:101
 msgid "This competition has reached it's entries limit."
-msgstr ""
+msgstr "Konkurs osiągnął swój łączny limit zgłoszeń"
 
 #: .\contest\views.py:147
 msgid "Entry has been added successfully"
