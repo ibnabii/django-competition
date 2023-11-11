@@ -9,7 +9,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView
 from django.views.generic.base import ContextMixin
 
-from .forms import NewEntryForm
+from .forms import NewEntryForm, ProfileForm
 from .models import Contest, Category, Entry, User
 
 
@@ -264,11 +264,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     model = User
     template_name = 'contest/generic_update.html'
-    fields = [
-        'username',
-        'first_name',
-        'last_name',
-    ]
+    form_class = ProfileForm
     success_url = reverse_lazy('contest:profile')
 
     def get_object(self, queryset=None):

@@ -17,6 +17,14 @@ class User(AbstractUser):
     class Meta:
         db_table = 'auth_user'
 
+    phone = models.CharField(
+        max_length=15,
+        verbose_name=_('Phone number'),
+        help_text=_('Include country code'),
+        blank=True
+    )
+    address = models.CharField(max_length=200, blank=True)
+
 
 class Style(models.Model):
     name = models.CharField(max_length=50)

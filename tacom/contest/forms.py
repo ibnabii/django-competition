@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Entry
+from .models import Entry, User
 
 
 class NewEntryForm(forms.ModelForm):
@@ -26,3 +26,17 @@ class NewEntryForm(forms.ModelForm):
         self.instance.brewer = user
         self.instance.category = category
 
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        widgets = {
+            'address': forms.Textarea(attrs={'cols': 30, 'rows': 4})
+        }
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'phone',
+            'address'
+        ]

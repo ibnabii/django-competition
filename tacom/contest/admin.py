@@ -151,7 +151,7 @@ class ContestAdmin(admin.ModelAdmin):
 #         super().save_model(request, obj, form, change)
 
 @admin.register(User)
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(admin.ModelAdmin):
     readonly_fields = [
         'date_joined',
         'last_login',
