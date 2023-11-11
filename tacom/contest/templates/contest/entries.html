@@ -74,7 +74,12 @@
                             </td>
 
                             <td>
-                                {{ entry.extra_info }}
+                                <span
+                                    data-toggle="tooltip"
+                                    title="{{ entry.extra_info }}"
+                                >
+                                    {{ entry.extra_info | truncatechars:30 }}
+                                </span>
                             </td>
 
                             <td>

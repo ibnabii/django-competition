@@ -250,7 +250,7 @@ class Entry(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='entries')
     brewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='entries')
     name = models.CharField(max_length=50)
-    extra_info = models.CharField(max_length=25, blank=True, verbose_name=_('Additional information'))
+    extra_info = models.CharField(max_length=1000, blank=True, verbose_name=_('Additional information'))
     is_paid = models.BooleanField(default=False)
     is_received = models.BooleanField(default=False)
     modified_at = models.DateTimeField(auto_now=True)

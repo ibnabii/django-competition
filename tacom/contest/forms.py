@@ -10,7 +10,8 @@ class NewEntryForm(forms.ModelForm):
         fields = ['name', 'extra_info']
         widgets = {
             'name': forms.TextInput(attrs={'size': 80}),
-            'extra_info': forms.TextInput(attrs={'size': 80}),
+            # 'extra_info': forms.TextInput(attrs={'size': 80}),
+            'extra_info': forms.Textarea(attrs={'cols': 80, 'rows': 15})
         }
 
     def __init__(self, *args, **kwargs):
