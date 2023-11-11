@@ -168,7 +168,10 @@ class Contest(models.Model):
             return None
         return max(
             0,
-            self.entry_global_limit - Entry.objects.filter(category__contest=self).filter(is_paid=True).count()
+            self.entry_global_limit - Entry.objects
+            .filter(category__contest=self)
+            # .filter(is_paid=True)
+            .count()
         )
 
     def user_limit_left(self, user):
@@ -282,8 +285,9 @@ class Entry(models.Model):
             if (self.category.entries_limit
                     <
                     Entry.objects.filter(category=self.category).filter(brewer=self.brewer).count() + extra):
-                raise ValidationError(_(f'You have reached entry limit for this category ({self.category.entries_limit})! '
-                                        f'No more entries in this category can be added.'))
+                raise ValidationError(_(
+                    f'You have reached entry limit for this category ({self.category.entries_limit})!'
+                    f'No more entries in this category can be added.'))
 
             # verify global limit
             if self.category.contest.entry_global_limit is not None and self.category.contest.global_limit_left <= 0:
