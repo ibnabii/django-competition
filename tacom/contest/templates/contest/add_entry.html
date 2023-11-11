@@ -22,6 +22,9 @@
   <button type="submit" class="btn btn-primary">
       {% translate "Save" %}
   </button>
+  <a class="btn btn-secondary" href="{{ request.META.HTTP_REFERER }}">
+      {% translate "Cancel" %}
+  </a>
 </form>
 
 {% endblock content %}
