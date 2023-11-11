@@ -201,3 +201,6 @@ MESSAGE_TAGS = {
 BOOTSTRAP5 = {
     'css_url': '/static/bootstrap.min.css',
 }
+
+ROSETTA_EXCLUDED_APPLICATIONS = INSTALLED_APPS.copy()
+ROSETTA_EXCLUDED_APPLICATIONS.remove('contest')

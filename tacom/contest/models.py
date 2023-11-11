@@ -86,7 +86,7 @@ class Contest(models.Model):
         help_text=_('will be used in contest URL, can be derrived automatically from titile')
     )
     description = models.TextField(blank=False, null=False)
-    entry_fee_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    entry_fee_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Entry fee amount'))
     entry_fee_currency = models.CharField(max_length=3, verbose_name=_('Fee currency code'))
     entry_global_limit = models.SmallIntegerField(
         verbose_name=_('Limit of entries in the contest'),
