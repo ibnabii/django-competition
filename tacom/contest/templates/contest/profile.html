@@ -28,4 +28,16 @@
     <br/>
     <br />
     {% include 'contest/entries.html' %}
+{#    If there's only one active contest in the system - link to register here #}
+    {% if is_one_contest %}
+        <br/>
+        <a class="btn btn-primary
+            {% if not contest.is_registrable %}
+            disabled
+            {% endif %}
+            "
+           href="{% url 'contest:add_entry_contest' contest.slug %}">
+            {% translate "Register your entry" %}
+        </a>
+    {% endif %}
 {% endblock content %}

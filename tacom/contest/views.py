@@ -254,6 +254,10 @@ class ProfileView(LoginRequiredMixin, TemplateView):
                               .filter(brewer=self.request.user)
                               .select_related('category__contest', 'category__style')
                               )
+        contest = Contest.registrable
+        context['is_one_contest'] = Contest.registrable.count() == 1
+        if context['is_one_contest']:
+            context['contest'] = Contest.registrable.first()
         return context
 
 
