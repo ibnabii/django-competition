@@ -280,8 +280,6 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         context['second_form'] = UserDetailsForm()
         return context
 
-    def form_valid(self, form):
-
 
 class ContestDeliveryAddressView(DetailView):
     model = Contest
