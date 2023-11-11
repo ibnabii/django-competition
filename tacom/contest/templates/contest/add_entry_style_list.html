@@ -25,10 +25,32 @@
 </a>
 
 <br /><br />
-{% if contest.global_limit_left is None or contest.global_limit_left %}
+{% if can_add %}
     <h3 class="h3">{% translate "Select style in which you would like to register an entry" %}</h3>
-    {% if contest.global_limit_left %}
-        <h4 class="h4">{% translate "Number of slots left in the contest" %}: {{ contest.global_limit_left }} </h4>
+{#    Display info about remaining global limit #}
+    {% if contest_limit_left %}
+        <h4 class="h4">
+            {% translate "Number of slots left in the contest" %}: {{ contest_limit_left }}
+            <span
+                data-toggle="tooltip"
+                title="{%  translate "You will be able to register and pay for your entries as long as there is at least one slot left." %}"
+            >
+                {% bs_icon 'info-circle-fill' size='0.8em'%}
+            </span>
+        </h4>
+    {% endif %}
+{#    Display info about remaining participant limit #}
+    {% if user_limit_left %}
+        <h4 class="h4">
+            {% translate "Number of slots left towards participant limit" %}: {{ user_limit_left }}
+            <span
+                data-toggle="tooltip"
+                title="{{ contest.entry_user_limit }} {% translate "is the maximum number of entries per participant in this competition" %}"
+            >
+                {% bs_icon 'info-circle-fill' size='0.8em'%}
+            </span>
+        </h4>
+        <br/><br/>
     {% endif %}
         <table class="table">
             {% for category in categories %}
@@ -60,7 +82,8 @@
             {% endfor %}
         </table>
 {% else %}
-    <h3 class="h3">{% translate "This contest has reached limit of entries. No more entries are accepted" %}</h3>
+    <h3 class="h3">{% translate "You cannot register entries anymore."%} </h3>
+    <h4 class="h4">{{ limit_exhausted_info }}</h4>
 
 {% endif %}
 

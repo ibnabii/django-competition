@@ -80,6 +80,28 @@ class AddEntryStyleListView(LoginRequiredMixin, ContestAcceptsRegistration, List
                 .order_by('style__name')
                 )
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_limit_left = self.contest.user_limit_left(self.request.user)
+        contest_limit_left = self.contest.global_limit_left
+        context['user_limit_left'] = user_limit_left
+        context['contest_limit_left'] = contest_limit_left
+        context['can_add'] = (
+                (user_limit_left is None or user_limit_left > 0)
+                and
+                (contest_limit_left is None or contest_limit_left > 0)
+        )
+        if not context['can_add']:
+            if user_limit_left is not None and user_limit_left <= 0:
+                context['limit_exhausted_info'] = (
+                    _("You have reached the limit of entries allowed per participant.")
+                )
+            else:
+                context['limit_exhausted_info'] = (
+                    _("This competition has reached it's entries limit.")
+                )
+        return context
+
 
 class AddEntryView(LoginRequiredMixin, CreateView):
     model = Entry
