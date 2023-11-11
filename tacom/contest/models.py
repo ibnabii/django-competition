@@ -171,6 +171,14 @@ class Contest(models.Model):
             self.entry_global_limit - Entry.objects.filter(category__contest=self).filter(is_paid=True).count()
         )
 
+    def user_limit_left(self, user):
+        if self.entry_user_limit is None:
+            return None
+        return max(
+            0,
+            self.entry_user_limit - Entry.objects.filter(category__contest=self).filter(brewer=user).count()
+        )
+
     class Meta:
         verbose_name = _('contest')
         verbose_name_plural = _('contests')
@@ -281,6 +289,13 @@ class Entry(models.Model):
             if self.category.contest.entry_global_limit is not None and self.category.contest.global_limit_left <= 0:
                 raise ValidationError(
                     _('This contest has reached maximum number of entries, no more entries can be registered.')
+                )
+
+            # verify user limit
+            limit_left = self.category.contest.user_limit_left(self.brewer)
+            if limit_left is not None and limit_left <= 0:
+                raise ValidationError(
+                    _('You have reached maximum number of entries per user in this competition.')
                 )
 
     def delete(self, using=None, keep_parents=False):
