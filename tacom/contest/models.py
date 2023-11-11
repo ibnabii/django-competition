@@ -286,6 +286,7 @@ class Entry(models.Model):
     def delete(self, using=None, keep_parents=False):
         if not self.can_be_deleted():
             raise ValidationError(_('Entries that has been paid or received cannot be deleted!'))
+        super().delete(using, keep_parents)
 
     def can_be_deleted(self):
         return not self.is_paid and not self.is_received

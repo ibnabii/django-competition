@@ -202,7 +202,7 @@ class DeleteEntryView(UserPassesTestMixin, DeleteView):
         if next_url:
             return next_url
         else:
-            return reverse('contest:add_entry_contest', kwargs={'slug': self.object.category.contest.slug})
+            return reverse_lazy('contest:add_entry_contest', kwargs={'slug': self.object.category.contest.slug})
 
     def handle_no_permission(self):
         """
