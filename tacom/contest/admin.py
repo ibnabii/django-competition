@@ -1,10 +1,9 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
 
-from .models import Contest, Style, Entry, Category, User
+from .models import Contest, Style, Entry, Category, User, Participant
 
 
 @admin.register(Style)
@@ -168,6 +167,58 @@ class CustomUserAdmin(admin.ModelAdmin):
         return form
 
 
+class EntriesForParticipant(admin.TabularInline):
+    model = Entry
+    extra = 0
+    readonly_fields = (
+        'style',
+        'name',
+        'extra_info',
+    )
+    exclude = ('category',)
+
+    def style(self, obj):
+        return obj.category.style.name
+
+    def has_add_permission(self, request, obj):
+        return False
+
+
+@admin.register(Participant)
+class ParticipantAdmin(admin.ModelAdmin):
+    f = (
+        'username',
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+        'address',
+        'date_joined',
+        'last_login'
+    )
+    fields = (
+        'is_active',
+        *f
+    )
+    readonly_fields = f
+
+    inlines = (EntriesForParticipant,)
+
+    list_display = (
+        'username',
+        'last_name',
+        'first_name',
+        'email',
+        'phone',
+        'entries_total',
+        'entries_paid',
+        'entries_received'
+    )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('entries')
+
+
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
     model = Entry
@@ -199,8 +250,6 @@ class EntryAdmin(admin.ModelAdmin):
     @admin.display(ordering='category__contest__title', description=_('Contest'))
     def get_contest_title(self, obj):
         return obj.category.contest.title
-
-
 
     @admin.display(ordering='category__style__name', description=_('Style'))
     def get_style_name(self, obj):

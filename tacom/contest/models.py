@@ -20,14 +20,54 @@ class User(AbstractUser):
     phone = models.CharField(
         max_length=15,
         verbose_name=_('Phone number'),
-        help_text=_('Include country code'),
         blank=True
     )
     address = models.CharField(max_length=200, blank=True)
 
 
+class Participant(User):
+    class Meta:
+        proxy = True
+        verbose_name = _('Participant')
+        verbose_name_plural = _('Participants')
+
+    @cached_property
+    def entries_stats(self):
+        entries = (
+            self.entries
+            .values('is_paid', 'is_received')
+            # .annotate(paid=models.Count('is_paid'), received=models.Count('is_received'))
+            .annotate(count=models.Count('is_paid'))
+        )
+        return {
+            'total': entries.aggregate(total=models.Sum('count')).get('total') or 0,
+            'paid': entries.filter(is_paid=True).count(),
+            'received': entries.filter(is_received=True).count()
+        }
+
+    @property
+    def entries_total(self):
+        return self.entries_stats.get('total')
+    entries_total.fget.short_description = _('Registered')
+
+    @property
+    def entries_paid(self):
+        return self.entries_stats.get('paid')
+    entries_paid.fget.short_description = _('Paid')
+
+    @property
+    def entries_received(self):
+        return self.entries_stats.get('received')
+    entries_received.fget.short_description = _('Received')
+
+    def __str__(self):
+        if self.last_name and self.first_name:
+            return f'{self.last_name} {self.first_name}'
+        return self.email
+
+
 class Style(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, verbose_name=_('Name'))
     slug = models.SlugField(
         unique=True,
         blank=True,
@@ -267,8 +307,8 @@ class Entry(models.Model):
     brewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='entries')
     name = models.CharField(max_length=50)
     extra_info = models.CharField(max_length=1000, blank=True, verbose_name=_('Additional information'))
-    is_paid = models.BooleanField(default=False)
-    is_received = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False, verbose_name=_('Is paid'))
+    is_received = models.BooleanField(default=False, verbose_name=_('Is received'))
     modified_at = models.DateTimeField(auto_now=True)
 
     class Meta:
