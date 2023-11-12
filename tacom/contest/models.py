@@ -4,13 +4,26 @@ from uuid import uuid1
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from .managers import StyleManager, ContestManager, RegistrableContestManager, PublishedContestManager, CategoryManager
+
+
+class User(AbstractUser):
+    class Meta:
+        db_table = 'auth_user'
+
+    phone = models.CharField(
+        max_length=15,
+        verbose_name=_('Phone number'),
+        help_text=_('Include country code'),
+        blank=True
+    )
+    address = models.CharField(max_length=200, blank=True)
 
 
 class Style(models.Model):

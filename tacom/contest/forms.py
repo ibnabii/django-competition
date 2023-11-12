@@ -1,7 +1,6 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
-from .models import Entry, Category
+from .models import Entry, User
 
 
 class NewEntryForm(forms.ModelForm):
@@ -27,3 +26,17 @@ class NewEntryForm(forms.ModelForm):
         self.instance.brewer = user
         self.instance.category = category
 
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        widgets = {
+            'address': forms.Textarea(attrs={'cols': 30, 'rows': 4})
+        }
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'phone',
+            'address'
+        ]

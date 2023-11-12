@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Prefetch
@@ -10,8 +9,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView
 from django.views.generic.base import ContextMixin
 
-from .forms import NewEntryForm
-from .models import Contest, Category, Entry
+from .forms import NewEntryForm, ProfileForm
+from .models import Contest, Category, Entry, User
 
 
 class PublishedContestListView(ListView):
@@ -265,11 +264,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     model = User
     template_name = 'contest/generic_update.html'
-    fields = [
-        'username',
-        'first_name',
-        'last_name',
-    ]
+    form_class = ProfileForm
     success_url = reverse_lazy('contest:profile')
 
     def get_object(self, queryset=None):

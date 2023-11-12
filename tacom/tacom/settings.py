@@ -71,6 +71,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 
 ]
+AUTH_USER_MODEL = 'contest.User'
 
 ROOT_URLCONF = 'tacom.urls'
 
@@ -158,7 +159,6 @@ LANGUAGES = [
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -201,6 +201,3 @@ MESSAGE_TAGS = {
 BOOTSTRAP5 = {
     'css_url': '/static/bootstrap.min.css',
 }
-
-ROSETTA_EXCLUDED_APPLICATIONS = INSTALLED_APPS.copy()
-ROSETTA_EXCLUDED_APPLICATIONS.remove('contest')

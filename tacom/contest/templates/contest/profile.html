@@ -20,6 +20,14 @@
             <td>{% translate "Primary email" %}:</td>
             <td> {{ user.email }}</td>
         </tr>
+        <tr>
+            <td>{% translate "Phone number" %}:</td>
+            <td> {{ user.phone }}</td>
+        </tr>
+        <tr>
+            <td>{% translate "Address" %}:</td>
+            <td> {{ user.address | linebreaks }}</td>
+        </tr>
     </table>
     <br />
     <a class="btn btn-primary" href="{% url 'account_change_password' %}">{% translate "change password" %}</a>
