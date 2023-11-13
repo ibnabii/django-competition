@@ -1,3 +1,6 @@
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
+
 from django import forms
 
 from .models import Entry, User
@@ -40,3 +43,5 @@ class ProfileForm(forms.ModelForm):
             'phone',
             'address'
         ]
+
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)

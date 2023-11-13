@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'django_bootstrap_icons',
     'rosetta',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -204,3 +205,7 @@ MESSAGE_TAGS = {
 BOOTSTRAP5 = {
     'css_url': '/static/bootstrap.min.css',
 }
+
+# ReCaptcha
+RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
+RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
