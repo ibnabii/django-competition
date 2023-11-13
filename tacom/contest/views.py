@@ -62,7 +62,23 @@ class ContestAcceptsRegistration(ContextMixin):
         return context
 
 
-class AddEntryStyleListView(LoginRequiredMixin, ContestAcceptsRegistration, ListView):
+class UserFullProfileMixin(UserPassesTestMixin):
+    """
+    Class redirects user to fill in the profile if he hasn't done so yet
+    """
+
+    def test_func(self):
+        return self.request.user.profile_complete
+
+    def handle_no_permission(self):
+        messages.warning(
+            self.request,
+            _('Complete your profile, please.')
+        )
+        return redirect('contest:profile_edit')
+
+
+class AddEntryStyleListView(LoginRequiredMixin, UserFullProfileMixin, ContestAcceptsRegistration, ListView):
     """
     Allows selection of the Style (via Category), to which user wants to register.
     Contest has been already chosen (and is passed via url slug)
@@ -102,7 +118,7 @@ class AddEntryStyleListView(LoginRequiredMixin, ContestAcceptsRegistration, List
         return context
 
 
-class AddEntryView(LoginRequiredMixin, CreateView):
+class AddEntryView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
     model = Entry
     template_name = 'contest/add_entry.html'
     form_class = NewEntryForm

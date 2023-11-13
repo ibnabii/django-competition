@@ -2,11 +2,11 @@
 {% block content %}
 
     {% load i18n %}
-    <h2>Profile</h2>
+    <h2>{% translate 'My User Profile' %}</h2>
     <table>
         <tr>
             <td>{% translate "Username" %}:</td>
-            <td> {{  user.username }}</td>
+            <td> {{  user.username }}<img src="{{ user.country.flag }}" alt="User country flag"/></td>
         </tr>
         <tr>
             <td>{% translate "First name" %}:</td>
@@ -27,6 +27,10 @@
         <tr>
             <td>{% translate "Address" %}:</td>
             <td> {{ user.address | linebreaks }}</td>
+        </tr>
+        <tr>
+            <td>{% translate "Preferred judging language" %}:</td>
+            <td> {{ user.get_language_display }}</td>
         </tr>
     </table>
     <br />

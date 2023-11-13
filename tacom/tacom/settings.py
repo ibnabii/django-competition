@@ -2,6 +2,7 @@ from pathlib import Path
 
 from django.contrib.messages import constants as messages
 from django.core.management.utils import get_random_secret_key
+from django.urls import reverse_lazy
 
 import environ
 
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'django_bootstrap_icons',
     'rosetta',
     'captcha',
+    'django_countries',
 ]
 
 MIDDLEWARE = [
@@ -179,7 +181,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
-
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy("contest:profile_edit")
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = env("EMAIL_PORT")
@@ -209,3 +212,7 @@ BOOTSTRAP5 = {
 # ReCaptcha
 RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
 RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
+# SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+
+# Countries
+COUNTRIES_FIRST = ['PL']

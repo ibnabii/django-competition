@@ -1,7 +1,8 @@
+from django import forms
+
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
-
-from django import forms
+from django_countries.widgets import CountrySelectWidget
 
 from .models import Entry, User
 
@@ -34,14 +35,17 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
         widgets = {
-            'address': forms.Textarea(attrs={'cols': 30, 'rows': 4})
+            'address': forms.Textarea(attrs={'cols': 30, 'rows': 4}),
+            'country': CountrySelectWidget()
         }
         fields = [
             'username',
             'first_name',
             'last_name',
+            'country',
             'phone',
-            'address'
+            'address',
+            'language'
         ]
 
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)

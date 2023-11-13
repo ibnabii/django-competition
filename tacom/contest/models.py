@@ -10,6 +10,8 @@ from django.utils.functional import cached_property
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
+from django_countries.fields import CountryField
+
 from .managers import StyleManager, ContestManager, RegistrableContestManager, PublishedContestManager, CategoryManager
 
 
@@ -17,12 +19,30 @@ class User(AbstractUser):
     class Meta:
         db_table = 'auth_user'
 
+    class JudgingLanguage(models.TextChoices):
+        polish = 'pl', _('Polish')
+        english = 'en', _('English')
+
+    country = CountryField(verbose_name=_('Country'), blank=True)
     phone = models.CharField(
         max_length=15,
         verbose_name=_('Phone number'),
         blank=True
     )
     address = models.CharField(max_length=200, blank=True)
+    language = models.CharField(
+        verbose_name=_('I would like to get feedback on my meads in'),
+        choices=JudgingLanguage.choices,
+        blank=True,
+        max_length=2
+    )
+
+    @property
+    def profile_complete(self):
+        return (
+            self.username and self.first_name and self.last_name and self.country and self.phone
+            and self.address and self.language
+        )
 
 
 class Participant(User):
