@@ -171,16 +171,23 @@ class EntriesForParticipant(admin.TabularInline):
     model = Entry
     extra = 0
     readonly_fields = (
+        'id',
         'style',
         'name',
         'extra_info',
+        'is_paid',
+        'is_received'
     )
     exclude = ('category',)
+    show_change_link = True
 
     def style(self, obj):
         return obj.category.style.name
 
     def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
         return False
 
 
@@ -203,6 +210,8 @@ class ParticipantAdmin(admin.ModelAdmin):
     readonly_fields = f
 
     inlines = (EntriesForParticipant,)
+    save_on_top = True
+
 
     list_display = (
         'username',
