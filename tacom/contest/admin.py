@@ -36,6 +36,7 @@ class ContestAdmin(admin.ModelAdmin):
     # save_on_top = True
     model = Contest
     inlines = (CategoriesForContest,)
+    save_on_top = True
     # filter_horizontal = ('categories', )
     readonly_fields = [
         'created_at',
@@ -50,7 +51,7 @@ class ContestAdmin(admin.ModelAdmin):
         (
             None,
             {
-                'fields': ['title', 'slug']
+                'fields': ['title', 'slug', 'logo']
             }
         ),
         (
