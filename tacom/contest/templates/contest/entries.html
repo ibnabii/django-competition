@@ -76,7 +76,8 @@
                             <td>
                                 <span
                                     data-toggle="tooltip"
-                                    title="{{ entry.extra_info }}"
+                                    title="{{ entry.extra_info | linebreaks }}"
+                                    data-bs-html="true"
                                 >
                                     {{ entry.extra_info | truncatechars:30 }}
                                 </span>
