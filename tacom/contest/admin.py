@@ -240,9 +240,9 @@ class ParticipantAdmin(admin.ModelAdmin):
 class EntryAdmin(admin.ModelAdmin):
     model = Entry
     list_display = [
-        'get_contest_title',
-        'get_style_name',
+        # 'get_contest_title',
         'brewer',
+        'get_style_name',
         'name',
         'is_paid',
         'is_received',
