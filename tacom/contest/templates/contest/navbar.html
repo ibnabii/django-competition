@@ -102,6 +102,24 @@
                         </form>
                   </ul>
                 </li>
+
+                {% if request.user|is_contest_staff %}
+                <li class="nav-item dropdown me-0">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMngmt" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% translate "Contest Management" %}
+                    </a>
+
+                    <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownMngmt">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'contest:profile' %}">
+                                {# Translators: Entries list #}
+                                {% translate "Entries List" %}
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                {% endif %}
 {#Regular links start here#}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'home' %}">
