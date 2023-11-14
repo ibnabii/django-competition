@@ -44,6 +44,11 @@ class User(AbstractUser):
             and self.address and self.language
         )
 
+    def __str__(self):
+        if self.last_name and self.first_name:
+            return f'{self.last_name} {self.first_name}'
+        return self.email
+
 
 class Participant(User):
     class Meta:
@@ -79,11 +84,6 @@ class Participant(User):
     def entries_received(self):
         return self.entries_stats.get('received')
     entries_received.fget.short_description = _('Received')
-
-    def __str__(self):
-        if self.last_name and self.first_name:
-            return f'{self.last_name} {self.first_name}'
-        return self.email
 
 
 class Style(models.Model):
