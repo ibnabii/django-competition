@@ -62,6 +62,13 @@ class ContestAdmin(admin.ModelAdmin):
             }
         ),
         (
+            _('Description in polish'),
+            {
+                'classes': ['collapse'],
+                'fields': ['description_pl'],
+            }
+        ),
+        (
             _('Delivery address'),
             {
                 'classes': ['collapse'],

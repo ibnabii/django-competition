@@ -8,62 +8,67 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-13 23:08+0100\n"
-"PO-Revision-Date: 2023-11-13 23:09+0100\n"
+"POT-Creation-Date: 2023-11-14 07:52+0100\n"
+"PO-Revision-Date: 2023-11-14 07:47+0100\n"
 "Last-Translator: admin bardzo ważny <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
 
 #: .\contest\admin.py:58
 msgid "Description"
 msgstr "Opis"
 
-#: .\contest\admin.py:65 .\contest\models.py:177
+#: .\contest\admin.py:65 .\contest\models.py:109 .\contest\models.py:163
+msgid "Description in polish"
+msgstr "Opis po polsku"
+
+#: .\contest\admin.py:72 .\contest\models.py:179
 msgid "Delivery address"
 msgstr "Adres do dostawy"
 
-#: .\contest\admin.py:79
+#: .\contest\admin.py:86
 msgid "Fees"
 msgstr "Opłaty"
 
-#: .\contest\admin.py:87
+#: .\contest\admin.py:94
 msgid "Limits"
 msgstr "Limity"
 
-#: .\contest\admin.py:95
+#: .\contest\admin.py:102
 msgid "Dates"
 msgstr "Daty"
 
-#: .\contest\admin.py:105
+#: .\contest\admin.py:112
 msgid "Publish competition page"
 msgstr "Opublikuj stronę konkursu"
 
-#: .\contest\admin.py:114
+#: .\contest\admin.py:121
 msgid "Publish competition results"
 msgstr "Opublikuj wyniki konkursu"
 
-#: .\contest\admin.py:123
+#: .\contest\admin.py:130
 msgid "Audit"
 msgstr "Audyt"
 
-#: .\contest\admin.py:260
+#: .\contest\admin.py:267
 msgid "Contest"
 msgstr "Konkurs"
 
-#: .\contest\admin.py:264
+#: .\contest\admin.py:271
 #: .\contest\templates\contest\add_entry_style_list.html:60
 #: .\contest\templates\contest\entries.html:37
 #: .\contest\templates\contest\entry_confirm_delete.html:8
 msgid "Style"
 msgstr "Styl"
 
-#. Translators: name of the app that's displayed in admin panel for managing
-#. data
+#. Translators: name of the app that's displayed in admin panel for managing data
 #: .\contest\apps.py:8
 msgid "Competitions"
 msgstr "Konkursy"
@@ -77,10 +82,8 @@ msgid "English"
 msgstr "angielski"
 
 #: .\contest\models.py:26
-#, fuzzy
-#| msgid "entry"
 msgid "Country"
-msgstr "zgłoszenie"
+msgstr "Kraj"
 
 #: .\contest\models.py:29 .\contest\templates\contest\profile.html:24
 msgid "Phone number"
@@ -115,7 +118,7 @@ msgstr "Dostarczone"
 msgid "Name"
 msgstr "Nazwa"
 
-#: .\contest\models.py:94 .\contest\models.py:159
+#: .\contest\models.py:94 .\contest\models.py:160
 msgid "will be used in contest URL, can be derrived automatically from titile"
 msgstr ""
 "będzie użyte do budowy adresu URL konkursu, może powstać automatycznie na "
@@ -141,69 +144,68 @@ msgstr ""
 "Podpowiedź dla uczestnika, jakie dodatkowe dane powinien podać</br>Wypełnij "
 "tylko jeśli wymagasz podania dodatkowych danych."
 
-#: .\contest\models.py:132
+#: .\contest\models.py:133
 msgid "style"
 msgstr "styl"
 
-#: .\contest\models.py:133
+#: .\contest\models.py:134
 msgid "styles"
 msgstr "style"
 
-#: .\contest\models.py:143
+#: .\contest\models.py:144
 msgid ""
-"If you require extra information from participants, provide them with a "
-"hint!"
+"If you require extra information from participants, provide them with a hint!"
 msgstr "Jeśli wymagasz dodatkowych danych od uczestnika, powiedz im jakich"
 
-#: .\contest\models.py:155
+#: .\contest\models.py:156
 msgid "title"
 msgstr "tytuł"
 
-#: .\contest\models.py:163
+#: .\contest\models.py:165
 msgid "Entry fee amount"
 msgstr "Wpisowe"
 
-#: .\contest\models.py:164
+#: .\contest\models.py:166
 msgid "Fee currency code"
 msgstr "Kod waluty wpisowego"
 
-#: .\contest\models.py:166
+#: .\contest\models.py:168
 msgid "Limit of entries in the contest"
 msgstr "Całkowity limit zgłoszeń w tym konkursie"
 
-#: .\contest\models.py:167 .\contest\models.py:173
+#: .\contest\models.py:169 .\contest\models.py:175
 msgid "Leave blank if no limit should be applied"
 msgstr "Puste jeśli brak limitu"
 
-#: .\contest\models.py:172
+#: .\contest\models.py:174
 msgid "Limit of entries per participant"
 msgstr "Limit liczby zgłoszeń w konkursie na uczestnika"
 
-#: .\contest\models.py:178
+#: .\contest\models.py:180
 msgid "Entry registration from"
 msgstr "Rejestracja zgłoszeń od"
 
-#: .\contest\models.py:179 .\contest\models.py:181 .\contest\models.py:183
+#: .\contest\models.py:181 .\contest\models.py:183 .\contest\models.py:185
 msgid "to"
 msgstr "do"
 
-#: .\contest\models.py:180
+#: .\contest\models.py:182
 msgid "Delivery from"
 msgstr "Dostarczanie od"
 
-#: .\contest\models.py:182
+#: .\contest\models.py:184
 msgid "Judging sessions from"
 msgstr "Sędziowanie konkursu od"
 
-#: .\contest\models.py:187 .\contest\models.py:198
+#: .\contest\models.py:189 .\contest\models.py:200
 msgid "Ignores auto-publish date"
 msgstr "Ignoruje datę automatycznej publikacji"
 
-#: .\contest\models.py:188
+#: .\contest\models.py:190
 msgid "Competition page is published"
 msgstr "Strona konkursu jest opublikowana"
 
-#: .\contest\models.py:193
+#: .\contest\models.py:195
 msgid ""
 "Fill only if you want the competition page to be published automatically at "
 "that time"
@@ -211,15 +213,15 @@ msgstr ""
 "Wypełnij tylko, jeśli chcesz, by strona konkursu była automatycznie "
 "opublikowana o tej godzinie"
 
-#: .\contest\models.py:194
+#: .\contest\models.py:196
 msgid "When to publish competition page automatically"
 msgstr "Kiedy automatycznie opublikować stronę konkursu"
 
-#: .\contest\models.py:199
+#: .\contest\models.py:201
 msgid "Competition results are published"
 msgstr "Wyniki konkursu są opublikowane"
 
-#: .\contest\models.py:204
+#: .\contest\models.py:206
 msgid ""
 "Fill only if you want the competition <b>results</b> to be published "
 "automatically at that time"
@@ -227,68 +229,69 @@ msgstr ""
 "Wypełnij tylko, jeśli chcesz, by <b>wyniki</b> konkursu były automatycznie "
 "opublikowane o tej godzinie"
 
-#: .\contest\models.py:205
+#: .\contest\models.py:207
 msgid "When to publish results automatically"
 msgstr "Kiedy automatycznie opublikować wyniki konkursu"
 
-#: .\contest\models.py:260
+#: .\contest\models.py:262
 msgid "contest"
 msgstr "konkurs"
 
-#: .\contest\models.py:261
+#: .\contest\models.py:263
 msgid "contests"
 msgstr "konkursy"
 
-#: .\contest\models.py:292
+#: .\contest\models.py:294
 msgid "Entries limit per user"
 msgstr "Limit zgłoszeń na uczestnika"
 
-#: .\contest\models.py:316
+#: .\contest\models.py:318
 msgid "category"
 msgstr "kategoria"
 
-#: .\contest\models.py:317
+#: .\contest\models.py:319
 msgid "categories"
 msgstr "kategorie"
 
-#: .\contest\models.py:330 .\contest\templates\contest\entries.html:43
+#: .\contest\models.py:332 .\contest\templates\contest\entries.html:43
 msgid "Additional information"
 msgstr "Informacje dodatkowe"
 
-#: .\contest\models.py:331 .\contest\templates\contest\entries.html:30
+#: .\contest\models.py:333 .\contest\templates\contest\entries.html:30
 msgid "Is paid"
 msgstr "Opłacono"
 
-#: .\contest\models.py:332 .\contest\templates\contest\entries.html:33
+#: .\contest\models.py:334 .\contest\templates\contest\entries.html:33
 msgid "Is received"
 msgstr "Dostarczono"
 
-#: .\contest\models.py:336
+#: .\contest\models.py:338
 msgid "entry"
 msgstr "zgłoszenie"
 
-#: .\contest\models.py:337
+#: .\contest\models.py:339
 msgid "entries"
 msgstr "zgłoszenia"
 
-#: .\contest\models.py:345
+#: .\contest\models.py:347
 #, python-brace-format
 msgid "Providing \"{self.category.style.extra_info_hint}\" is mandatory!"
-msgstr "Wypełnienie \"{self.category.style.extra_info_hint}\" jest obowiązkowe!"
+msgstr ""
+"Wypełnienie \"{self.category.style.extra_info_hint}\" jest obowiązkowe!"
 
-#: .\contest\models.py:350
+#: .\contest\models.py:352
 msgid "Entries that have been received cannot be edited!"
 msgstr "Nie można edytować dostarczonych zgłoszeń"
 
-#: .\contest\models.py:363
+#: .\contest\models.py:365
 #, python-brace-format
 msgid ""
-"You have reached entry limit for this category "
-"({self.category.entries_limit})!"
+"You have reached entry limit for this category ({self.category."
+"entries_limit})!"
 msgstr ""
 "Osiągnięto limit zgłoszeń w tej kategorii ({self.category.entries_limit})! "
 
-#: .\contest\models.py:369
+#: .\contest\models.py:371
 msgid ""
 "This contest has reached maximum number of entries, no more entries can be "
 "registered."
@@ -296,12 +299,12 @@ msgstr ""
 "Konkurs osiągnął maksymalną liczbę zgłoszeń, nie można już rejestrować "
 "kolejnych."
 
-#: .\contest\models.py:376
+#: .\contest\models.py:378
 msgid ""
 "You have reached maximum number of entries per user in this competition."
 msgstr "Osiągnięto limit liczby zgłoszeń na uczestnika."
 
-#: .\contest\models.py:381
+#: .\contest\models.py:383
 msgid "Entries that has been paid or received cannot be deleted!"
 msgstr "Nie można usunąć opłaconych zgłoszeń"
 
@@ -345,8 +348,8 @@ msgstr "Liczba pozostałych miejsc w konkursie, ze względu na jego limit"
 
 #: .\contest\templates\contest\add_entry_style_list.html:36
 msgid ""
-"You will be able to register and pay for your entries as long as there is at"
-" least one slot left."
+"You will be able to register and pay for your entries as long as there is at "
+"least one slot left."
 msgstr ""
 "Możesz rejestrować i opłacać zgłoszenia tak długo, jak zostało przynajmniej "
 "jedno miejsce"
@@ -354,8 +357,7 @@ msgstr ""
 #: .\contest\templates\contest\add_entry_style_list.html:45
 msgid "Number of slots left towards participant limit"
 msgstr ""
-"Liczba zgłoszeń, które możesz jeszcze dodać ze względu na limit na "
-"uczestnika"
+"Liczba zgłoszeń, które możesz jeszcze dodać ze względu na limit na uczestnika"
 
 #: .\contest\templates\contest\add_entry_style_list.html:48
 msgid "is the maximum number of entries per participant in this competition"
@@ -482,8 +484,6 @@ msgid "Home"
 msgstr "Home"
 
 #: .\contest\templates\contest\profile.html:5
-#, fuzzy
-#| msgid "My profile"
 msgid "My User Profile"
 msgstr "Moje dane"
 

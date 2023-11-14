@@ -53,6 +53,11 @@
     </div>
 
     <h2>{% translate "Competition description" %}</h2>
-    {{  contest.description | safe }}
+    {% get_current_language as LANGUAGE_CODE %}
+    {% if LANGUAGE_CODE == 'pl' %}
+        {{ contest.description_pl | safe }}
+    {% else %}
+        {{ contest.description | safe }}
+    {% endif %}
 
 {% endblock content %}

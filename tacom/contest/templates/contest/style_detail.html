@@ -2,6 +2,12 @@
 {% block content %}
 
     <h1> {{ style.name }}</h1>
-    {{ style.description | safe }}
+    {% load i18n %}
+    {% get_current_language as LANGUAGE_CODE %}
+    {% if LANGUAGE_CODE == 'pl' %}
+        {{ style.description_pl | safe }}
+    {% else %}
+        {{ style.description | safe }}
+    {% endif %}
 
 {% endblock content %}
