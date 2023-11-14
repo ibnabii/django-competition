@@ -241,6 +241,7 @@ class EntryAdmin(admin.ModelAdmin):
     model = Entry
     list_display = [
         # 'get_contest_title',
+        'code',
         'brewer',
         'get_style_name',
         'name',

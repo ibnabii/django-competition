@@ -324,8 +324,15 @@ class Category(models.Model):
         return f'{self.contest.title} - {self.style.name}'
 
 
+def code_generator():
+    # for migration only:
+    # return 0
+    return max(1000, int(Entry.objects.aggregate(models.Max('code'))['code__max']) + 1)
+
+
 class Entry(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
+    code = models.IntegerField(verbose_name=_('code'), default=code_generator)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='entries')
     brewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='entries')
     name = models.CharField(max_length=50)
