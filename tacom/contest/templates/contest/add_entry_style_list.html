@@ -5,7 +5,7 @@
 
 {%  include 'contest/entries.html' %}
 <br />
-<a class="btn btn-outline-primary">
+<a class="btn btn-outline-primary" href="{% url 'contest:payment_start' contest.slug %}">
     {% bs_icon 'cash-coin' size='1.5em' %}
     Pay for entries
 </a>

@@ -1,10 +1,13 @@
 from django import forms
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
+from crum import get_current_user
 from django_countries.widgets import CountrySelectWidget
 
-from .models import Entry, User
+from .models import Entry, User, EntriesPackage
 
 
 class NewEntryForm(forms.ModelForm):
@@ -49,3 +52,37 @@ class ProfileForm(forms.ModelForm):
         ]
 
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+
+
+class EntryField(forms.ModelMultipleChoiceField):
+    def label_from_instance(self, obj):
+        return f'{obj.category.style.name} - {obj.name}'
+
+
+class NewPackageForm(forms.ModelForm):
+    entries = EntryField(
+        queryset=Entry.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label=''
+    )
+
+    class Meta:
+        model = EntriesPackage
+        fields = ('entries',)
+
+    def __init__(self, *args, **kwargs):
+        queryset = kwargs.pop('entries')
+        self.purpose = kwargs.pop('purpose')
+        self.owner = kwargs.pop('owner')
+        self.contest = kwargs.pop('contest')
+        super().__init__(*args, **kwargs)
+        self.fields['entries'].queryset = queryset
+
+    def clean(self):
+        cleaned_data = super().clean()
+        for entry in cleaned_data.get('entries'):
+            if self.owner != entry.brewer:
+                raise ValidationError(_('Cannot add entry that does not belong to user'))
+            if self.contest != entry.category.contest:
+                raise ValidationError(_('Cannot add entry from another contest'))
+        return cleaned_data

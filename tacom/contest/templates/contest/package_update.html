@@ -1,0 +1,20 @@
+{% extends "contest/base.html" %}
+
+{% block content %}
+{%  load i18n %}
+
+<h3 class="h3">Select entries {{ form.purpose }}</h3>
+<form method="post" action="">
+  {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+  <button type="submit" class="btn btn-primary">
+      {% translate "Save" %}
+  </button>
+  <a class="btn btn-secondary" href="{{ request.META.HTTP_REFERER }}">
+      {% translate "Cancel" %}
+  </a>
+</form>
+
+{% endblock %}

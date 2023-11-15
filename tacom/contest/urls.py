@@ -18,4 +18,6 @@ urlpatterns = [
     path('entry/add/category/<uuid:pk>/', views.AddEntryView.as_view(), name='add_entry_category'),
     path('entry/edit/<uuid:pk>/', views.EditEntryView.as_view(), name='entry_edit'),
     path('entry/delete/<uuid:pk>/', views.DeleteEntryView.as_view(), name='entry_delete'),
+    path('<str:slug>/payment', views.AddPackageForPayment.as_view(), name='payment_start'),
+    path('<str:slug>/payment/<uuid:package_id>', views.SelectPaymentMethodView.as_view(), name='payment_method_selection'),
 ]

@@ -9,8 +9,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView
 from django.views.generic.base import ContextMixin
 
-from .forms import NewEntryForm, ProfileForm
-from .models import Contest, Category, Entry, User
+from .forms import NewEntryForm, ProfileForm, NewPackageForm
+from .models import Contest, Category, Entry, User, EntriesPackage
 
 
 class PublishedContestListView(ListView):
@@ -291,3 +291,61 @@ class ContestDeliveryAddressView(DetailView):
     model = Contest
     template_name = 'contest/contest_delivery_addr.html'
     queryset = Contest.published
+
+
+class AddPackageView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
+    model = EntriesPackage
+    template_name = 'contest/package_update.html'
+    # fields = '__all__'
+    success_url = reverse_lazy('contest:profile')
+    form_class = NewPackageForm
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print(kwargs)
+        self.owner = None
+        self.contest = None
+
+    def get_form_kwargs(self):
+        self.owner = self.request.user
+        self.contest = Contest.objects.get(slug=self.kwargs['slug'])
+        kwargs = super().get_form_kwargs()
+        kwargs['entries'] = (Entry.objects
+                             .filter(category__contest=self.contest)
+                             .filter(brewer=self.owner)
+                             )
+        kwargs['purpose'] = ''
+        kwargs['owner'] = self.owner
+        kwargs['contest'] = self.contest
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.owner = self.owner
+        form.instance.contest = self.contest
+        return super().form_valid(form)
+
+
+class AddPackageForPayment(AddPackageView):
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['entries'] = kwargs['entries'].filter(is_paid=False)
+        kwargs['purpose'] = _('for payment')
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('contest:payment_method_selection', kwargs={
+            'slug': self.contest.slug,
+            'package_id': self.object.id
+        })
+
+
+class UserOwnsPackageMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user == get_object_or_404(EntriesPackage, id=self.kwargs['package_id']).owner
+
+    def handle_no_permission(self):
+        raise Http404
+
+
+class SelectPaymentMethodView(LoginRequiredMixin, UserOwnsPackageMixin, DetailView):
+    model = Contest

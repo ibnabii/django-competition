@@ -395,3 +395,10 @@ class Entry(models.Model):
 
     def can_be_edited(self):
         return not self.is_received
+
+
+class EntriesPackage(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='packages')
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE, related_name='+')
+    entries = models.ManyToManyField(Entry)
