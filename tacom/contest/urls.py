@@ -19,5 +19,9 @@ urlpatterns = [
     path('entry/edit/<uuid:pk>/', views.EditEntryView.as_view(), name='entry_edit'),
     path('entry/delete/<uuid:pk>/', views.DeleteEntryView.as_view(), name='entry_delete'),
     path('<str:slug>/payment', views.AddPackageForPayment.as_view(), name='payment_start'),
-    path('<str:slug>/payment/<uuid:package_id>', views.SelectPaymentMethodView.as_view(), name='payment_method_selection'),
+    path('<str:slug>/payment/<uuid:package_id>',
+         views.SelectPaymentMethodView.as_view(),
+         name='payment_method_selection'),
+    path('payment/<uuid:payment_id>/fake/', views.FakePaymentView.as_view(), name='payment_fake'),
+    path('payment/<uuid:payment_id>/transfer/', views.TransferPaymentView.as_view(), name='payment_transfer'),
 ]

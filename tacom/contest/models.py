@@ -164,6 +164,14 @@ class Contest(models.Model):
     logo = models.ImageField(blank=True, null=True)
     entry_fee_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Entry fee amount'))
     entry_fee_currency = models.CharField(max_length=3, verbose_name=_('Fee currency code'))
+    payment_methods = models.ManyToManyField('PaymentMethod',
+                                             verbose_name=_('Allowed payment methods'),
+                                             related_name='contests')
+    payment_transfer_info = models.TextField(
+        blank=True,
+        verbose_name=_('Transfer payment instructions'),
+        help_text=_('Mandatory if contest allows transfer payment method.')
+    )
     entry_global_limit = models.SmallIntegerField(
         verbose_name=_('Limit of entries in the contest'),
         help_text=_('Leave blank if no limit should be applied'),
@@ -265,6 +273,12 @@ class Contest(models.Model):
 
     def natural_key(self):
         return self.slug
+
+    def clean(self):
+        if (PaymentMethod.objects.get(code='transfer') in self.payment_methods.all()
+                and not self.payment_transfer_info.strip()):
+            raise ValidationError(_('You have chosen to allow transfer payments. You need to provide payment info!'))
+        super().clean()
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -401,4 +415,47 @@ class EntriesPackage(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='packages')
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE, related_name='+')
-    entries = models.ManyToManyField(Entry)
+    entries = models.ManyToManyField(Entry, related_name='packages')
+
+
+class PaymentMethod(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
+    logo = models.ImageField(blank=True, null=True, help_text=_('Displayed at payment method selection page'))
+    name = models.CharField(max_length=50, verbose_name=_('Name'))
+    name_pl = models.CharField(max_length=50, verbose_name=_('Polish name'))
+    code = models.CharField(
+        max_length=10,
+        unique=True,
+        verbose_name=_('Method code'),
+        help_text=_('Code is used by the software, do not change!')
+    )
+
+    def __str__(self):
+        return self.code
+
+
+class Payment(models.Model):
+    class Meta:
+        ordering = ('-created_at',)
+        verbose_name = _('payment')
+        verbose_name_plural = _('payments')
+
+    class PaymentStatus(models.TextChoices):
+        CREATED = 'created', _('Created')
+        CANCELED = 'canceled', _('Canceled')
+        OK = 'ok', _('OK')
+        FAILED = 'failed', _('Failed')
+        AWAITING = 'awaiting', _('Confirmation pending')
+
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
+    method = models.ForeignKey(PaymentMethod, on_delete=models.DO_NOTHING, related_name='+', verbose_name=_('Method'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payments', verbose_name=_('User'))
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE, related_name='payments', verbose_name=_('Contest'))
+    entries = models.ManyToManyField(Entry, related_name='payments', verbose_name=_('Entries'))
+    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Amount'))
+    currency = models.CharField(max_length=3, verbose_name=_('Currency'))
+    status = models.CharField(max_length=10, choices=PaymentStatus.choices, default=PaymentStatus.CREATED)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user}: {self.amount} {self.currency} [{self.status}]'

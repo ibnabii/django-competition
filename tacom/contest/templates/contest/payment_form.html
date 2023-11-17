@@ -3,11 +3,11 @@
 {% block content %}
 {%  load i18n %}
 
-<h3 class="h3">{% translate 'Select entries' %} {{ form.purpose }}</h3>
+<h3 class="h3">{% translate 'Select payment method' %}</h3>
 <form method="post" action="">
   {% csrf_token %}
     <table>
-        {{form.as_table}}
+        {{form}}
     </table>
   <button type="submit" class="btn btn-primary">
       {% translate "Continue" %}

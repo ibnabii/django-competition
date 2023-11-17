@@ -3,14 +3,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Prefetch
 from django.shortcuts import redirect, get_object_or_404, Http404
-from django.utils.translation import gettext_lazy as _
 from django.utils.functional import cached_property
+from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView
+from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView, FormView
 from django.views.generic.base import ContextMixin
 
-from .forms import NewEntryForm, ProfileForm, NewPackageForm
-from .models import Contest, Category, Entry, User, EntriesPackage
+from .forms import NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankPaymentForm
+from .models import Contest, Category, Entry, User, EntriesPackage, Payment
 
 
 class PublishedContestListView(ListView):
@@ -296,13 +297,11 @@ class ContestDeliveryAddressView(DetailView):
 class AddPackageView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
     model = EntriesPackage
     template_name = 'contest/package_update.html'
-    # fields = '__all__'
     success_url = reverse_lazy('contest:profile')
     form_class = NewPackageForm
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        print(kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.owner = None
         self.contest = None
 
@@ -347,5 +346,84 @@ class UserOwnsPackageMixin(UserPassesTestMixin):
         raise Http404
 
 
-class SelectPaymentMethodView(LoginRequiredMixin, UserOwnsPackageMixin, DetailView):
-    model = Contest
+class SelectPaymentMethodView(LoginRequiredMixin, UserOwnsPackageMixin, CreateView):
+    model = Payment
+    form_class = NewPaymentForm
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.package = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.package = get_object_or_404(EntriesPackage, id=self.kwargs['package_id'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['contest'] = self.package.contest
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.user = self.package.owner
+        form.instance.contest = self.package.contest
+        form.instance.amount = self.package.contest.entry_fee_amount * self.package.entries.count()
+        form.instance.currency = self.package.contest.entry_fee_currency
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        # first add entries
+        for entry in self.package.entries.all():
+            self.object.entries.add(entry)
+        # delete package as it's not needed anymore
+        self.package.delete()
+
+        # decide what to do next
+        if self.object.method.code == 'fake':
+            return reverse('contest:payment_fake', args=(self.object.id,))
+        if self.object.method.code == 'transfer':
+            return reverse('contest:payment_transfer', args=(self.object.id,))
+
+
+class PaymentView(LoginRequiredMixin, FormView):
+    template_name = 'contest/generic_update.html'
+
+    def __init__(self, *args, **kwargs):
+        self.payment = None
+        super().__init__(*args, **kwargs)
+
+    def dispatch(self, request, *args, **kwargs):
+        self.payment = get_object_or_404(Payment, id=self.kwargs['payment_id'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['return_url'] = reverse('contest:add_entry_contest', args=(self.payment.contest.slug,))
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('contest:add_entry_contest', args=(self.payment.contest.slug,))
+
+
+class FakePaymentView(PaymentView):
+    form_class = FakePaymentForm
+
+    def form_valid(self, form):
+        if form.cleaned_data.get('payment_successful', '') == 'yes':
+            self.payment.entries.update(is_paid=True)
+            self.payment.status = Payment.PaymentStatus.OK
+        else:
+            self.payment.status = Payment.PaymentStatus.FAILED
+        self.payment.save()
+        return super().form_valid(form)
+
+
+class TransferPaymentView(PaymentView):
+    form_class = BlankPaymentForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['head_info'] = mark_safe(self.payment.contest.payment_transfer_info)
+        return kwargs
+
+
+

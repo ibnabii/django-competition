@@ -3,7 +3,7 @@ from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
 
-from .models import Contest, Style, Entry, Category, User, Participant, EntriesPackage
+from .models import Contest, Style, Entry, Category, User, Participant, EntriesPackage, PaymentMethod, Payment
 
 
 @admin.register(Style)
@@ -75,18 +75,14 @@ class ContestAdmin(admin.ModelAdmin):
                 'fields': ['delivery_address'],
             }
         ),
-        # (
-        #     _('Categories'),
-        #     {
-        #         'classes': ['collapse'],
-        #         'fields': ['styles'],
-        #     }
-        # ),
         (
             _('Fees'),
             {
+                'classes': ['collapse'],
                 'fields': [
-                    ('entry_fee_amount', 'entry_fee_currency')
+                    ('entry_fee_amount', 'entry_fee_currency'),
+                    ('payment_methods',),
+                    ('payment_transfer_info',)
                 ]
             }
         ),
@@ -273,10 +269,30 @@ class EntryAdmin(admin.ModelAdmin):
     def get_style_name(self, obj):
         return obj.category.style.name
 
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     pass
 
+
 @admin.register(EntriesPackage)
 class EntriesPackageAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(PaymentMethod)
+class PaymentMethodAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'user',
+        'created_at',
+        'method',
+        'status',
+        'amount',
+        'currency'
+    )
