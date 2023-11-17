@@ -425,5 +425,10 @@ class TransferPaymentView(PaymentView):
         kwargs['head_info'] = mark_safe(self.payment.contest.payment_transfer_info)
         return kwargs
 
+    def form_valid(self, form):
+        self.payment.status = Payment.PaymentStatus.AWAITING
+        self.payment.save()
+        return super().form_valid(form)
+
 
 
