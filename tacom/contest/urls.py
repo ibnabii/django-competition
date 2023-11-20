@@ -24,4 +24,9 @@ urlpatterns = [
          name='payment_method_selection'),
     path('payment/<uuid:payment_id>/fake/', views.FakePaymentView.as_view(), name='payment_fake'),
     path('payment/<uuid:payment_id>/transfer/', views.TransferPaymentView.as_view(), name='payment_transfer'),
+    path('payment/<uuid:payment_id>/payu/', views.PayUPaymentView.as_view(), name='payment_payu'),
+    path('payment/payu/<str:contest_slug>/', views.PayUPaymentRedirectView.as_view(), name='payment_payu_redirect'),
+    path('payment/payu/notification/<uuid:payment_id>/',
+         views.PayUNotificationView.as_view(),
+         name='payment_payu_notification'),
 ]

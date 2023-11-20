@@ -456,6 +456,7 @@ class Payment(models.Model):
     currency = models.CharField(max_length=3, verbose_name=_('Currency'))
     status = models.CharField(max_length=10, choices=PaymentStatus.choices, default=PaymentStatus.CREATED)
     created_at = models.DateTimeField(auto_now_add=True)
+    code = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return f'{self.user}: {self.amount} {self.currency} [{self.status}]'

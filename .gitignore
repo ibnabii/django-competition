@@ -3,3 +3,4 @@
 /tacom/db.sqlite3
 /tacom/tacom/.env
 /tacom/media
+*./__pycache__

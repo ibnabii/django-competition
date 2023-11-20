@@ -1,17 +1,25 @@
+import json
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Prefetch
+from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404, Http404
+from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView, FormView
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import (
+    ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView, FormView, RedirectView, View
+)
 from django.views.generic.base import ContextMixin
 
 from .forms import NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankPaymentForm
 from .models import Contest, Category, Entry, User, EntriesPackage, Payment
+from . import payu
 
 
 class PublishedContestListView(ListView):
@@ -382,6 +390,8 @@ class SelectPaymentMethodView(LoginRequiredMixin, UserOwnsPackageMixin, CreateVi
             return reverse('contest:payment_fake', args=(self.object.id,))
         if self.object.method.code == 'transfer':
             return reverse('contest:payment_transfer', args=(self.object.id,))
+        if self.object.method.code == 'payu':
+            return reverse('contest:payment_payu', args=(self.object.id,))
 
 
 class PaymentView(LoginRequiredMixin, FormView):
@@ -431,4 +441,67 @@ class TransferPaymentView(PaymentView):
         return super().form_valid(form)
 
 
+class PayUPaymentView(PaymentView):
 
+    def get(self, request, *args, **kwargs):
+        payu_url = payu.get_order_link(
+            payment=self.payment,
+            ip=request.META.get('REMOTE_ADDR'),
+            next_url=request.build_absolute_uri(
+                reverse('contest:payment_payu_redirect', args=(self.payment.contest.slug,))
+            ),
+            notify_url=request.build_absolute_uri(
+                reverse('contest:payment_payu_notification', args=(self.payment.id,))
+            )
+        )
+        return redirect(payu_url)
+
+
+class PayUPaymentRedirectView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        if self.request.GET.get('error') == '501':
+            messages.warning(
+                self.request,
+                _('Payment failed')
+            )
+        else:
+            messages.success(
+                self.request,
+                _('Status of your entries will be updated upon reveiving confirmation from PayU')
+            )
+        return reverse('contest:add_entry_contest', args=(self.kwargs['contest_slug'],))
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class PayUNotificationView(View):
+    def post(self, request, payment_id):
+        payment = get_object_or_404(Payment, id=payment_id)
+        # async calls - if payment already completed, then ignore
+        if payment.status == Payment.PaymentStatus.OK:
+            return HttpResponse(status=200)
+        data = json.loads(request.body)
+
+        # check if order in body matches order in URL, also amount and currency in payment matches
+        order = data.get('order', {})
+        if (
+            order.get('orderId') != payment.code
+            or
+            float(order.get('totalAmount')) != float(payment.amount)
+            or
+            order.get('currencyCode') != payment.currency
+        ):
+            return HttpResponse(status=404)
+
+        status = order.get('status')
+        status_mapping = {
+            'PENDING': Payment.PaymentStatus.AWAITING,
+            'COMPLETED': Payment.PaymentStatus.OK,
+            'CANCELED': Payment.PaymentStatus.FAILED
+        }
+        if not status or status not in status_mapping.keys():
+            return HttpResponse(status=404)
+
+        payment.status = status_mapping.get(status)
+        payment.save()
+
+        return HttpResponse('OK')
