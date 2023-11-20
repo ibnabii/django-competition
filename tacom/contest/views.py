@@ -19,6 +19,7 @@ from django.views.generic.base import ContextMixin
 
 from .forms import NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankPaymentForm
 from .models import Contest, Category, Entry, User, EntriesPackage, Payment
+from .utils import get_client_ip
 from . import payu
 
 
@@ -446,7 +447,7 @@ class PayUPaymentView(PaymentView):
     def get(self, request, *args, **kwargs):
         payu_url = payu.get_order_link(
             payment=self.payment,
-            ip=request.META.get('REMOTE_ADDR'),
+            ip=get_client_ip(request)
             next_url=request.build_absolute_uri(
                 reverse('contest:payment_payu_redirect', args=(self.payment.contest.slug,))
             ),
@@ -467,7 +468,7 @@ class PayUPaymentRedirectView(RedirectView):
         else:
             messages.success(
                 self.request,
-                _('Status of your entries will be updated upon reveiving confirmation from PayU')
+                _('Status of your entries will be updated upon receiving confirmation from PayU')
             )
         return reverse('contest:add_entry_contest', args=(self.kwargs['contest_slug'],))
 
