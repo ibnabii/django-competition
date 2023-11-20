@@ -10,7 +10,7 @@
     {% translate 'Pay for entries' %}
 </a>
 
-<a class="btn btn-outline-primary">
+<a class="btn btn-outline-primary" href="{% url 'contest:labels_start' contest.slug %}">
     {% bs_icon 'file-richtext' size='1.5em' %}
     {% translate 'Print bottle labels' %}
 </a>

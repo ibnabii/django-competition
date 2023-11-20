@@ -29,4 +29,6 @@ urlpatterns = [
     path('payment/payu/notification/<uuid:payment_id>/',
          views.PayUNotificationView.as_view(),
          name='payment_payu_notification'),
+    path('<str:slug>/print/', views.AddPackageForPrinting.as_view(), name='labels_start'),
+    path('print/<uuid:package_id>', views.LabelPrintoutView.as_view(), name='labels_print'),
 ]

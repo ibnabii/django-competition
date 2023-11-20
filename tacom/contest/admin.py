@@ -204,6 +204,7 @@ class ParticipantAdmin(admin.ModelAdmin):
         'email',
         'phone',
         'address',
+        'language',
         'date_joined',
         'last_login'
     )

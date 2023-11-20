@@ -348,6 +348,20 @@ class AddPackageForPayment(AddPackageView):
         })
 
 
+class AddPackageForPrinting(AddPackageView):
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['entries'] = kwargs['entries'].filter(is_paid=True)
+        kwargs['purpose'] = _('to print labels')
+        # kwargs['target'] = '_blank'
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('contest:labels_print', kwargs={
+            'package_id': self.object.id
+        })
+
+
 class UserOwnsPackageMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user == get_object_or_404(EntriesPackage, id=self.kwargs['package_id']).owner
@@ -507,3 +521,27 @@ class PayUNotificationView(View):
         payment.save()
 
         return HttpResponse('OK')
+
+
+class LabelPrintoutView(LoginRequiredMixin, UserOwnsPackageMixin, TemplateView):
+    template_name = 'contest/labels.html'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.package = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.package = get_object_or_404(
+            EntriesPackage.objects.select_related('owner'),
+            id=self.kwargs['package_id']
+        )
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['entries'] = (Entry.objects
+                              .filter(id__in=self.package.entries.all())
+                              .select_related('category__style')
+                              )
+        context['user'] = self.package.owner
+        return context

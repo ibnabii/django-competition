@@ -72,9 +72,10 @@ class NewPackageForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         queryset = kwargs.pop('entries')
-        self.purpose = kwargs.pop('purpose')
-        self.owner = kwargs.pop('owner')
-        self.contest = kwargs.pop('contest')
+        self.purpose = kwargs.pop('purpose', None)
+        self.owner = kwargs.pop('owner', None)
+        self.contest = kwargs.pop('contest', None)
+        self.target = kwargs.pop('target', None)
         super().__init__(*args, **kwargs)
         self.fields['entries'].queryset = queryset
 
