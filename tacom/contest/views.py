@@ -98,6 +98,7 @@ class AddEntryStyleListView(LoginRequiredMixin, UserFullProfileMixin, ContestAcc
     context_object_name = 'categories'
 
     def get_queryset(self):
+        payu.update_user_payments_statuses(self.request.user)
         return (Category.objects
                 .not_full(self.request.user)
                 .filter(contest=self.contest)
@@ -447,13 +448,13 @@ class PayUPaymentView(PaymentView):
     def get(self, request, *args, **kwargs):
         payu_url = payu.get_order_link(
             payment=self.payment,
-            ip=get_client_ip(request)
+            ip=get_client_ip(request),
             next_url=request.build_absolute_uri(
                 reverse('contest:payment_payu_redirect', args=(self.payment.contest.slug,))
             ),
             notify_url=request.build_absolute_uri(
                 reverse('contest:payment_payu_notification', args=(self.payment.id,))
-            )
+            ).replace('http', 'https')
         )
         return redirect(payu_url)
 

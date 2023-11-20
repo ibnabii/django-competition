@@ -460,3 +460,10 @@ class Payment(models.Model):
 
     def __str__(self):
         return f'{self.user}: {self.amount} {self.currency} [{self.status}]'
+
+    def save(self, *args, **kwargs):
+        if self.status == Payment.PaymentStatus.OK:
+            self.entries.update(is_paid=True)
+        super().save(*args, **kwargs)
+
+
