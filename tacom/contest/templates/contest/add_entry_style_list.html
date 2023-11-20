@@ -7,12 +7,12 @@
 <br />
 <a class="btn btn-outline-primary" href="{% url 'contest:payment_start' contest.slug %}">
     {% bs_icon 'cash-coin' size='1.5em' %}
-    Pay for entries
+    {% translate 'Pay for entries' %}
 </a>
 
 <a class="btn btn-outline-primary">
     {% bs_icon 'file-richtext' size='1.5em' %}
-    Print bottle labels
+    {% translate 'Print bottle labels' %}
 </a>
 
 <a
@@ -21,7 +21,7 @@
     target="_blank"
 >
     {% bs_icon 'truck' size='1.5em' %}
-    Print delivery address
+    {% translate 'Print delivery address' %}
 </a>
 
 <br /><br />

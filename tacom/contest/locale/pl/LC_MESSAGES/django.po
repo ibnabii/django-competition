@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-17 19:45+0100\n"
-"PO-Revision-Date: 2023-11-17 19:50+0100\n"
-"Last-Translator: ASrtur Drugi <pasieczny.a+2@gmail.com>\n"
+"POT-Creation-Date: 2023-11-20 17:24+0100\n"
+"PO-Revision-Date: 2023-11-20 17:25+0100\n"
+"Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -77,12 +77,10 @@ msgid "Cannot add entry that does not belong to user"
 msgstr "Nie możesz dodać nie swojego zgłoszenia"
 
 #: .\contest\forms.py:89
-#| msgid "You cannot add entries for this contest"
 msgid "Cannot add entry from another contest"
 msgstr "Nie możesz dodać zgłoszenia z innego konkursu"
 
 #: .\contest\forms.py:120
-#| msgid "You cannot add entries for this contest"
 msgid "This method is not allowed for this contest"
 msgstr "Ta metoda płatności nie jest dozwolona w tym konkursie"
 
@@ -361,7 +359,6 @@ msgid "Displayed at payment method selection page"
 msgstr "Wyświetlane na stronie wyboru płatności"
 
 #: .\contest\models.py:425
-#| msgid "Polish"
 msgid "Polish name"
 msgstr "Nazwa polska"
 
@@ -386,7 +383,6 @@ msgid "Created"
 msgstr "Utworzona"
 
 #: .\contest\models.py:445
-#| msgid "Cancel"
 msgid "Canceled"
 msgstr "Anulowany"
 
@@ -407,7 +403,6 @@ msgid "Method"
 msgstr "Metoda"
 
 #: .\contest\models.py:452
-#| msgid "Username"
 msgid "User"
 msgstr "Użytkownik"
 
@@ -416,7 +411,6 @@ msgid "Entries"
 msgstr "Zgłoszenia"
 
 #: .\contest\models.py:455
-#| msgid "Country"
 msgid "Amount"
 msgstr "Kwota"
 
@@ -455,6 +449,20 @@ msgstr "szczegóły konkursu"
 #: .\contest\templates\contest\add_entry_contest_list.html:21
 msgid "No contest accepts registration at the moment."
 msgstr "W tej chwili nie można się zgłaszać do żadnego konkursu"
+
+#: .\contest\templates\contest\add_entry_style_list.html:10
+#| msgid "My entries:"
+msgid "Pay for entries"
+msgstr "Opłać zgłoszenia"
+
+#: .\contest\templates\contest\add_entry_style_list.html:15
+msgid "Print bottle labels"
+msgstr "Drukuj etykiety"
+
+#: .\contest\templates\contest\add_entry_style_list.html:24
+#| msgid "Delivery address"
+msgid "Print delivery address"
+msgstr "Zobacz adres do dostawy"
 
 #: .\contest\templates\contest\add_entry_style_list.html:29
 msgid "Select style in which you would like to register an entry"
@@ -612,13 +620,11 @@ msgid "Home"
 msgstr "Home"
 
 #: .\contest\templates\contest\package_update.html:6
-#| msgid "Delete entry"
 msgid "Select entries"
 msgstr "Wybierz zgłoszenia"
 
 #: .\contest\templates\contest\package_update.html:13
 #: .\contest\templates\contest\payment_form.html:13
-#| msgid "Contest"
 msgid "Continue"
 msgstr "Dalej"
 
@@ -666,33 +672,43 @@ msgstr "edycja emaila"
 msgid "edit profile data"
 msgstr "edycja danych"
 
-#: .\contest\views.py:77
+#: .\contest\views.py:86
 msgid "Complete your profile, please."
 msgstr "Proszę uzupełnić dane."
 
-#: .\contest\views.py:113
+#: .\contest\views.py:123
 msgid "You have reached the limit of entries allowed per participant."
 msgstr "Osiągnięto limit liczby zgłoszeń na uczestnika"
 
-#: .\contest\views.py:117
+#: .\contest\views.py:127
 msgid "This competition has reached it's entries limit."
 msgstr "Konkurs osiągnął swój łączny limit zgłoszeń"
 
-#: .\contest\views.py:163
+#: .\contest\views.py:173
 msgid "Entry has been added successfully"
 msgstr "Dodano zgłoszenie"
 
-#: .\contest\views.py:194
+#: .\contest\views.py:204
 msgid "Entry has been updated successfully"
 msgstr "Zmodyfikowano zgłoszenie"
 
-#: .\contest\views.py:233
+#: .\contest\views.py:243
 msgid "Entry has been deleted"
 msgstr "Usunięto zgłoszenie"
 
-#: .\contest\views.py:331
+#: .\contest\views.py:341
 msgid "for payment"
 msgstr "do opłacenia"
+
+#: .\contest\views.py:467
+msgid "Payment failed"
+msgstr "Płatność nieudana"
+
+#: .\contest\views.py:472
+msgid ""
+"Status of your entries will be updated upon receiving confirmation from PayU"
+msgstr ""
+"Status zgłoszeń zostanie zaktualizowany po otrzymaniu potwierdzenia z PayU"
 
 #~ msgid "save"
 #~ msgstr "zapisz"
