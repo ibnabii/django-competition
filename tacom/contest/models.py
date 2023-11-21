@@ -13,6 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 
 from .managers import StyleManager, ContestManager, RegistrableContestManager, PublishedContestManager, CategoryManager
+from .utils import mail_entry_status_change
 
 
 class User(AbstractUser):
@@ -462,8 +463,13 @@ class Payment(models.Model):
         return f'{self.user}: {self.amount} {self.currency} [{self.status}]'
 
     def save(self, *args, **kwargs):
-        if self.status == Payment.PaymentStatus.OK:
+        if (self.status == Payment.PaymentStatus.OK
+                and (self._state.adding
+                     or not self._state.adding and Payment.objects.get(pk=self.pk).status != self.status
+                )):
             self.entries.update(is_paid=True)
+            mail_entry_status_change(self.entries.all(), 'PAID')
+
         super().save(*args, **kwargs)
 
 
