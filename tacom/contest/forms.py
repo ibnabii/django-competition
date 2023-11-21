@@ -88,8 +88,11 @@ class NewPackageForm(forms.ModelForm):
         self.fields['entries'].show_entry_codes = self.show_entry_codes
         self.options_count = queryset.count()
 
+    def super_clean(self):
+        return super().clean()
+
     def clean(self):
-        cleaned_data = super().clean()
+        cleaned_data = self.super_clean()
         if not cleaned_data.get('entries'):
             return cleaned_data
         for entry in cleaned_data.get('entries'):
@@ -106,7 +109,7 @@ class NewAdminPackage(NewPackageForm):
     """
 
     def clean(self):
-        cleaned_data = super().clean()
+        cleaned_data = super().super_clean()
         if not cleaned_data.get('entries'):
             return cleaned_data
         for entry in cleaned_data.get('entries'):
