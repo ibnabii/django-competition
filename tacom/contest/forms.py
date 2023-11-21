@@ -100,6 +100,21 @@ class NewPackageForm(forms.ModelForm):
         return cleaned_data
 
 
+class NewAdminPackage(NewPackageForm):
+    """
+    This form allows selection of not-owned entries - for contest staff views
+    """
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if not cleaned_data.get('entries'):
+            return cleaned_data
+        for entry in cleaned_data.get('entries'):
+            if self.contest != entry.category.contest:
+                raise ValidationError(_('Cannot add entry from another contest'))
+        return cleaned_data
+
+
 class ImageChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
         if obj.logo:

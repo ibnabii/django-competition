@@ -17,7 +17,9 @@ from django.views.generic import (
 )
 from django.views.generic.base import ContextMixin
 
-from .forms import NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankForm
+from .forms import (
+    NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankForm, NewAdminPackage
+)
 from .models import Contest, Category, Entry, User, EntriesPackage, Payment
 from .utils import get_client_ip, mail_entry_status_change
 from . import payu
@@ -391,6 +393,7 @@ class AddPackageForPrinting(AddPackageView):
 
 class AddPackageOfDelivered(GroupRequiredMixin, AddPackageView):
     groups_required = ('reception',)
+    form_class = NewAdminPackage
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
