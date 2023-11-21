@@ -31,4 +31,6 @@ urlpatterns = [
          name='payment_payu_notification'),
     path('<str:slug>/print/', views.AddPackageForPrinting.as_view(), name='labels_start'),
     path('print/<uuid:package_id>', views.LabelPrintoutView.as_view(), name='labels_print'),
+    path('<str:slug>/mgmt/delivery/', views.AddPackageOfDelivered.as_view(), name='delivery_select'),
+    path('/mgmt/delivery/<uuid:pk>', views.ProcessPackageDelivered.as_view(), name='delivery_process'),
 ]

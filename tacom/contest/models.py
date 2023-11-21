@@ -45,6 +45,11 @@ class User(AbstractUser):
             and self.address and self.language
         )
 
+    @property
+    def contest(self):
+        # temp solution for one-competition site
+        return Contest.objects.first().slug
+
     def __str__(self):
         if self.last_name and self.first_name:
             return f'{self.last_name} {self.first_name}'
@@ -417,6 +422,9 @@ class EntriesPackage(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='packages')
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE, related_name='+')
     entries = models.ManyToManyField(Entry, related_name='packages')
+
+    def entries_codes_as_li(self):
+        return ''.join([f'<li>{entry.code}</li>' for entry in self.entries.all()])
 
 
 class PaymentMethod(models.Model):

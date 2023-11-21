@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.urls import reverse
+from django.utils import translation
 
 
 def open_contests():
@@ -27,7 +28,8 @@ def get_client_ip(request):
 
 def mail_entry_status_change(entries, new_status):
     template = {
-        'PAID': 'entries_paid'
+        'PAID': 'entries_paid',
+        'RECEIVED': 'entries_received',
     }
 
     if new_status not in template.keys():
@@ -36,6 +38,7 @@ def mail_entry_status_change(entries, new_status):
     template_html = get_template('contest/email/' + template.get(new_status) + '.html')
 
     user = entries[0].brewer
+    translation.activate(user.language)
     contest = entries[0].category.contest
     context = {
         'username': user.username,

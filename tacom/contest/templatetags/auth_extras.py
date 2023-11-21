@@ -11,3 +11,8 @@ def is_translator(user):
 @register.filter(name='is_contest_staff')
 def is_contest_staff(user):
     return user.groups.filter(name='contest_staff').exists()
+
+
+@register.filter(name='is_reception')
+def is_contest_staff(user):
+    return user.groups.filter(name='reception').exists()

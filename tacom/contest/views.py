@@ -17,9 +17,9 @@ from django.views.generic import (
 )
 from django.views.generic.base import ContextMixin
 
-from .forms import NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankPaymentForm
+from .forms import NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankForm
 from .models import Contest, Category, Entry, User, EntriesPackage, Payment
-from .utils import get_client_ip
+from .utils import get_client_ip, mail_entry_status_change
 from . import payu
 
 
@@ -78,6 +78,7 @@ class UserFullProfileMixin(UserPassesTestMixin):
     """
 
     def test_func(self):
+        print('test_func in UserFullProfileMixin')
         return self.request.user.profile_complete
 
     def handle_no_permission(self):
@@ -86,6 +87,33 @@ class UserFullProfileMixin(UserPassesTestMixin):
             _('Complete your profile, please.')
         )
         return redirect('contest:profile_edit')
+
+
+class GroupRequiredMixin(UserPassesTestMixin):
+    groups_required = None
+
+    def test_func(self):
+        print(f'test_func in GroupRequiredMixin {set(self.groups_required)}')
+
+        groups = set(self.groups_required)
+        user_groups = set(self.request.user.groups.values_list('name', flat=True))
+        print('user_groups:', user_groups)
+        return groups == groups.intersection(user_groups)
+
+    def handle_no_permission(self):
+        messages.warning(
+            self.request,
+            _('You do not have permission to access this site!')
+        )
+        return redirect('contest:contest_list')
+
+
+class UserOwnsPackageMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user == get_object_or_404(EntriesPackage, id=self.kwargs['package_id']).owner
+
+    def handle_no_permission(self):
+        raise Http404
 
 
 class AddEntryStyleListView(LoginRequiredMixin, UserFullProfileMixin, ContestAcceptsRegistration, ListView):
@@ -281,7 +309,6 @@ class ProfileView(LoginRequiredMixin, TemplateView):
                               .filter(brewer=self.request.user)
                               .select_related('category__contest', 'category__style')
                               )
-        contest = Contest.registrable
         context['is_one_contest'] = Contest.registrable.count() == 1
         if context['is_one_contest']:
             context['contest'] = Contest.registrable.first()
@@ -362,12 +389,37 @@ class AddPackageForPrinting(AddPackageView):
         })
 
 
-class UserOwnsPackageMixin(UserPassesTestMixin):
-    def test_func(self):
-        return self.request.user == get_object_or_404(EntriesPackage, id=self.kwargs['package_id']).owner
+class AddPackageOfDelivered(GroupRequiredMixin, AddPackageView):
+    groups_required = ('reception',)
 
-    def handle_no_permission(self):
-        raise Http404
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['entries'] = kwargs['entries'].filter(is_paid=True).filter(is_received=False).order_by('code')
+        kwargs['purpose'] = _('to mark as delivered')
+        kwargs['show_entry_codes'] = True
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('contest:delivery_process', args=(self.object.id,))
+
+
+class ProcessPackageDelivered(GroupRequiredMixin, UserOwnsPackageMixin, DeleteView):
+    model = EntriesPackage
+    template_name = 'contest/generic_update.html'
+    form_class = BlankForm
+    groups_required = ('reception',)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        text = _('Are you sure, you want to mark following entries as delivered?')
+        kwargs['head_info'] = mark_safe(f'{text}<ol>{self.object.entries_codes_as_li()}</ol>')
+        return kwargs
+
+    def get_success_url(self):
+        contest = self.object.contest
+        mail_entry_status_change(self.object.entries.all(), 'RECEIVED')
+        self.object.entries.update(is_received=True)
+        return reverse('contest:delivery_select', args=(contest.slug,))
 
 
 class SelectPaymentMethodView(LoginRequiredMixin, UserOwnsPackageMixin, CreateView):
@@ -444,7 +496,7 @@ class FakePaymentView(PaymentView):
 
 
 class TransferPaymentView(PaymentView):
-    form_class = BlankPaymentForm
+    form_class = BlankForm
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

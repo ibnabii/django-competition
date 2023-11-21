@@ -55,8 +55,14 @@ class ProfileForm(forms.ModelForm):
 
 
 class EntryField(forms.ModelMultipleChoiceField):
+
+    def __init__(self, queryset, **kwargs):
+        self.show_entry_codes = kwargs.pop('show_entry_codes', False)
+        super().__init__(queryset, **kwargs)
+
     def label_from_instance(self, obj):
-        return f'{obj.category.style.name} - {obj.name}'
+        extra = f'<b>{obj.code}</b> - ' if self.show_entry_codes else ''
+        return mark_safe(f'{extra}{obj.category.style.name} - {obj.name}')
 
 
 class NewPackageForm(forms.ModelForm):
@@ -76,8 +82,10 @@ class NewPackageForm(forms.ModelForm):
         self.owner = kwargs.pop('owner', None)
         self.contest = kwargs.pop('contest', None)
         self.target = kwargs.pop('target', None)
+        self.show_entry_codes = kwargs.pop('show_entry_codes', False)
         super().__init__(*args, **kwargs)
         self.fields['entries'].queryset = queryset
+        self.fields['entries'].show_entry_codes = self.show_entry_codes
         self.options_count = queryset.count()
 
     def clean(self):
@@ -141,5 +149,5 @@ class FakePaymentForm(EnhancedForm):
     )
 
 
-class BlankPaymentForm(EnhancedForm):
+class BlankForm(EnhancedForm):
     pass

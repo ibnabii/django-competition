@@ -108,16 +108,16 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMngmt" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {% translate "Contest Management" %}
                     </a>
-
-                    <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownMngmt">
-                        <li>
-                            <a class="dropdown-item" href="{% url 'contest:profile' %}">
-                                {# Translators: Entries list #}
-                                {% translate "Entries List" %}
-                            </a>
-                        </li>
-
-                    </ul>
+{#                    Receiving deliveries#}
+                    {% if request.user|is_reception %}
+                        <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownMngmt">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'contest:delivery_select' user.contest %}">
+                                    {% translate "Deliveries" %}
+                                </a>
+                            </li>
+                        </ul>
+                    {% endif %}
                 </li>
                 {% endif %}
 {#Regular links start here#}
