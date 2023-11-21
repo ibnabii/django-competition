@@ -2,28 +2,31 @@
 
 {% block content %}
 {%  load i18n %}
-
-<h3 class="h3">{% translate 'Select entries' %} {{ form.purpose }}</h3>
-<form
-        method="post"
-        action=""
-        {% if form.target %}
-        target="{{ form.target }}"
-        {% endif %}
->
-  {% csrf_token %}
-    <table>
-        {{form.as_table}}
-    </table>
-  <button
-          type="submit"
-          class="btn btn-primary"
-          {% if form.target %}
-          onclick="setTimeout(2000);window.location.href='{% url 'contest:add_entry_contest' form.contest.slug %}'"
-          {% endif %}
-  >
-      {% translate "Continue" %}
-  </button>
+{% if form.options_count %}
+    <h3 class="h3">{% translate 'Select entries' %} {{ form.purpose }}</h3>
+    <form
+            method="post"
+            action=""
+            {% if form.target %}
+            target="{{ form.target }}"
+            {% endif %}
+    >
+      {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+      <button
+              type="submit"
+              class="btn btn-primary"
+              {% if form.target %}
+              onclick="setTimeout(2000);window.location.href='{% url 'contest:add_entry_contest' form.contest.slug %}'"
+              {% endif %}
+      >
+          {% translate "Continue" %}
+      </button>
+{% else %}
+    <h3 class="h3">{% translate 'You have no entries' %} {{ form.purpose }}</h3>
+{% endif %}
   <a class="btn btn-secondary" href="{% url 'contest:add_entry_contest' form.contest.slug %}">
       {% translate "Cancel" %}
   </a>

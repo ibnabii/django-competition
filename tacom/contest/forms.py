@@ -78,6 +78,7 @@ class NewPackageForm(forms.ModelForm):
         self.target = kwargs.pop('target', None)
         super().__init__(*args, **kwargs)
         self.fields['entries'].queryset = queryset
+        self.options_count = queryset.count()
 
     def clean(self):
         cleaned_data = super().clean()
