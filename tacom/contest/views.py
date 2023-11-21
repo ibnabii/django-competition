@@ -394,7 +394,13 @@ class AddPackageOfDelivered(GroupRequiredMixin, AddPackageView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['entries'] = kwargs['entries'].filter(is_paid=True).filter(is_received=False).order_by('code')
+        kwargs['entries'] = (
+            Entry.objects
+            .filter(category__contest=self.contest)
+            .filter(is_paid=True)
+            .filter(is_received=False)
+            .order_by('code')
+        )
         kwargs['purpose'] = _('to mark as delivered')
         kwargs['show_entry_codes'] = True
         return kwargs
