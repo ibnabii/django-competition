@@ -95,11 +95,8 @@ class GroupRequiredMixin(UserPassesTestMixin):
     groups_required = None
 
     def test_func(self):
-        print(f'test_func in GroupRequiredMixin {set(self.groups_required)}')
-
         groups = set(self.groups_required)
         user_groups = set(self.request.user.groups.values_list('name', flat=True))
-        print('user_groups:', user_groups)
         return groups == groups.intersection(user_groups)
 
     def handle_no_permission(self):
@@ -426,7 +423,9 @@ class ProcessPackageDelivered(GroupRequiredMixin, UserOwnsPackageMixin, DeleteVi
 
     def get_success_url(self):
         contest = self.object.contest
-        mail_entry_status_change(self.object.entries.all(), 'RECEIVED')
+        brewers = set(self.object.entries.values_list('brewer', flat=True))
+        for brewer in brewers:
+            mail_entry_status_change(self.object.entries.filter(brewer__id=brewer).all(), 'RECEIVED')
         self.object.entries.update(is_received=True)
         return reverse('contest:delivery_select', args=(contest.slug,))
 

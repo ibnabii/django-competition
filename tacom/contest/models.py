@@ -424,7 +424,7 @@ class EntriesPackage(models.Model):
     entries = models.ManyToManyField(Entry, related_name='packages')
 
     def entries_codes_as_li(self):
-        return ''.join([f'<li>{entry.code}</li>' for entry in self.entries.all()])
+        return ''.join([f'<li>{entry.code}</li>' for entry in self.entries.order_by('code').all()])
 
 
 class PaymentMethod(models.Model):
