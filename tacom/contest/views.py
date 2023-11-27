@@ -9,7 +9,7 @@ from django.shortcuts import redirect, get_object_or_404, Http404
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, get_language
 from django.urls import reverse_lazy, reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import (
@@ -80,7 +80,6 @@ class UserFullProfileMixin(UserPassesTestMixin):
     """
 
     def test_func(self):
-        print('test_func in UserFullProfileMixin')
         return self.request.user.profile_complete
 
     def handle_no_permission(self):
@@ -189,7 +188,10 @@ class AddEntryView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
     def get_form_kwargs(self):
         form_kwargs = super().get_form_kwargs()
         form_kwargs['is_extra_mandatory'] = self.category.style.extra_info_is_required
-        form_kwargs['extra_hint'] = self.category.style.extra_info_hint
+        if get_language() == 'pl':
+            form_kwargs['extra_hint'] = self.category.style.extra_info_hint_pl
+        else:
+            form_kwargs['extra_hint'] = self.category.style.extra_info_hint
         form_kwargs['user'] = self.request.user
         form_kwargs['category'] = self.category
         return form_kwargs

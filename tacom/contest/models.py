@@ -111,7 +111,15 @@ class Style(models.Model):
                     '</br>Fill only if you require extra information for entries'),
         blank=True
     )
-    description = models.TextField(blank=False, null=False)
+    extra_info_hint_pl = models.CharField(
+        max_length=255,
+        verbose_name=_('Required information hint in Polish'),
+        help_text=_('This will instruct the participants what information they need to provide for an entry.'
+                    '</br>Fill only if you require extra information for entries'),
+        blank=True
+    )
+
+    description = models.TextField(blank=False, null=False, verbose_name=_('Description in english'))
     description_pl = models.TextField(null=True, verbose_name=_('Description in polish'))
 
     # managers
