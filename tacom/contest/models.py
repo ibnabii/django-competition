@@ -347,7 +347,10 @@ class Category(models.Model):
 def code_generator():
     # for migration only:
     # return 0
-    return max(100, int(Entry.objects.aggregate(models.Max('code'))['code__max']) + 1)
+    maximum_code = Entry.objects.aggregate(models.Max('code'))['code__max']
+    if maximum_code:
+        return int(maximum_code) + 1
+    return 1000
 
 
 class Entry(models.Model):
