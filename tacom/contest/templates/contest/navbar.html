@@ -105,19 +105,27 @@
 
                 {% if request.user|is_contest_staff %}
                 <li class="nav-item dropdown me-0">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMngmt" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMgmt" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {% translate "Contest Management" %}
                     </a>
+                    <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownMgmt">
 {#                    Receiving deliveries#}
                     {% if request.user|is_reception %}
-                        <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownMngmt">
                             <li>
                                 <a class="dropdown-item" href="{% url 'contest:delivery_select' user.contest %}">
                                     {% translate "Deliveries" %}
                                 </a>
                             </li>
-                        </ul>
                     {% endif %}
+{#                    Manual payments#}
+                    {% if request.user|is_payment_mgmt %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'contest:payment_list' user.contest %}">
+                                    {% translate "Payments" %}
+                                </a>
+                            </li>
+                    {% endif %}
+                    </ul>
                 </li>
                 {% endif %}
 {#Regular links start here#}

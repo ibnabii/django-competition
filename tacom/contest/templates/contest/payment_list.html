@@ -1,0 +1,52 @@
+{% extends "contest/base.html" %}
+
+{% block content %}
+{% load i18n %}
+{% load bootstrap_icons %}
+    <table class="table">
+        <tr>
+            <th>
+                {% translate "Last name" %}
+            </th>
+            <th>
+                {% translate "First name" %}
+            </th>
+            <th>
+                {% translate "Email" %}
+            </th>
+            <th>
+                {% translate "Amount" %}
+            </th>
+            <th>
+                {% translate "Entries" %}
+            </th>
+            <th>
+                {% translate "Actions" %}
+            </th>
+        </tr>
+
+        {% for payment in payment_list %}
+            <tr>
+                <td>{{ payment.user.last_name }}</td>
+                <td>{{ payment.user.first_name }}</td>
+                <td>{{ payment.user.email }}</td>
+                <td>{{ payment.amount }}</td>
+                <td>
+                    {% for entry in payment.entries.all %}
+                        {{ entry.name }} ({{ entry.category.style.name }})<br/>
+                    {% endfor %}
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary"
+                       data-toggle="tooltip"
+                       title="{% translate 'Confirm received' %}"
+                       href="{% url 'contest:payment_process' payment.id %}"
+
+                    >
+                        {% bs_icon 'check2-square' size='1.5em'%}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

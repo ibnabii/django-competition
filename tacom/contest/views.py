@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Prefetch
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404, Http404
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
@@ -18,7 +18,8 @@ from django.views.generic import (
 from django.views.generic.base import ContextMixin
 
 from .forms import (
-    NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankForm, NewAdminPackage
+    NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankForm, NewAdminPackage,
+    DeletePaymentForm
 )
 from .models import Contest, Category, Entry, User, EntriesPackage, Payment
 from .utils import get_client_ip, mail_entry_status_change
@@ -607,3 +608,53 @@ class LabelPrintoutView(LoginRequiredMixin, UserOwnsPackageMixin, TemplateView):
                               )
         context['user'] = self.package.owner
         return context
+
+
+class PaymentManagementView(GroupRequiredMixin, ListView):
+    groups_required = ('payment_mgmt',)
+    model = Payment
+
+    def __init__(self):
+        super().__init__()
+        self.contest = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.contest = Contest.objects.get(slug=self.kwargs['slug'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return (
+            Payment.pending
+            .filter(contest=self.contest)
+            .select_related('user')
+            .prefetch_related('entries', 'entries__category', 'entries__category__style')
+        )
+
+
+class PaymentReceivedView(GroupRequiredMixin, DeleteView):
+    groups_required = ('payment_mgmt',)
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(
+            Payment.pending
+            .select_related('user')
+            .prefetch_related('entries', 'entries__category', 'entries__category__style'),
+            pk=self.kwargs['pk']
+        )
+
+    def get_success_url(self):
+        return reverse('contest:payment_list', args=(self.object.contest.slug,))
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        self.object.status = Payment.PaymentStatus.OK
+        self.object.save()
+        return HttpResponseRedirect(success_url)
+
+
+
+
+
+
+
+

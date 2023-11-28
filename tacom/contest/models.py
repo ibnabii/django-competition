@@ -12,7 +12,10 @@ from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import CountryField
 
-from .managers import StyleManager, ContestManager, RegistrableContestManager, PublishedContestManager, CategoryManager
+from .managers import (
+    StyleManager, ContestManager, RegistrableContestManager, PublishedContestManager,
+    CategoryManager, PaymentManagerExcludeStatuses, DefaultManager
+)
 from .utils import mail_entry_status_change
 
 
@@ -477,6 +480,10 @@ class Payment(models.Model):
     status = models.CharField(max_length=10, choices=PaymentStatus.choices, default=PaymentStatus.CREATED)
     created_at = models.DateTimeField(auto_now_add=True)
     code = models.CharField(max_length=50, null=True)
+
+    # managers
+    objects = DefaultManager()
+    pending = PaymentManagerExcludeStatuses((PaymentStatus.OK, PaymentStatus.FAILED), methods=('transfer',))
 
     def __str__(self):
         return f'{self.user}: {self.amount} {self.currency} [{self.status}]'

@@ -1,0 +1,72 @@
+{% extends "contest/base.html" %}
+
+{% block content %}
+{%  load i18n %}
+<form method="post" action="">
+  {% csrf_token %}
+    <h3>{% translate "Are you sure you want to confirm following payment?" %}</h3>
+    <table class="table">
+        <tr>
+            <td>
+                <b>{% translate "Last name" %}:</b>
+            </td>
+            <td>
+                {{ payment.user.last_name }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>{% translate "First name" %}:</b>
+            </td>
+            <td>
+                {{ payment.user.first_name }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>{% translate "Email" %}:</b>
+            </td>
+            <td>
+                {{ payment.user.email }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>{% translate "Amount" %}:</b>
+            </td>
+            <td>
+                {{ payment.amount }} {{ payment.currency }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>{% translate "Entries" %}:</b>
+            </td>
+            <td>
+                <table class="table">
+                    <tr>
+                        <th>{% translate "Code" %}</th>
+                        <th>{% translate "Name" %}</th>
+                        <th>{% translate "Style" %}</th>
+                    </tr>
+                    {% for entry in payment.entries.all %}
+                    <tr>
+                        <td>{{ entry.code }}</td>
+                        <td>{{ entry.name }}</td>
+                        <td>{{ entry.category.style.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+
+    <a class="btn btn-primary" href="{{ view.get_success_url }}">Cancel</a>
+    <button type="submit" class="btn btn-danger">
+      {% translate "Submit" %}
+  </button>
+</form>
+
+{% endblock %}

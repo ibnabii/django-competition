@@ -149,6 +149,12 @@ class NewPaymentForm(forms.ModelForm):
         return cleaned_data
 
 
+class DeletePaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = '__all__'
+
+
 class EnhancedForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.head_info = kwargs.pop('head_info', None)

@@ -33,4 +33,6 @@ urlpatterns = [
     path('print/<uuid:package_id>', views.LabelPrintoutView.as_view(), name='labels_print'),
     path('<str:slug>/mgmt/delivery/', views.AddPackageOfDelivered.as_view(), name='delivery_select'),
     path('mgmt/delivery/<uuid:pk>', views.ProcessPackageDelivered.as_view(), name='delivery_process'),
+    path('<str:slug>/mgmt/payments/', views.PaymentManagementView.as_view(), name='payment_list'),
+    path('mgmt/payments/<uuid:pk>', views.PaymentReceivedView.as_view(), name='payment_process'),
 ]

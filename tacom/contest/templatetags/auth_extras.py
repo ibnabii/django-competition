@@ -16,3 +16,8 @@ def is_contest_staff(user):
 @register.filter(name='is_reception')
 def is_contest_staff(user):
     return user.groups.filter(name='reception').exists()
+
+
+@register.filter(name='is_payment_mgmt')
+def is_payment_mgmt(user):
+    return user.groups.filter(name='payment_mgmt').exists()

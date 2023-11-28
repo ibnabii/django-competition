@@ -38,3 +38,21 @@ class CategoryManager(models.Manager):
 
     def not_full(self, user):
         return super().get_queryset().exclude(id__in=self.full(user))
+
+
+class PaymentManagerExcludeStatuses(models.Manager):
+
+    def __init__(self, statuses, methods=None):
+        self.statuses = statuses
+        self.methods = methods
+        super().__init__()
+
+    def get_queryset(self):
+        payments = super().get_queryset().exclude(status__in=self.statuses)
+        if self.methods:
+            payments = payments.filter(method__code__in=self.methods)
+        return payments
+
+
+class DefaultManager(models.Manager):
+    pass

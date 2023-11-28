@@ -74,10 +74,10 @@ def update_payment_status(payment: Payment, token=None):
 
 
 def update_user_payments_statuses(user: User):
-    payments = (Payment.objects
+    payments = (Payment.pending
                 .filter(user=user)
                 .filter(method__code='payu')
-                .exclude(status__in=[Payment.PaymentStatus.OK, Payment.PaymentStatus.FAILED])
+                # .exclude(status__in=[Payment.PaymentStatus.OK, Payment.PaymentStatus.FAILED])
                 )
     token = get_oauth_token()
     for payment in payments:
