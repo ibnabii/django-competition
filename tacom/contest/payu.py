@@ -6,7 +6,7 @@ from django.utils.translation import get_language
 
 from .models import Payment, User
 
-PAYU_URL = 'https://secure.snd.payu.com'
+PAYU_URL = settings.PAYU_URL
 PAYU_OAUTH_ENDPOINT = '/pl/standard/user/oauth/authorize'
 PAYU_ORDER_ENDPOINT = '/api/v2_1/orders'
 PAYU_STATUS_MAPPING = {
@@ -14,6 +14,7 @@ PAYU_STATUS_MAPPING = {
             'COMPLETED': Payment.PaymentStatus.OK,
             'CANCELED': Payment.PaymentStatus.FAILED
         }
+
 
 def get_oauth_token():
     data = {
