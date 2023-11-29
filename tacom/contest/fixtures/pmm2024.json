@@ -1,0 +1,142 @@
+[
+{
+  "model": "contest.contest",
+  "fields": {
+    "title": "Polish Mead Masters  Competition 2024",
+    "slug": "polish-mead-masters-competition-2024",
+    "description": "<h2>&nbsp;</h2>\r\n<p><strong>Welcome to the only such mead competition in the world.</strong></p>\r\n<p>This competition is oganized by&nbsp;<a href=\"https://www.dzikimiod.pl/\" target=\"_blank\" rel=\"noopener\">&nbsp;Dziki Mi&oacute;d Meadery Poland</a> and is open to any amateur and commercial meadmaker.</p>\r\n<p>The only categories for this competition are Dw&oacute;jniak,Tr&oacute;jniak and Mi&oacute;d Pitny Sto┼éowy.</p>\r\n<p>No BJCP categories will be accepted. There will be no first, second and third places, the&nbsp; best meads in a category will win a a title of Master of Polish Meads.</p>\r\n<p>We will have two titles. Master for wining in one category, Grand Master for three categories.</p>\r\n<p>Would you like to see your name on the bottle of mead made by Dziki Mi&oacute;d Meadery in Poland? No problem, you just need to win the Master title, share your recipe with Krzysztof Piwowar and if only your mead is possible to be produced in Poland you will receive a few bottles of your commercially made mead.</p>\r\n<p>We ask for ONE bottle of mead, at least 12 oz/375ml. There is a limit of 5 entries.</p>\r\n<p>All mailed entries must be <strong>received</strong> at the mailing location by the shipping deadline - please allow for shipping time.</p>\r\n<p>All entries must be handcrafted products.</p>\r\n<p>The competition organizers are not responsible for entries, are not received by the entry deadline or entries that arrived damaged, entry fee will not be refunded in such cases.</p>\r\n<p>Qualified judging of all entries is the primary goal of our event. Judges will be well known Polish home and commercial meadmakers.</p>\r\n<p>There is a limit of 5 entries per entrant.</p>\r\n<p>Bottles will not be returned to entrants.</p>\r\n<p>The entry fee is $15 per entry.</p>\r\n<p>Please, don't mention alcohol/mead competition when sending your parcels, the best is to declare juice or liquid yeast. You can write FREE SAMPLES NOT FOR RESALE on parcels.</p>\r\n<p>For parcels from USA with 1 bottle we advise to declare value of $15 - max $35 when sending more. PLEASE mark it GIFT FOR A RECIPIENT, we would like to avoid duty fees.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "description_pl": "<h2>&nbsp;</h2>\r\n<p>Witamy w jedynym takim konkursie na ┼¢wiecie.</p>\r\n<p>Konkurs jest organizowany przez <a href=\"https://www.dzikimiod.pl/\" target=\"_blank\" rel=\"noopener\">&nbsp;Dziki Mi&oacute;d Meadery Poland</a> i jest otwarty dla domowych i komercyjnych miodosytnik&oacute;w.</p>\r\n<p>&nbsp; W obecnej edycji konkursu mamy trzy kategorie: Dw&oacute;jniak wagowy, Tr&oacute;jniak i Mi&oacute;d Sto┼éowy, szczeg&oacute;┼éowy opis kategorii jest umieszczony na <a href=\"https://www.facebook.com/groups/625838587911440\" target=\"_blank\" rel=\"noopener\">FB&nbsp; group Polski Mi&oacute;d Pitny</a>.&nbsp;</p>\r\n<p>&nbsp; W naszym konkursie nie obowi─àzuj─à przepisy BJCP, nie ma pierwszego,drugiego i trzeciego miejsca w kategorii, tytu┼é Master zdobywaj─à miody, uznane przez komisj─Ö s─Ödziowska za wybitne. Tym samym takich tytu┼éow mo┼╝e by─ç kilka albo wcale.</p>\r\n<p>&nbsp; Mamy dwa tytu┼éy dla zwyci─Öskich miodosytnik&oacute;w, Master za wygrana w jednej kategorii, Grand Master za trzy kategorie.</p>\r\n<p>&nbsp; Zwyci─Öskie miody maja szans─Ö na komercyjn─à produkcj─Ö w Miodosytni Dziki Mi&oacute;d.</p>\r\n<p>&nbsp; &nbsp;Prosimy o JEDN─ä butelk─Ö 375 ml lub wi─Öksz─à.</p>\r\n<p>&nbsp; &nbsp;S─Ödziowie konkursu reprezentuj─à grono do┼¢wiadczonych miodosytnik&oacute;w domowych i komercyjnych, z licznymi osi─àgni─Öciami na konkursach w USA i w Polsce.</p>\r\n<p>&nbsp; W konkusie obowi─àzuje limit 5 miod&oacute;w na osob─Ö, op┼éata za zg┼éoszenie wynosi 70z┼é za ka┼╝dy mi&oacute;d.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+    "logo": "20241.jpg",
+    "entry_fee_amount": "1.00",
+    "entry_fee_currency": "PLN",
+    "payment_transfer_info": "<p>Konto bankowe Miodosytni Dziki Mi&oacute;d</p>\r\n<p>95 1240 3552 1111 0010 8877 0766</p>\r\n<p>w tytule przelewu prosz─Ö poda─ç numery zg┼éoszonych miod&oacute;w do konkursu</p>",
+    "entry_global_limit": 100,
+    "entry_user_limit": 5,
+    "delivery_address": "<p>&nbsp;Miody nale┼╝y wysy┼é─à─ç na adres: Miodosytnia Dziki Mi&oacute;d&nbsp; 74-407 Chwarszczany 5a&nbsp;</p>",
+    "registration_date_from": "2023-11-10",
+    "registration_date_to": "2024-01-31",
+    "delivery_date_from": "2023-12-17",
+    "delivery_date_to": "2024-02-15",
+    "judging_date_from": "2024-02-20",
+    "judging_date_to": "2024-02-21",
+    "competition_is_published": true,
+    "competition_autopublish_datetime": "2023-12-15T18:00:00",
+    "result_is_published": false,
+    "result_autopublish_datetime": "2024-02-24T12:00:00",
+    "created_at": "2023-11-29T10:06:47.453",
+    "created_by": [
+      "admin"
+    ],
+    "modified_at": "2023-11-29T10:38:17.749",
+    "modified_by": [
+      "admin"
+    ],
+    "payment_methods": [
+      "fake",
+      "transfer",
+      "payu"
+    ]
+  }
+},
+{
+  "model": "contest.style",
+  "fields": {
+    "name": "Mi├│d pitny sto┼éowy (table mead)",
+    "slug": "miod-pitny-stoowy",
+    "show": true,
+    "extra_info_is_required": true,
+    "extra_info_hint": "Description of mead: ingredients, honey variety",
+    "extra_info_hint_pl": "Opis miodu pitnego : sk┼éadniki, rodzaj miodu pszczelego",
+    "description": "<p>Mi&oacute;d pitny sto┼éowy.</p>\r\n<p>this category is not a traditional Polish mead, it is between Pi─àtak and Czw&oacute;rniak. We want to receive a mead, which is dry and with about 12% ABV, so it should be started at about 21-22 Brix or 1,088-1,092.</p>\r\n<p>&nbsp;</p>",
+    "description_pl": "<p>Mi&oacute;d pitny sto┼éowy to nasza nowa propozycja,&nbsp; chcemy dosta─ç od Was miody wytrawne, odpowiedniki win sto┼éowych, g&oacute;ra 2 Blg. Prawdziwy czw&oacute;rniak obj─Öto┼¢ciowy ma startowe 25-26 Blg, mo┼╝e by─ç wytrawny, ale jest wtedy bardzo alkoholowy i niezbyt z tego powodu pijalny, zw┼éaszcza par─Ö miesi─Öcy po fermentacji. Nasz mi&oacute;d pitny sto┼éowy to odpowiednik czw&oacute;rniaka komercyjnego, nastawianego z 21-22Blg. Taki mi&oacute;d ma parametry wina sto┼éowego, przy 12-13 % alkoholu.</p>",
+    "created_at": "2023-11-29T10:07:28.815",
+    "created_by": [
+      "admin"
+    ],
+    "modified_at": "2023-11-29T10:07:28.815",
+    "modified_by": [
+      "admin"
+    ]
+  }
+},
+{
+  "model": "contest.style",
+  "fields": {
+    "name": "Tr├│jniak",
+    "slug": "trojniak",
+    "show": true,
+    "extra_info_is_required": true,
+    "extra_info_hint": "Description of mead: ingredients, honey variety",
+    "extra_info_hint_pl": "Opis miodu pitnego : sk┼éadniki, rodzaj miodu pszczelego",
+    "description": "<div>\r\n<div class=\"\" dir=\"auto\">\r\n<div id=\":r1ba:\" class=\"x1iorvi4 x1pi30zi x1swvt13 xjkvuk6\" data-ad-comet-preview=\"message\" data-ad-preview=\"message\">\r\n<div class=\"x78zum5 xdt5ytf xz62fqu x16ldp7u\">\r\n<div class=\"xu06os2 x1ok221b\">\r\n<div class=\"xdj266r x11i5rnm xat24cr x1mh8g0r x1vvkbs x126k92a\">\r\n<div dir=\"auto\">\r\n<div>\r\n<div class=\"\" dir=\"auto\">\r\n<div id=\":ra8:\" class=\"x1iorvi4 x1pi30zi x1swvt13 xjkvuk6\" data-ad-comet-preview=\"message\" data-ad-preview=\"message\">\r\n<div class=\"x78zum5 xdt5ytf xz62fqu x16ldp7u\">\r\n<div class=\"xu06os2 x1ok221b\">\r\n<div class=\"xdj266r x11i5rnm xat24cr x1mh8g0r x1vvkbs x126k92a\">\r\n<div dir=\"auto\">Tr&oacute;jniak</div>\r\n</div>\r\n<div class=\"x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a\">\r\n<div dir=\"auto\">Polish meads are described by ratios. Using these ratios, we can calculate starting Brix,</div>\r\n<div dir=\"auto\">Tr&oacute;jniak is 1 part by volume of honey and 2 parts by volume of water. (Ratio 1:2)</div>\r\n<div dir=\"auto\">1 liter of honey weighs 1.4 kilo (and is about 80% sugar), so it gives 1.12 kilo of sugar in a 3.4-kilo mixture. (112 / 3.4 = 33 Brix) (Specific Gravity = 1.144)</div>\r\n<div dir=\"auto\">From our books, the most described range for a Tr&oacute;jniak is 32 - 37 Brix. For our competition, I suggest that you start from about 32 Brix for both traditionals and melomels. Our goal during fermentation is to reach 14% ABV, so the final Brix should be about 8 Brix - 9 Brix. When fermentation stops lower, you should stabilize and backsweeten to 8 &ndash; 9 Brix for proper sweetness.</div>\r\n</div>\r\n<div class=\"x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a\">\r\n<div dir=\"auto\">Starting Brix: 32 SG: 1.139</div>\r\n<div dir=\"auto\">Final Brix: 8-9 FG: 1.032-1,036</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<div>\r\n<div class=\"x168nmei x13lgxp2 x30kzoy x9jhf4c x6ikm8r x10wlt62\" data-visualcompletion=\"ignore-dynamic\">\r\n<div class=\"x1n2onr6\">\r\n<div class=\"x6s0dn4 xi81zsa x78zum5 x6prxxf x13a6bvl xvq8zen xdj266r xktsk01 xat24cr x1d52u69 x889kno x4uap5 x1a8lsjc xkhd6sd xdppsyt\">\r\n<div class=\"x6s0dn4 x78zum5 x1iyjqo2 x6ikm8r x10wlt62\">\r\n<div class=\"x1i10hfl x1qjc9v5 xjbqb8w xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x3nfvp2 x1q0g3np x87ps6o x1lku1pv x1a2a7pz\" tabindex=\"0\" role=\"button\" aria-label=\"Like: 14 people\">&nbsp;</div>\r\n<div class=\"x1i10hfl x1qjc9v5 xjbqb8w xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x3nfvp2 x1q0g3np x87ps6o x1lku1pv x1a2a7pz\" tabindex=\"0\" role=\"button\" aria-label=\"Love: 1 person\">&nbsp;</div>\r\n<div class=\"\">\r\n<div class=\"x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x1n2onr6 x87ps6o x1lku1pv x1a2a7pz x1heor9g xnl1qt8 x6ikm8r x10wlt62 x1vjfegm x1lliihq\" tabindex=\"0\" role=\"button\">\r\n<div class=\"x9f619 x1ja2u2z xzpqnlu x1hyvwdk xjm9jq1 x6ikm8r x10wlt62 x10l6tqk x1i1rx1s\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"x9f619 x1n2onr6 x1ja2u2z x78zum5 x2lah0s x1qughib x1qjc9v5 xozqiw3 x1q0g3np xykv574 xbmpl8g x4cne27 xifccgj\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<div>\r\n<div class=\"x168nmei x13lgxp2 x30kzoy x9jhf4c x6ikm8r x10wlt62\" data-visualcompletion=\"ignore-dynamic\">\r\n<div class=\"x1n2onr6\">\r\n<div class=\"x6s0dn4 xi81zsa x78zum5 x6prxxf x13a6bvl xvq8zen xdj266r xktsk01 xat24cr x1d52u69 x889kno x4uap5 x1a8lsjc xkhd6sd xdppsyt\">\r\n<div class=\"x6s0dn4 x78zum5 x1iyjqo2 x6ikm8r x10wlt62\">\r\n<div class=\"x1i10hfl x1qjc9v5 xjbqb8w xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x3nfvp2 x1q0g3np x87ps6o x1lku1pv x1a2a7pz\" tabindex=\"0\" role=\"button\" aria-label=\"Like: 14 people\">&nbsp;</div>\r\n</div>\r\n<div class=\"x9f619 x1n2onr6 x1ja2u2z x78zum5 x2lah0s x1qughib x1qjc9v5 xozqiw3 x1q0g3np xykv574 xbmpl8g x4cne27 xifccgj\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>",
+    "description_pl": "<p>Tr&oacute;jniak.</p>\r\n<p>Startowe Blg 32-33, ko┼äcowe 8-10Blg.</p>",
+    "created_at": "2023-11-29T10:07:55.202",
+    "created_by": [
+      "admin"
+    ],
+    "modified_at": "2023-11-29T10:07:55.202",
+    "modified_by": [
+      "admin"
+    ]
+  }
+},
+{
+  "model": "contest.style",
+  "fields": {
+    "name": "Dw├│jniak wagowy",
+    "slug": "dwojniak-wagowy",
+    "show": true,
+    "extra_info_is_required": true,
+    "extra_info_hint": "Description of mead: ingredients, honey variety",
+    "extra_info_hint_pl": "opis miodu pitnego, sk┼éadniki, mi├│d pszczeli, proces",
+    "description": "<div>\r\n<div class=\"\" dir=\"auto\">\r\n<div id=\":r1cm:\" class=\"x1iorvi4 x1pi30zi x1swvt13 xjkvuk6\" data-ad-comet-preview=\"message\" data-ad-preview=\"message\">\r\n<div class=\"x78zum5 xdt5ytf xz62fqu x16ldp7u\">\r\n<div class=\"xu06os2 x1ok221b\">\r\n<div class=\"xdj266r x11i5rnm xat24cr x1mh8g0r x1vvkbs x126k92a\">\r\n<div dir=\"auto\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<div>\r\n<div class=\"x168nmei x13lgxp2 x30kzoy x9jhf4c x6ikm8r x10wlt62\" data-visualcompletion=\"ignore-dynamic\">\r\n<div class=\"x1n2onr6\">\r\n<div class=\"x6s0dn4 xi81zsa x78zum5 x6prxxf x13a6bvl xvq8zen xdj266r xktsk01 xat24cr x1d52u69 x889kno x4uap5 x1a8lsjc xkhd6sd xdppsyt\">\r\n<div class=\"x9f619 x1n2onr6 x1ja2u2z x78zum5 x2lah0s x1qughib x1qjc9v5 xozqiw3 x1q0g3np xykv574 xbmpl8g x4cne27 xifccgj\">\r\n<div>\r\n<div class=\"\" dir=\"auto\">\r\n<div id=\":r82:\" class=\"x1iorvi4 x1pi30zi x1swvt13 xjkvuk6\" data-ad-comet-preview=\"message\" data-ad-preview=\"message\">\r\n<div class=\"x78zum5 xdt5ytf xz62fqu x16ldp7u\">\r\n<div class=\"xu06os2 x1ok221b\">\r\n<div class=\"xdj266r x11i5rnm xat24cr x1mh8g0r x1vvkbs x126k92a\">\r\n<div dir=\"auto\">Dw&oacute;jniak by weight.</div>\r\n</div>\r\n<div class=\"x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a\">\r\n<div dir=\"auto\">Dw&oacute;jniak is 1 part by volume of honey and 1 part by volume of water. (Ratio 1:1)</div>\r\n<div dir=\"auto\">1 liter of honey weighs 1.4 kilo (and is about 80% sugar), so it gives 1.12 kilo of sugar in a 2.4-kilo mixture. (112 / 2.4 = 47 Brix) (Specific Gravity = 1.22)</div>\r\n<div dir=\"auto\">From our books, the most described range for a Dw&oacute;jniak is 45 - 53 Brix. Fermenting a Dw&oacute;jniak from such high Brix to at least 15% ABV is almost impossible, even with step feeding. This is the reason why our commercial meaderies make Dw&oacute;jniak from Tr&oacute;jniak, back sweetened and fortified.</div>\r\n<div dir=\"auto\">My solution for this problem is Dw&oacute;jniak by weigh, not by volume, 1 kilo of honey and 1 kilo of water gives 40 Brix. Using a bayanus type of yeast (my favorite is Uvaferm 43), it&rsquo;s not a problem to finish fermentation in the range 15Brix - 18 Brix, even without step feeding. You should start all Dw&oacute;jniaks from about 40 Brix, both traditionals and melomels.</div>\r\n</div>\r\n<div class=\"x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a\">\r\n<div dir=\"auto\">Starting Brix: 40 SG:1.179</div>\r\n<div dir=\"auto\">Final Brix: 15-18 FG:1.061-1,074</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<div>\r\n<div class=\"x168nmei x13lgxp2 x30kzoy x9jhf4c x6ikm8r x10wlt62\" data-visualcompletion=\"ignore-dynamic\">\r\n<div class=\"x1n2onr6\">\r\n<div class=\"x6s0dn4 xi81zsa x78zum5 x6prxxf x13a6bvl xvq8zen xdj266r xktsk01 xat24cr x1d52u69 x889kno x4uap5 x1a8lsjc xkhd6sd xdppsyt\">\r\n<div class=\"x6s0dn4 x78zum5 x1iyjqo2 x6ikm8r x10wlt62\">\r\n<div class=\"x1i10hfl x1qjc9v5 xjbqb8w xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x3nfvp2 x1q0g3np x87ps6o x1lku1pv x1a2a7pz\" tabindex=\"0\" role=\"button\" aria-label=\"Like: 14 people\">&nbsp;</div>\r\n<div class=\"x1i10hfl x1qjc9v5 xjbqb8w xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x3nfvp2 x1q0g3np x87ps6o x1lku1pv x1a2a7pz\" tabindex=\"0\" role=\"button\" aria-label=\"Love: 2 people\">&nbsp;</div>\r\n<div class=\"\">\r\n<div class=\"x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x1n2onr6 x87ps6o x1lku1pv x1a2a7pz x1heor9g xnl1qt8 x6ikm8r x10wlt62 x1vjfegm x1lliihq\" tabindex=\"0\" role=\"button\">\r\n<div class=\"x9f619 x1ja2u2z xzpqnlu x1hyvwdk xjm9jq1 x6ikm8r x10wlt62 x10l6tqk x1i1rx1s\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>",
+    "description_pl": "<p>Dw&oacute;jniak wagowy.</p>\r\n<p>Na nasz konkurs prosimy o nadsy┼éanie dw&oacute;jniak&oacute;w wagowych robionych z 40Blg, taki mi&oacute;d mo┼╝na odfermentowa─ç do 15-18 Blg i osi─àgn─à─ç przyzwoity poziom alkoholu. Nie chcemy pi─ç prawdziwych dw&oacute;jniak&oacute;w z 47Blg, nieodfermentowanych i maj─àcych finalnie ok.30Blg, to s─à paskudne ulepy.</p>",
+    "created_at": "2023-11-29T10:08:27.525",
+    "created_by": [
+      "admin"
+    ],
+    "modified_at": "2023-11-29T10:08:27.525",
+    "modified_by": [
+      "admin"
+    ]
+  }
+},
+{
+  "model": "contest.category",
+  "fields": {
+    "contest": "polish-mead-masters-competition-2024",
+    "style": "miod-pitny-stoowy",
+    "entries_limit": 4,
+    "created_at": "2023-11-29T10:09:11.519",
+    "created_by": null,
+    "modified_at": "2023-11-29T10:38:17.756",
+    "modified_by": null
+  }
+},
+{
+  "model": "contest.category",
+  "fields": {
+    "contest": "polish-mead-masters-competition-2024",
+    "style": "trojniak",
+    "entries_limit": 5,
+    "created_at": "2023-11-29T10:09:11.521",
+    "created_by": null,
+    "modified_at": "2023-11-29T10:38:32.076",
+    "modified_by": [
+      "admin"
+    ]
+  }
+},
+{
+  "model": "contest.category",
+  "fields": {
+    "contest": "polish-mead-masters-competition-2024",
+    "style": "dwojniak-wagowy",
+    "entries_limit": 4,
+    "created_at": "2023-11-29T10:09:11.523",
+    "created_by": null,
+    "modified_at": "2023-11-29T10:38:17.755",
+    "modified_by": null
+  }
+}
+]

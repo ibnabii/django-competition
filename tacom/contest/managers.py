@@ -54,5 +54,10 @@ class PaymentManagerExcludeStatuses(models.Manager):
         return payments
 
 
+class PaymentMethodManager(models.Manager):
+    def get_by_natural_key(self, code):
+        return self.get(code=code)
+
+
 class DefaultManager(models.Manager):
     pass

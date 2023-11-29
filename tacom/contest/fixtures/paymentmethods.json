@@ -1,0 +1,25 @@
+[
+{
+  "model": "contest.paymentmethod",
+  "fields": {
+    "logo": "0-q1.jpg",
+    "name": "Fake - for testing",
+    "name_pl": "Udawana - do test≤w",
+    "code": "fake"
+  }
+},
+{
+  "model": "contest.paymentmethod",
+  "fields": {
+    "logo": "bank1.png",
+    "name": "Wire transfer",
+    "name_pl": "Przelew bankowy",
+    "code": "transfer"
+  }
+},
+{
+  "model": "contest.paymentmethod",
+  "fields": {
+    "logo": "PayU.svg1.png",
+    "name": "PayU payment integrator",
+    "name_pl": 

@@ -14,7 +14,7 @@ from django_countries.fields import CountryField
 
 from .managers import (
     StyleManager, ContestManager, RegistrableContestManager, PublishedContestManager,
-    CategoryManager, PaymentManagerExcludeStatuses, DefaultManager
+    CategoryManager, PaymentManagerExcludeStatuses, DefaultManager, PaymentMethodManager
 )
 from .utils import mail_entry_status_change
 
@@ -357,6 +357,9 @@ class Category(models.Model):
     def __str__(self):
         return f'{self.contest.title} - {self.style.name}'
 
+    def natural_key(self):
+        return
+
 
 def code_generator():
     # for migration only:
@@ -456,7 +459,13 @@ class PaymentMethod(models.Model):
         help_text=_('Code is used by the software, do not change!')
     )
 
+    # managers
+    objects = PaymentMethodManager()
+
     def __str__(self):
+        return self.code
+
+    def natural_key(self):
         return self.code
 
 
