@@ -292,7 +292,10 @@ class Contest(models.Model):
         return self.slug
 
     def clean(self):
-        if (PaymentMethod.objects.get(code='transfer') in self.payment_methods.all()
+        if self._state.adding:
+            return super().clean()
+        transfer_method = PaymentMethod.objects.filter(code='transfer')
+        if (transfer_method.exists() and transfer_method.first() in self.payment_methods.all()
                 and not self.payment_transfer_info.strip()):
             raise ValidationError(_('You have chosen to allow transfer payments. You need to provide payment info!'))
         super().clean()

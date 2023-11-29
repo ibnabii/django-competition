@@ -159,6 +159,13 @@ class CustomUserAdmin(admin.ModelAdmin):
         'date_joined',
         'last_login',
     ]
+    list_display = (
+        'username',
+        'last_name',
+        'first_name',
+        'email'
+    )
+    list_display_links = list_display
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
