@@ -30,7 +30,12 @@
                                     {% translate "My profile" %}
                                 </a>
                             </li>
-
+                            <li>
+                                <a class="dropdown-item" href="{% url 'contest:add_entry' %}">
+                                    {# Translators: My profile button #}
+                                    {% translate "My entries" %}
+                                </a>
+                            </li>
                             {%  if user.is_staff %}
                             <li>
                                 <a class="dropdown-item" href="{% url 'admin:index' %}">

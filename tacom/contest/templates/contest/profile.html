@@ -37,19 +37,10 @@
     <a class="btn btn-primary" href="{% url 'account_change_password' %}">{% translate "change password" %}</a>
     <a class="btn btn-primary" href="{% url 'account_email' %}">{% translate "edit email" %}</a>
     <a class="btn btn-primary" href="{% url 'contest:profile_edit' %}">{% translate "edit profile data" %}</a>
-    <br/>
-    <br />
-    {% include 'contest/entries.html' %}
-{#    If there's only one active contest in the system - link to register here #}
-    {% if is_one_contest %}
-        <br/>
-        <a class="btn btn-primary
-            {% if not contest.is_registrable %}
-            disabled
-            {% endif %}
-            "
-           href="{% url 'contest:add_entry_contest' contest.slug %}">
-            {% translate "Register your entry" %}
-        </a>
-    {% endif %}
+{#    {% include 'contest/entries.html' %}#}
+    <a class="btn btn-primary"
+       href="{% url 'contest:add_entry' %}">
+        {% translate "entries" %}
+    </a>
+
 {% endblock content %}
