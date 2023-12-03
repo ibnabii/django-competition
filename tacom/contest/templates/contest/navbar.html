@@ -3,6 +3,7 @@
 {% load i18n %}
 
 {% load auth_extras %}
+{% get_user_permissions as perms %}
 
 <nav class="container navbar navbar-expand-sm text-bg-secondary navbar shadow py-1 px-3 sticky-top rounded-bottom">
     <div class="container-fluid">
@@ -95,7 +96,7 @@
                                 </button>
                             </li>
                        {% endfor %}
-                        {% if request.user|is_translator %}
+                        {% if perms.is_translator %}
                             <li><hr class="dropdown-divider" /></li>
                             <li>
                                 <a class="dropdown-item" href="{% url 'rosetta-file-list' 'third-party' %}">
@@ -108,14 +109,14 @@
                   </ul>
                 </li>
 
-                {% if request.user|is_contest_staff %}
+                {% if perms.is_contest_staff %}
                 <li class="nav-item dropdown me-0">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMgmt" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {% translate "Contest Management" %}
                     </a>
                     <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownMgmt">
 {#                    Receiving deliveries#}
-                    {% if request.user|is_reception %}
+                    {% if perms.is_reception %}
                             <li>
                                 <a class="dropdown-item" href="{% url 'contest:delivery_select' user.contest %}">
                                     {% translate "Deliveries" %}
@@ -123,10 +124,18 @@
                             </li>
                     {% endif %}
 {#                    Manual payments#}
-                    {% if request.user|is_payment_mgmt %}
+                        {% if perms.is_payment_mgmt %}
                             <li>
                                 <a class="dropdown-item" href="{% url 'contest:payment_list' user.contest %}">
                                     {% translate "Payments" %}
+                                </a>
+                            </li>
+                    {% endif %}
+{#                    Judging#}
+                    {% if perms.is_judge %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'contest:judging_list' user.contest %}">
+                                    {% translate "Judging" %}
                                 </a>
                             </li>
                     {% endif %}

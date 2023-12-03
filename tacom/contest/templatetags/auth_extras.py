@@ -3,26 +3,14 @@ from django import template
 register = template.Library()
 
 
-@register.filter(name='is_translator')
-def is_translator(user):
-    return user.groups.filter(name='translators').exists()
-
-
-@register.filter(name='is_contest_staff')
-def is_contest_staff(user):
-    return user.groups.filter(name='contest_staff').exists()
-
-
-@register.filter(name='is_reception')
-def is_contest_staff(user):
-    return user.groups.filter(name='reception').exists()
-
-
-@register.filter(name='is_payment_mgmt')
-def is_payment_mgmt(user):
-    return user.groups.filter(name='payment_mgmt').exists()
-
-
-@register.filter(name='is_judge')
-def is_payment_mgmt(user):
-    return user.groups.filter(name='judge').exists()
+@register.simple_tag(takes_context=True)
+def get_user_permissions(context):
+    user = context['request'].user
+    groups = user.groups.values_list('name', flat=True)
+    return {
+        'is_translator': 'translators' in groups,
+        'is_contest_staff': 'contest_staff' in groups,
+        'is_reception': 'reception' in groups,
+        'is_payment_mgmt': 'payment_mgmt' in groups,
+        'is_judge': 'judge' in groups,
+    }
