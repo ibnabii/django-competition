@@ -6,7 +6,11 @@
     <table>
         <tr>
             <td>{% translate "Username" %}:</td>
-            <td> {{  user.username }}<img src="{{ user.country.flag }}" alt="User country flag"/></td>
+            <td> {{  user.username }}
+                {% if user.country %}
+                    <img src="{{ user.country.flag }}" alt="User country flag"/>
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <td>{% translate "First name" %}:</td>
