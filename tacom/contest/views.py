@@ -48,7 +48,7 @@ class AddEntryContestListView(ListView):
 
     def dispatch(self, request, *args, **kwargs):
         # redirect straight to only contests page if that's the case
-        if Contest.registrable.count() == 1:
+        if Contest.objects.count() == 1:
             return HttpResponseRedirect(reverse('contest:add_entry_contest', args=(Contest.registrable.first().slug,)))
         return super().dispatch(request, *args, **kwargs)
 
