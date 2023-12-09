@@ -28,10 +28,21 @@
                     {{ entry.medal }}
                 </td>
                 <td>
-                    <a class="btn btn-outline-primary disabled">
+                    <a
+                        class="btn btn-outline-primary {% if not entry.scoresheet %}disabled{% endif %}"
+                        {% if entry.scoresheet %}
+                            href="{% url 'contest:scoresheet_view' entry.scoresheet.id %}"
+                        {% endif %}
+                    >
                         {% bs_icon 'eye' size='1.5em' %}
                     </a>
-                    <a class="btn btn-outline-primary">
+                    <a class="btn
+                        {% if entry.scoresheet %}
+                            btn-outline-primary
+                        {% else %}
+                            btn-primary
+                        {% endif %}
+                    ">
                         {% bs_icon 'pencil' size='1.5em' %}
                     </a>
 

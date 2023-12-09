@@ -1,0 +1,31 @@
+{% extends 'contest/base.html' %}
+{% load i18n %}
+{% load user_flag %}
+{% load static %}
+{% block content %}
+
+<dl class="row">
+    <dt class="col-sm-1">{% translate 'Entry' %}:</dt>
+    <dd class="col-sm-11">{{ scoresheet.entry.code }} {{ scoresheet.entry.medal }}</dd>
+
+    <dt class="col-sm-1">{% translate 'Medal' %}:</dt>
+    <dd class="col-sm-11">
+        {% if scoresheet.has_medal %}
+            {% translate 'Yes' %}
+        {% else %}
+            {% translate 'No' %}
+        {% endif %}
+    </dd>
+
+    <dt class="col-sm-1">{% translate 'Language' %}:</dt>
+    <dd class="col-sm-11">
+        {{ scoresheet.entry.brewer.get_language_display }}
+        <img src="{% static ""%}{% flag scoresheet.entry.brewer %}" alt="Judging language flag"/>
+    </dd>
+    <dt class="col-sm-1">{% translate 'Description' %}:</dt>
+    <dd class="col-sm-11">
+        {{ scoresheet.description|safe }}
+    </dd>
+</dl>
+
+{% endblock content %}

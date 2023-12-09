@@ -2,8 +2,9 @@ from django.contrib import admin
 from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
+from simple_history.admin import SimpleHistoryAdmin
 
-from .models import Contest, Style, Entry, Category, User, Participant, EntriesPackage, PaymentMethod, Payment
+from .models import Contest, Style, Entry, Category, User, Participant, EntriesPackage, PaymentMethod, Payment, ScoreSheet
 
 
 @admin.register(Style)
@@ -304,3 +305,10 @@ class PaymentAdmin(admin.ModelAdmin):
         'amount',
         'currency'
     )
+
+
+@admin.register(ScoreSheet)
+class ScoreSheetAdmin(SimpleHistoryAdmin):
+    formfield_overrides = {
+        TextField: {'widget': TinyMCE(attrs={'cols': 80, 'rows': 100})},
+    }

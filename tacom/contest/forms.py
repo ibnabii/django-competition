@@ -6,8 +6,9 @@ from django.utils.translation import gettext_lazy as _
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 from django_countries.widgets import CountrySelectWidget
+from tinymce.widgets import TinyMCE
 
-from .models import Entry, User, EntriesPackage, Payment, PaymentMethod
+from .models import Entry, User, EntriesPackage, Payment, PaymentMethod, ScoreSheet
 
 
 class NewEntryForm(forms.ModelForm):
@@ -175,3 +176,12 @@ class FakePaymentForm(EnhancedForm):
 
 class BlankForm(EnhancedForm):
     pass
+
+
+class ScoreSheetForm(forms.ModelForm):
+    class Meta:
+        model = ScoreSheet
+        fields = ['has_medal', 'description']
+        widgets = {
+            'description': TinyMCE(attrs={'cols': 80, 'rows': 50})
+        }

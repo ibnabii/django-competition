@@ -21,7 +21,7 @@ from .forms import (
     NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankForm, NewAdminPackage,
     DeletePaymentForm
 )
-from .models import Contest, Category, Entry, User, EntriesPackage, Payment
+from .models import Contest, Category, Entry, User, EntriesPackage, Payment, ScoreSheet
 from .utils import get_client_ip, mail_entry_status_change
 from . import payu
 
@@ -676,3 +676,6 @@ class JudgingListView(ListView):
                 .order_by('category__style__name', 'code')
                 )
 
+
+class ScoreSheetView(DetailView):
+    model = ScoreSheet

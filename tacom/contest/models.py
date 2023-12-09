@@ -13,6 +13,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import CountryField
+from simple_history.models import HistoricalRecords
 
 from .managers import (
     StyleManager, ContestManager, RegistrableContestManager, PublishedContestManager,
@@ -46,8 +47,8 @@ class User(AbstractUser):
     @property
     def profile_complete(self):
         return (
-            self.username and self.first_name and self.last_name and self.country and self.phone
-            and self.address and self.language
+                self.username and self.first_name and self.last_name and self.country and self.phone
+                and self.address and self.language
         )
 
     @cached_property
@@ -84,16 +85,19 @@ class Participant(User):
     @property
     def entries_total(self):
         return self.entries_stats.get('total')
+
     entries_total.fget.short_description = _('Registered')
 
     @property
     def entries_paid(self):
         return self.entries_stats.get('paid')
+
     entries_paid.fget.short_description = _('Paid')
 
     @property
     def entries_received(self):
         return self.entries_stats.get('received')
+
     entries_received.fget.short_description = _('Received')
 
 
@@ -389,7 +393,7 @@ class Entry(models.Model):
         ordering = ['category__contest__title', 'category__style__name', 'brewer', 'name']
 
     def __str__(self):
-        return str(self.id)
+        return str(self.code)
 
     def clean(self):
         if self.category.style.extra_info_is_required and self.extra_info == '':
@@ -439,8 +443,18 @@ class Entry(models.Model):
         return not self.is_received
 
     @cached_property
+    def scoresheet(self):
+        if self.scoresheets.count() == 1:
+            return self.scoresheets.first()
+        return None
+
+
+    @cached_property
     def medal(self):
-        return mark_safe(f'<img src="{static("contest/medal.svg")}" height="30">')
+        if self.scoresheet and self.scoresheet.has_medal:
+            return mark_safe(f'<img src="{static("contest/medal.svg")}" height="30">')
+        else:
+            return ''
 
 
 class EntriesPackage(models.Model):
@@ -509,12 +523,21 @@ class Payment(models.Model):
     def save(self, *args, **kwargs):
         if (self.status == Payment.PaymentStatus.OK
                 and (self._state.adding
-                     or not self._state.adding and Payment.objects.get(pk=self.pk).status != self.status
-                )):
+                     or not self._state.adding and Payment.objects.get(pk=self.pk).status != self.status)):
             self.entries.update(is_paid=True)
             mail_entry_status_change(self.entries.all(), 'PAID')
 
         super().save(*args, **kwargs)
 
 
-# class ScoreSheet(models.Model):
+class ScoreSheet(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE, related_name='scoresheets', verbose_name=_('Entry'))
+    has_medal = models.BooleanField(verbose_name=_('Medal'), default=False)
+    description = models.TextField(verbose_name=_('Description'))
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return f'{self.entry.code}'
+
+

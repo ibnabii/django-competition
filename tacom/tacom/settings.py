@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rosetta',
     'captcha',
     'django_countries',
+    'simple_history',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
     # 'crum.CurrentRequestUserMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 if DEBUG:
