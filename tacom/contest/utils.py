@@ -31,6 +31,7 @@ def mail_entry_status_change(entries, new_status):
         'PAID': 'entries_paid',
         'RECEIVED': 'entries_received',
     }
+    old_language = translation.get_language()
 
     if new_status not in template.keys():
         raise ValueError(f'mail_entry_status_change: no template defined for status: {new_status}.')
@@ -41,7 +42,7 @@ def mail_entry_status_change(entries, new_status):
     translation.activate(user.language)
     contest = entries[0].category.contest
     context = {
-        'username': user.username,
+        'username': user.first_name,
         'new_status': new_status,
         'entries': entries,
         'contest': contest.title,
@@ -55,3 +56,5 @@ def mail_entry_status_change(entries, new_status):
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
     msg.attach_alternative(html_content, "text/html")
     msg.send()
+
+    translation.activate(old_language)

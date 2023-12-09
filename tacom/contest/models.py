@@ -5,8 +5,10 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import AbstractUser
+from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.functional import cached_property
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
@@ -48,7 +50,7 @@ class User(AbstractUser):
             and self.address and self.language
         )
 
-    @property
+    @cached_property
     def contest(self):
         # temp solution for one-competition site
         return Contest.objects.first().slug
@@ -436,6 +438,10 @@ class Entry(models.Model):
     def can_be_edited(self):
         return not self.is_received
 
+    @cached_property
+    def medal(self):
+        return mark_safe(f'<img src="{static("contest/medal.svg")}" height="30">')
+
 
 class EntriesPackage(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
@@ -511,3 +517,4 @@ class Payment(models.Model):
         super().save(*args, **kwargs)
 
 
+# class ScoreSheet(models.Model):

@@ -523,6 +523,10 @@ class TransferPaymentView(PaymentView):
     def form_valid(self, form):
         self.payment.status = Payment.PaymentStatus.AWAITING
         self.payment.save()
+        messages.success(
+            self.request,
+            _('We are awaiting your payment. Once it is received we will notify you.')
+        )
         return super().form_valid(form)
 
 
@@ -658,9 +662,17 @@ class PaymentReceivedView(GroupRequiredMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
+class JudgingListView(ListView):
+    model = Entry
+    template_name = 'contest/judging_list_by_style.html'
+    context_object_name = 'entries'
 
-
-
-
-
+    def get_queryset(self):
+        return (Entry.objects
+                .filter(is_received=True)
+                .filter(is_paid=True)
+                .filter(category__contest__slug=self.kwargs['slug'])
+                .select_related('category__style', 'brewer')
+                .order_by('category__style__name', 'code')
+                )
 
