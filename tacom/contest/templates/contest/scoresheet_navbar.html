@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load bootstrap_icons %}
+<div class="container">
+    <a class="btn btn-primary float-start"
+       href="{% url 'contest:judging_list' scoresheet.entry.category.contest.slug %}">
+        {% bs_icon 'card-list' size='1.5em' %} {% translate 'Back to list' %}
+    </a>
+    
+    <a class="btn btn-primary float-end"
+       href="{% url 'contest:scoresheet_edit' scoresheet.id %}">
+        {% bs_icon 'pencil' %} {% translate 'Edit' %}
+    </a>
+    
+    <br/><br/>
+</div>

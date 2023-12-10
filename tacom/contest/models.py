@@ -539,5 +539,3 @@ class ScoreSheet(models.Model):
 
     def __str__(self):
         return f'{self.entry.code}'
-
-

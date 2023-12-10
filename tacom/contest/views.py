@@ -19,7 +19,7 @@ from django.views.generic.base import ContextMixin
 
 from .forms import (
     NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankForm, NewAdminPackage,
-    DeletePaymentForm
+    DeletePaymentForm, ScoreSheetForm
 )
 from .models import Contest, Category, Entry, User, EntriesPackage, Payment, ScoreSheet
 from .utils import get_client_ip, mail_entry_status_change
@@ -662,10 +662,11 @@ class PaymentReceivedView(GroupRequiredMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class JudgingListView(ListView):
+class JudgingListView(GroupRequiredMixin, ListView):
     model = Entry
     template_name = 'contest/judging_list_by_style.html'
     context_object_name = 'entries'
+    groups_required = ('judge',)
 
     def get_queryset(self):
         return (Entry.objects
@@ -677,5 +678,36 @@ class JudgingListView(ListView):
                 )
 
 
-class ScoreSheetView(DetailView):
+class ScoreSheetView(GroupRequiredMixin, DetailView):
     model = ScoreSheet
+    groups_required = ('judge',)
+
+
+class ScoreSheetEdit(GroupRequiredMixin, UpdateView):
+    model = ScoreSheet
+    form_class = ScoreSheetForm
+    groups_required = ('judge',)
+
+
+    def get_success_url(self):
+        return reverse('contest:scoresheet_view', args=(self.object.id,))
+
+
+class ScoreSheetCreate(GroupRequiredMixin, CreateView):
+    model = ScoreSheet
+    form_class = ScoreSheetForm
+    groups_required = ('judge',)
+
+    def form_valid(self, form):
+        form.instance.entry = get_object_or_404(Entry, pk=self.kwargs['entry'])
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('contest:scoresheet_view', args=(self.object.id,))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['scoresheet'] = {
+            'entry': get_object_or_404(Entry, pk=self.kwargs['entry'])
+        }
+        return context

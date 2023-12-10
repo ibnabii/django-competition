@@ -36,13 +36,16 @@
                     >
                         {% bs_icon 'eye' size='1.5em' %}
                     </a>
-                    <a class="btn
-                        {% if entry.scoresheet %}
-                            btn-outline-primary
-                        {% else %}
-                            btn-primary
-                        {% endif %}
-                    ">
+                    
+                    {% if entry.scoresheet %}
+                        <a class="btn btn-outline-primary"
+                           href="{% url 'contest:scoresheet_edit' entry.scoresheet.id %}"
+                       >
+                    {% else %}
+                        <a class="btn btn-primary"
+                           href="{% url 'contest:scoresheet_create' entry.id %}"
+                       >
+                    {% endif %}                    
                         {% bs_icon 'pencil' size='1.5em' %}
                     </a>
 

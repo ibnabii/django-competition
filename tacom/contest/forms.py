@@ -183,5 +183,5 @@ class ScoreSheetForm(forms.ModelForm):
         model = ScoreSheet
         fields = ['has_medal', 'description']
         widgets = {
-            'description': TinyMCE(attrs={'cols': 80, 'rows': 50})
+            'description': TinyMCE(attrs={'cols': 120, 'rows': 50})
         }

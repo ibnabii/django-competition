@@ -37,4 +37,6 @@ urlpatterns = [
     path('mgmt/payments/<uuid:pk>/', views.PaymentReceivedView.as_view(), name='payment_process'),
     path('<str:slug>/judging/', views.JudgingListView.as_view(), name='judging_list'),
     path('scoresheet/<uuid:pk>/', views.ScoreSheetView.as_view(), name='scoresheet_view'),
+    path('scoresheet/<uuid:pk>/edit/', views.ScoreSheetEdit.as_view(), name='scoresheet_edit'),
+    path('entry/<uuid:entry>/scoresheet/', views.ScoreSheetCreate.as_view(), name='scoresheet_create'),
 ]

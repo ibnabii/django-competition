@@ -3,7 +3,9 @@
 {% load user_flag %}
 {% load static %}
 {% block content %}
-
+{% include 'contest/scoresheet_navbar.html' %}
+<hr/>
+<div class="container">
 <dl class="row">
     <dt class="col-sm-1">{% translate 'Entry' %}:</dt>
     <dd class="col-sm-11">{{ scoresheet.entry.code }} {{ scoresheet.entry.medal }}</dd>
@@ -27,5 +29,7 @@
         {{ scoresheet.description|safe }}
     </dd>
 </dl>
-
+</div>
+<hr/>
+{% include 'contest/scoresheet_navbar.html' %}
 {% endblock content %}
