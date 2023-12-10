@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-10 09:21+0100\n"
-"PO-Revision-Date: 2023-12-10 09:22+0100\n"
+"POT-Creation-Date: 2023-12-10 10:18+0100\n"
+"PO-Revision-Date: 2023-12-10 10:18+0100\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -438,7 +438,6 @@ msgstr "Waluta"
 #: .\contest\models.py:535
 #: .\contest\templates\contest\scoresheet_detail.html:10
 #: .\contest\templates\contest\scoresheet_form.html:9
-#| msgid "entry"
 msgid "Entry"
 msgstr "Zgłoszenie"
 
@@ -666,6 +665,18 @@ msgstr "Kod"
 msgid "Language"
 msgstr "Język"
 
+#: .\contest\templates\contest\judging_list_by_style.html:36
+msgid "View score sheet"
+msgstr "Zobacz ocenę"
+
+#: .\contest\templates\contest\judging_list_by_style.html:45
+msgid "Edit score sheet"
+msgstr "Edytuj ocenę"
+
+#: .\contest\templates\contest\judging_list_by_style.html:51
+msgid "Create score sheet"
+msgstr "Utwórz ocenę"
+
 #: .\contest\templates\contest\navbar.html:25
 msgid "Logged in as:"
 msgstr "Zalogowany jako:"
@@ -718,7 +729,6 @@ msgid "Payments"
 msgstr "Płatności"
 
 #: .\contest\templates\contest\navbar.html:138
-#| msgid "Judging sessions"
 msgid "Judging"
 msgstr "Sędziowanie"
 

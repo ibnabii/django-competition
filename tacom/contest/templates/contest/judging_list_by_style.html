@@ -33,19 +33,25 @@
                         {% if entry.scoresheet %}
                             href="{% url 'contest:scoresheet_view' entry.scoresheet.id %}"
                         {% endif %}
+                        title="{% translate 'View score sheet' %}"
+                        data-toggle="tooltip"
                     >
                         {% bs_icon 'eye' size='1.5em' %}
                     </a>
-                    
+
                     {% if entry.scoresheet %}
                         <a class="btn btn-outline-primary"
                            href="{% url 'contest:scoresheet_edit' entry.scoresheet.id %}"
+                           title="{% translate 'Edit score sheet' %}"
+                           data-toggle="tooltip"
                        >
                     {% else %}
                         <a class="btn btn-primary"
                            href="{% url 'contest:scoresheet_create' entry.id %}"
+                           title="{% translate 'Create score sheet' %}"
+                           data-toggle="tooltip"
                        >
-                    {% endif %}                    
+                    {% endif %}
                         {% bs_icon 'pencil' size='1.5em' %}
                     </a>
 
