@@ -5,15 +5,8 @@
 {% block content %}
 
 <div class="container">
-    <dl class="row">
-        <dt class="col-sm-1">{% translate 'Entry' %}:</dt>
-        <dd class="col-sm-11">{{ scoresheet.entry.code }}</dd>
-        <dt class="col-sm-1">{% translate 'Language' %}:</dt>
-        <dd class="col-sm-11">
-            {{ scoresheet.entry.brewer.get_language_display }}
-        <img src="{% static ""%}{% flag scoresheet.entry.brewer %}" alt="Judging language flag"/>
-    </dd>
-    </dl>
+    {% include 'contest/scoresheet_entry.html' %}
+    <hr/>
     <form method="post" action="">
       {% csrf_token %}
         <table>

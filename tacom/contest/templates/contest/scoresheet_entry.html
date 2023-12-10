@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load static %}
+{% load user_flag %}
+
+<dl class="row">
+    <dt class="col-sm-1">{% translate 'Style' %}:</dt>
+    <dd class="col-sm-11">{{ scoresheet.entry.category.style.name }}</dd>
+
+    <dt class="col-sm-1">{% translate 'Entry' %}:</dt>
+    <dd class="col-sm-11">{{ scoresheet.entry.code }}
+        {% url 'contest:scoresheet_view' scoresheet.id as display_url%}
+        {% if request.path == display_url %}
+            {{ scoresheet.entry.medal }}
+        {% endif %}
+        </dd>
+
+    <dt class="col-sm-1">{% translate 'Language' %}:</dt>
+    <dd class="col-sm-11">
+        {{ scoresheet.entry.brewer.get_language_display }}
+        <img src="{% static ""%}{% flag scoresheet.entry.brewer %}" alt="Judging language flag"/>
+    </dd>
+</dl>
+<p>
+<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseDescription" role="button">
+    {% translate 'Entry description' %}
+</a>
+</p>
+<p>
+<div class="collapse" id="collapseDescription">
+  <div class="card card-body">
+    {{ scoresheet.entry.extra_info|linebreaks }}
+  </div>
+</div>
+</p>
