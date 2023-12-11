@@ -176,6 +176,11 @@ class Style(models.Model):
 
 
 class Contest(models.Model):
+    class Meta:
+        verbose_name = _('contest')
+        verbose_name_plural = _('contests')
+        ordering = ('-judging_date_from', '-delivery_date_to')
+
     title = models.CharField(_('title'), max_length=255, blank=False, null=False)
     slug = models.SlugField(
         unique=True,
@@ -288,11 +293,6 @@ class Contest(models.Model):
             0,
             self.entry_user_limit - Entry.objects.filter(category__contest=self).filter(brewer=user).count()
         )
-
-    class Meta:
-        verbose_name = _('contest')
-        verbose_name_plural = _('contests')
-        ordering = ('-judging_date_from', '-delivery_date_to')
 
     def natural_key(self):
         return self.slug
