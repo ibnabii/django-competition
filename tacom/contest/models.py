@@ -1,4 +1,5 @@
 from datetime import date
+from datetime import datetime
 from uuid import uuid1
 
 from django.db import models
@@ -274,6 +275,10 @@ class Contest(models.Model):
                 and self.registration_date_from <= date.today() <= self.registration_date_to
                 and (self.entry_global_limit is None or self.global_limit_left)
                 )
+
+    @cached_property
+    def show_results(self):
+        return self.result_is_published or self.result_autopublish_datetime <= datetime.now()
 
     @cached_property
     def global_limit_left(self):
