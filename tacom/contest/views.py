@@ -177,7 +177,7 @@ class AddEntryView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
         self.category = get_object_or_404(Category.objects.select_related('contest', 'style'), pk=kwargs['pk'])
         self.contest = self.category.contest
         self.style = self.category.style
-        if not self.contest.is_registrable():
+        if not self.contest.is_registrable:
             raise Http404
         return super().dispatch(request, *args, **kwargs)
 

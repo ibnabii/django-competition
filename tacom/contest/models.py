@@ -268,6 +268,7 @@ class Contest(models.Model):
     published = PublishedContestManager()
     registrable = RegistrableContestManager()
 
+    @cached_property
     def is_registrable(self):
         return (self.competition_is_published
                 and self.registration_date_from <= date.today() <= self.registration_date_to
