@@ -101,6 +101,8 @@ class GroupRequiredMixin(UserPassesTestMixin):
     groups_required = None
 
     def test_func(self):
+        if len(self.groups_required) == 0:
+            return True
         groups = set(self.groups_required)
         user_groups = set(self.request.user.groups.values_list('name', flat=True))
         return groups == groups.intersection(user_groups)
