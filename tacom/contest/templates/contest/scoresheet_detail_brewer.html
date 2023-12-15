@@ -1,0 +1,45 @@
+{% extends 'contest/base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="container">
+
+<dl class="row">
+
+    <dt class="col-sm-1">{% translate 'Style' %}:</dt>
+    <dd class="col-sm-11">{{ scoresheet.entry.category.style.name }}</dd>
+
+    <dt class="col-sm-1">{% translate 'Name' %}:</dt>
+    <dd class="col-sm-11">{{ scoresheet.entry.name }}</dd>
+
+
+    <dt class="col-sm-1">{% translate 'Medal' %}:</dt>
+    <dd class="col-sm-11">
+        {% if scoresheet.has_medal %}
+            {% translate 'Yes' %}
+        {% else %}
+            {% translate 'No' %}
+        {% endif %}
+        {{ scoresheet.entry.medal }}
+    </dd>
+</dl>
+<p>
+<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseDescription" role="button">
+    {% translate 'Entry description' %}
+</a>
+</p>
+<p>
+<div class="collapse" id="collapseDescription">
+  <div class="card card-body">
+    {{ scoresheet.entry.extra_info|linebreaks }}
+  </div>
+</div>
+</p>
+<dl class="row">
+    <dt class="col-sm-1">{% translate "Judge's description"  %}:</dt>
+    <dd class="col-sm-11">
+        {{ scoresheet.description|safe }}
+    </dd>
+</dl>
+</div>
+
+{% endblock content %}

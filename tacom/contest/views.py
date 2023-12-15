@@ -101,6 +101,7 @@ class GroupRequiredMixin(UserPassesTestMixin):
     groups_required = None
 
     def test_func(self):
+        print('GroupRequiredMixin.test_func')
         if len(self.groups_required) == 0:
             return True
         groups = set(self.groups_required)
@@ -685,11 +686,25 @@ class ScoreSheetView(GroupRequiredMixin, DetailView):
     groups_required = ('judge',)
 
 
+class MyScoreSheetView(ScoreSheetView):
+    template_name = 'contest/scoresheet_detail_brewer.html'
+
+    def test_func(self):
+        scoresheet = self.get_object()
+        # verify if contest already published results
+        if not scoresheet.entry.category.contest.show_results:
+            return False
+        # verify if user owns the entry
+        return scoresheet and self.request.user == scoresheet.entry.brewer
+
+    def get_object(self):
+        return ScoreSheet.objects.filter(entry=self.kwargs["pk"]).first()
+
+
 class ScoreSheetEdit(GroupRequiredMixin, UpdateView):
     model = ScoreSheet
     form_class = ScoreSheetForm
     groups_required = ('judge',)
-
 
     def get_success_url(self):
         return reverse('contest:scoresheet_view', args=(self.object.id,))

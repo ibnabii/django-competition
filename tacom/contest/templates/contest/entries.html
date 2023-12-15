@@ -107,6 +107,15 @@
                                 >
                                     {% bs_icon 'trash3' %}
                                 </a>
+                                <a class="btn btn-outline-primary {% if not contest.grouper.show_results %}
+                                        disabled
+                                    {% endif %}"
+                                   data-toggle="tooltip"
+                                   title="{% translate 'Score card' %}"
+                                   href="{% url 'contest:entry_results' entry.id %}"
+                                >
+                                    {% bs_icon 'trophy' %}
+                                </a>
                             </td>
                         </tr>
                     {%  endfor %}
