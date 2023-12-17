@@ -3,7 +3,7 @@ import json
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404, Http404
 from django.utils.decorators import method_decorator
@@ -728,3 +728,29 @@ class ScoreSheetCreate(GroupRequiredMixin, CreateView):
             'entry': get_object_or_404(Entry, pk=self.kwargs['entry'])
         }
         return context
+
+
+class MedalsListView(ListView):
+    template_name = 'contest/medal_list_by_style.html'
+    context_object_name = 'entries'
+
+    def __init__(self, *args, **kwargs):
+        self.contest = None
+        super().__init__(*args, **kwargs)
+
+    def get_queryset(self):
+        return (
+            Entry.objects
+            .filter(category__contest=self.contest)
+            .filter(scoresheets__has_medal=True)
+            .distinct()
+            .order_by('category__style__name', 'brewer')
+            .select_related('brewer', 'category__style')
+            .prefetch_related('scoresheets')
+        )
+
+    def dispatch(self, request, *args, **kwargs):
+        self.contest = Contest.objects.get(slug=self.kwargs['contest_slug'])
+        if not (self.contest and self.contest.show_results):
+            raise Http404
+        return super().dispatch(request, *args, **kwargs)

@@ -11,7 +11,10 @@
        href="{% url 'contest:add_entry_contest' contest.slug %}">
         {% translate "Register your entry" %}
     </a>
-    <a class="btn btn-primary {% if not contest.show_results %}disabled{% endif %}">
+    <a class="btn btn-primary"
+       href="{% url 'contest:contest_results' contest.slug %}"
+    > 
+{#{% if not contest.show_results %}disabled{% endif %}">#}
         {% translate "Check results" %}
     </a>
     <div class="container">

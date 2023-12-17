@@ -1,0 +1,38 @@
+{% extends "contest/base.html" %}
+
+{% block content %}
+{% load i18n %}
+{% load static %}
+{% load bootstrap_icons %}
+{% load user_flag %}
+    {% regroup entries by category.style as entries_by_style %}
+    {% for style in entries_by_style %}
+        <p class="display-6">{{ style.grouper }}</p>
+        <table class="table">
+        <tr>
+            <th class="col-1"></th>
+            <th class="col-2">{% translate 'Brewer' %}</th>
+            <th class="col-1">{% translate 'Country' %}</th>
+            <th class="col-1"></th>
+            <th>{% translate 'Mead name' %}</th>
+        </tr>
+        {% for entry in style.list|dictsort:"brewer.last_name"|dictsort:"brewer.first_name" %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    {{ entry.brewer }}</td>
+                <td>
+                    {{ entry.brewer.country.name }} <img src="{{ entry.brewer.country.flag }}"/>
+                </td>
+                <td>
+                    <img src="{% static 'contest/medal.svg' %}" height="30">
+                </td>
+                <td>
+                    {{ entry.name }}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {%  endfor %}
+
+{% endblock %}

@@ -40,4 +40,5 @@ urlpatterns = [
     path('scoresheet/<uuid:pk>/', views.ScoreSheetView.as_view(), name='scoresheet_view'),
     path('scoresheet/<uuid:pk>/edit/', views.ScoreSheetEdit.as_view(), name='scoresheet_edit'),
     path('entry/<uuid:entry>/scoresheet/', views.ScoreSheetCreate.as_view(), name='scoresheet_create'),
+    path('<str:contest_slug>/results/', views.MedalsListView.as_view(), name='contest_results'),
 ]
