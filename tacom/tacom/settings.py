@@ -113,7 +113,7 @@ if env("DB_USE_SQLITE", default=True):
     }
 else:
     DATABASES = {
-        'default': env.json('DB_PARAMS')
+        'default': env.db(),
     }
 
 # Password validation
