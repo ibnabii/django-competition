@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-17 22:00+0100\n"
-"PO-Revision-Date: 2023-12-17 22:00+0100\n"
+"POT-Creation-Date: 2023-12-21 07:48+0100\n"
+"PO-Revision-Date: 2023-12-21 07:49+0100\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -690,7 +690,6 @@ msgid "Brewer"
 msgstr "Autor"
 
 #: .\contest\templates\contest\medal_list_by_style.html:17
-#| msgid "Last name"
 msgid "Mead name"
 msgstr "Nazwa miodu"
 
@@ -838,7 +837,6 @@ msgid "Entry description"
 msgstr "Informacje ze zgłoszenia"
 
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:38
-#| msgid "Style description"
 msgid "Judge's description"
 msgstr "Opis sędziów"
 
@@ -849,6 +847,10 @@ msgstr "Powrót do listy"
 #: .\contest\templates\contest\scoresheet_navbar.html:11
 msgid "Edit"
 msgstr "Edycja"
+
+#: .\contest\templates\contest\test_environment_banner.html:14
+msgid "TEST ENVIRONMENT"
+msgstr "ŚRODOWISKO TESTOWE"
 
 #: .\contest\views.py:95
 msgid "Complete your profile, please."

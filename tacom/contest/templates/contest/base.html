@@ -21,6 +21,9 @@
 <body class="bg-light-subtle">
 
     {% include 'contest/messages.html' %}
+    {% if TEST_ENV %}
+        {% include 'contest/test_environment_banner.html' %}
+    {% endif %}
 {#    {% include 'contest/header.html' %}#}
     {%  include 'contest/navbar.html' %}
 
@@ -31,6 +34,8 @@
 
         {% endblock %}
     </div>
-
+{% if TEST_ENV %}
+    {% include 'contest/test_environment_banner.html' %}
+{% endif %}
 </body>
 </html>
