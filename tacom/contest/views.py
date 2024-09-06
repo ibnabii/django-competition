@@ -686,7 +686,8 @@ class ScoreSheetView(GroupRequiredMixin, DetailView):
     groups_required = ('judge',)
 
 
-class MyScoreSheetView(ScoreSheetView):
+class MyScoreSheetView(DetailView):
+    model = ScoreSheet
     template_name = 'contest/scoresheet_detail_brewer.html'
 
     def test_func(self):
@@ -697,8 +698,8 @@ class MyScoreSheetView(ScoreSheetView):
         # verify if user owns the entry
         return scoresheet and self.request.user == scoresheet.entry.brewer
 
-    def get_object(self):
-        return ScoreSheet.objects.filter(entry=self.kwargs["pk"]).first()
+    def get_object(self, queryset=None):
+        return get_object_or_404(ScoreSheet, entry=self.kwargs['pk'])
 
 
 class ScoreSheetEdit(GroupRequiredMixin, UpdateView):
