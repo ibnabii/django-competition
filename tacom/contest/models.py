@@ -446,7 +446,8 @@ class Entry(models.Model):
         return not self.is_paid and not self.is_received
 
     def can_be_edited(self):
-        return not self.is_received
+        # return not self.is_received
+        return self.category.contest.registration_date_to >= date.today()
 
     @cached_property
     def scoresheet(self):
