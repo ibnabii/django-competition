@@ -19,7 +19,7 @@ from django.views.generic.base import ContextMixin
 
 from .forms import (
     NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankForm, NewAdminPackage,
-    DeletePaymentForm, ScoreSheetForm
+    DeletePaymentForm, ScoreSheetForm, EditEntryForm
 )
 from .models import Contest, Category, Entry, User, EntriesPackage, Payment, ScoreSheet
 from .utils import get_client_ip, mail_entry_status_change
@@ -222,7 +222,7 @@ class AddEntryView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
 class EditEntryView(UserPassesTestMixin, UpdateView):
     model = Entry
     template_name = 'contest/generic_update.html'
-    form_class = NewEntryForm
+    form_class = EditEntryForm
 
     def test_func(self):
         return self.get_object().brewer == self.request.user and self.get_object().can_be_edited()

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-21 07:48+0100\n"
-"PO-Revision-Date: 2023-12-21 07:49+0100\n"
+"POT-Creation-Date: 2024-09-08 18:08+0200\n"
+"PO-Revision-Date: 2024-09-08 18:08+0200\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
 
-#: .\contest\admin.py:59 .\contest\models.py:543
+#: .\contest\admin.py:59 .\contest\models.py:551
 #: .\contest\templates\contest\scoresheet_detail.html:19
 msgid "Description"
 msgstr "Opis"
@@ -56,7 +56,7 @@ msgstr "Opublikuj wyniki konkursu"
 msgid "Audit"
 msgstr "Audyt"
 
-#: .\contest\admin.py:273 .\contest\models.py:514
+#: .\contest\admin.py:273 .\contest\models.py:522
 msgid "Contest"
 msgstr "Konkurs"
 
@@ -76,29 +76,29 @@ msgstr "Styl"
 msgid "Competitions"
 msgstr "Konkursy"
 
-#: .\contest\forms.py:101
+#: .\contest\forms.py:111
 msgid "Cannot add entry that does not belong to user"
 msgstr "Nie możesz dodać nie swojego zgłoszenia"
 
-#: .\contest\forms.py:103 .\contest\forms.py:118
+#: .\contest\forms.py:113 .\contest\forms.py:128
 msgid "Cannot add entry from another contest"
 msgstr "Nie możesz dodać zgłoszenia z innego konkursu"
 
-#: .\contest\forms.py:149
+#: .\contest\forms.py:159
 msgid "This method is not allowed for this contest"
 msgstr "Ta metoda płatności nie jest dozwolona w tym konkursie"
 
-#: .\contest\forms.py:169
+#: .\contest\forms.py:179
 msgid "Is payment successful?"
 msgstr "Czy płatność ma się udać"
 
-#: .\contest\forms.py:171
+#: .\contest\forms.py:181
 #: .\contest\templates\contest\scoresheet_detail.html:13
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:18
 msgid "Yes"
 msgstr "Tak"
 
-#: .\contest\forms.py:172
+#: .\contest\forms.py:182
 #: .\contest\templates\contest\scoresheet_detail.html:15
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:20
 msgid "No"
@@ -145,7 +145,7 @@ msgstr "Opłacone"
 msgid "Received"
 msgstr "Dostarczone"
 
-#: .\contest\models.py:106 .\contest\models.py:390 .\contest\models.py:479
+#: .\contest\models.py:106 .\contest\models.py:390 .\contest\models.py:487
 #: .\contest\templates\contest\entries.html:40
 #: .\contest\templates\contest\entry_confirm_delete.html:9
 #: .\contest\templates\contest\payment_confirm_delete.html:49
@@ -345,10 +345,23 @@ msgid "Providing \"{self.category.style.extra_info_hint}\" is mandatory!"
 msgstr "Wypełnienie \"{self.category.style.extra_info_hint}\" jest obowiązkowe!"
 
 #: .\contest\models.py:411
-msgid "Entries that have been received cannot be edited!"
-msgstr "Nie można edytować dostarczonych zgłoszeń"
+#| msgid "You cannot register entries anymore."
+msgid "Entry cannot be edited anymore!"
+msgstr "Nie można już edytować zgłoszeń!"
 
-#: .\contest\models.py:424
+#: .\contest\models.py:418
+#, python-brace-format
+#| msgid ""
+#| "You have reached entry limit for this category "
+#| "({self.category.entries_limit})!"
+msgid ""
+"You have reached entry limit for {self.category} category "
+"({self.category.entries_limit})!"
+msgstr ""
+"Osiągnięto limit zgłoszeń w kategorii {self.category} "
+"({self.category.entries_limit})! "
+
+#: .\contest\models.py:431
 #, python-brace-format
 msgid ""
 "You have reached entry limit for this category "
@@ -356,7 +369,7 @@ msgid ""
 msgstr ""
 "Osiągnięto limit zgłoszeń w tej kategorii ({self.category.entries_limit})! "
 
-#: .\contest\models.py:430
+#: .\contest\models.py:437
 msgid ""
 "This contest has reached maximum number of entries, no more entries can be "
 "registered."
@@ -364,88 +377,88 @@ msgstr ""
 "Konkurs osiągnął maksymalną liczbę zgłoszeń, nie można już rejestrować "
 "kolejnych."
 
-#: .\contest\models.py:437
+#: .\contest\models.py:444
 msgid ""
 "You have reached maximum number of entries per user in this competition."
 msgstr "Osiągnięto limit liczby zgłoszeń na uczestnika."
 
-#: .\contest\models.py:442
+#: .\contest\models.py:449
 msgid "Entries that has been paid or received cannot be deleted!"
 msgstr "Nie można usunąć opłaconych zgłoszeń"
 
-#: .\contest\models.py:478
+#: .\contest\models.py:486
 msgid "Displayed at payment method selection page"
 msgstr "Wyświetlane na stronie wyboru płatności"
 
-#: .\contest\models.py:480
+#: .\contest\models.py:488
 msgid "Polish name"
 msgstr "Nazwa polska"
 
-#: .\contest\models.py:484
+#: .\contest\models.py:492
 msgid "Method code"
 msgstr "Kod metody"
 
-#: .\contest\models.py:485
+#: .\contest\models.py:493
 msgid "Code is used by the software, do not change!"
 msgstr "Kod jest używany przez system, nie zmieniaj go"
 
-#: .\contest\models.py:501
+#: .\contest\models.py:509
 msgid "payment"
 msgstr "płatność"
 
-#: .\contest\models.py:502
+#: .\contest\models.py:510
 msgid "payments"
 msgstr "płatności"
 
-#: .\contest\models.py:505
+#: .\contest\models.py:513
 msgid "Created"
 msgstr "Utworzona"
 
-#: .\contest\models.py:506
+#: .\contest\models.py:514
 msgid "Canceled"
 msgstr "Anulowany"
 
-#: .\contest\models.py:507
+#: .\contest\models.py:515
 msgid "OK"
 msgstr "OK"
 
-#: .\contest\models.py:508
+#: .\contest\models.py:516
 msgid "Failed"
 msgstr "Niepowodzenie"
 
-#: .\contest\models.py:509
+#: .\contest\models.py:517
 msgid "Confirmation pending"
 msgstr "Czeka na potwierdzenie"
 
-#: .\contest\models.py:512
+#: .\contest\models.py:520
 msgid "Method"
 msgstr "Metoda"
 
-#: .\contest\models.py:513
+#: .\contest\models.py:521
 msgid "User"
 msgstr "Użytkownik"
 
-#: .\contest\models.py:515
+#: .\contest\models.py:523
 #: .\contest\templates\contest\payment_confirm_delete.html:43
 #: .\contest\templates\contest\payment_list.html:21
 msgid "Entries"
 msgstr "Zgłoszenia"
 
-#: .\contest\models.py:516
+#: .\contest\models.py:524
 #: .\contest\templates\contest\payment_confirm_delete.html:35
 #: .\contest\templates\contest\payment_list.html:18
 msgid "Amount"
 msgstr "Kwota"
 
-#: .\contest\models.py:517
+#: .\contest\models.py:525
 msgid "Currency"
 msgstr "Waluta"
 
-#: .\contest\models.py:541 .\contest\templates\contest\scoresheet_entry.html:9
+#: .\contest\models.py:549 .\contest\templates\contest\scoresheet_entry.html:9
 msgid "Entry"
 msgstr "Zgłoszenie"
 
-#: .\contest\models.py:542
+#: .\contest\models.py:550
 #: .\contest\templates\contest\scoresheet_detail.html:10
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:15
 msgid "Medal"
@@ -909,6 +922,9 @@ msgid ""
 "Status of your entries will be updated upon receiving confirmation from PayU"
 msgstr ""
 "Status zgłoszeń zostanie zaktualizowany po otrzymaniu potwierdzenia z PayU"
+
+#~ msgid "Entries that have been received cannot be edited!"
+#~ msgstr "Nie można edytować dostarczonych zgłoszeń"
 
 #~ msgid "Entries List"
 #~ msgstr "Lista zgłoszeń"

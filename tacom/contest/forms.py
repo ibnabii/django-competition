@@ -35,6 +35,16 @@ class NewEntryForm(forms.ModelForm):
         self.instance.category = category
 
 
+class EditEntryForm(NewEntryForm):
+    class Meta:
+        fields = ('category', 'name', 'extra_info')
+        widgets = {
+            'name': forms.TextInput(attrs={'size': 80}),
+            'extra_info': forms.Textarea(attrs={'cols': 80, 'rows': 15})
+        }
+        model = Entry
+
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = User

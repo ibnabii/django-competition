@@ -367,7 +367,7 @@ class Category(models.Model):
         constraints = [models.UniqueConstraint(fields=['style', 'contest'], name='unique_contest_style')]
 
     def __str__(self):
-        return f'{self.contest.title} - {self.style.name}'
+        return f'{self.style.name}'
 
     def natural_key(self):
         return
@@ -408,8 +408,15 @@ class Entry(models.Model):
         if Entry.objects.filter(pk=self.id).exists():
             # update
             if not self.can_be_edited():
-                raise ValidationError(_('Entries that have been received cannot be edited!'))
+                raise ValidationError(_('Entry cannot be edited anymore!'))
             extra = 0
+
+            # validate category limit if category changed
+            if (self.category.entries_limit < Entry.objects.filter(category=self.category).filter(
+                    brewer=self.brewer).count() + 1):
+                raise ValidationError(_(
+                    f'You have reached entry limit for {self.category} category ({self.category.entries_limit})!'
+                    f'No more entries in this category can be added.'))
         else:
             # insert
             extra = 1
