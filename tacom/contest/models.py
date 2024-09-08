@@ -415,8 +415,7 @@ class Entry(models.Model):
             if (self.category.entries_limit < Entry.objects.filter(category=self.category).filter(
                     brewer=self.brewer).count() + 1):
                 raise ValidationError(_(
-                    f'You have reached entry limit for {self.category} category ({self.category.entries_limit})!'
-                    f'No more entries in this category can be added.'))
+                    f'Cannot change category due to target category limit'))
         else:
             # insert
             extra = 1
