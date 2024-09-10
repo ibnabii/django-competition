@@ -383,15 +383,29 @@ def code_generator():
 
 
 class Entry(models.Model):
+    class SweetnessLevel(models.TextChoices):
+        DRY = 'dry', _('Dry')
+        MEDIUM = 'medium', _('Medium')
+        SWEET = 'sweet', _('Sweet')
+
+    class CarbonationLevel(models.TextChoices):
+        STILL = 'still', _('Still')
+        PETILLANT = 'petillant', _('Petillant')
+        SPARKLING = 'sparkling', _('Sparkling')
+
     id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
-    code = models.IntegerField(verbose_name=_('code'), default=code_generator)
+    code = models.IntegerField(verbose_name=_('code'), default=code_generator, editable=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='entries')
-    brewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='entries')
+    brewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='entries', editable=False)
     name = models.CharField(max_length=50, verbose_name=_('Name'))
-    extra_info = models.CharField(max_length=1000, blank=True, verbose_name=_('Additional information'))
-    is_paid = models.BooleanField(default=False, verbose_name=_('Is paid'))
-    is_received = models.BooleanField(default=False, verbose_name=_('Is received'))
-    modified_at = models.DateTimeField(auto_now=True)
+    sweetness = models.CharField(max_length=10, choices=SweetnessLevel.choices, verbose_name=_('Sweetness'))
+    carbonation = models.CharField(max_length=10, choices=CarbonationLevel.choices, verbose_name=_('Carbonation'))
+    extra_info = models.CharField(max_length=1000, blank=True, verbose_name=_('Ingredients'))
+    alcohol_content = models.DecimalField(blank=True, null=True, verbose_name=_('Alcohol content'), max_digits=4,
+                                          decimal_places=2)
+    is_paid = models.BooleanField(default=False, verbose_name=_('Is paid'), editable=False)
+    is_received = models.BooleanField(default=False, verbose_name=_('Is received'), editable=False)
+    modified_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
         verbose_name = _('entry')

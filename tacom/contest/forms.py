@@ -14,11 +14,12 @@ from .models import Entry, User, EntriesPackage, Payment, PaymentMethod, ScoreSh
 class NewEntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['name', 'extra_info']
+        # fields = ['name', 'extra_info']
+        exclude = ('category',)
         widgets = {
             'name': forms.TextInput(attrs={'size': 80}),
             # 'extra_info': forms.TextInput(attrs={'size': 80}),
-            'extra_info': forms.Textarea(attrs={'cols': 80, 'rows': 15})
+            'extra_info': forms.Textarea(attrs={'cols': 80, 'rows': 5})
         }
 
     def __init__(self, *args, **kwargs):
@@ -37,10 +38,10 @@ class NewEntryForm(forms.ModelForm):
 
 class EditEntryForm(NewEntryForm):
     class Meta:
-        fields = ('category', 'name', 'extra_info')
+        fields = "__all__"
         widgets = {
             'name': forms.TextInput(attrs={'size': 80}),
-            'extra_info': forms.Textarea(attrs={'cols': 80, 'rows': 15})
+            'extra_info': forms.Textarea(attrs={'cols': 80, 'rows': 5})
         }
         model = Entry
 
