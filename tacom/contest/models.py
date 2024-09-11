@@ -395,7 +395,7 @@ class Entry(models.Model):
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
     code = models.IntegerField(verbose_name=_('code'), default=code_generator, editable=False)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='entries')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='entries', verbose_name=_('Category'))
     brewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='entries', editable=False)
     name = models.CharField(max_length=50, verbose_name=_('Name'))
     sweetness = models.CharField(max_length=10, choices=SweetnessLevel.choices, verbose_name=_('Sweetness'))

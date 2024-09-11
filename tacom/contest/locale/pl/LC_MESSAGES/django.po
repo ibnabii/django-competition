@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-10 22:17+0200\n"
-"PO-Revision-Date: 2024-09-10 22:18+0200\n"
+"POT-Creation-Date: 2024-09-11 13:26+0200\n"
+"PO-Revision-Date: 2024-09-11 13:26+0200\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -321,7 +321,7 @@ msgstr "Wytrawny"
 
 #: .\contest\models.py:388
 msgid "Medium"
-msgstr "daj mnie tłumaczenie"
+msgstr "Półsłodki"
 
 #: .\contest\models.py:389
 msgid "Sweet"
@@ -342,6 +342,19 @@ msgstr "Gazowany"
 #: .\contest\models.py:397
 msgid "code"
 msgstr "kod"
+
+#: .\contest\models.py:398
+#| msgid "category"
+msgid "Category"
+msgstr "Kategoria"
+
+#: .\contest\models.py:401
+msgid "Sweetness"
+msgstr "Poziom słodyczy"
+
+#: .\contest\models.py:402
+msgid "Carbonation"
+msgstr "Nagazowanie"
 
 #: .\contest\models.py:403
 msgid "Ingredients"
