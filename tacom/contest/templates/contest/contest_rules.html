@@ -1,0 +1,14 @@
+{% extends 'contest/base.html' %}
+{% load i18n %}
+{% block content %}
+
+    <h1> {{ contest.title }}</h1>
+    <h2> {% translate "Rules" %}</h2>
+    {% get_current_language as LANGUAGE_CODE %}
+    {% if LANGUAGE_CODE == 'pl' %}
+        {{ contest.rules_pl | safe }}
+    {% else %}
+        {{ contest.rules | safe }}
+    {% endif %}
+
+{% endblock content %}

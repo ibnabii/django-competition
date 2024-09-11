@@ -70,6 +70,20 @@ class ContestAdmin(admin.ModelAdmin):
             }
         ),
         (
+            _('Rules'),
+            {
+                'classes': ['collapse'],
+                'fields': ['rules'],
+            }
+        ),
+        (
+            _('Rules in polish'),
+            {
+                'classes': ['collapse'],
+                'fields': ['rules_pl'],
+            }
+        ),
+        (
             _('Delivery address'),
             {
                 'classes': ['collapse'],

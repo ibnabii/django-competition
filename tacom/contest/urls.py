@@ -9,7 +9,8 @@ app_name = 'contest'
 urlpatterns = [
     path('', views.PublishedContestListView.as_view(), name='contest_list'),
     path('details/<str:slug>/', views.ContestDetailView.as_view(), name='contest_detail'),
-    path('details/<str:slug>/addr', views.ContestDeliveryAddressView.as_view(), name='contest_address'),
+    path('details/<str:slug>/rules/', views.ContestRulesView.as_view(), name='contest_rules'),
+    path('details/<str:slug>/addr/', views.ContestDeliveryAddressView.as_view(), name='contest_address'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('profile/edit/', views.ProfileEditView.as_view(), name='profile_edit'),
     path('style/<str:slug>/', DetailView.as_view(model=Style), name='style_detail'),

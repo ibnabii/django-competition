@@ -3,6 +3,10 @@
 {% block content %}
 
     <h1> {{ contest.title }}</h1>
+    <a class="btn btn-primary"
+       href="{% url 'contest:contest_rules' contest.slug %}">
+        {% translate "Rules" %}
+    </a>
     <a class="btn btn-primary
         {% if not contest.is_registrable %}
         disabled

@@ -311,6 +311,11 @@ class ContestDetailView(DetailView):
     )  # 1 query
 
 
+class ContestRulesView(DetailView):
+    model = Contest
+    template_name = 'contest/contest_rules.html'
+
+
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'contest/profile.html'
 

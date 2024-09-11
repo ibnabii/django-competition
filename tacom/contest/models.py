@@ -190,6 +190,8 @@ class Contest(models.Model):
     )
     description = models.TextField(blank=False, null=False)
     description_pl = models.TextField(null=True, verbose_name=_('Description in polish'))
+    rules = models.TextField(blank=True, verbose_name=_('Rules'))
+    rules_pl = models.TextField(blank=True, verbose_name=_('Rules in polish'))
     logo = models.ImageField(blank=True, null=True)
     entry_fee_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Entry fee amount'))
     entry_fee_currency = models.CharField(max_length=3, verbose_name=_('Fee currency code'))
