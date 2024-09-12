@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-11 13:38+0200\n"
-"PO-Revision-Date: 2024-09-11 13:38+0200\n"
+"POT-Creation-Date: 2024-09-12 19:45+0200\n"
+"PO-Revision-Date: 2024-09-12 19:46+0200\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -29,11 +29,12 @@ msgid "Description in polish"
 msgstr "Opis po polsku"
 
 #: .\contest\admin.py:73 .\contest\models.py:193
+#: .\contest\templates\contest\contest_detail.html:8
+#: .\contest\templates\contest\contest_rules.html:6
 msgid "Rules"
 msgstr "Regulamin"
 
 #: .\contest\admin.py:80 .\contest\models.py:194
-#| msgid "Description in polish"
 msgid "Rules in polish"
 msgstr "Regulamin po polsku"
 
@@ -369,8 +370,9 @@ msgid "Ingredients"
 msgstr "Składniki"
 
 #: .\contest\models.py:406
-msgid "Alcohol content"
-msgstr "Zawartość alkoholu"
+#| msgid "Alcohol content"
+msgid "Alcohol content (ABV)"
+msgstr "Zawartość alkoholu (Alk. Obj.)"
 
 #: .\contest\models.py:408 .\contest\templates\contest\entries.html:30
 msgid "Is paid"
@@ -598,35 +600,35 @@ msgstr "Nie możesz zarejestrować zgłoszenia w tym konkursie"
 msgid "You cannot register entries anymore."
 msgstr "Nie możesz już rejestrować zgłoszeń w tym konkursie"
 
-#: .\contest\templates\contest\contest_detail.html:12
+#: .\contest\templates\contest\contest_detail.html:16
 msgid "Register your entry"
 msgstr "Zgłoś się do konkursu"
 
-#: .\contest\templates\contest\contest_detail.html:18
+#: .\contest\templates\contest\contest_detail.html:22
 msgid "Check results"
 msgstr "Sprawdź wyniki konkursu"
 
-#: .\contest\templates\contest\contest_detail.html:23
+#: .\contest\templates\contest\contest_detail.html:27
 msgid "Timeline"
 msgstr "Istotne daty"
 
-#: .\contest\templates\contest\contest_detail.html:24
+#: .\contest\templates\contest\contest_detail.html:28
 msgid "Registration"
 msgstr "Rejestracja zgłoszeń"
 
-#: .\contest\templates\contest\contest_detail.html:29
+#: .\contest\templates\contest\contest_detail.html:33
 msgid "Samples delivery"
 msgstr "Dostawa zgłoszeń"
 
-#: .\contest\templates\contest\contest_detail.html:34
+#: .\contest\templates\contest\contest_detail.html:38
 msgid "Judging sessions"
 msgstr "Sędziowanie konkursu"
 
-#: .\contest\templates\contest\contest_detail.html:39
+#: .\contest\templates\contest\contest_detail.html:43
 msgid "Categories"
 msgstr "Kategorie"
 
-#: .\contest\templates\contest\contest_detail.html:58
+#: .\contest\templates\contest\contest_detail.html:62
 msgid "Competition description"
 msgstr "Opis konkursu"
 
@@ -858,6 +860,10 @@ msgstr "Wybierz metodę płatności"
 msgid "Confirm received"
 msgstr "Potwierdź otrzymanie płatności"
 
+#: .\contest\templates\contest\paypal_dispatch.html:6
+msgid "Proceed to PayPal"
+msgstr "Przejdź do PayPal"
+
 #: .\contest\templates\contest\profile.html:5
 msgid "My User Profile"
 msgstr "Moje dane"
@@ -911,63 +917,68 @@ msgstr "Edycja"
 msgid "TEST ENVIRONMENT"
 msgstr "ŚRODOWISKO TESTOWE"
 
-#: .\contest\views.py:95
+#: .\contest\views.py:97
 msgid "Complete your profile, please."
 msgstr "Proszę uzupełnić dane."
 
-#: .\contest\views.py:114
+#: .\contest\views.py:116
 msgid "You do not have permission to access this site!"
 msgstr "Brak uprawnień, by wejść na stronę!"
 
-#: .\contest\views.py:159
+#: .\contest\views.py:161
 msgid "You have reached the limit of entries allowed per participant."
 msgstr "Osiągnięto limit liczby zgłoszeń na uczestnika"
 
-#: .\contest\views.py:163
+#: .\contest\views.py:165
 msgid "This competition has reached it's entries limit."
 msgstr "Konkurs osiągnął swój łączny limit zgłoszeń"
 
-#: .\contest\views.py:212
+#: .\contest\views.py:214
 msgid "Entry has been added successfully"
 msgstr "Dodano zgłoszenie"
 
-#: .\contest\views.py:243
+#: .\contest\views.py:245
 msgid "Entry has been updated successfully"
 msgstr "Zmodyfikowano zgłoszenie"
 
-#: .\contest\views.py:282
+#: .\contest\views.py:284
 msgid "Entry has been deleted"
 msgstr "Usunięto zgłoszenie"
 
-#: .\contest\views.py:379
+#: .\contest\views.py:386
 msgid "for payment"
 msgstr "do opłacenia"
 
-#: .\contest\views.py:393
+#: .\contest\views.py:400
 msgid "to print labels"
 msgstr "do druku etykiet"
 
-#: .\contest\views.py:416
+#: .\contest\views.py:423
 msgid "to mark as delivered"
 msgstr "do oznaczenia jako dostarczone"
 
-#: .\contest\views.py:432
+#: .\contest\views.py:439
 msgid "Are you sure, you want to mark following entries as delivered?"
 msgstr "Czy na pewno chcesz oznaczyć poniższe zgłoszenia jako dostarczone?"
 
-#: .\contest\views.py:531
+#: .\contest\views.py:540
 msgid "We are awaiting your payment. Once it is received we will notify you."
 msgstr "Czekamy na płatność, poinformujemy Cię gdy dotrze."
 
-#: .\contest\views.py:557
+#: .\contest\views.py:566 .\contest\views.py:667
 msgid "Payment failed"
 msgstr "Płatność nieudana"
 
-#: .\contest\views.py:562
+#: .\contest\views.py:571
 msgid ""
 "Status of your entries will be updated upon receiving confirmation from PayU"
 msgstr ""
 "Status zgłoszeń zostanie zaktualizowany po otrzymaniu potwierdzenia z PayU"
+
+#: .\contest\views.py:656
+#| msgid "Is payment successful?"
+msgid "Payment successful"
+msgstr "Płatność zakończona sukcesem"
 
 #, python-brace-format
 #~ msgid ""

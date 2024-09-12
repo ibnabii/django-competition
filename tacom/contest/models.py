@@ -403,7 +403,7 @@ class Entry(models.Model):
     sweetness = models.CharField(max_length=10, choices=SweetnessLevel.choices, verbose_name=_('Sweetness'))
     carbonation = models.CharField(max_length=10, choices=CarbonationLevel.choices, verbose_name=_('Carbonation'))
     extra_info = models.CharField(max_length=1000, blank=True, verbose_name=_('Ingredients'))
-    alcohol_content = models.DecimalField(blank=True, null=True, verbose_name=_('Alcohol content'), max_digits=4,
+    alcohol_content = models.DecimalField(blank=True, null=True, verbose_name=_('Alcohol content (ABV)'), max_digits=4,
                                           decimal_places=2)
     is_paid = models.BooleanField(default=False, verbose_name=_('Is paid'), editable=False)
     is_received = models.BooleanField(default=False, verbose_name=_('Is received'), editable=False)
