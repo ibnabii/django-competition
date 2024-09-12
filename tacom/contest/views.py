@@ -1,29 +1,31 @@
 import json
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
-from django.db.models import Prefetch, Q
+from django.db.models import Prefetch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404, Http404
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, get_language
-from django.urls import reverse_lazy, reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import (
     ListView, TemplateView, UpdateView, DetailView, CreateView, DeleteView, FormView, RedirectView, View
 )
 from django.views.generic.base import ContextMixin
+from paypal.standard.forms import PayPalPaymentsForm
 
+from . import payu
 from .forms import (
     NewEntryForm, ProfileForm, NewPackageForm, NewPaymentForm, FakePaymentForm, BlankForm, NewAdminPackage,
-    DeletePaymentForm, ScoreSheetForm, EditEntryForm
+    ScoreSheetForm, EditEntryForm
 )
 from .models import Contest, Category, Entry, User, EntriesPackage, Payment, ScoreSheet
 from .utils import get_client_ip, mail_entry_status_change
-from . import payu
 
 
 class PublishedContestListView(ListView):
@@ -485,6 +487,8 @@ class SelectPaymentMethodView(LoginRequiredMixin, UserOwnsPackageMixin, CreateVi
             return reverse('contest:payment_transfer', args=(self.object.id,))
         if self.object.method.code == 'payu':
             return reverse('contest:payment_payu', args=(self.object.id,))
+        if self.object.method.code == 'paypal':
+            return reverse('contest:payment_paypal', args=(self.object.id,))
 
 
 class PaymentView(LoginRequiredMixin, FormView):
@@ -602,6 +606,67 @@ class PayUNotificationView(View):
         payment.save()
 
         return HttpResponse('OK')
+
+
+class PayPalDispatchView(PaymentView):
+    template_name = 'contest/paypal_dispatch.html'
+
+    def get_form(self, form_class=None):
+        paypal_data = {
+            'business': settings.PAYPAL_RECEIVER_EMAIL,
+            'amount': self.payment.amount,
+            'item_name':
+                f"{self.payment.contest.title} - {_('Entries')}: {[entry.code for entry in self.payment.entries.all()]}",
+            'invoice': self.payment.id,
+            'currency_code': self.payment.currency,
+            # 'charset': 'UTF-8',
+            'notify_url': self.request.build_absolute_uri(reverse('paypal-ipn')),
+            'return_url': self.request.build_absolute_uri(reverse(
+                'contest:payment_paypal_success',
+                args=(self.payment.id,)
+            )),
+            'cancel_url': self.request.build_absolute_uri(reverse(
+                'contest:payment_paypal_failure',
+                args=(self.payment.id,)
+            )),
+        }
+        return PayPalPaymentsForm(initial=paypal_data)
+
+
+class PaymentRedirectView(RedirectView):
+    def __init__(self, *args, **kwargs):
+        self.payment = None
+        super().__init__(*args, **kwargs)
+
+    def dispatch(self, request, *args, **kwargs):
+        self.payment = get_object_or_404(Payment, id=self.kwargs['payment_id'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('contest:add_entry_contest', args=(self.payment.contest.slug,))
+
+
+class PayPalSuccessRedirectView(PaymentRedirectView):
+
+    def get(self, request, *args, **kwargs):
+        self.payment.status = Payment.PaymentStatus.OK
+        self.payment.save()
+        messages.success(
+            self.request,
+            _("Payment successful")
+        )
+        return super().get(request, *args, **kwargs)
+
+
+class PayPalFailureRedirectView(PaymentRedirectView):
+    def get(self, request, *args, **kwargs):
+        self.payment.status = Payment.PaymentStatus.FAILED
+        self.payment.save()
+        messages.warning(
+            self.request,
+            _("Payment failed")
+        )
+        return super().get(request, *args, **kwargs)
 
 
 class LabelPrintoutView(LoginRequiredMixin, UserOwnsPackageMixin, TemplateView):

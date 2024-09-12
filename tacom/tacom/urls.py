@@ -8,7 +8,6 @@ from django.urls import path, include, reverse_lazy
 from django.views.generic import RedirectView
 
 
-
 urlpatterns = i18n_patterns(
     path(
         'accounts/password/change/',
@@ -25,6 +24,7 @@ urlpatterns = i18n_patterns(
     path('i18n/', include('django.conf.urls.i18n')),
     path('tinymce/', include('tinymce.urls')),
     path('rosetta/', include('rosetta.urls')),
+    path('paypal/', include('paypal.standard.ipn.urls')),
     path('', RedirectView.as_view(url='/contest'), name='home'),
 )
 

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'captcha',
     'django_countries',
     'simple_history',
+    'paypal.standard.ipn'
 ]
 
 MIDDLEWARE = [
@@ -248,3 +249,7 @@ PAYU_PROD_HOSTS = ["185.68.12.10", "185.68.12.11", "185.68.12.12", "185.68.12.26
 PAYU_TEST_HOSTS = ["185.68.14.10", "185.68.14.11", "185.68.14.12", "185.68.14.26", "185.68.14.27", "185.68.14.28"]
 
 ALLOWED_HOSTS += PAYU_TEST_HOSTS
+
+# PayPal
+PAYPAL_RECEIVER_EMAIL = env("PAYPAL_RECEIVER_EMAIL")
+PAYPAL_TEST = env("PAYPAL_TEST", default=False)
