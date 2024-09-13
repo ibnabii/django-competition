@@ -4,14 +4,42 @@
 {% load static %}
 {% block content %}
 
+    
 <div class="container">
     {% include 'contest/scoresheet_entry.html' %}
     <hr/>
     <form method="post" action="">
       {% csrf_token %}
-        <table>
-            {{form.as_p}}
-        </table>
+        {% if form.non_field_errors %}
+        <div class="text-danger">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+        <!-- Appearance Section -->
+        {% include 'contest/scoresheet_card_template.html' with header=appearance_header field=form.appearance_score description_field=form.appearance table=appearance_table %}
+
+        <!-- Aroma Section -->
+        {% include 'contest/scoresheet_card_template.html' with header=aroma_header field=form.aroma_score description_field=form.aroma table=aroma_table %}
+
+        <!-- Flavor Section -->
+        {% include 'contest/scoresheet_card_template.html' with header=body_header field=form.flavor_score description_field=form.flavor table=flavor_table %}
+
+        <!-- Finish Section -->
+        {% include 'contest/scoresheet_card_template.html' with header=finish_header field=form.finish_score description_field=form.finish table=finish_table %}
+
+        <!-- Overall Section -->
+        {% include 'contest/scoresheet_card_template.html' with header=overall_header field=form.overall_score description_field=form.overall table=overall_table %}
+
+        <hr/>
+        <div>
+            <h5>{% translate "Proceed with this entry to the final round?" %}</h5>
+            <label for="{{ form.final_round.id_for_label }}">{{ form.final_round.label_tag }}</label>
+            {{ form.final_round }}
+        </div>
+    <hr/>
       <button type="submit" class="btn btn-primary">
           {% translate "Save" %}
       </button>

@@ -1,0 +1,60 @@
+{% load widget_tweaks %}
+{% load i18n %}
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h2 class="card-title">{{ header }}</h2>
+    </div>
+    <div class="card-body d-flex flex-row">
+        <div class="row flex-grow-1">
+            <!-- Left Column: Description Field -->
+            <div class="col-md-6 d-flex flex-column">
+                <div class="form-group flex-grow-1 d-flex">
+                    {{ description_field|add_class:"form-control h-100" }}
+                    {% if description_field.errors %}
+                        <div class="text-danger mt-2">
+                            {% for error in description_field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Column: Points Explanation Table and Score Input Field -->
+            <div class="col-md-6 d-flex flex-column">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>{% translate "Quality" %}</th>
+                            <th>{% translate "Description" %}</th>
+                            <th>{% translate "Points" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in table %}
+                            <tr>
+                                <th>{{ row.category }}</th>
+                                <td>{{ row.description }}</td>
+                                <td>{{ row.points }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Score Input Field -->
+                <div class="form-group mt-3">
+                    <label for="{{ field.id_for_label }}">{%  translate "Score" %}</label>
+                    {{ field|add_class:"form-control w-auto" }}
+                    {% if field.errors %}
+                        <div class="text-danger mt-2">
+                            {% for error in field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

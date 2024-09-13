@@ -4,7 +4,7 @@ from uuid import uuid1
 
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
 from django.templatetags.static import static
 from django.urls import reverse
@@ -708,8 +708,31 @@ class ScoreSheet(models.Model):
         related_name="scoresheets",
         verbose_name=_("Entry"),
     )
-    has_medal = models.BooleanField(verbose_name=_("Medal"), default=False)
-    description = models.TextField(verbose_name=_("Description"))
+    final_round = models.BooleanField(verbose_name=_("Final round"), default=False)
+    place = models.PositiveIntegerField(verbose_name=_("Place"), default=0)
+
+    appearance = models.TextField(verbose_name=_("Appearance"), blank=True)
+    appearance_score = models.PositiveIntegerField(
+        verbose_name=_("Appearance score"),
+        validators=(MaxValueValidator(12),),
+        max_length=2,
+    )
+    aroma = models.TextField(verbose_name=_("Aroma"), blank=True)
+    aroma_score = models.PositiveIntegerField(
+        verbose_name=_("Aroma score"), validators=(MaxValueValidator(30),)
+    )
+    flavor = models.TextField(verbose_name=_("Flavor and body"), blank=True)
+    flavor_score = models.PositiveIntegerField(
+        verbose_name=_("Flavor and body score"), validators=(MaxValueValidator(32),)
+    )
+    finish = models.TextField(verbose_name=_("Finish"), blank=True)
+    finish_score = models.PositiveIntegerField(
+        verbose_name=_("Finish score"), validators=(MaxValueValidator(14),)
+    )
+    overall = models.TextField(verbose_name=_("Overall impression"), blank=True)
+    overall_score = models.PositiveIntegerField(
+        verbose_name=_("Overal impression score"), validators=(MaxValueValidator(12),)
+    )
     history = HistoricalRecords()
 
     def __str__(self):

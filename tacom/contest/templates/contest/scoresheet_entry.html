@@ -4,21 +4,30 @@
 
 <dl class="row">
     <dt class="col-sm-1">{% translate 'Style' %}:</dt>
-    <dd class="col-sm-11">{{ scoresheet.entry.category.style.name }}</dd>
+    <dd class="col-sm-5">{{ scoresheet.entry.category.style.name }}</dd>
+
+    <dt class="col-sm-1">{% translate 'ABV' %}:</dt>
+    <dd class="col-sm-5">{{ scoresheet.entry.alcohol_content }}</dd>
 
     <dt class="col-sm-1">{% translate 'Entry' %}:</dt>
-    <dd class="col-sm-11">{{ scoresheet.entry.code }}
+    <dd class="col-sm-5">{{ scoresheet.entry.code }}
         {% url 'contest:scoresheet_view' scoresheet.id as display_url%}
-        {% if request.path == display_url %}
-            {{ scoresheet.entry.medal }}
-        {% endif %}
+{#        {% if request.path == display_url %}#}
+{#            {{ scoresheet.entry.medal }}#}
+{#        {% endif %}#}
         </dd>
 
+    <dt class="col-sm-1">{% translate 'Sweetness' %}:</dt>
+    <dd class="col-sm-5">{{ scoresheet.entry.get_sweetness_display }}</dd>
+
     <dt class="col-sm-1">{% translate 'Language' %}:</dt>
-    <dd class="col-sm-11">
+    <dd class="col-sm-5">
         {{ scoresheet.entry.brewer.get_language_display }}
         <img src="{% static ""%}{% flag scoresheet.entry.brewer %}" alt="Judging language flag"/>
     </dd>
+
+    <dt class="col-sm-1">{% translate 'Carbonation' %}:</dt>
+    <dd class="col-sm-5">{{ scoresheet.entry.get_carbonation_display }}</dd>
 </dl>
 <p>
 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseDescription" role="button">
