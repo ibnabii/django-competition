@@ -4,3 +4,4 @@
 /tacom/tacom/.env
 /tacom/media
 *./__pycache__
+/data_dumps/

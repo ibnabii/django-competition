@@ -20,21 +20,25 @@ class PublishedContestManager(models.Manager):
 
 class RegistrableContestManager(models.Manager):
     def get_queryset(self):
-        return(super().get_queryset()
-               .filter(competition_is_published=True)
-               .filter(registration_date_from__lte=date.today())
-               .filter(registration_date_to__gte=date.today())
-               )
+        return (
+            super()
+            .get_queryset()
+            .filter(competition_is_published=True)
+            .filter(registration_date_from__lte=date.today())
+            .filter(registration_date_to__gte=date.today())
+        )
 
 
 class CategoryManager(models.Manager):
     def full(self, user):
-        return (super().get_queryset()
-                .filter(entries__brewer=user)
-                .prefetch_related('entries')
-                .annotate(entries_count=models.Count('entries'))
-                .filter(entries_count__gte=models.F('entries_limit'))
-                )
+        return (
+            super()
+            .get_queryset()
+            .filter(entries__brewer=user)
+            .prefetch_related("entries")
+            .annotate(entries_count=models.Count("entries"))
+            .filter(entries_count__gte=models.F("entries_limit"))
+        )
 
     def not_full(self, user):
         return super().get_queryset().exclude(id__in=self.full(user))

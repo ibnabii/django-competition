@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-12 19:45+0200\n"
-"PO-Revision-Date: 2024-09-12 19:46+0200\n"
+"PO-Revision-Date: 2024-09-13 11:23+0200\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -372,7 +372,7 @@ msgstr "Składniki"
 #: .\contest\models.py:406
 #| msgid "Alcohol content"
 msgid "Alcohol content (ABV)"
-msgstr "Zawartość alkoholu (Alk. Obj.)"
+msgstr "Zawartość alkoholu (alk. obj.)"
 
 #: .\contest\models.py:408 .\contest\templates\contest\entries.html:30
 msgid "Is paid"
