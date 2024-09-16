@@ -45,7 +45,7 @@
                 <!-- Score Input Field -->
                 <div class="form-group mt-3">
                     <label for="{{ field.id_for_label }}">{%  translate "Score" %}</label>
-                    {{ field|add_class:"form-control w-auto" }}
+                    {{ field|add_class:"form-control w-auto score" }}
                     {% if field.errors %}
                         <div class="text-danger mt-2">
                             {% for error in field.errors %}

@@ -32,7 +32,10 @@
 
         <!-- Overall Section -->
         {% include 'contest/scoresheet_card_template.html' with header=overall_header field=form.overall_score description_field=form.overall table=overall_table %}
-
+        <hr/>
+        <div>
+            <h3>{% translate "Total points" %}: <span id="total-points">0</span> / 100</h3>
+        </div>
         <hr/>
         <div>
             <h5>{% translate "Proceed with this entry to the final round?" %}</h5>
@@ -50,6 +53,33 @@
           {% translate "Cancel" %}
       </a>
     </form>
+
+        <script>
+        // Function to calculate the total score
+        function calculateTotalPoints() {
+            let total = 0;
+
+            // Get all input elements with the 'score' class
+            document.querySelectorAll('.score').forEach(function(input) {
+                // Parse the input value and add it to the total if it's a number
+                let value = parseFloat(input.value);
+                if (!isNaN(value)) {
+                    total += value;
+                }
+            });
+
+            // Update the total points in the span
+            document.getElementById('total-points').innerText = total;
+        }
+
+        // Add event listeners to all inputs with the 'score' class
+        document.querySelectorAll('.score').forEach(function(input) {
+            input.addEventListener('input', calculateTotalPoints);
+        });
+
+        // Initial calculation in case there are pre-filled values
+        calculateTotalPoints();
+    </script>
 </div>
 
 {% endblock content %}
