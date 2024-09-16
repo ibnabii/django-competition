@@ -27,7 +27,7 @@
 {% else %}
     <h3 class="h3">{% translate 'You have no entries' %} {{ form.purpose }}</h3>
 {% endif %}
-  <a class="btn btn-secondary" href="{% url 'contest:add_entry_contest' form.contest.slug %}">
+  <a class="btn btn-secondary" href="{{ referer }}">
       {% translate "Cancel" %}
   </a>
 </form>

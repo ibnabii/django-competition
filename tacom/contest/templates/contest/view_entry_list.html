@@ -1,0 +1,28 @@
+{% extends 'contest/base.html' %}
+{% block content %}
+{% load i18n %}
+{% load bootstrap_icons %}
+
+{%  include 'contest/entries.html' %}
+<br />
+<a class="btn btn-outline-primary" href="{% url 'contest:payment_start' contest.slug %}">
+    {% bs_icon 'cash-coin' size='1.5em' %}
+    {% translate 'Pay for entries' %}
+</a>
+
+<a class="btn btn-outline-primary" href="{% url 'contest:labels_start' contest.slug %}">
+    {% bs_icon 'file-richtext' size='1.5em' %}
+    {% translate 'Print bottle labels' %}
+</a>
+
+<a
+    class="btn btn-outline-primary"
+    href="{% url 'contest:contest_address' contest.slug %}"
+    target="_blank"
+>
+    {% bs_icon 'truck' size='1.5em' %}
+    {% translate 'Print delivery address' %}
+</a>
+
+
+{% endblock content %}

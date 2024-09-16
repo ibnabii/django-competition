@@ -67,12 +67,20 @@ class AddEntryContestListView(ListView):
     def dispatch(self, request, *args, **kwargs):
         # redirect straight to only contests page if that's the case
         if Contest.objects.count() == 1:
-            return HttpResponseRedirect(
-                reverse(
-                    "contest:add_entry_contest",
-                    args=(Contest.registrable.first().slug,),
+            if Contest.registrable.count() == 1:
+                return HttpResponseRedirect(
+                    reverse(
+                        "contest:add_entry_contest",
+                        args=(Contest.registrable.first().slug,),
+                    )
                 )
-            )
+            else:
+                return HttpResponseRedirect(
+                    reverse(
+                        "contest:user_entry_list",
+                        args=(Contest.objects.first().slug,),
+                    )
+                )
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -144,6 +152,37 @@ class UserOwnsPackageMixin(UserPassesTestMixin):
 
     def handle_no_permission(self):
         raise Http404
+
+
+class UsersEntryListView(LoginRequiredMixin, UserFullProfileMixin, ListView):
+    """
+    Displays list of user's entries - priomary purpose is to let him view
+    the results after the registration has ended
+    """
+
+    template_name = "contest/view_entry_list.html"
+    context_object_name = "entries"
+
+    def __init__(self):
+        self.contest = None
+        super().__init__()
+
+    def dispatch(self, request, *args, **kwargs):
+        self.contest = get_object_or_404(Contest, slug=self.kwargs["slug"])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        payu.update_user_payments_statuses(self.request.user)
+        return (
+            Entry.objects.filter(brewer=self.request.user)
+            .filter(category__contest=self.contest)
+            .select_related("category__style", "category__contest")
+        )
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context["contest"] = self.contest
+        return context
 
 
 class AddEntryStyleListView(
@@ -398,6 +437,11 @@ class AddPackageView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
         form.instance.owner = self.owner
         form.instance.contest = self.contest
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["referer"] = self.request.META.get("HTTP_REFERER")
+        return context
 
 
 class AddPackageForPayment(AddPackageView):
