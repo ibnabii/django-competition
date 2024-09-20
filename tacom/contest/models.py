@@ -56,7 +56,7 @@ class User(AbstractUser):
         validators=[validate_gdpr_consent],
         verbose_name=_("Privacy Policy accepted"),
     )
-    gdpr_consent_date = models.DateField(auto_now_add=True)
+    gdpr_consent_date = models.DateTimeField(auto_now_add=True)
 
     @property
     def profile_complete(self):
