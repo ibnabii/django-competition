@@ -212,6 +212,10 @@ EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = env("EMAIL_HOST_USER")
+# override default signup form to add gdpr checkbox
+ACCOUNT_FORMS = {
+    "signup": "contest.forms.CustomSignupForm",
+}
 
 # Debug_toolbar
 INTERNAL_IPS = [

@@ -1,3 +1,4 @@
+from allauth.account.forms import SignupForm
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
@@ -195,3 +196,15 @@ class ScoreSheetForm(forms.ModelForm):
         exclude = ["place", "entry"]
         # tinymce = TinyMCE(attrs={"cols": 120, "rows": 50})
         # widgets = {"appearance": tinymce}
+
+
+class CustomSignupForm(SignupForm):
+    gdpr_consent = forms.BooleanField(
+        label=_("I agree to KMP Bartnik's Privacy Policy"), required=True
+    )
+
+    def save(self, request):
+        user = super(CustomSignupForm, self).save(request)
+        user.gdpr_consent = self.cleaned_data["gdpr_consent"]
+        user.save()
+        return user

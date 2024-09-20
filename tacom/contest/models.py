@@ -29,6 +29,11 @@ from .managers import (
 from .utils import mail_entry_status_change
 
 
+def validate_gdpr_consent(value):
+    if not value:
+        raise ValidationError("You must accept Privacy Policy to create an account.")
+
+
 class User(AbstractUser):
     class Meta:
         db_table = "auth_user"
@@ -46,6 +51,12 @@ class User(AbstractUser):
         blank=True,
         max_length=2,
     )
+    gdpr_consent = models.BooleanField(
+        default=False,
+        validators=[validate_gdpr_consent],
+        verbose_name=_("Privacy Policy accepted"),
+    )
+    gdpr_consent_date = models.DateField(auto_now_add=True)
 
     @property
     def profile_complete(self):
