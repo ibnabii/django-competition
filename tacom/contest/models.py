@@ -44,7 +44,7 @@ class User(AbstractUser):
 
     country = CountryField(verbose_name=_("Country"), blank=True)
     phone = models.CharField(max_length=15, verbose_name=_("Phone number"), blank=True)
-    address = models.CharField(max_length=200, blank=True)
+    address = models.CharField(max_length=200, blank=True, verbose_name=_("Address"))
     language = models.CharField(
         verbose_name=_("I would like to get feedback on my meads in"),
         choices=JudgingLanguage.choices,
