@@ -7,20 +7,16 @@
 
 {% include 'contest/scoresheet_entry.html' %}
 <dl class="row">
-    <dt class="col-sm-1">{% translate 'Medal' %}:</dt>
-    <dd class="col-sm-11">
-        {% if scoresheet.has_medal %}
+    <dt class="col-sm-2">{% translate 'Final round' %}:</dt>
+    <dd class="col-sm-10">
+        {% if scoresheet.final_round %}
             {% translate 'Yes' %}
         {% else %}
             {% translate 'No' %}
         {% endif %}
     </dd>
-
-    <dt class="col-sm-1">{% translate 'Description' %}:</dt>
-    <dd class="col-sm-11">
-        {{ scoresheet.description|safe }}
-    </dd>
 </dl>
+{% include 'contest/scoresheet_feedback.html' %}
 </div>
 <hr/>
 {% include 'contest/scoresheet_navbar.html' %}

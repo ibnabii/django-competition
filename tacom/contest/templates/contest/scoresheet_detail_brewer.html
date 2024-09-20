@@ -1,45 +1,77 @@
 {% extends 'contest/base.html' %}
 {% load i18n %}
+{% load static %}
+{% load user_flag %}
+{% load bootstrap_icons %}
 {% block content %}
-<div class="container">
 
-<dl class="row">
+    <div class="container">
+        <a class="btn btn-primary float-start"
+           href="{% url 'contest:user_entry_list' scoresheet.entry.category.contest.slug %}">
+            {% bs_icon 'card-list' size='1.5em' %} {% translate 'Back to list' %}
+        </a>
 
-    <dt class="col-sm-1">{% translate 'Style' %}:</dt>
-    <dd class="col-sm-11">{{ scoresheet.entry.category.style.name }}</dd>
+        <br/><br/>
+    </div>
+    <hr/>
+    <div class="container">
+        <dl class="row">
+            <dt class="col-sm-1">{% translate 'Style' %}:</dt>
+            <dd class="col-sm-5">{{ scoresheet.entry.category.style.name }}</dd>
 
-    <dt class="col-sm-1">{% translate 'Name' %}:</dt>
-    <dd class="col-sm-11">{{ scoresheet.entry.name }}</dd>
+            <dt class="col-sm-1">{% translate 'ABV' %}:</dt>
+            <dd class="col-sm-5">{{ scoresheet.entry.alcohol_content }}</dd>
 
+            <dt class="col-sm-1">{% translate 'Name' %}:</dt>
+            <dd class="col-sm-5">{{ scoresheet.entry.name }}
 
-    <dt class="col-sm-1">{% translate 'Medal' %}:</dt>
-    <dd class="col-sm-11">
-        {% if scoresheet.has_medal %}
-            {% translate 'Yes' %}
-        {% else %}
-            {% translate 'No' %}
-        {% endif %}
-        {{ scoresheet.entry.medal }}
-    </dd>
-</dl>
-<p>
-<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseDescription" role="button">
-    {% translate 'Entry description' %}
-</a>
-</p>
-<p>
-<div class="collapse" id="collapseDescription">
-  <div class="card card-body">
-    {{ scoresheet.entry.extra_info|linebreaks }}
-  </div>
-</div>
-</p>
-<dl class="row">
-    <dt class="col-sm-1">{% translate "Judge's description"  %}:</dt>
-    <dd class="col-sm-11">
-        {{ scoresheet.description|safe }}
-    </dd>
-</dl>
-</div>
+            </dd>
+
+            <dt class="col-sm-1">{% translate 'Sweetness' %}:</dt>
+            <dd class="col-sm-5">{{ scoresheet.entry.get_sweetness_display }}</dd>
+
+            <dt class="col-sm-1">{% translate 'Language' %}:</dt>
+            <dd class="col-sm-5">
+                {{ scoresheet.entry.brewer.get_language_display }}
+                <img src="{% static "" %}{% flag scoresheet.entry.brewer %}" alt="Judging language flag"/>
+            </dd>
+
+            <dt class="col-sm-1">{% translate 'Carbonation' %}:</dt>
+            <dd class="col-sm-5">{{ scoresheet.entry.get_carbonation_display }}</dd>
+        </dl>
+        <p>
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseDescription" role="button">
+                {% translate 'Entry description' %}
+            </a>
+        </p>
+
+        <div class="collapse" id="collapseDescription">
+            <div class="card card-body">
+                {{ scoresheet.entry.extra_info|linebreaks }}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <dl class="row">
+            <dt class="col-sm-2">{% translate 'Final round' %}:</dt>
+            <dd class="col-sm-10">
+                {% if scoresheet.final_round %}
+                    {% translate 'Yes' %}
+                {% else %}
+                    {% translate 'No' %}
+                {% endif %}
+            </dd>
+        </dl>
+    </div>
+    {% include 'contest/scoresheet_feedback.html' %}
+    <hr/>
+    <div class="container">
+        <a class="btn btn-primary float-start"
+           href="{% url 'contest:user_entry_list' scoresheet.entry.category.contest.slug %}">
+            {% bs_icon 'card-list' size='1.5em' %} {% translate 'Back to list' %}
+        </a>
+
+        <br/><br/>
+    </div>
 
 {% endblock content %}

@@ -1,0 +1,19 @@
+{% load i18n %}
+<div class="container">
+
+        <!-- Appearance Section -->
+        {% include 'contest/scoresheet_card_display_template.html' with header="Appearance" max_score=12 score=scoresheet.appearance_score description=scoresheet.appearance %}
+
+        <!-- Aroma Section -->
+        {% include 'contest/scoresheet_card_display_template.html' with header="Aroma" max_score=30 score=scoresheet.aroma_score description=scoresheet.aroma %}
+
+        <!-- Flavor Section -->
+        {% include 'contest/scoresheet_card_display_template.html' with header="Flavor and Body" max_score=32 score=scoresheet.flavor_score description=scoresheet.flavor %}
+
+        <!-- Finish Section -->
+        {% include 'contest/scoresheet_card_display_template.html' with header="Finish" max_score=14 score=scoresheet.finish_score description=scoresheet.finish %}
+
+        <!-- Overall Section -->
+        {% include 'contest/scoresheet_card_display_template.html' with header="Overall Impression" max_score=12 score=scoresheet.overall_score description=scoresheet.overall %}
+
+</div>

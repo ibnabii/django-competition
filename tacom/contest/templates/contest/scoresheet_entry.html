@@ -12,9 +12,6 @@
     <dt class="col-sm-1">{% translate 'Entry' %}:</dt>
     <dd class="col-sm-5">{{ scoresheet.entry.code }}
         {% url 'contest:scoresheet_view' scoresheet.id as display_url%}
-{#        {% if request.path == display_url %}#}
-{#            {{ scoresheet.entry.medal }}#}
-{#        {% endif %}#}
         </dd>
 
     <dt class="col-sm-1">{% translate 'Sweetness' %}:</dt>

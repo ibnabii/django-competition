@@ -754,3 +754,13 @@ class ScoreSheet(models.Model):
 
     def __str__(self):
         return f"{self.entry.code}"
+
+    @cached_property
+    def total_points(self):
+        return (
+            self.aroma_score
+            + self.flavor_score
+            + self.appearance_score
+            + self.finish_score
+            + self.overall_score
+        )
