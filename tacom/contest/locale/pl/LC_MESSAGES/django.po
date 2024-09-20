@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-20 20:31+0200\n"
+"POT-Creation-Date: 2024-09-20 22:36+0200\n"
 "PO-Revision-Date: 2024-09-20 20:33+0200\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
 
 #: .\contest\admin.py:59
@@ -80,45 +82,36 @@ msgstr "Konkurs"
 msgid "Style"
 msgstr "Styl"
 
-#. Translators: name of the app that's displayed in admin panel for managing
-#. data
+#. Translators: name of the app that's displayed in admin panel for managing data
 #: .\contest\apps.py:8
 msgid "Competitions"
 msgstr "Konkursy"
 
-#: .\contest\forms.py:112
+#: .\contest\forms.py:113
 msgid "Cannot add entry that does not belong to user"
 msgstr "Nie możesz dodać nie swojego zgłoszenia"
 
-#: .\contest\forms.py:115 .\contest\forms.py:130
+#: .\contest\forms.py:116 .\contest\forms.py:131
 msgid "Cannot add entry from another contest"
 msgstr "Nie możesz dodać zgłoszenia z innego konkursu"
 
-#: .\contest\forms.py:163
+#: .\contest\forms.py:164
 msgid "This method is not allowed for this contest"
 msgstr "Ta metoda płatności nie jest dozwolona w tym konkursie"
 
-#: .\contest\forms.py:183
+#: .\contest\forms.py:184
 msgid "Is payment successful?"
 msgstr "Czy płatność ma się udać"
 
-#: .\contest\forms.py:184
-#: .\contest\templates\contest\scoresheet_detail.html:13
+#: .\contest\forms.py:185 .\contest\templates\contest\scoresheet_detail.html:13
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:59
 msgid "Yes"
 msgstr "Tak"
 
-#: .\contest\forms.py:184
-#: .\contest\templates\contest\scoresheet_detail.html:15
+#: .\contest\forms.py:185 .\contest\templates\contest\scoresheet_detail.html:15
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:61
 msgid "No"
 msgstr "Nie"
-
-#: .\contest\forms.py:203
-msgid "I agree to KMP Bartnik's Privacy Policy"
-msgstr ""
-"Wyrażam zgodę na wykorzystywanie moich danych osobowych zgodnie z Polityką "
-"Prywatności KMP Bartnik"
 
 #: .\contest\models.py:42
 msgid "Polish"
@@ -136,6 +129,10 @@ msgstr "Kraj"
 #: .\contest\models.py:46 .\contest\templates\contest\profile.html:28
 msgid "Phone number"
 msgstr "Numer telefonu"
+
+#: .\contest\models.py:47 .\contest\templates\contest\profile.html:32
+msgid "Address"
+msgstr "Adres"
 
 #: .\contest\models.py:49
 msgid "I would like to get feedback on my meads in"
@@ -217,8 +214,7 @@ msgstr "style"
 
 #: .\contest\models.py:198
 msgid ""
-"If you require extra information from participants, provide them with a "
-"hint!"
+"If you require extra information from participants, provide them with a hint!"
 msgstr "Jeśli wymagasz dodatkowych danych od uczestnika, powiedz im jakich"
 
 #: .\contest\models.py:215
@@ -319,8 +315,7 @@ msgstr "Kiedy automatycznie opublikować wyniki konkursu"
 
 #: .\contest\models.py:399
 msgid ""
-"You have chosen to allow transfer payments. You need to provide payment "
-"info!"
+"You have chosen to allow transfer payments. You need to provide payment info!"
 msgstr "Wybrano możliwość płacenia przelewem, podaj dane do przelewu"
 
 #: .\contest\models.py:433
@@ -406,7 +401,8 @@ msgstr "zgłoszenia"
 #: .\contest\models.py:544
 #, python-brace-format
 msgid "Providing \"{self.category.style.extra_info_hint}\" is mandatory!"
-msgstr "Wypełnienie \"{self.category.style.extra_info_hint}\" jest obowiązkowe!"
+msgstr ""
+"Wypełnienie \"{self.category.style.extra_info_hint}\" jest obowiązkowe!"
 
 #: .\contest\models.py:550
 msgid "Entry cannot be edited anymore!"
@@ -421,8 +417,8 @@ msgstr ""
 #: .\contest\models.py:580
 #, python-brace-format
 msgid ""
-"You have reached entry limit for this category "
-"({self.category.entries_limit})!"
+"You have reached entry limit for this category ({self.category."
+"entries_limit})!"
 msgstr ""
 "Osiągnięto limit zgłoszeń w tej kategorii ({self.category.entries_limit})! "
 
@@ -511,8 +507,7 @@ msgstr "Kwota"
 msgid "Currency"
 msgstr "Waluta"
 
-#: .\contest\models.py:738
-#: .\contest\templates\contest\scoresheet_entry.html:12
+#: .\contest\models.py:738 .\contest\templates\contest\scoresheet_entry.html:12
 msgid "Entry"
 msgstr "Zgłoszenie"
 
@@ -625,8 +620,8 @@ msgstr "Liczba pozostałych miejsc w konkursie, ze względu na jego limit"
 
 #: .\contest\templates\contest\add_entry_style_list.html:36
 msgid ""
-"You will be able to register and pay for your entries as long as there is at"
-" least one slot left."
+"You will be able to register and pay for your entries as long as there is at "
+"least one slot left."
 msgstr ""
 "Możesz rejestrować i opłacać zgłoszenia tak długo, jak zostało przynajmniej "
 "jedno miejsce"
@@ -634,8 +629,7 @@ msgstr ""
 #: .\contest\templates\contest\add_entry_style_list.html:45
 msgid "Number of slots left towards participant limit"
 msgstr ""
-"Liczba zgłoszeń, które możesz jeszcze dodać ze względu na limit na "
-"uczestnika"
+"Liczba zgłoszeń, które możesz jeszcze dodać ze względu na limit na uczestnika"
 
 #: .\contest\templates\contest\add_entry_style_list.html:48
 msgid "is the maximum number of entries per participant in this competition"
@@ -714,16 +708,14 @@ msgstr "Wiadomość wygenerowana automatyczna, nie odpowiadaj na nią!"
 #: .\contest\templates\contest\email\entries_paid.html:6
 #: .\contest\templates\contest\email\entries_paid.txt:6
 msgid ""
-"is happy to inform, that we have received your payment for following "
-"entries:"
+"is happy to inform, that we have received your payment for following entries:"
 msgstr ""
 "z przyjemnością informuje, że otrzymaliśmy płatność za poniższe zgłoszenia:"
 
 #: .\contest\templates\contest\email\entries_paid.html:12
 #: .\contest\templates\contest\email\entries_paid.txt:11
 msgid "You can check your entries and print labels using following link:"
-msgstr ""
-"Możesz sprawdzić swoje zgłoszenia i wydrukować etykiety klikając link:"
+msgstr "Możesz sprawdzić swoje zgłoszenia i wydrukować etykiety klikając link:"
 
 #: .\contest\templates\contest\email\entries_paid.html:16
 #: .\contest\templates\contest\email\entries_paid.txt:15
@@ -937,10 +929,6 @@ msgstr "Nazwa użytkownika"
 #: .\contest\templates\contest\profile.html:24
 msgid "Primary email"
 msgstr "Email (główny)"
-
-#: .\contest\templates\contest\profile.html:32
-msgid "Address"
-msgstr "Adres"
 
 #: .\contest\templates\contest\profile.html:36
 msgid "Preferred judging language"
@@ -1207,6 +1195,11 @@ msgstr "Bez wad, w większości w stylu"
 msgid "Mead ideal with the style"
 msgstr "Dokładnie w stylu"
 
+#~ msgid "I agree to KMP Bartnik's Privacy Policy"
+#~ msgstr ""
+#~ "Wyrażam zgodę na wykorzystywanie moich danych osobowych zgodnie z "
+#~ "Polityką Prywatności KMP Bartnik"
+
 #~ msgid "Medal"
 #~ msgstr "Medal"
 
@@ -1215,11 +1208,11 @@ msgstr "Dokładnie w stylu"
 
 #, python-brace-format
 #~ msgid ""
-#~ "You have reached entry limit for {self.category} category "
-#~ "({self.category.entries_limit})!"
+#~ "You have reached entry limit for {self.category} category ({self.category."
+#~ "entries_limit})!"
 #~ msgstr ""
-#~ "Osiągnięto limit zgłoszeń w kategorii {self.category} "
-#~ "({self.category.entries_limit})! "
+#~ "Osiągnięto limit zgłoszeń w kategorii {self.category} ({self.category."
+#~ "entries_limit})! "
 
 #~ msgid "Entries that have been received cannot be edited!"
 #~ msgstr "Nie można edytować dostarczonych zgłoszeń"

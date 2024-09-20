@@ -1068,3 +1068,14 @@ class MedalsListView(ListView):
         if not (self.contest and self.contest.show_results):
             raise Http404
         return super().dispatch(request, *args, **kwargs)
+
+
+class PrivacyView(TemplateView):
+    template_name = "contest/privacy_en.html"
+
+    def get_template_names(self):
+        current_language = get_language()
+        if current_language == "pl":
+            return ["contest/privacy_pl.html"]
+
+        return [self.template_name]

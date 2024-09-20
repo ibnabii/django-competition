@@ -1,8 +1,9 @@
 from allauth.account.forms import SignupForm
 from django import forms
 from django.core.exceptions import ValidationError
+from django.urls import reverse_lazy, reverse
 from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, get_language
 
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
@@ -199,9 +200,21 @@ class ScoreSheetForm(forms.ModelForm):
 
 
 class CustomSignupForm(SignupForm):
-    gdpr_consent = forms.BooleanField(
-        label=_("I agree to KMP Bartnik's Privacy Policy"), required=True
-    )
+    gdpr_consent = forms.BooleanField()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        url = reverse("contest:privacy")
+        current_language = get_language()
+        if current_language == "pl":
+            self.fields["gdpr_consent"].label = mark_safe(
+                f"Wyrażam zgodę na wykorzystywanie moich danych osobowych zgodnie z "
+                f"<a href='{url}' target='_blank'>Polityką Prywatności</a> KMP Bartnik"
+            )
+        else:
+            self.fields["gdpr_consent"].label = mark_safe(
+                f"I accept processing of my data per KMP Bartnik's <a href='{url}' target='_blank'>Privacy Policy</a>"
+            )
 
     def save(self, request):
         user = super(CustomSignupForm, self).save(request)

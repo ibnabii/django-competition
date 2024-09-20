@@ -146,4 +146,5 @@ urlpatterns = [
         views.MedalsListView.as_view(),
         name="contest_results",
     ),
+    path("privacy/", views.PrivacyView.as_view(), name="privacy"),
 ]
