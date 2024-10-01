@@ -339,24 +339,6 @@ class Contest(models.Model):
 
     @cached_property
     def show_results(self):
-        print(1, self.result_is_published)
-        print(2, self.result_autopublish_datetime)
-        # print(3, self.result_autopublish_datetime <= datetime.now())
-        print(
-            4,
-            (
-                self.result_autopublish_datetime
-                and self.result_autopublish_datetime <= datetime.now()
-            ),
-        )
-        print(
-            5,
-            self.result_is_published
-            or (
-                self.result_autopublish_datetime
-                and self.result_autopublish_datetime <= datetime.now()
-            ),
-        )
         return self.result_is_published or (
             self.result_autopublish_datetime
             and self.result_autopublish_datetime <= datetime.now()

@@ -129,7 +129,6 @@ class GroupRequiredMixin(UserPassesTestMixin):
     groups_required = None
 
     def test_func(self):
-        print("GroupRequiredMixin.test_func")
         if len(self.groups_required) == 0:
             return True
         groups = set(self.groups_required)
@@ -347,7 +346,6 @@ class DeleteEntryView(UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         next_url = self.request.GET.get("next")
-        print(next_url)
         if next_url:
             return next_url
         else:
