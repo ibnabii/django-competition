@@ -206,14 +206,17 @@ class CustomSignupForm(SignupForm):
         super().__init__(*args, **kwargs)
         url = reverse("contest:privacy")
         current_language = get_language()
+        self.order_fields(
+            ["username", "email", "password1", "password2", "gdpr_consent"]
+        )
         if current_language == "pl":
             self.fields["gdpr_consent"].label = mark_safe(
-                f"Wyrażam zgodę na wykorzystywanie moich danych osobowych zgodnie z "
+                f"Wyrażam zgodę na wykorzystywanie<br/>moich danych osobowych zgodnie z<br />"
                 f"<a href='{url}' target='_blank'>Polityką Prywatności</a> KMP Bartnik"
             )
         else:
             self.fields["gdpr_consent"].label = mark_safe(
-                f"I accept processing of my data per KMP Bartnik's <a href='{url}' target='_blank'>Privacy Policy</a>"
+                f"I accept processing of my data<br />per KMP Bartnik's <a href='{url}' target='_blank'>Privacy Policy</a>"
             )
 
     def save(self, request):
