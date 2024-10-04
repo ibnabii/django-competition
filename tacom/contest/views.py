@@ -819,9 +819,6 @@ class JudgingListView(GroupRequiredMixin, ListView):
             .order_by("category__style__name", "code")
         )
 
-    def get_contest(self):
-        return Contest.objects.get(slug=self.kwargs["slug"])
-
 
 class ScoreSheetView(GroupRequiredMixin, DetailView):
     model = ScoreSheet
