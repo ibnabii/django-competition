@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-04 21:33+0200\n"
-"PO-Revision-Date: 2024-10-04 21:34+0200\n"
+"POT-Creation-Date: 2024-10-04 21:42+0200\n"
+"PO-Revision-Date: 2024-10-04 21:43+0200\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -75,7 +75,7 @@ msgstr "Opublikuj wyniki konkursu"
 msgid "Audit"
 msgstr "Audyt"
 
-#: .\contest\admin.py:263 .\contest\models.py:686
+#: .\contest\admin.py:263 .\contest\models.py:690
 msgid "Contest"
 msgstr "Konkurs"
 
@@ -172,7 +172,7 @@ msgstr "Opłacone"
 msgid "Received"
 msgstr "Dostarczone"
 
-#: .\contest\models.py:123 .\contest\models.py:493 .\contest\models.py:640
+#: .\contest\models.py:123 .\contest\models.py:493 .\contest\models.py:644
 #: .\contest\templates\contest\entries.html:40
 #: .\contest\templates\contest\entry_confirm_delete.html:9
 #: .\contest\templates\contest\payment_confirm_delete.html:49
@@ -458,128 +458,146 @@ msgstr "Osiągnięto limit liczby zgłoszeń na uczestnika."
 msgid "Entries that has been paid or received cannot be deleted!"
 msgstr "Nie można usunąć opłaconych zgłoszeń"
 
+#: .\contest\models.py:637
+#| msgid "Payment failed"
+msgid "Payment Method"
+msgstr "Metoda Płatności"
+
 #: .\contest\models.py:638
+#| msgid "Payments"
+msgid "Payment Methods"
+msgstr "Metody Płatności"
+
+#: .\contest\models.py:642
 msgid "Displayed at payment method selection page"
 msgstr "Wyświetlane na stronie wyboru płatności"
 
-#: .\contest\models.py:641
+#: .\contest\models.py:645
 msgid "Polish name"
 msgstr "Nazwa polska"
 
-#: .\contest\models.py:645
+#: .\contest\models.py:649
 msgid "Method code"
 msgstr "Kod metody"
 
-#: .\contest\models.py:646
+#: .\contest\models.py:650
 msgid "Code is used by the software, do not change!"
 msgstr "Kod jest używany przez system, nie zmieniaj go"
 
-#: .\contest\models.py:662
+#: .\contest\models.py:666
 msgid "payment"
 msgstr "płatność"
 
-#: .\contest\models.py:663
+#: .\contest\models.py:667
 msgid "payments"
 msgstr "płatności"
 
-#: .\contest\models.py:666
+#: .\contest\models.py:670
 msgid "Created"
 msgstr "Utworzona"
 
-#: .\contest\models.py:667
+#: .\contest\models.py:671
 msgid "Canceled"
 msgstr "Anulowany"
 
-#: .\contest\models.py:668
+#: .\contest\models.py:672
 msgid "OK"
 msgstr "OK"
 
-#: .\contest\models.py:669
+#: .\contest\models.py:673
 msgid "Failed"
 msgstr "Niepowodzenie"
 
-#: .\contest\models.py:670
+#: .\contest\models.py:674
 msgid "Confirmation pending"
 msgstr "Czeka na potwierdzenie"
 
-#: .\contest\models.py:677
+#: .\contest\models.py:681
 msgid "Method"
 msgstr "Metoda"
 
-#: .\contest\models.py:680
+#: .\contest\models.py:684
 msgid "User"
 msgstr "Użytkownik"
 
-#: .\contest\models.py:689
+#: .\contest\models.py:693
 #: .\contest\templates\contest\payment_confirm_delete.html:43
 #: .\contest\templates\contest\payment_list.html:21
 msgid "Entries"
 msgstr "Zgłoszenia"
 
-#: .\contest\models.py:692
+#: .\contest\models.py:696
 #: .\contest\templates\contest\payment_confirm_delete.html:35
 #: .\contest\templates\contest\payment_list.html:18
 msgid "Amount"
 msgstr "Kwota"
 
-#: .\contest\models.py:694
+#: .\contest\models.py:698
 msgid "Currency"
 msgstr "Waluta"
 
-#: .\contest\models.py:728
+#: .\contest\models.py:732
 #: .\contest\templates\contest\scoresheet_entry.html:12
 msgid "Entry"
 msgstr "Zgłoszenie"
 
-#: .\contest\models.py:730
+#: .\contest\models.py:734
 #: .\contest\templates\contest\scoresheet_detail.html:10
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:56
 msgid "Final round"
 msgstr "Runda finałowa"
 
-#: .\contest\models.py:731
+#: .\contest\models.py:735
 msgid "Place"
 msgstr "Miejsce"
 
-#: .\contest\models.py:733 .\contest\views.py:853
+#: .\contest\models.py:737 .\contest\views.py:853
 msgid "Appearance"
 msgstr "Wygląd"
 
-#: .\contest\models.py:735
+#: .\contest\models.py:739
 msgid "Appearance score"
 msgstr "Punkty za wygląd"
 
-#: .\contest\models.py:738 .\contest\views.py:854
+#: .\contest\models.py:742 .\contest\views.py:854
 msgid "Aroma"
 msgstr "Aromat"
 
-#: .\contest\models.py:740
+#: .\contest\models.py:744
 msgid "Aroma score"
 msgstr "Punkty za aromat"
 
-#: .\contest\models.py:742
+#: .\contest\models.py:746
 msgid "Flavor and body"
 msgstr "Smak"
 
-#: .\contest\models.py:744
+#: .\contest\models.py:748
 msgid "Flavor and body score"
 msgstr "Punkty za smak"
 
-#: .\contest\models.py:746 .\contest\views.py:856
+#: .\contest\models.py:750 .\contest\views.py:856
 msgid "Finish"
 msgstr "Finisz"
 
-#: .\contest\models.py:748
+#: .\contest\models.py:752
 msgid "Finish score"
 msgstr "Punkty za finisz"
 
-#: .\contest\models.py:750
+#: .\contest\models.py:754
 msgid "Overall impression"
 msgstr "Wrażenie ogólne"
 
-#: .\contest\models.py:752
+#: .\contest\models.py:756
 msgid "Overal impression score"
 msgstr "Punkty za wrażenie ogólne"
+
+#: .\contest\models.py:761
+msgid "Score Sheet"
+msgstr "Arkusz Oceny"
+
+#: .\contest\models.py:762
+msgid "Score Sheets"
+msgstr "Arkusze Oceny"
 
 #: .\contest\templates\contest\add_entry.html:10
 msgid "Provide entry details:"

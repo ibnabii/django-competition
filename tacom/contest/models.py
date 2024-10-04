@@ -633,6 +633,10 @@ class EntriesPackage(models.Model):
 
 
 class PaymentMethod(models.Model):
+    class Meta:
+        verbose_name = _("Payment Method")
+        verbose_name_plural = _("Payment Methods")
+
     id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
     logo = models.ImageField(
         blank=True, null=True, help_text=_("Displayed at payment method selection page")
@@ -752,6 +756,10 @@ class ScoreSheet(models.Model):
         verbose_name=_("Overal impression score"), validators=(MaxValueValidator(12),)
     )
     history = HistoricalRecords()
+
+    class Meta:
+        verbose_name = _("Score Sheet")
+        verbose_name_plural = _("Score Sheets")
 
     def __str__(self):
         return f"{self.entry.code}"
