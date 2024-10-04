@@ -1,4 +1,5 @@
 import json
+import os
 
 from django.conf import settings
 from django.contrib import messages
@@ -1077,3 +1078,34 @@ class PrivacyView(TemplateView):
             return ["contest/privacy_pl.html"]
 
         return [self.template_name]
+
+
+class PartnersGalleryView(TemplateView):
+    template_name = "contest/partners_gallery_template.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Parameters
+        images_path = "contest/partners"
+        context["max_width"] = 200
+        context["max_height"] = 200
+
+        # Path to the static/partners directory
+        images_dir = os.path.join(settings.STATIC_ROOT, images_path)
+
+        # List all valid image files (e.g., jpg, png, gif, etc.)
+        valid_extensions = (".jpg", ".jpeg", ".png", ".gif", ".webp")
+        images = [
+            f for f in os.listdir(images_dir) if f.lower().endswith(valid_extensions)
+        ]
+
+        # Construct the URLs for the static images
+        image_urls = [
+            os.path.join(settings.STATIC_URL, images_path, img) for img in images
+        ]
+
+        # Add the image URLs to the context
+        context["image_urls"] = image_urls
+
+        return context

@@ -1,0 +1,10 @@
+<div id="partners-gallery">
+    <!-- The gallery will be injected here -->
+</div>
+<script src="https://unpkg.com/htmx.org@1.9.2"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load the gallery when the page is fully loaded
+        htmx.ajax('GET', '{% url "contest:partners_gallery" %}', '#partners-gallery');
+    });
+</script>

@@ -5,3 +5,4 @@
 /tacom/media
 *./__pycache__
 /data_dumps/
+/tacom/serving_static

@@ -147,4 +147,5 @@ urlpatterns = [
         name="contest_results",
     ),
     path("privacy/", views.PrivacyView.as_view(), name="privacy"),
+    path("partners/", views.PartnersGalleryView.as_view(), name="partners_gallery"),
 ]

@@ -1,0 +1,14 @@
+{% load i18n %}
+<div>
+    <h2>{% translate "Partners" %}</h2>
+    <div class="container" style="background-color: white; border-radius: 15px; padding: 20px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+            {% for image_url in image_urls %}
+                <div style="flex: 0 1 auto; margin: 10px; display: flex; justify-content: center; align-items: center;">
+                    <img src="{{ image_url }}" alt="Partner Image"
+                         style="max-height: {{ max_height }}px; max-width: {{ max_width }}px; object-fit: contain;">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
