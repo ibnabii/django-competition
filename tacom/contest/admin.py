@@ -4,21 +4,27 @@ from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
 from simple_history.admin import SimpleHistoryAdmin
 
-from .models import Contest, Style, Entry, Category, User, Participant, EntriesPackage, PaymentMethod, Payment, ScoreSheet
+from .models import (
+    Contest,
+    Style,
+    Entry,
+    Category,
+    User,
+    Participant,
+    EntriesPackage,
+    PaymentMethod,
+    Payment,
+    ScoreSheet,
+)
 
 
 @admin.register(Style)
 class StyleAdmin(admin.ModelAdmin):
     model = Style
     formfield_overrides = {
-        TextField: {'widget': TinyMCE(attrs={'cols': 80, 'rows': 30})},
+        TextField: {"widget": TinyMCE(attrs={"cols": 80, "rows": 30})},
     }
-    readonly_fields = [
-        'created_at',
-        'created_by',
-        'modified_at',
-        'modified_by'
-    ]
+    readonly_fields = ["created_at", "created_by", "modified_at", "modified_by"]
 
     def save_model(self, request, obj, form, change):
         obj.modified_by = request.user
@@ -39,109 +45,94 @@ class ContestAdmin(admin.ModelAdmin):
     inlines = (CategoriesForContest,)
     save_on_top = True
     # filter_horizontal = ('categories', )
-    readonly_fields = [
-        'created_at',
-        'created_by',
-        'modified_at',
-        'modified_by'
-    ]
+    readonly_fields = ["created_at", "created_by", "modified_at", "modified_by"]
     formfield_overrides = {
-        TextField: {'widget': TinyMCE(attrs={'cols': 80, 'rows': 30})},
+        TextField: {"widget": TinyMCE(attrs={"cols": 80, "rows": 30})},
     }
     fieldsets = [
+        (None, {"fields": ["title", "slug", "logo"]}),
         (
-            None,
+            _("Description"),
             {
-                'fields': ['title', 'slug', 'logo']
-            }
+                "classes": ["collapse"],
+                "fields": ["description"],
+            },
         ),
         (
-            _('Description'),
+            _("Description in polish"),
             {
-                'classes': ['collapse'],
-                'fields': ['description'],
-            }
+                "classes": ["collapse"],
+                "fields": ["description_pl"],
+            },
         ),
         (
-            _('Description in polish'),
+            _("Rules"),
             {
-                'classes': ['collapse'],
-                'fields': ['description_pl'],
-            }
+                "classes": ["collapse"],
+                "fields": ["rules"],
+            },
         ),
         (
-            _('Rules'),
+            _("Rules in polish"),
             {
-                'classes': ['collapse'],
-                'fields': ['rules'],
-            }
+                "classes": ["collapse"],
+                "fields": ["rules_pl"],
+            },
         ),
         (
-            _('Rules in polish'),
+            _("Delivery address"),
             {
-                'classes': ['collapse'],
-                'fields': ['rules_pl'],
-            }
+                "classes": ["collapse"],
+                "fields": ["delivery_address"],
+            },
         ),
         (
-            _('Delivery address'),
+            _("Fees"),
             {
-                'classes': ['collapse'],
-                'fields': ['delivery_address'],
-            }
+                "classes": ["collapse"],
+                "fields": [
+                    ("entry_fee_amount", "entry_fee_currency"),
+                    ("payment_methods",),
+                    ("payment_transfer_info",),
+                ],
+            },
         ),
         (
-            _('Fees'),
+            _("Judging"),
             {
-                'classes': ['collapse'],
-                'fields': [
-                    ('entry_fee_amount', 'entry_fee_currency'),
-                    ('payment_methods',),
-                    ('payment_transfer_info',)
+                "fields": [("is_judging_eliminations",), ("is_judging_finals",)],
+                "description": _(
+                    "Check which part of judging you want to make available to judges NOW"
+                ),
+            },
+        ),
+        (_("Limits"), {"fields": [("entry_global_limit", "entry_user_limit")]}),
+        (
+            _("Dates"),
+            {
+                "fields": [
+                    ("registration_date_from", "registration_date_to"),
+                    ("delivery_date_from", "delivery_date_to"),
+                    ("judging_date_from", "judging_date_to"),
                 ]
-            }
+            },
         ),
         (
-            _('Limits'),
+            _("Publish competition page"),
             {
-                'fields': [
-                    ('entry_global_limit', 'entry_user_limit')
+                "fields": [
+                    "competition_is_published",
+                    "competition_autopublish_datetime",
                 ]
-            }
+            },
         ),
         (
-            _('Dates'),
-            {
-                'fields': [
-                    ('registration_date_from', 'registration_date_to'),
-                    ('delivery_date_from', 'delivery_date_to'),
-                    ('judging_date_from', 'judging_date_to'),
-                ]
-            }
+            _("Publish competition results"),
+            {"fields": ["result_is_published", "result_autopublish_datetime"]},
         ),
         (
-            _('Publish competition page'),
-            {
-                'fields': [
-                    'competition_is_published',
-                    'competition_autopublish_datetime',
-                ]
-            }
-        ),
-        (
-            _('Publish competition results'),
-            {
-                'fields': [
-                    'result_is_published',
-                    'result_autopublish_datetime'
-                ]
-            }
-        ),
-        (
-            _('Audit'),
-            {
-                'fields': [('created_at', 'created_by'), ('modified_at', 'modified_by')]
-            }
+            _("Audit"),
+            {"fields": [("created_at", "created_by"), ("modified_at", "modified_by")]},
         ),
     ]
 
@@ -168,18 +159,14 @@ class ContestAdmin(admin.ModelAdmin):
 #             obj.created_by = request.user
 #         super().save_model(request, obj, form, change)
 
+
 @admin.register(User)
 class CustomUserAdmin(admin.ModelAdmin):
     readonly_fields = [
-        'date_joined',
-        'last_login',
+        "date_joined",
+        "last_login",
     ]
-    list_display = (
-        'username',
-        'last_name',
-        'first_name',
-        'email'
-    )
+    list_display = ("username", "last_name", "first_name", "email")
     list_display_links = list_display
 
     def get_form(self, request, obj=None, **kwargs):
@@ -187,24 +174,17 @@ class CustomUserAdmin(admin.ModelAdmin):
         is_superuser = request.user.is_superuser
 
         if not is_superuser:
-            form.base_fields['user_permissions'].disabled = True
-            form.base_fields['is_staff'].disabled = True
-            form.base_fields['is_superuser'].disabled = True
+            form.base_fields["user_permissions"].disabled = True
+            form.base_fields["is_staff"].disabled = True
+            form.base_fields["is_superuser"].disabled = True
         return form
 
 
 class EntriesForParticipant(admin.TabularInline):
     model = Entry
     extra = 0
-    readonly_fields = (
-        'id',
-        'style',
-        'name',
-        'extra_info',
-        'is_paid',
-        'is_received'
-    )
-    exclude = ('category',)
+    readonly_fields = ("id", "style", "name", "extra_info", "is_paid", "is_received")
+    exclude = ("category",)
     show_change_link = True
 
     def style(self, obj):
@@ -220,39 +200,35 @@ class EntriesForParticipant(admin.TabularInline):
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
     f = (
-        'username',
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-        'address',
-        'language',
-        'date_joined',
-        'last_login'
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "phone",
+        "address",
+        "language",
+        "date_joined",
+        "last_login",
     )
-    fields = (
-        'is_active',
-        *f
-    )
+    fields = ("is_active", *f)
     readonly_fields = f
 
     inlines = (EntriesForParticipant,)
     save_on_top = True
 
-
     list_display = (
-        'username',
-        'last_name',
-        'first_name',
-        'email',
-        'phone',
-        'entries_total',
-        'entries_paid',
-        'entries_received'
+        "username",
+        "last_name",
+        "first_name",
+        "email",
+        "phone",
+        "entries_total",
+        "entries_paid",
+        "entries_received",
     )
 
     def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related('entries')
+        return super().get_queryset(request).prefetch_related("entries")
 
 
 @admin.register(Entry)
@@ -260,35 +236,35 @@ class EntryAdmin(admin.ModelAdmin):
     model = Entry
     list_display = [
         # 'get_contest_title',
-        'code',
-        'brewer',
-        'get_style_name',
-        'name',
-        'is_paid',
-        'is_received',
-        'extra_info',
+        "code",
+        "brewer",
+        "get_style_name",
+        "name",
+        "is_paid",
+        "is_received",
+        "extra_info",
     ]
     readonly_fields = [
-        'modified_at',
+        "modified_at",
     ]
     list_filter = [
-        'is_paid',
-        'is_received',
-        'category__contest__title',
-        'category__style__name',
+        "is_paid",
+        "is_received",
+        "category__contest__title",
+        "category__style__name",
     ]
     search_fields = [
-        'brewer__username',
-        'brewer__first_name',
-        'brewer__last_name',
-        'brewer__email',
+        "brewer__username",
+        "brewer__first_name",
+        "brewer__last_name",
+        "brewer__email",
     ]
 
-    @admin.display(ordering='category__contest__title', description=_('Contest'))
+    @admin.display(ordering="category__contest__title", description=_("Contest"))
     def get_contest_title(self, obj):
         return obj.category.contest.title
 
-    @admin.display(ordering='category__style__name', description=_('Style'))
+    @admin.display(ordering="category__style__name", description=_("Style"))
     def get_style_name(self, obj):
         return obj.category.style.name
 
@@ -311,18 +287,18 @@ class PaymentMethodAdmin(admin.ModelAdmin):
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
     list_display = (
-        'id',
-        'user',
-        'created_at',
-        'method',
-        'status',
-        'amount',
-        'currency'
+        "id",
+        "user",
+        "created_at",
+        "method",
+        "status",
+        "amount",
+        "currency",
     )
 
 
 @admin.register(ScoreSheet)
 class ScoreSheetAdmin(SimpleHistoryAdmin):
     formfield_overrides = {
-        TextField: {'widget': TinyMCE(attrs={'cols': 80, 'rows': 100})},
+        TextField: {"widget": TinyMCE(attrs={"cols": 80, "rows": 100})},
     }

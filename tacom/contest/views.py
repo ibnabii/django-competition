@@ -1,3 +1,4 @@
+import abc
 import json
 import os
 
@@ -793,6 +794,16 @@ class PaymentReceivedView(GroupRequiredMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
+class ContestJudgingEliminationsMixin(UserPassesTestMixin):
+
+    @abc.abstractmethod
+    def get_contest(self) -> Contest:
+        pass
+
+    def test_func(self):
+        return self.get_contest().is_judging_eliminations
+
+
 class JudgingListView(GroupRequiredMixin, ListView):
     model = Entry
     template_name = "contest/judging_list_by_style.html"
@@ -807,6 +818,9 @@ class JudgingListView(GroupRequiredMixin, ListView):
             .select_related("category__style", "brewer")
             .order_by("category__style__name", "code")
         )
+
+    def get_contest(self):
+        return Contest.objects.get(slug=self.kwargs["slug"])
 
 
 class ScoreSheetView(GroupRequiredMixin, DetailView):
@@ -1015,7 +1029,12 @@ class ScoreSheetTableMixin(ContextMixin):
         return context
 
 
-class ScoreSheetEdit(GroupRequiredMixin, ScoreSheetTableMixin, UpdateView):
+class ScoreSheetEdit(
+    ContestJudgingEliminationsMixin,
+    GroupRequiredMixin,
+    ScoreSheetTableMixin,
+    UpdateView,
+):
     model = ScoreSheet
     form_class = ScoreSheetForm
     groups_required = ("judge",)
@@ -1023,8 +1042,16 @@ class ScoreSheetEdit(GroupRequiredMixin, ScoreSheetTableMixin, UpdateView):
     def get_success_url(self):
         return reverse("contest:scoresheet_view", args=(self.object.id,))
 
+    def get_contest(self):
+        return self.get_object().entry.category.contest
 
-class ScoreSheetCreate(GroupRequiredMixin, ScoreSheetTableMixin, CreateView):
+
+class ScoreSheetCreate(
+    ContestJudgingEliminationsMixin,
+    GroupRequiredMixin,
+    ScoreSheetTableMixin,
+    CreateView,
+):
     model = ScoreSheet
     form_class = ScoreSheetForm
     groups_required = ("judge",)
@@ -1042,6 +1069,9 @@ class ScoreSheetCreate(GroupRequiredMixin, ScoreSheetTableMixin, CreateView):
             "entry": get_object_or_404(Entry, pk=self.kwargs["entry"])
         }
         return context
+
+    def get_contest(self):
+        return Entry.objects.get(pk=self.kwargs["entry"]).category.contest
 
 
 class MedalsListView(ListView):

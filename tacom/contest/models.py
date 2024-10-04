@@ -306,6 +306,14 @@ class Contest(models.Model):
         Style, through="Category", through_fields=("contest", "style")
     )
 
+    is_judging_eliminations = models.BooleanField(
+        default=False, verbose_name=_("Enable judges to judge elimination round.")
+    )
+
+    is_judging_finals = models.BooleanField(
+        default=False, verbose_name=_("Enable judges to judge final round.")
+    )
+
     # audit fields
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
