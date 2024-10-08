@@ -33,7 +33,9 @@
         {% block content %}
 
         {% endblock %}
+    {% include "contest/partners_gallery.html" %}
     </div>
+    
 {% if TEST_ENV %}
     {% include 'contest/test_environment_banner.html' %}
 {% endif %}
