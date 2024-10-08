@@ -3,11 +3,27 @@
     </td></tr>
     {% for entry in entries %}
         <tr
-            {% if forloop.counter|divisibleby:5 %}
+            {% if forloop.counter|divisibleby:2 %}
             style="page-break-before: always"
             {% endif %}
         >
             <td>
+                <table class="table-borderless">
+                    <tr><td>Style:</td><td>{{ entry.category.style }}</td></tr>
+                    <tr><td>Name:</td><td>{{ entry.name }}</td></tr>
+                    <tr><td>Number:</td><td>{{ entry.code }}</td></tr>
+                </table>
+            </td>
+            <td align="center">
+                <br/>
+                <h5>{{ entry.category.style }}</h5>
+                <h2>{{ entry.code }}</h2>
+                <h5>{{ user.language }}</h5>
+                <br/>
+            </td>
+        </tr>
+        <tr>
+        <td>
                 <table class="table-borderless">
                     <tr><td>Style:</td><td>{{ entry.category.style }}</td></tr>
                     <tr><td>Name:</td><td>{{ entry.name }}</td></tr>
