@@ -17,7 +17,7 @@ class NewEntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         # fields = ['name', 'extra_info']
-        exclude = ("category",)
+        exclude = ("category", "place")
         widgets = {
             "name": forms.TextInput(attrs={"size": 80}),
             # 'extra_info': forms.TextInput(attrs={'size': 80}),
@@ -40,7 +40,7 @@ class NewEntryForm(forms.ModelForm):
 
 class EditEntryForm(NewEntryForm):
     class Meta:
-        fields = "__all__"
+        exclude = ("place",)
         widgets = {
             "name": forms.TextInput(attrs={"size": 80}),
             "extra_info": forms.Textarea(attrs={"cols": 80, "rows": 5}),
