@@ -54,7 +54,16 @@ from .forms import (
     EditEntryForm,
     FinalEntriesFormset,
 )
-from .models import Contest, Category, Entry, User, EntriesPackage, Payment, ScoreSheet
+from .models import (
+    Contest,
+    Category,
+    Entry,
+    User,
+    EntriesPackage,
+    Payment,
+    ScoreSheet,
+    Style,
+)
 from .utils import get_client_ip, mail_entry_status_change
 
 
@@ -1205,9 +1214,8 @@ class JudgingFinalsListView(ContestJudgingFinalsMixin, GroupRequiredMixin, ListV
 class JudgingFinalsCategoryView(
     ContestJudgingFinalsMixin, GroupRequiredMixin, UpdateView
 ):
-    model = Entry
+    # model = Entry
     template_name = "contest/judging_finals_category.html"
-    context_object_name = "entries"
     groups_required = ("judge_final",)
 
     def get_success_url(self):
@@ -1226,8 +1234,12 @@ class JudgingFinalsCategoryView(
         return Contest.objects.get(slug=self.kwargs["slug"])
 
     def get(self, request, *args, **kwargs):
-        formset = FinalEntriesFormset(queryset=self.get_queryset())
-        return render(request, self.template_name, {"formset": formset})
+        context = {
+            "formset": FinalEntriesFormset(queryset=self.get_queryset()),
+            "style": Category.objects.get(id=self.kwargs["category_id"]).style.name,
+        }
+
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         formset = FinalEntriesFormset(request.POST, queryset=self.get_queryset())

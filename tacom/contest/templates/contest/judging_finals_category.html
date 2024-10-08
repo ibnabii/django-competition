@@ -1,7 +1,7 @@
 {% extends "contest/base.html" %}
 {% block content %}
     {% load i18n %}
-
+    <h2>{{ style }}</h2>
     <form method="post">
         {% csrf_token %}
         {{ formset.management_form }}
