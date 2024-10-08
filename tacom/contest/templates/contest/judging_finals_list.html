@@ -1,0 +1,50 @@
+{% extends "contest/base.html" %}
+{% block content %}
+    {% load i18n %}
+    {% load bootstrap_icons %}
+
+    <h3 class="h3">{% translate "Final round" %}</h3>
+
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">
+                    {% translate "Category" %}
+                </th>
+                <th scope="col">
+                    {% translate "Entries in final" %}
+                </th>
+                <th scope="col">
+                    {% translate "Winners" %}
+                </th>
+                <th scope="col">
+                    {% translate "Judging" %}
+                </th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category }}</td>
+                    <td>{{ category.finals_count }} / {{ category.entries.all|length }}</td>
+                    <td>{{ category.winning_entries|join:", "|default_if_none:"" }}</td>
+                    <td>
+                        <a class="btn
+                            {% if category.is_final_round_done %}btn-outline-primary
+                            {% else %}btn-primary{% endif %}
+                            "
+                           href="{% url 'contest:judging_finals_category' category.contest.slug category.id %}"
+                           title="{% translate 'Assign places' %}"
+                           data-toggle="tooltip"
+                        >
+                            {% bs_icon 'pencil' size='1.5em' %}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

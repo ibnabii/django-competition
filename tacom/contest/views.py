@@ -4,11 +4,23 @@ import os
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    AccessMixin,
+)
 from django.core.exceptions import PermissionDenied
-from django.db.models import Prefetch
+from django.db.models import (
+    Prefetch,
+    Count,
+    Case,
+    When,
+    IntegerField,
+    Subquery,
+    OuterRef,
+)
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, get_object_or_404, Http404
+from django.shortcuts import redirect, get_object_or_404, Http404, render
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
@@ -40,6 +52,7 @@ from .forms import (
     NewAdminPackage,
     ScoreSheetForm,
     EditEntryForm,
+    FinalEntriesFormset,
 )
 from .models import Contest, Category, Entry, User, EntriesPackage, Payment, ScoreSheet
 from .utils import get_client_ip, mail_entry_status_change
@@ -804,6 +817,26 @@ class ContestJudgingEliminationsMixin(UserPassesTestMixin):
         return self.get_contest().is_judging_eliminations
 
 
+# class ContestJudgingFinalsMixin(UserPassesTestMixin):
+#
+#     @abc.abstractmethod
+#     def get_contest(self) -> Contest:
+#         pass
+#
+#     def test_func(self):
+#         return self.get_contest().is_judging_finals
+class ContestJudgingFinalsMixin:
+
+    @abc.abstractmethod
+    def get_contest(self) -> Contest:
+        pass
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.get_contest().is_judging_finals:
+            raise PermissionDenied()
+        return super().dispatch(request, *args, **kwargs)
+
+
 class JudgingListView(GroupRequiredMixin, ListView):
     model = Entry
     template_name = "contest/judging_list_by_style.html"
@@ -1136,3 +1169,69 @@ class PartnersGalleryView(TemplateView):
         context["image_urls"] = image_urls
 
         return context
+
+
+class JudgingFinalsListView(ContestJudgingFinalsMixin, GroupRequiredMixin, ListView):
+    template_name = "contest/judging_finals_list.html"
+    context_object_name = "categories"
+    groups_required = ("judge_final",)
+
+    def get_queryset(self):
+        categories = (
+            Category.objects.filter(contest__slug=self.kwargs["slug"])
+            .annotate(
+                finals_count=Count(
+                    Case(
+                        When(entries__scoresheets__final_round=True, then=1),
+                        output_field=IntegerField(),
+                    )
+                )
+            )
+            .prefetch_related(
+                Prefetch(
+                    "entries",
+                    queryset=Entry.objects.filter(place__gt=0).order_by("place"),
+                    to_attr="winning_entries",
+                )
+            )
+        )
+        return categories
+
+    def get_contest(self) -> Contest:
+        return Contest.objects.get(slug=self.kwargs["slug"])
+
+
+class JudgingFinalsCategoryView(
+    ContestJudgingFinalsMixin, GroupRequiredMixin, UpdateView
+):
+    model = Entry
+    template_name = "contest/judging_finals_category.html"
+    context_object_name = "entries"
+    groups_required = ("judge_final",)
+
+    def get_success_url(self):
+        messages.success(
+            self.request,
+            _("Final round results saved for category: ")
+            + Category.objects.get(id=self.kwargs["category_id"]).style.name,
+        )
+        return reverse("contest:judging_finals_list", args=(self.kwargs["slug"],))
+
+    def get_queryset(self):
+        finals = Category.objects.get(id=self.kwargs["category_id"]).entries_in_final
+        return Entry.objects.filter(id__in=finals)
+
+    def get_contest(self) -> Contest:
+        return Contest.objects.get(slug=self.kwargs["slug"])
+
+    def get(self, request, *args, **kwargs):
+        formset = FinalEntriesFormset(queryset=self.get_queryset())
+        return render(request, self.template_name, {"formset": formset})
+
+    def post(self, request, *args, **kwargs):
+        formset = FinalEntriesFormset(request.POST, queryset=self.get_queryset())
+
+        if formset.is_valid():
+            formset.save()
+            return redirect(self.get_success_url())  # Replace with your success URL
+        return render(request, self.template_name, {"formset": formset})

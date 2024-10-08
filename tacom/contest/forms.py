@@ -224,3 +224,29 @@ class CustomSignupForm(SignupForm):
         user.gdpr_consent = self.cleaned_data["gdpr_consent"]
         user.save()
         return user
+
+
+class FinalEntryForm(forms.ModelForm):
+    class Meta:
+        model = Entry
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name in self.fields:
+            if field_name != "place":
+                self.fields[field_name].widget = forms.HiddenInput()
+
+
+class FinalEntryFormset(forms.BaseModelFormSet):
+    def save(self, commit=True, **kwargs):
+        print("FinalEntryFormset.save")
+        final_judgment = kwargs.pop("final_judgment", False)
+        instances = super().save(commit=False)  # Get the instances without saving them
+        for instance in instances:
+            if commit:
+                instance.save(final_judgment=final_judgment)  # Save the instance
+        return instances
+
+
+FinalEntriesFormset = forms.modelformset_factory(Entry, form=FinalEntryForm, extra=0)

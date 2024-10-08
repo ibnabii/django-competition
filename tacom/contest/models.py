@@ -456,6 +456,26 @@ class Category(models.Model):
     def __str__(self):
         return f"{self.style.name}"
 
+    @cached_property
+    def is_final_round_done(self):
+        # number of assigned places in finals (up to 3)
+        entries_with_place = self.entries.filter(place__gt=0).count()
+        if entries_with_place == 3:
+            return True
+        # if not 3, check if there were sufficient entries in finals
+        entries_in_final = len(self.entries_in_final)
+        print(self, entries_in_final)
+        # no final round
+        if entries_in_final == 0:
+            return True
+
+        # all entries in final got their place
+        return entries_in_final == entries_with_place
+
+    @cached_property
+    def entries_in_final(self):
+        return [entry.id for entry in self.entries.all() if entry.in_final_round]
+
 
 def code_generator():
     # for migration only:
@@ -507,6 +527,7 @@ class Entry(models.Model):
         max_digits=4,
         decimal_places=2,
     )
+    place = models.PositiveIntegerField(verbose_name=_("Place"), default=0)
     is_paid = models.BooleanField(
         default=False, verbose_name=_("Is paid"), editable=False
     )
@@ -528,7 +549,7 @@ class Entry(models.Model):
     def __str__(self):
         return str(self.code)
 
-    def clean(self):
+    def clean(self, **kwargs):
         if self.category.style.extra_info_is_required and self.extra_info == "":
             raise ValidationError(
                 _(f'Providing "{self.category.style.extra_info_hint}" is mandatory!')
@@ -536,17 +557,30 @@ class Entry(models.Model):
 
         if Entry.objects.filter(pk=self.id).exists():
             # update
+            old = Entry.objects.get(pk=self.pk).__dict__
+            altered_fields = [
+                key for key, value in self.__dict__.items() if value != old.get(key)
+            ]
+            altered_fields.remove("_state")
             if not self.can_be_edited():
-                raise ValidationError(_("Entry cannot be edited anymore!"))
+                # check if we're updating only place attribute
+                allowed_modifications = ["place"]
+                changes_allowed = (
+                    all([field in allowed_modifications for field in altered_fields])
+                    and len(altered_fields) == len(allowed_modifications)
+                ) or len(altered_fields) == 0
+                if not changes_allowed:
+                    raise ValidationError(_("Entry cannot be edited anymore!"))
+
             extra = 0
 
             # validate category limit if category changed
             if (
-                self.category.entries_limit
-                < Entry.objects.filter(category=self.category)
+                "category" in altered_fields
+                and self.category.entries_limit
+                <= Entry.objects.filter(category=self.category)
                 .filter(brewer=self.brewer)
                 .count()
-                + 1
             ):
                 raise ValidationError(
                     _(f"Cannot change category due to target category limit")
@@ -613,11 +647,10 @@ class Entry(models.Model):
         return None
 
     @cached_property
-    def medal(self):
-        if self.scoresheet and self.scoresheet.has_medal:
-            return mark_safe(f'<img src="{static("contest/medal.svg")}" height="30">')
-        else:
-            return ""
+    def in_final_round(self):
+        if self.scoresheets.count() == 1:
+            return self.scoresheets.first().final_round
+        return False
 
 
 class EntriesPackage(models.Model):
@@ -731,8 +764,8 @@ class ScoreSheet(models.Model):
         related_name="scoresheets",
         verbose_name=_("Entry"),
     )
+    # TODO refactor - final_round should be in Entry
     final_round = models.BooleanField(verbose_name=_("Final round"), default=False)
-    place = models.PositiveIntegerField(verbose_name=_("Place"), default=0)
 
     appearance = models.TextField(verbose_name=_("Appearance"), blank=True)
     appearance_score = models.PositiveIntegerField(

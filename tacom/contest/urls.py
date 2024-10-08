@@ -129,6 +129,16 @@ urlpatterns = [
     ),
     path("<str:slug>/judging/", views.JudgingListView.as_view(), name="judging_list"),
     path(
+        "<str:slug>/judging-finals/",
+        views.JudgingFinalsListView.as_view(),
+        name="judging_finals_list",
+    ),
+    path(
+        "<str:slug>/judging-finals/<uuid:category_id>",
+        views.JudgingFinalsCategoryView.as_view(),
+        name="judging_finals_category",
+    ),
+    path(
         "scoresheet/<uuid:pk>/", views.ScoreSheetView.as_view(), name="scoresheet_view"
     ),
     path(

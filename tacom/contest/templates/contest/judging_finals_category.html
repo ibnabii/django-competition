@@ -1,0 +1,46 @@
+{% extends "contest/base.html" %}
+{% block content %}
+    {% load i18n %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <table>
+            {#            <thead>#}
+            {#            <tr>#}
+            {#                <th>{% translate "Code" %}</th>#}
+            {#                <th>{% translate "Place" %}</th>#}
+            {#            </tr>#}
+            {#            </thead>#}
+            <tbody>
+            {% for form in formset %}
+                <tr>
+                    <td>{% translate "Code" %} <b>{{ form.instance.code }}</b>:</td>
+                    <!-- Display entry_id (readonly) -->
+
+                    <td>{{ form.as_div }}</td>     <!-- Editable place field -->
+
+
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2">No entries found.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">
+            {% translate "Save" %}
+        </button>
+        <a class="btn btn-secondary" href="
+        {% if form.return_url %}
+            {{ form.return_url }}
+        {% else %}
+            {{ request.META.HTTP_REFERER }}
+        {% endif %}">
+            {% translate "Cancel" %}
+        </a>
+    </form>
+
+
+{% endblock %}
