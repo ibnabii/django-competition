@@ -1115,8 +1115,9 @@ class MedalsListView(ListView):
     def get_queryset(self):
         return (
             Entry.objects.filter(category__contest=self.contest)
-            .filter(scoresheets__has_medal=True)
-            .distinct()
+            # .filter(scoresheets__has_medal=True)
+            # .distinct()
+            .filter(place__gt=0)
             .order_by("category__style__name", "brewer")
             .select_related("brewer", "category__style")
             .prefetch_related("scoresheets")

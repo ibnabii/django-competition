@@ -10,22 +10,18 @@
         <p class="display-6">{{ style.grouper }}</p>
         <table class="table">
         <tr>
-            <th class="col-1"></th>
+            <th class="col-1">{% translate 'Place' %}</th>
             <th class="col-2">{% translate 'Brewer' %}</th>
-            <th class="col-1">{% translate 'Country' %}</th>
-            <th class="col-1"></th>
+            <th class="col-2">{% translate 'Country' %}</th>
             <th>{% translate 'Mead name' %}</th>
         </tr>
-        {% for entry in style.list|dictsort:"brewer.last_name"|dictsort:"brewer.first_name" %}
+        {% for entry in style.list|dictsort:"place" %}
             <tr>
-                <td>{{ forloop.counter }}</td>
+                <td>{{ entry.place }}</td>
                 <td>
                     {{ entry.brewer }}</td>
                 <td>
                     {{ entry.brewer.country.name }} <img src="{{ entry.brewer.country.flag }}"/>
-                </td>
-                <td>
-                    <img src="{% static 'contest/medal.svg' %}" height="30">
                 </td>
                 <td>
                     {{ entry.name }}
