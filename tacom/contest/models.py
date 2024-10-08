@@ -550,6 +550,10 @@ class Entry(models.Model):
         return str(self.code)
 
     def clean(self, **kwargs):
+        # bypass checks for admins
+        if getattr(self, "_admin_skip_validation", False):
+            return
+
         if self.category.style.extra_info_is_required and self.extra_info == "":
             raise ValidationError(
                 _(f'Providing "{self.category.style.extra_info_hint}" is mandatory!')

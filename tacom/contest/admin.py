@@ -268,6 +268,13 @@ class EntryAdmin(admin.ModelAdmin):
     def get_style_name(self, obj):
         return obj.category.style.name
 
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        form = super().get_form(request, obj, change, **kwargs)
+        # Set a flag to bypass validation if this is an admin form
+        if obj is not None:
+            obj._admin_skip_validation = True
+        return form
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
