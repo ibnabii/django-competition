@@ -3,8 +3,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr ""
-"Project-Id-Version: \n"
+msgstr "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-03 04:26-0500\n"
 "PO-Revision-Date: 2024-10-10 15:58+0200\n"
@@ -192,14 +191,12 @@ msgid "email confirmations"
 msgstr "potwierdzenia adresów e-mail"
 
 #: mfa/adapter.py:19
-msgid ""
-"You cannot activate two-factor authentication until you have verified your "
+msgid "You cannot activate two-factor authentication until you have verified your "
 "email address."
 msgstr ""
 
 #: mfa/adapter.py:22
-msgid ""
-"You cannot add an email address to an account protected by two-factor "
+msgid "You cannot add an email address to an account protected by two-factor "
 "authentication."
 msgstr ""
 
@@ -232,11 +229,9 @@ msgstr ""
 #| msgid ""
 #| "An account already exists with this e-mail address. Please sign in to that "
 #| "account first, then connect your %s account."
-msgid ""
-"An account already exists with this email address. Please sign in to that "
+msgid "An account already exists with this email address. Please sign in to that "
 "account first, then connect your %s account."
-msgstr ""
-"Istnieje już konto dla tego adresu e-mail. Zaloguj się najpierw na to konto,"
+msgstr "Istnieje już konto dla tego adresu e-mail. Zaloguj się najpierw na to konto,"
 " a następnie połącz swoje konto %s."
 
 #: socialaccount/adapter.py:138
@@ -352,8 +347,7 @@ msgstr "Nieprawidłowe dane profilu"
 #: socialaccount/providers/oauth/client.py:85
 #, fuzzy, python-format
 #| msgid "Invalid response while obtaining request token from \"%s\"."
-msgid ""
-"Invalid response while obtaining request token from \"%s\". Response was: "
+msgid "Invalid response while obtaining request token from \"%s\". Response was: "
 "%s."
 msgstr "Błędna odpowiedź podczas pobierania tokena z \"%s\"."
 
@@ -438,8 +432,7 @@ msgstr "Czy naprawdę chcesz usunąć wybrany adres e-mail?"
 
 #: templates/account/email/account_already_exists_message.txt:4
 #, python-format
-msgid ""
-"You are receiving this email because you or someone else tried to signup for an\n"
+msgid "You are receiving this email because you or someone else tried to signup for an\n"
 "account using email address:\n"
 "\n"
 "%(email)s\n"
@@ -462,11 +455,9 @@ msgstr "Witamy z %(site_name)s!"
 
 #: templates/account/email/base_message.txt:5
 #, python-format
-msgid ""
-"Thank you for using %(site_name)s!\n"
+msgid "Thank you for using %(site_name)s!\n"
 "%(site_domain)s"
-msgstr ""
-"Dziękujemy za korzystanie z %(site_name)s!\n"
+msgstr "Dziękujemy za korzystanie z %(site_name)s!\n"
 "%(site_domain)s"
 
 #: templates/account/email/email_confirmation_message.txt:5
@@ -475,12 +466,10 @@ msgstr ""
 #| "You're receiving this e-mail because user %(user_display)s has given your e-mail address to register an account on %(site_domain)s.\n"
 #| "\n"
 #| "To confirm this is correct, go to %(activate_url)s"
-msgid ""
-"You're receiving this email because user %(user_display)s has given your email address to register an account on %(site_domain)s.\n"
+msgid "You're receiving this email because user %(user_display)s has given your email address to register an account on %(site_domain)s.\n"
 "\n"
 "To confirm this is correct, go to %(activate_url)s"
-msgstr ""
-"Otrzymujesz ten e-mail, ponieważ użytkownik %(user_display)s podał niniejszy adres e-mail, aby powiązać go z swoim kontem w serwisie %(site_domain)s.\n"
+msgstr "Otrzymujesz ten e-mail, ponieważ użytkownik %(user_display)s podał niniejszy adres e-mail, aby powiązać go z swoim kontem w serwisie %(site_domain)s.\n"
 "\n"
 "Aby potwierdzić powiązanie, kliknij w link %(activate_url)s"
 
@@ -492,18 +481,15 @@ msgstr "Proszę potwierdź adres e-mail"
 #| msgid ""
 #| "You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
 #| "It can be safely ignored if you did not request a password reset. Click the link below to reset your password."
-msgid ""
-"You're receiving this email because you or someone else has requested a password reset for your user account.\n"
+msgid "You're receiving this email because you or someone else has requested a password reset for your user account.\n"
 "It can be safely ignored if you did not request a password reset. Click the link below to reset your password."
-msgstr ""
-"Otrzymujesz tę wiadomość, ponieważ Ty lub ktoś inny poprosił o zresetowanie hasła do Twojego konta.\n"
+msgstr "Otrzymujesz tę wiadomość, ponieważ Ty lub ktoś inny poprosił o zresetowanie hasła do Twojego konta.\n"
 "Niniejszą wiadomość możesz spokojnie zignorować, jeżeli prośba nie pochodziła od Ciebie. Kliknij w link poniżej, aby zresetować hasło."
 
 #: templates/account/email/password_reset_key_message.txt:9
 #, python-format
 msgid "In case you forgot, your username is %(username)s."
-msgstr ""
-"Na wszelki wypadek przypominamy, że Twoja nazwa użytkownika to %(username)s."
+msgstr "Na wszelki wypadek przypominamy, że Twoja nazwa użytkownika to %(username)s."
 
 #: templates/account/email/password_reset_key_subject.txt:3
 #: templates/account/email/unknown_account_subject.txt:3
@@ -515,16 +501,14 @@ msgstr "E-mail z łączem do zmiany hasła"
 #| msgid ""
 #| "You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
 #| "It can be safely ignored if you did not request a password reset. Click the link below to reset your password."
-msgid ""
-"You are receiving this email because you or someone else has requested a\n"
+msgid "You are receiving this email because you or someone else has requested a\n"
 "password for your user account. However, we do not have any record of a user\n"
 "with email %(email)s in our database.\n"
 "\n"
 "This mail can be safely ignored if you did not request a password reset.\n"
 "\n"
 "If it was you, you can sign up for an account using the link below."
-msgstr ""
-"Otrzymujesz tę wiadomość, ponieważ Ty lub ktoś inny poprosił o zresetowanie hasła do Twojego konta.\n"
+msgstr "Otrzymujesz tę wiadomość, ponieważ Ty lub ktoś inny poprosił o zresetowanie hasła do Twojego konta. %(email)s\n"
 "Niniejszą wiadomość możesz spokojnie zignorować, jeżeli prośba nie pochodziła od Ciebie. Kliknij w link poniżej, aby zresetować hasło."
 
 #: templates/account/email_change.html:5 templates/account/email_change.html:9
@@ -569,11 +553,9 @@ msgstr "Potwierdź adres e-mail"
 #| msgid ""
 #| "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
 #| "address for user %(user_display)s."
-msgid ""
-"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
+msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
 "address for user %(user_display)s."
-msgstr ""
-"Proszę potwierdź, że adres <a href=\"mailto:%(email)s\">%(email)s</a> jest "
+msgstr "Proszę potwierdź, że adres <a href=\"mailto:%(email)s\">%(email)s</a> jest "
 "adresem e-mail dla użytkownika %(user_display)s."
 
 #: templates/account/email_confirm.html:23
@@ -586,8 +568,7 @@ msgstr "Potwierdź"
 #, fuzzy, python-format
 #| msgid ""
 #| "The social account is already connected to a different account."
-msgid ""
-"Unable to confirm %(email)s because it is already confirmed by a different "
+msgid "Unable to confirm %(email)s because it is already confirmed by a different "
 "account."
 msgstr "To konto społecznościowe jest już połączone z innym kontem."
 
@@ -596,11 +577,9 @@ msgstr "To konto społecznościowe jest już połączone z innym kontem."
 #| msgid ""
 #| "This e-mail confirmation link expired or is invalid. Please <a "
 #| "href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgid ""
-"This email confirmation link expired or is invalid. Please <a "
+msgid "This email confirmation link expired or is invalid. Please <a "
 "href=\"%(email_url)s\">issue a new email confirmation request</a>."
-msgstr ""
-"Łącze z adresem do zresetowania hasła wygasło lub jest niepoprawne.  <a "
+msgstr "Łącze z adresem do zresetowania hasła wygasło lub jest niepoprawne.  <a "
 "href=\"%(email_url)s\">wygenerować nowe łącze dla Twojego adresu. </a>."
 
 #: templates/account/login.html:5 templates/account/login.html:9
@@ -616,11 +595,9 @@ msgstr "Zaloguj"
 #| msgid ""
 #| "If you have not created an account yet, then please\n"
 #| "<a href=\"%(signup_url)s\">sign up</a> first."
-msgid ""
-"If you have not created an account yet, then please\n"
+msgid "If you have not created an account yet, then please\n"
 "    <a href=\"%(signup_url)s\">sign up</a> first."
-msgstr ""
-"Jeżeli nie masz jeszcze konta, to proszę <a "
+msgstr "Jeżeli nie masz jeszcze konta, to proszę <a "
 "href=\"%(signup_url)s\">zarejestruj się</a> najpierw."
 
 #: templates/account/logout.html:4 templates/account/logout.html:8
@@ -704,11 +681,9 @@ msgstr "Resetowanie hasła"
 #| msgid ""
 #| "Forgotten your password? Enter your e-mail address below, and we'll send you"
 #| " an e-mail allowing you to reset it."
-msgid ""
-"Forgotten your password? Enter your email address below, and we'll send you "
+msgid "Forgotten your password? Enter your email address below, and we'll send you "
 "an email allowing you to reset it."
-msgstr ""
-"Nie pamiętasz swojego hasła? Wpisz swój adres e-mail poniżej, a my wyślemy "
+msgstr "Nie pamiętasz swojego hasła? Wpisz swój adres e-mail poniżej, a my wyślemy "
 "Ci wiadomość, dzięki której dokonasz jego zmiany."
 
 #: templates/account/password_reset.html:25
@@ -717,19 +692,16 @@ msgstr "Zresetuj moje hasło"
 
 #: templates/account/password_reset.html:29
 msgid "Please contact us if you have any trouble resetting your password."
-msgstr ""
-"Skontaktuj się z nami, jeśli masz problem ze zresetowaniem swojego hasła."
+msgstr "Skontaktuj się z nami, jeśli masz problem ze zresetowaniem swojego hasła."
 
 #: templates/account/password_reset_done.html:16
 #| msgid ""
 #| "We have sent an e-mail to you for\n"
 #| "verification. Please click on the link inside this e-mail. Please\n"
 #| "contact us if you do not receive it within a few minutes."
-msgid ""
-"We have sent you an email. If you have not received it please check your "
+msgid "We have sent you an email. If you have not received it please check your "
 "spam folder. Otherwise contact us if you do not receive it in a few minutes."
-msgstr ""
-"Wysłaliśmy Ci wiadomość e-mail.\n"
+msgstr "Wysłaliśmy Ci wiadomość e-mail.\n"
 "W celu weryfikacji musisz kliknąć w łącze zawarte w wiadomości. Proszę skontaktuj się z nami, jeśli nie dotarła do Ciebie w ciągu kilku minut."
 
 #: templates/account/password_reset_from_key.html:10
@@ -738,12 +710,10 @@ msgstr "Nieprawidłowy klucz"
 
 #: templates/account/password_reset_from_key.html:18
 #, python-format
-msgid ""
-"The password reset link was invalid, possibly because it has already been "
+msgid "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
 "reset</a>."
-msgstr ""
-"Łącze resetujące hasło jest niepoprawne, prawdopodobnie zostało już użyte.  "
+msgstr "Łącze resetujące hasło jest niepoprawne, prawdopodobnie zostało już użyte.  "
 "<a href=\"%(passwd_reset_url)s\">Zresetuj hasło jeszcze raz.</a>"
 
 #: templates/account/password_reset_from_key_done.html:11
@@ -779,8 +749,7 @@ msgstr "Zarejestruj się"
 
 #: templates/account/signup.html:11
 #, python-format
-msgid ""
-"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgid "Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
 msgstr "Masz już konto? Jeżeli tak, to <a href=\"%(login_url)s\">zaloguj się</a>."
 
 #: templates/account/signup_closed.html:5
@@ -812,11 +781,9 @@ msgstr "Uwaga:"
 #| "You currently do not have any e-mail address set up. You should really add "
 #| "an e-mail address so you can receive notifications, reset your password, "
 #| "etc."
-msgid ""
-"You currently do not have any email address set up. You should really add an"
+msgid "You currently do not have any email address set up. You should really add an"
 " email address so you can receive notifications, reset your password, etc."
-msgstr ""
-"Aktualnie nie posiadasz przypisanych do twojego konta adresów e-mail. Warto "
+msgstr "Aktualnie nie posiadasz przypisanych do twojego konta adresów e-mail. Warto "
 "dodać taki adres, aby otrzymywać informacje administracyjne, wiadomości o "
 "zmianie hasła, itd."
 
@@ -832,13 +799,11 @@ msgstr "Zweryfikuj swój adres e-mail."
 #| "We have sent an e-mail to you for verification. Follow the link provided to "
 #| "finalize the signup process. Please contact us if you do not receive it "
 #| "within a few minutes."
-msgid ""
-"We have sent an email to you for verification. Follow the link provided to "
+msgid "We have sent an email to you for verification. Follow the link provided to "
 "finalize the signup process. If you do not see the verification email in "
 "your main inbox, check your spam folder. Please contact us if you do not "
 "receive the verification email within a few minutes."
-msgstr ""
-"Przesłaliśmy weryfikacyjny e-mail na twój adres. Kliknij w łącze w "
+msgstr "Przesłaliśmy weryfikacyjny e-mail na twój adres. Kliknij w łącze w "
 "wiadomości, aby zakończyć proces rejestracji. Skontaktuj się z nami, jeśli "
 "nie otrzymasz jej w ciągu kilku minut."
 
@@ -848,12 +813,10 @@ msgstr ""
 #| "This part of the site requires us to verify that\n"
 #| "you are who you claim to be. For this purpose, we require that you\n"
 #| "verify ownership of your e-mail address. "
-msgid ""
-"This part of the site requires us to verify that\n"
+msgid "This part of the site requires us to verify that\n"
 "you are who you claim to be. For this purpose, we require that you\n"
 "verify ownership of your email address. "
-msgstr ""
-"Ta część strony wymaga weryfikacji tego, kim jesteś. Dlatego wymagamy "
+msgstr "Ta część strony wymaga weryfikacji tego, kim jesteś. Dlatego wymagamy "
 "weryfikacji Twojego adresu e-mail. "
 
 #: templates/account/verified_email_required.html:18
@@ -861,12 +824,10 @@ msgstr ""
 #| "We have sent an e-mail to you for\n"
 #| "verification. Please click on the link inside this e-mail. Please\n"
 #| "contact us if you do not receive it within a few minutes."
-msgid ""
-"We have sent an email to you for\n"
+msgid "We have sent an email to you for\n"
 "verification. Please click on the link inside that email. If you do not see the verification email in your main inbox, check your spam folder. Otherwise\n"
 "contact us if you do not receive it within a few minutes."
-msgstr ""
-"Wysłaliśmy Ci wiadomość e-mail.\n"
+msgstr "Wysłaliśmy Ci wiadomość e-mail.\n"
 "W celu weryfikacji musisz kliknąć w łącze zawarte w wiadomości. Proszę skontaktuj się z nami, jeśli nie dotarła do Ciebie w ciągu kilku minut."
 
 #: templates/account/verified_email_required.html:23
@@ -874,11 +835,9 @@ msgstr ""
 #| msgid ""
 #| "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
 #| "e-mail address</a>."
-msgid ""
-"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
+msgid "<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
 "email address</a>."
-msgstr ""
-"<strong>Uwaga:</strong> możesz ciągle <a href=\"%(email_url)s\">zmienić Twój"
+msgstr "<strong>Uwaga:</strong> możesz ciągle <a href=\"%(email_url)s\">zmienić Twój"
 " adres e-mail</a>."
 
 #: templates/allauth/layouts/base.html:18
@@ -895,8 +854,7 @@ msgid "Two-Factor Authentication"
 msgstr ""
 
 #: templates/mfa/authenticate.html:12
-msgid ""
-"Your account is protected by two-factor authentication. Please enter an "
+msgid "Your account is protected by two-factor authentication. Please enter an "
 "authenticator code:"
 msgstr ""
 
@@ -928,10 +886,8 @@ msgstr ""
 
 #: templates/mfa/index.html:44 templates/mfa/recovery_codes/index.html:9
 #, python-format
-msgid ""
-"There is %(unused_count)s out of %(total_count)s recovery codes available."
-msgid_plural ""
-"There are %(unused_count)s out of %(total_count)s recovery codes available."
+msgid "There is %(unused_count)s out of %(total_count)s recovery codes available."
+msgid_plural "There are %(unused_count)s out of %(total_count)s recovery codes available."
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -966,8 +922,7 @@ msgid "Authenticator app deactivated."
 msgstr ""
 
 #: templates/mfa/recovery_codes/generate.html:9
-msgid ""
-"You are about to generate a new set of recovery codes for your account."
+msgid "You are about to generate a new set of recovery codes for your account."
 msgstr ""
 
 #: templates/mfa/recovery_codes/generate.html:11
@@ -996,8 +951,7 @@ msgid "Activate Authenticator App"
 msgstr ""
 
 #: templates/mfa/totp/activate_form.html:11
-msgid ""
-"To protect your account with two-factor authentication, scan the QR code "
+msgid "To protect your account with two-factor authentication, scan the QR code "
 "below with your authenticator app. Then, input the verification code "
 "generated by the app below."
 msgstr ""
@@ -1009,8 +963,7 @@ msgid "Authenticator secret"
 msgstr "token secret"
 
 #: templates/mfa/totp/activate_form.html:24
-msgid ""
-"You can store this secret and use it to reinstall your authenticator app at "
+msgid "You can store this secret and use it to reinstall your authenticator app at "
 "a later time."
 msgstr ""
 
@@ -1020,8 +973,7 @@ msgid "Deactivate Authenticator App"
 msgstr ""
 
 #: templates/mfa/totp/deactivate_form.html:12
-msgid ""
-"You are about to deactivate authenticator app based authentication. Are you "
+msgid "You are about to deactivate authenticator app based authentication. Are you "
 "sure?"
 msgstr ""
 
@@ -1031,10 +983,8 @@ msgid "Social Network Login Failure"
 msgstr "Błędne logowanie z konta społecznościowego"
 
 #: templates/socialaccount/authentication_error.html:11
-msgid ""
-"An error occurred while attempting to login via your social network account."
-msgstr ""
-"Wystąpił błąd podczas próby logowania za pomocą konta społecznościowego."
+msgid "An error occurred while attempting to login via your social network account."
+msgstr "Wystąpił błąd podczas próby logowania za pomocą konta społecznościowego."
 
 #: templates/socialaccount/connections.html:5
 #: templates/socialaccount/connections.html:9
@@ -1046,18 +996,14 @@ msgstr "Połączone konta"
 #| msgid ""
 #| "You can sign in to your account using any of the following third party "
 #| "accounts:"
-msgid ""
-"You can sign in to your account using any of the following third-party "
+msgid "You can sign in to your account using any of the following third-party "
 "accounts:"
-msgstr ""
-"Możesz zalogować się do swojego konta używając dowolnego z poniższych kont "
+msgstr "Możesz zalogować się do swojego konta używając dowolnego z poniższych kont "
 "zewnętrznych:"
 
 #: templates/socialaccount/connections.html:45
-msgid ""
-"You currently have no social network accounts connected to this account."
-msgstr ""
-"Nie masz obecnie żadnych kont społecznościowych połączonych z tym kontem."
+msgid "You currently have no social network accounts connected to this account."
+msgstr "Nie masz obecnie żadnych kont społecznościowych połączonych z tym kontem."
 
 #: templates/socialaccount/connections.html:48
 #, fuzzy
@@ -1082,8 +1028,7 @@ msgstr ""
 
 #: templates/socialaccount/login.html:20
 #, python-format
-msgid ""
-"You are about to sign in using a third-party account from %(provider)s."
+msgid "You are about to sign in using a third-party account from %(provider)s."
 msgstr ""
 
 #: templates/socialaccount/login.html:27
@@ -1097,12 +1042,10 @@ msgstr "Logowanie anulowane"
 
 #: templates/socialaccount/login_cancelled.html:13
 #, python-format
-msgid ""
-"You decided to cancel logging in to our site using one of your existing "
+msgid "You decided to cancel logging in to our site using one of your existing "
 "accounts. If this was a mistake, please proceed to <a "
 "href=\"%(login_url)s\">sign in</a>."
-msgstr ""
-"Wybrano anulowanie logowania przez jedno z istniejących kont. Jeżeli to była"
+msgstr "Wybrano anulowanie logowania przez jedno z istniejących kont. Jeżeli to była"
 " pomyłka, proszę przejdź do <a href=\"%(login_url)s\">zaloguj</a>."
 
 #: templates/socialaccount/messages/account_connected.txt:2
@@ -1119,11 +1062,9 @@ msgstr "Konto społecznościowe zostało rozłączone."
 
 #: templates/socialaccount/signup.html:12
 #, python-format
-msgid ""
-"You are about to use your %(provider_name)s account to login to\n"
+msgid "You are about to use your %(provider_name)s account to login to\n"
 "%(site_name)s. As a final step, please complete the following form:"
-msgstr ""
-"Masz zamiar użyć konta %(provider_name)s do zalogowania się w \n"
+msgstr "Masz zamiar użyć konta %(provider_name)s do zalogowania się w \n"
 "%(site_name)s. Jako ostatni krok, proszę wypełnij formularz:"
 
 #: templates/socialaccount/snippets/login.html:8
