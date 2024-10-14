@@ -1169,7 +1169,7 @@ class PartnersGalleryView(TemplateView):
         images = [
             f for f in os.listdir(images_dir) if f.lower().endswith(valid_extensions)
         ]
-
+        images = sorted(images)
         # Construct the URLs for the static images
         image_urls = [
             os.path.join(settings.STATIC_URL, images_path, img) for img in images
