@@ -1,3 +1,4 @@
+import logging.config
 from pathlib import Path
 
 from django.contrib.messages import constants as messages
@@ -177,6 +178,40 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 SITE_ID = 1
+
+# Logging
+# settings.py
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,  # Keeps Django's default loggers
+    "handlers": {
+        "console": {  # This handler will output logs to the console
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",  # Minimum log level to capture
+        },
+    },
+    "loggers": {
+        # Custom logger for "models"
+        "models": {  # This logger corresponds to getLogger("models")
+            "handlers": ["console"],  # Use the 'console' handler
+            "level": "DEBUG",  # Minimum level to capture (DEBUG, INFO, WARNING, etc.)
+            "propagate": False,  # Avoid propagating to the root logger
+        },
+        # Django's default loggers can be configured here as well
+        # 'django': {
+        #     'handlers': ['console'],  # You can also output Django logs to the console
+        #     'level': 'INFO',
+        #     'propagate': True,
+        # },
+    },
+    # 'root': {
+    #     'handlers': ['console'],
+    #     'level': 'WARNING',  # Root logger config (captures all warnings by default)
+    # },
+}
+
 
 # TinyMCE settings
 TINYMCE_DEFAULT_CONFIG = {

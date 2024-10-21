@@ -1,5 +1,6 @@
 from datetime import date
 from datetime import datetime
+from logging import getLogger
 from uuid import uuid1
 
 from django.db import models
@@ -27,6 +28,8 @@ from .managers import (
     PaymentMethodManager,
 )
 from .utils import mail_entry_status_change
+
+logger = getLogger("models")
 
 
 def validate_gdpr_consent(value):
@@ -550,6 +553,7 @@ class Entry(models.Model):
         return str(self.code)
 
     def clean(self, **kwargs):
+        logger.debug("Entry.clean() ==================================================")
         # bypass checks for admins
         if getattr(self, "_admin_skip_validation", False):
             return
@@ -560,13 +564,18 @@ class Entry(models.Model):
             )
 
         if Entry.objects.filter(pk=self.id).exists():
+            logger.debug("Entry.clean(): (pk=self.id).exists()")
             # update
             old = Entry.objects.get(pk=self.pk).__dict__
             altered_fields = [
                 key for key, value in self.__dict__.items() if value != old.get(key)
             ]
             altered_fields.remove("_state")
+
+            logger.debug("Entry.clean(): altered_fields={}".format(altered_fields))
+            logger.debug("Entry.clean(): can_be_edited={}".format(self.can_be_edited()))
             if not self.can_be_edited():
+
                 # check if we're updating only place attribute
                 allowed_modifications = ["place"]
                 changes_allowed = (
@@ -580,7 +589,7 @@ class Entry(models.Model):
 
             # validate category limit if category changed
             if (
-                "category" in altered_fields
+                "category_id" in altered_fields
                 and self.category.entries_limit
                 <= Entry.objects.filter(category=self.category)
                 .filter(brewer=self.brewer)
@@ -606,7 +615,6 @@ class Entry(models.Model):
                 raise ValidationError(
                     _(
                         f"You have reached entry limit for this category ({self.category.entries_limit})!"
-                        f"No more entries in this category can be added."
                     )
                 )
 
