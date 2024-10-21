@@ -29,6 +29,7 @@ class NewEntryForm(forms.ModelForm):
         extra_hint = kwargs.pop("extra_hint", None)
         user = kwargs.pop("user", None)
         category = kwargs.pop("category", None)
+        return_url = kwargs.pop("return_url", None)
         super().__init__(*args, **kwargs)
         if extra_hint:
             self.fields["extra_info"].label = extra_hint
@@ -36,6 +37,9 @@ class NewEntryForm(forms.ModelForm):
             self.fields["extra_info"].required = True
         self.instance.brewer = user
         self.instance.category = category
+
+        if return_url:
+            self.return_url = return_url
 
 
 class EditEntryForm(NewEntryForm):

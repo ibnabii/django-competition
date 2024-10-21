@@ -22,7 +22,13 @@
   <button type="submit" class="btn btn-primary">
       {% translate "Save" %}
   </button>
-  <a class="btn btn-secondary" href="{{ request.META.HTTP_REFERER }}">
+  <a class="btn btn-secondary" href="
+        {% if form.return_url %}
+            {{ form.return_url }}
+        {% else %}
+{#            {{ request.META.HTTP_REFERER }}#}
+            javascript:window.history.back()
+        {% endif %}">
       {% translate "Cancel" %}
   </a>
 </form>

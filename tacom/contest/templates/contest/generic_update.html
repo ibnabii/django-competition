@@ -17,7 +17,8 @@
         {% if form.return_url %}
             {{ form.return_url }}
         {% else %}
-            {{ request.META.HTTP_REFERER }}
+{#            {{ request.META.HTTP_REFERER }}#}
+            javascript:window.history.back()
         {% endif %}">
       {% translate "Cancel" %}
   </a>

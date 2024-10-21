@@ -189,7 +189,7 @@ LOGGING = {
     "handlers": {
         "console": {  # This handler will output logs to the console
             "class": "logging.StreamHandler",
-            "level": "DEBUG",  # Minimum log level to capture
+            "level": "INFO",  # Minimum log level to capture
         },
     },
     "loggers": {

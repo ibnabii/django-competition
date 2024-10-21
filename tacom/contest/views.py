@@ -290,17 +290,23 @@ class AddEntryView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
             form_kwargs["extra_hint"] = self.category.style.extra_info_hint
         form_kwargs["user"] = self.request.user
         form_kwargs["category"] = self.category
+        form_kwargs["return_url"] = self.get_success_url()
         return form_kwargs
 
     def get_success_url(self):
-        messages.success(self.request, _("Entry has been added successfully"))
         return reverse(
             "contest:add_entry_contest",
-            kwargs={"slug": self.object.category.contest.slug},
+            kwargs={"slug": self.contest.slug},
         )
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form, error=True))
+
+    def form_valid(self, form):
+        # Save the form and set the success message
+        response = super().form_valid(form)
+        messages.success(self.request, _("Entry has been added successfully"))
+        return response
 
 
 class EditEntryView(UserPassesTestMixin, UpdateView):
@@ -321,11 +327,11 @@ class EditEntryView(UserPassesTestMixin, UpdateView):
         form_kwargs["extra_hint"] = category.style.extra_info_hint
         form_kwargs["user"] = self.request.user
         form_kwargs["category"] = category
+        form_kwargs["return_url"] = self.get_success_url()
         return form_kwargs
 
     def get_success_url(self):
         next_url = self.request.POST.get("next")
-        messages.success(self.request, _("Entry has been updated successfully"))
         if next_url:
             return next_url
         else:
@@ -333,6 +339,12 @@ class EditEntryView(UserPassesTestMixin, UpdateView):
                 "contest:add_entry_contest",
                 kwargs={"slug": self.object.category.contest.slug},
             )
+
+    def form_valid(self, form):
+        # Save the form and set the success message
+        response = super().form_valid(form)
+        messages.success(self.request, _("Entry has been updated successfully"))
+        return response
 
     def handle_no_permission(self):
         """
@@ -1219,11 +1231,6 @@ class JudgingFinalsCategoryView(
     groups_required = ("judge_final",)
 
     def get_success_url(self):
-        messages.success(
-            self.request,
-            _("Final round results saved for category: ")
-            + Category.objects.get(id=self.kwargs["category_id"]).style.name,
-        )
         return reverse("contest:judging_finals_list", args=(self.kwargs["slug"],))
 
     def get_queryset(self):
@@ -1248,3 +1255,14 @@ class JudgingFinalsCategoryView(
             formset.save()
             return redirect(self.get_success_url())  # Replace with your success URL
         return render(request, self.template_name, {"formset": formset})
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        messages.success(
+            self.request,
+            _("Final round results saved for category: ")
+            + Category.objects.get(id=self.kwargs["category_id"]).style.name,
+        )
+
+        return response
