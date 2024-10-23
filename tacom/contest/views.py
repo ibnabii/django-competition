@@ -1,6 +1,7 @@
 import abc
 import json
 import os
+from logging import getLogger
 
 from django.conf import settings
 from django.contrib import messages
@@ -53,6 +54,7 @@ from .forms import (
     ScoreSheetForm,
     EditEntryForm,
     FinalEntriesFormset,
+    ContestBestOfShowForm,
 )
 from .models import (
     Contest,
@@ -65,6 +67,9 @@ from .models import (
     Style,
 )
 from .utils import get_client_ip, mail_entry_status_change
+
+
+logger = getLogger("views")
 
 
 class PublishedContestListView(ListView):
@@ -1265,4 +1270,76 @@ class JudgingFinalsCategoryView(
             + Category.objects.get(id=self.kwargs["category_id"]).style.name,
         )
 
+        return response
+
+
+class JudgeBosView(GroupRequiredMixin, ListView):
+    groups_required = ("judge_bos",)
+    context_object_name = "entries"
+    template_name = "contest/judging_bos_list.html"
+
+    def __init__(self, *args, **kwargs):
+        self.contest = None
+        super().__init__(*args, **kwargs)
+
+    def get_queryset(self):
+        queryset = (
+            Entry.objects.filter(category__contest=self.contest)
+            .filter(place=1)
+            .order_by("category__style__name")
+            .select_related("category__style")
+        )
+        logger.debug(f"JudgeBossView:\n{queryset.values()}")
+        return queryset
+
+    def dispatch(self, request, *args, **kwargs):
+        self.contest = Contest.objects.get(slug=self.kwargs["slug"])
+        if not self.contest:
+            raise Http404
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        if self.contest.bos_entry:
+            context["best_of_show"] = Entry.objects.get(id=self.contest.bos_entry.id)
+        else:
+            context["best_of_show"] = None
+        context["contest"] = self.contest
+        return context
+
+
+class JudgeBosSelect(GroupRequiredMixin, UpdateView):
+    groups_required = ("judge_bos",)
+    model = Contest
+    form_class = ContestBestOfShowForm
+    template_name = "contest/judging_bos_selection.html"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        contest = self.get_object()
+        candidates = (
+            Entry.objects.filter(category__contest=contest)
+            .filter(place=1)
+            .order_by("category__style__name")
+            .select_related("category__style")
+        )
+        kwargs["candidates"] = candidates
+        logger.debug(
+            "JudgeBosSelect: candidates:\n{candidates}".format(candidates=candidates)
+        )
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["contest"] = self.get_object()
+        return context
+
+    def get_success_url(self):
+        return reverse(
+            "contest:judging_bos_view", kwargs={"slug": self.get_object().slug}
+        )
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, _("Best Of Show saved"))
         return response

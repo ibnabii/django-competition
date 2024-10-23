@@ -100,7 +100,11 @@ class ContestAdmin(admin.ModelAdmin):
         (
             _("Judging"),
             {
-                "fields": [("is_judging_eliminations",), ("is_judging_finals",)],
+                "fields": [
+                    ("is_judging_eliminations",),
+                    ("is_judging_finals",),
+                    ("is_judging_bos",),
+                ],
                 "description": _(
                     "Check which part of judging you want to make available to judges NOW"
                 ),

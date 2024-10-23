@@ -1,0 +1,17 @@
+{% extends "contest/base.html" %}
+
+{% block content %}
+{% load i18n %}
+{% load static %}
+
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <br /><br />
+    <a class="btn btn-secondary" href="{% url 'contest:judging_bos_view' contest.slug %}">{% translate 'Cancel' %}</a>
+    <button class="btn btn-primary" type="submit">OK</button>
+</form>
+
+
+{% endblock %}

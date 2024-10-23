@@ -134,6 +134,16 @@ urlpatterns = [
         name="judging_finals_list",
     ),
     path(
+        "<str:slug>/judging-bos/",
+        views.JudgeBosView.as_view(),
+        name="judging_bos_view",
+    ),
+    path(
+        "<slug:slug>/judging-bos/edit/",
+        views.JudgeBosSelect.as_view(),
+        name="judging_bos_select",
+    ),
+    path(
         "<str:slug>/judging-finals/<uuid:category_id>",
         views.JudgingFinalsCategoryView.as_view(),
         name="judging_finals_category",

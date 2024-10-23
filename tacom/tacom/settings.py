@@ -196,8 +196,13 @@ LOGGING = {
         # Custom logger for "models"
         "models": {  # This logger corresponds to getLogger("models")
             "handlers": ["console"],  # Use the 'console' handler
-            "level": "DEBUG",  # Minimum level to capture (DEBUG, INFO, WARNING, etc.)
+            "level": "INFO",  # Minimum level to capture (DEBUG, INFO, WARNING, etc.)
             "propagate": False,  # Avoid propagating to the root logger
+        },
+        "views": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
         },
         # Django's default loggers can be configured here as well
         # 'django': {

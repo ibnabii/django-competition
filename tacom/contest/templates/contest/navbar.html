@@ -138,12 +138,18 @@
                                     {% translate "Judging" %}
                                 </a>
                             </li>
-                    {% endif %}
-
+                    {% endif %}                    
                     {% if perms.is_judge_final %}
                             <li>
                                 <a class="dropdown-item" href="{% url 'contest:judging_finals_list' user.contest %}">
                                     {% translate "Judging finals" %}
+                                </a>
+                            </li>
+                    {% endif %}
+                    {% if perms.is_judge_bos %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'contest:judging_bos_view' user.contest %}">
+                                    {% translate "Judging BOS" %}
                                 </a>
                             </li>
                     {% endif %}

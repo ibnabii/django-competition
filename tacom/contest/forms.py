@@ -10,7 +10,15 @@ from captcha.widgets import ReCaptchaV2Checkbox
 from django_countries.widgets import CountrySelectWidget
 from tinymce.widgets import TinyMCE
 
-from .models import Entry, User, EntriesPackage, Payment, PaymentMethod, ScoreSheet
+from .models import (
+    Entry,
+    User,
+    EntriesPackage,
+    Payment,
+    PaymentMethod,
+    ScoreSheet,
+    Contest,
+)
 
 
 class NewEntryForm(forms.ModelForm):
@@ -254,3 +262,19 @@ class FinalEntryFormset(forms.BaseModelFormSet):
 
 
 FinalEntriesFormset = forms.modelformset_factory(Entry, form=FinalEntryForm, extra=0)
+
+
+class ContestBestOfShowForm(forms.ModelForm):
+    class Meta:
+        model = Contest
+        fields = ["bos_entry"]
+
+        widgets = {
+            "bos_entry": forms.RadioSelect(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        candidates = kwargs.pop("candidates", None)
+        super().__init__(*args, **kwargs)
+        if candidates:
+            self.fields["bos_entry"].queryset = candidates

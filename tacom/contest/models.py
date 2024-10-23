@@ -316,6 +316,16 @@ class Contest(models.Model):
     is_judging_finals = models.BooleanField(
         default=False, verbose_name=_("Enable judges to judge final round.")
     )
+    is_judging_bos = models.BooleanField(
+        default=False, verbose_name=_("Enable judges to judge Best Of Show.")
+    )
+    bos_entry = models.ForeignKey(
+        "Entry",
+        verbose_name=_("Best Of Show winner"),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
 
     # audit fields
     created_at = models.DateTimeField(auto_now_add=True)

@@ -14,4 +14,5 @@ def get_user_permissions(context):
         "is_payment_mgmt": "payment_mgmt" in groups,
         "is_judge": "judge" in groups,
         "is_judge_final": "judge_final" in groups,
+        "is_judge_bos": "judge_bos" in groups,
     }

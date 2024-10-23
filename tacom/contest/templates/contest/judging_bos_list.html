@@ -1,0 +1,38 @@
+{% extends "contest/base.html" %}
+
+{% block content %}
+{% load i18n %}
+{% load static %}
+
+
+        <p class="display-6">{% translate 'Category Winners' %}</p>
+        <table class="table">
+        <tr>
+            <th class="col-6">{% translate 'Category' %}</th>
+            <th class="col-6">{% translate 'Winner' %}</th>
+        </tr>
+        {% for entry in entries %}
+            <tr>
+                <td>{{ entry.category.style.name }}</td>
+                <td>{{ entry.code }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+        <p class="display-6">{% translate 'Best Of Show Winner' %}</p>
+        {% if best_of_show %}
+            <table class="table">
+                <tr>
+                    <th class="col-6">{% translate 'Category' %}</th>
+                    <th class="col-6">{% translate 'Winner' %}</th>
+                </tr>
+                <tr>
+                    <td>{{ best_of_show.category.style.name }}</td>
+                    <td>{{ best_of_show.code }}</td>
+                </tr>
+            </table>
+            <a class="btn btn-primary" href="{% url 'contest:judging_bos_select' contest.slug %}">{% translate "Change Best Of Show" %}</a>
+        {% else %}
+            <a class="btn btn-primary" href="{% url 'contest:judging_bos_select' contest.slug %}">{% translate "Select Best Of Show" %}</a>
+        {% endif %}
+
+{% endblock %}

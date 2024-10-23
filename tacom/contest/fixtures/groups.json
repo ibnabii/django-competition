@@ -1,157 +1,164 @@
 [
-{
-  "model": "auth.group",
-  "fields": {
-    "name": "translators",
-    "permissions": []
-  }
-},
-{
-  "model": "auth.group",
-  "fields": {
-    "name": "contest_staff",
-    "permissions": []
-  }
-},
-{
-  "model": "auth.group",
-  "fields": {
-    "name": "payment_mgmt",
-    "permissions": []
-  }
-},
-{
-  "model": "auth.group",
-  "fields": {
-    "name": "reception",
-    "permissions": []
-  }
-},
-{
-  "model": "auth.group",
-  "fields": {
-    "name": "judge",
-    "permissions": []
-  }
-},
   {
-  "model": "auth.group",
-  "fields": {
-    "name": "judge_finals",
-    "permissions": []
-  }
-},
-{
-  "model": "auth.group",
-  "fields": {
-    "name": "competition_full",
-    "permissions": [
-      [
-        "add_category",
-        "contest",
-        "category"
-      ],
-      [
-        "change_category",
-        "contest",
-        "category"
-      ],
-      [
-        "delete_category",
-        "contest",
-        "category"
-      ],
-      [
-        "view_category",
-        "contest",
-        "category"
-      ],
-      [
-        "add_contest",
-        "contest",
-        "contest"
-      ],
-      [
-        "change_contest",
-        "contest",
-        "contest"
-      ],
-      [
-        "delete_contest",
-        "contest",
-        "contest"
-      ],
-      [
-        "view_contest",
-        "contest",
-        "contest"
-      ],
-      [
-        "add_entry",
-        "contest",
-        "entry"
-      ],
-      [
-        "change_entry",
-        "contest",
-        "entry"
-      ],
-      [
-        "delete_entry",
-        "contest",
-        "entry"
-      ],
-      [
-        "view_entry",
-        "contest",
-        "entry"
-      ],
-      [
-        "add_participant",
-        "contest",
-        "participant"
-      ],
-      [
-        "change_participant",
-        "contest",
-        "participant"
-      ],
-      [
-        "delete_participant",
-        "contest",
-        "participant"
-      ],
-      [
-        "view_participant",
-        "contest",
-        "participant"
-      ],
-      [
-        "view_payment",
-        "contest",
-        "payment"
-      ],
-      [
-        "add_style",
-        "contest",
-        "style"
-      ],
-      [
-        "change_style",
-        "contest",
-        "style"
-      ],
-      [
-        "delete_style",
-        "contest",
-        "style"
-      ],
-      [
-        "view_style",
-        "contest",
-        "style"
+    "model": "auth.group",
+    "fields": {
+      "name": "translators",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "fields": {
+      "name": "contest_staff",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "fields": {
+      "name": "payment_mgmt",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "fields": {
+      "name": "reception",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "fields": {
+      "name": "judge",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "fields": {
+      "name": "judge_finals",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "fields": {
+      "name": "judge_bos",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "fields": {
+      "name": "competition_full",
+      "permissions": [
+        [
+          "add_category",
+          "contest",
+          "category"
+        ],
+        [
+          "change_category",
+          "contest",
+          "category"
+        ],
+        [
+          "delete_category",
+          "contest",
+          "category"
+        ],
+        [
+          "view_category",
+          "contest",
+          "category"
+        ],
+        [
+          "add_contest",
+          "contest",
+          "contest"
+        ],
+        [
+          "change_contest",
+          "contest",
+          "contest"
+        ],
+        [
+          "delete_contest",
+          "contest",
+          "contest"
+        ],
+        [
+          "view_contest",
+          "contest",
+          "contest"
+        ],
+        [
+          "add_entry",
+          "contest",
+          "entry"
+        ],
+        [
+          "change_entry",
+          "contest",
+          "entry"
+        ],
+        [
+          "delete_entry",
+          "contest",
+          "entry"
+        ],
+        [
+          "view_entry",
+          "contest",
+          "entry"
+        ],
+        [
+          "add_participant",
+          "contest",
+          "participant"
+        ],
+        [
+          "change_participant",
+          "contest",
+          "participant"
+        ],
+        [
+          "delete_participant",
+          "contest",
+          "participant"
+        ],
+        [
+          "view_participant",
+          "contest",
+          "participant"
+        ],
+        [
+          "view_payment",
+          "contest",
+          "payment"
+        ],
+        [
+          "add_style",
+          "contest",
+          "style"
+        ],
+        [
+          "change_style",
+          "contest",
+          "style"
+        ],
+        [
+          "delete_style",
+          "contest",
+          "style"
+        ],
+        [
+          "view_style",
+          "contest",
+          "style"
+        ]
       ]
-    ]
+    }
   }
-}
 ]
