@@ -1150,10 +1150,17 @@ class MedalsListView(ListView):
         )
 
     def dispatch(self, request, *args, **kwargs):
-        self.contest = Contest.objects.get(slug=self.kwargs["contest_slug"])
+        self.contest = Contest.objects.prefetch_related("bos_entry").get(
+            slug=self.kwargs["contest_slug"]
+        )
         if not (self.contest and self.contest.show_results):
             raise Http404
         return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["best_of_show"] = self.contest.bos_entry
+        return context
 
 
 class PrivacyView(TemplateView):
@@ -1293,17 +1300,16 @@ class JudgeBosView(GroupRequiredMixin, ListView):
         return queryset
 
     def dispatch(self, request, *args, **kwargs):
-        self.contest = Contest.objects.get(slug=self.kwargs["slug"])
+        self.contest = Contest.objects.select_related("bos_entry").get(
+            slug=self.kwargs["slug"]
+        )
         if not self.contest:
             raise Http404
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        if self.contest.bos_entry:
-            context["best_of_show"] = Entry.objects.get(id=self.contest.bos_entry.id)
-        else:
-            context["best_of_show"] = None
+        context["best_of_show"] = self.contest.bos_entry
         context["contest"] = self.contest
         return context
 

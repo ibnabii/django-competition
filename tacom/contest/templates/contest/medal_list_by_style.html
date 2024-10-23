@@ -31,4 +31,14 @@
         </table>
     {%  endfor %}
 
+    {% if best_of_show %}
+    <p class="display-5">Best Of Show</p>
+    <p class="lead">{% translate "From the meads that won 1st places in their categories we have selected one to be awarded the 'Best Of Show' title." %}</p>
+    <p class="lead">{% translate "The winner is:" %}</p>
+        <table class="table">
+        <tr><th>{% translate "Mead name" %}</th><td>{{ best_of_show.name }}</td></tr>
+        <tr><th>{% translate "Author" %}</th><td>{{ best_of_show.brewer }}</td></tr>
+        <tr><th>{% translate "Category" %}</th><td>{{ best_of_show.category.style.name }}</td></tr>
+        </table>
+    {% endif %}
 {% endblock %}
