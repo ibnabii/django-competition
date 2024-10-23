@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 16:19+0200\n"
-"PO-Revision-Date: 2024-10-23 16:20+0200\n"
+"POT-Creation-Date: 2024-10-23 17:07+0200\n"
+"PO-Revision-Date: 2024-10-23 17:07+0200\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -392,6 +392,7 @@ msgstr "kod"
 #: .\contest\templates\contest\judging_bos_list.html:11
 #: .\contest\templates\contest\judging_bos_list.html:25
 #: .\contest\templates\contest\judging_finals_list.html:13
+#: .\contest\templates\contest\medal_list_by_style.html:41
 msgid "Category"
 msgstr "Kategoria"
 
@@ -835,28 +836,23 @@ msgid "Delete"
 msgstr "Usuń"
 
 #: .\contest\templates\contest\judging_bos_list.html:8
-#| msgid "Categories"
 msgid "Category Winners"
 msgstr "Zwycięzcy w kategoriach"
 
 #: .\contest\templates\contest\judging_bos_list.html:12
 #: .\contest\templates\contest\judging_bos_list.html:26
-#| msgid "Winners"
 msgid "Winner"
 msgstr "Zwycięzca"
 
 #: .\contest\templates\contest\judging_bos_list.html:21
-#| msgid "Best Of Show winner"
 msgid "Best Of Show Winner"
 msgstr "Zwycięzca Best Of Show"
 
 #: .\contest\templates\contest\judging_bos_list.html:33
-#| msgid "Best Of Show winner"
 msgid "Change Best Of Show"
 msgstr "Zmień Best Of Show"
 
 #: .\contest\templates\contest\judging_bos_list.html:35
-#| msgid "Best Of Show winner"
 msgid "Select Best Of Show"
 msgstr "Wybierz Best Of Show"
 
@@ -897,12 +893,26 @@ msgid "Create score sheet"
 msgstr "Utwórz ocenę"
 
 #: .\contest\templates\contest\medal_list_by_style.html:14
+#: .\contest\templates\contest\medal_list_by_style.html:40
 msgid "Brewer"
 msgstr "Autor"
 
 #: .\contest\templates\contest\medal_list_by_style.html:16
+#: .\contest\templates\contest\medal_list_by_style.html:39
 msgid "Mead name"
 msgstr "Nazwa miodu"
+
+#: .\contest\templates\contest\medal_list_by_style.html:36
+msgid ""
+"From the meads that won 1st places in their categories we have selected one "
+"to be awarded the 'Best Of Show' title."
+msgstr ""
+"Sposród miodów, które zajęły 1. miejsca w swoich kategoriach wybraliśmy "
+"jeden by przyznać mu tytuł 'Best Of Show'"
+
+#: .\contest\templates\contest\medal_list_by_style.html:37
+msgid "The winner is:"
+msgstr "Zwycięzcą jest:"
 
 #: .\contest\templates\contest\navbar.html:25
 msgid "Logged in as:"
@@ -1299,12 +1309,11 @@ msgstr "Bez wad, w większości w stylu"
 msgid "Mead ideal with the style"
 msgstr "Dokładnie w stylu"
 
-#: .\contest\views.py:1269
+#: .\contest\views.py:1276
 msgid "Final round results saved for category: "
 msgstr "Rezultaty finałów zapisane dla kategorii:"
 
-#: .\contest\views.py:1344
-#| msgid "Best Of Show winner"
+#: .\contest\views.py:1350
 msgid "Best Of Show saved"
 msgstr "Best Of Show zapisany"
 
