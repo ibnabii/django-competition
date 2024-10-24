@@ -1219,7 +1219,13 @@ class JudgingFinalsListView(ContestJudgingFinalsMixin, GroupRequiredMixin, ListV
                         When(entries__scoresheets__final_round=True, then=1),
                         output_field=IntegerField(),
                     )
-                )
+                ),
+                entries_delivered=Count(
+                    Case(
+                        When(entries__is_paid=True, entries__is_received=True, then=1),
+                        output_field=IntegerField(),
+                    )
+                ),
             )
             .prefetch_related(
                 Prefetch(

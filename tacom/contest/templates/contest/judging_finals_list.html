@@ -27,7 +27,7 @@
             {% for category in categories %}
                 <tr>
                     <td>{{ category }}</td>
-                    <td>{{ category.finals_count }} / {{ category.entries.all|length }}</td>
+                    <td>{{ category.finals_count }} / {{ category.entries_delivered }}</td>
                     <td>{{ category.winning_entries|join:", "|default_if_none:"" }}</td>
                     <td>
                         <a class="btn
