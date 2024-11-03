@@ -6,3 +6,4 @@
 *./__pycache__
 /data_dumps/
 /tacom/serving_static
+/tacom/contest_data_migration
