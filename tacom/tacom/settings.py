@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.facebook',
-    "debug_toolbar",
     "bootstrap5",
     "django_bootstrap_icons",
     "rosetta",
@@ -72,6 +71,7 @@ MIDDLEWARE = [
 
 if DEBUG:
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+    INSTALLED_APPS.append("debug_toolbar")
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
