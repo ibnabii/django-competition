@@ -1,0 +1,119 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-17 21:49+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\templates\admin\base_site.html:3
+msgid "Django site admin"
+msgstr "Administrador del sitio Django"
+
+#: .\templates\socialaccount\authentication_error.html:5
+#: .\templates\socialaccount\authentication_error.html:8
+msgid "Social Network Login Failure"
+msgstr "Error al iniciar sesión con la red social"
+
+#: .\templates\socialaccount\authentication_error.html:10
+msgid "An error occurred while attempting to login via your social network account."
+msgstr "Ocurrió un error al intentar iniciar sesión con su cuenta de red social."
+
+#: .\templates\socialaccount\connections.html:5
+#: .\templates\socialaccount\connections.html:8
+msgid "Account Connections"
+msgstr "Conexiones de cuenta"
+
+#: .\templates\socialaccount\connections.html:11
+msgid "You can sign in to your account using any of the following third party accounts:"
+msgstr "Puede iniciar sesión en su cuenta utilizando cualquiera de las siguientes cuentas de terceros:"
+
+#: .\templates\socialaccount\connections.html:35
+msgid "Remove"
+msgstr "Eliminar"
+
+#: .\templates\socialaccount\connections.html:43
+msgid "You currently have no social network accounts connected to this account."
+msgstr "Actualmente no tiene cuentas de redes sociales conectadas a esta cuenta."
+
+#: .\templates\socialaccount\connections.html:46
+msgid "Add a 3rd Party Account"
+msgstr "Agregar una cuenta de terceros"
+
+#: .\templates\socialaccount\login.html:4
+msgid "Sign In"
+msgstr "Iniciar sesión"
+
+#: .\templates\socialaccount\login.html:8
+#, python-format
+msgid "Connect %(provider)s"
+msgstr "Conectar %(provider)s"
+
+#: .\templates\socialaccount\login.html:10
+#, python-format
+msgid "You are about to connect a new third party account from %(provider)s."
+msgstr "Está a punto de conectar una nueva cuenta de terceros desde %(provider)s."
+
+#: .\templates\socialaccount\login.html:12
+#, python-format
+msgid "Sign In Via %(provider)s"
+msgstr "Iniciar sesión a través de %(provider)s"
+
+#: .\templates\socialaccount\login.html:14
+#, python-format
+msgid "You are about to sign in using a third party account from %(provider)s."
+msgstr "Está a punto de iniciar sesión usando una cuenta de terceros de %(provider)s."
+
+#: .\templates\socialaccount\login.html:19
+msgid "Continue"
+msgstr "Continuar"
+
+#: .\templates\socialaccount\login_cancelled.html:5
+#: .\templates\socialaccount\login_cancelled.html:9
+msgid "Login Cancelled"
+msgstr "Inicio de sesión cancelado"
+
+#: .\templates\socialaccount\login_cancelled.html:13
+#, python-format
+msgid "You decided to cancel logging in to our site using one of your existing "
+"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s"
+"\">sign in</a>."
+msgstr "Ha decidido cancelar el inicio de sesión en nuestro sitio utilizando una de sus cuentas existentes. Si esto fue un error, por favor proceda a <a href=\"%(login_url)s\">iniciar sesión</a>."
+
+#: .\templates\socialaccount\messages\account_connected.txt:2
+msgid "The social account has been connected."
+msgstr "La cuenta social ha sido conectada."
+
+#: .\templates\socialaccount\messages\account_connected_other.txt:2
+msgid "The social account is already connected to a different account."
+msgstr "La cuenta social ya está conectada a una cuenta diferente."
+
+#: .\templates\socialaccount\messages\account_disconnected.txt:2
+msgid "The social account has been disconnected."
+msgstr "La cuenta social ha sido desconectada."
+
+#: .\templates\socialaccount\signup.html:5
+msgid "Signup"
+msgstr "Registrarse"
+
+#: .\templates\socialaccount\signup.html:8
+#: .\templates\socialaccount\signup.html:19
+msgid "Sign Up"
+msgstr "Crear cuenta"
+
+#: .\templates\socialaccount\signup.html:10
+#, python-format
+msgid "You are about to use your %(provider_name)s account to login to\n"
+"%(site_name)s. As a final step, please complete the following form:"
+msgstr "Está a punto de usar su cuenta de %(provider_name)s para iniciar sesión en\n%(site_name)s. Como paso final, complete el siguiente formulario:"

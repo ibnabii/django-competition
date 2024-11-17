@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     "simple_history",
     "paypal.standard.ipn",
     "widget_tweaks",
-    "django_po_translator",
 ]
 
 MIDDLEWARE = [
