@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "simple_history",
     "paypal.standard.ipn",
     "widget_tweaks",
+    "django_po_translator",
 ]
 
 MIDDLEWARE = [
@@ -158,10 +159,7 @@ TIME_ZONE = "Europe/Warsaw"
 
 USE_I18N = True
 
-LANGUAGES = [
-    ("pl", "Polski"),
-    ("en", "English"),
-]
+LANGUAGES = [("pl", "Polski"), ("en", "English"), ("es", "Español")]
 
 
 # USE_TZ = True
