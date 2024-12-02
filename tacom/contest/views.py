@@ -1,6 +1,7 @@
 import abc
 import json
 import os
+from decimal import Decimal
 from logging import getLogger
 
 from django.conf import settings
@@ -8,7 +9,6 @@ from django.contrib import messages
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     UserPassesTestMixin,
-    AccessMixin,
 )
 from django.core.exceptions import PermissionDenied
 from django.db.models import (
@@ -17,8 +17,6 @@ from django.db.models import (
     Case,
     When,
     IntegerField,
-    Subquery,
-    OuterRef,
 )
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404, Http404, render
@@ -63,8 +61,8 @@ from .models import (
     User,
     EntriesPackage,
     Payment,
+    RebateCode,
     ScoreSheet,
-    Style,
 )
 from .utils import get_client_ip, mail_entry_status_change
 
@@ -571,11 +569,24 @@ class SelectPaymentMethodView(LoginRequiredMixin, UserOwnsPackageMixin, CreateVi
         kwargs["contest"] = self.package.contest
         return kwargs
 
+    def get_discount(self):
+        try:
+            promo_code = RebateCode.objects.get(user=self.package.owner)
+        except RebateCode.DoesNotExist:
+            return 0
+        if promo_code:
+            return self.package.contest.discount_rate
+        else:
+            return 0
+
     def form_valid(self, form):
         form.instance.user = self.package.owner
         form.instance.contest = self.package.contest
-        form.instance.amount = (
-            self.package.contest.entry_fee_amount * self.package.entries.count()
+        form.instance.amount = round(
+            self.package.contest.entry_fee_amount
+            * self.package.entries.count()
+            * Decimal(1 - self.get_discount() / 100),
+            2,
         )
         form.instance.currency = self.package.contest.entry_fee_currency
         return super().form_valid(form)

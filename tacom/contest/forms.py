@@ -18,6 +18,7 @@ from .models import (
     PaymentMethod,
     ScoreSheet,
     Contest,
+    RebateCode,
 )
 
 
@@ -75,9 +76,28 @@ class ProfileForm(forms.ModelForm):
             "phone",
             "address",
             "language",
+            "rebate_code_text",
         ]
 
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+
+    def clean_rebate_code_text(self):
+        rebate_code_text = self.cleaned_data.get("rebate_code_text")
+
+        if rebate_code_text:
+            try:
+                # Try to find a rebate code with the provided text
+                rebate_code = RebateCode.objects.get(code=rebate_code_text)
+                if rebate_code.is_used and rebate_code.user != self.instance:
+                    raise ValidationError(_("This code has already been used."))
+
+                # If all checks pass, mark the rebate code as used and assign it to the user
+                rebate_code.use(self.instance)  # `self.instance` is the current User
+
+            except RebateCode.DoesNotExist:
+                raise ValidationError(_("Wrong code"))
+
+        return rebate_code_text
 
 
 class EntryField(forms.ModelMultipleChoiceField):

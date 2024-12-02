@@ -1,7 +1,7 @@
 {% extends 'contest/base.html' %}
 {% block content %}
-
-    {% load i18n %}
+{% load bootstrap_icons %}
+{% load i18n %}
     <h2>{% translate 'My User Profile' %}</h2>
     <table>
         <tr>
@@ -35,6 +35,16 @@
         <tr>
             <td>{% translate "Preferred judging language" %}:</td>
             <td> {{ user.get_language_display }}</td>
+        </tr>
+        <tr>
+            <td>{% translate "Rebate code" %}:</td>
+            <td>
+                {% if user.rebate_code_text %}
+                {% bs_icon 'check' size='1.5em' %}
+                {% else %}
+                {% bs_icon 'x' size='1.5em' %}
+                {% endif %}
+            </td>
         </tr>
     </table>
     <br />

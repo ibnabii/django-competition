@@ -15,6 +15,7 @@ from .models import (
     PaymentMethod,
     Payment,
     ScoreSheet,
+    RebateCode,
 )
 
 
@@ -92,6 +93,7 @@ class ContestAdmin(admin.ModelAdmin):
                 "classes": ["collapse"],
                 "fields": [
                     ("entry_fee_amount", "entry_fee_currency"),
+                    ("discount_rate",),
                     ("payment_methods",),
                     ("payment_transfer_info",),
                 ],
@@ -313,3 +315,22 @@ class ScoreSheetAdmin(SimpleHistoryAdmin):
     formfield_overrides = {
         TextField: {"widget": TinyMCE(attrs={"cols": 80, "rows": 100})},
     }
+
+
+@admin.register(RebateCode)
+class RebateCodeAdmin(admin.ModelAdmin):
+    list_display = ("code", "is_used", "user")
+
+    def get_fields(self, request, obj=None):
+        fields = super().get_fields(request, obj)
+        # Exclude is_used and user fields only when creating a new instance
+        if not obj:
+            return [field for field in fields if field not in ("is_used", "user")]
+        return fields
+
+    # Automatically set default values for is_used and user only when creating a new rebate code
+    def save_model(self, request, obj, form, change):
+        if not change:  # If the object is being created
+            obj.is_used = False
+            obj.user = None
+        super().save_model(request, obj, form, change)

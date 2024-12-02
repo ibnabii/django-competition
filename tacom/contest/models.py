@@ -2,15 +2,15 @@ from datetime import date
 from datetime import datetime
 from logging import getLogger
 from uuid import uuid1
+from random import choices
+from string import ascii_uppercase, digits
 
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
-from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.functional import cached_property
-from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
@@ -60,6 +60,12 @@ class User(AbstractUser):
         verbose_name=_("Privacy Policy accepted"),
     )
     gdpr_consent_date = models.DateTimeField(auto_now_add=True)
+    rebate_code_text = models.CharField(
+        max_length=15,
+        verbose_name=_("Rebate code"),
+        help_text=_("Add rebate code if you have one"),
+        blank=True,
+    )
 
     @property
     def profile_complete(self):
@@ -249,6 +255,13 @@ class Contest(models.Model):
         blank=True,
         verbose_name=_("Transfer payment instructions"),
         help_text=_("Mandatory if contest allows transfer payment method."),
+    )
+    discount_rate = models.DecimalField(
+        max_digits=4,
+        decimal_places=1,
+        verbose_name=_("Discount rate with promo code (in %)"),
+        validators=[MinValueValidator(0.0), MaxValueValidator(100.0)],
+        default=0,
     )
     entry_global_limit = models.SmallIntegerField(
         verbose_name=_("Limit of entries in the contest"),
@@ -828,3 +841,44 @@ class ScoreSheet(models.Model):
             + self.finish_score
             + self.overall_score
         )
+
+
+def rebate_code_generator():
+    """Generate a unique 10-character alphanumeric code (uppercase letters and digits)."""
+    while True:
+        code = "".join(choices(ascii_uppercase + digits, k=10))
+        if not RebateCode.objects.filter(code=code).exists():
+            return code
+
+
+class RebateCode(models.Model):
+    class Meta:
+        verbose_name = _("Rebate Code")
+        verbose_name_plural = _("Rebate Codes")
+
+    id = models.UUIDField(primary_key=True, default=uuid1, editable=False)
+    code = models.CharField(
+        max_length=10,
+        unique=True,
+        default=rebate_code_generator,
+        editable=False,
+        verbose_name=_("Code"),
+    )
+    is_used = models.BooleanField(default=False, verbose_name=_("Is used"))
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="rebate_code",
+    )
+
+    def __str__(self):
+        return self.code
+
+    def use(self, user):
+        if self.is_used and self.user != user:
+            raise ValueError("This code has already been used.")
+        self.user = user
+        self.is_used = True
+        self.save()
