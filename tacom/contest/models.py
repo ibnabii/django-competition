@@ -5,7 +5,7 @@ from uuid import uuid1
 from random import choices
 from string import ascii_uppercase, digits
 
-from django.db import models, ProgrammingError, OperationalError
+from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
@@ -504,11 +504,9 @@ class Category(models.Model):
 
 
 def code_generator():
-    try:
-        maximum_code = Entry.objects.aggregate(models.Max("code"))["code__max"]
-    except (OperationalError, ProgrammingError):
-        # If the table (or column) doesn't exist yet, return 0
-        return 0
+    # for migration only:
+    # return 0
+    maximum_code = Entry.objects.aggregate(models.Max("code"))["code__max"]
     if maximum_code:
         return int(maximum_code) + 1
     return 1000
