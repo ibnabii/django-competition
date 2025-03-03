@@ -1193,8 +1193,8 @@ class PartnersGalleryView(TemplateView):
 
         # Parameters
         images_path = "contest/partners"
-        context["max_width"] = 200
-        context["max_height"] = 200
+        context["max_width"] = 150
+        context["max_height"] = 150
 
         # Path to the static/partners directory
         images_dir = os.path.join(settings.STATIC_ROOT, images_path)
