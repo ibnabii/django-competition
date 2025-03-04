@@ -4,10 +4,13 @@ import subprocess
 import os
 from datetime import datetime
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 env = environ.Env()
 
-environ.Env.read_env(env_file="tacom/.env")
+env.read_env(env_file=f"{SCRIPT_DIR}/tacom/.env")
 backup_dir = "db_backup"
+
 timestamp_str = datetime.now().strftime("%Y-%m-%d_%H%M%S")
 
 db_config = env.db()
@@ -28,7 +31,10 @@ cmd = [
 os.environ["PGPASSWORD"] = db_config["PASSWORD"]
 
 
-with gzip.open(f"{backup_dir}/backup_{timestamp_str}.gz", "wb") as f:
+with gzip.open(
+    f"{SCRIPT_DIR}/{backup_dir}/backup_{timestamp_str}.gz",
+    "wb",
+) as f:
     popen = subprocess.Popen(
         cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True
     )
