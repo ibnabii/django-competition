@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-02 11:16+0100\n"
-"PO-Revision-Date: 2024-12-02 11:20+0100\n"
+"POT-Creation-Date: 2025-03-13 11:31+0100\n"
+"PO-Revision-Date: 2025-03-13 11:34+0100\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -164,7 +164,6 @@ msgid "Privacy Policy accepted"
 msgstr "Política de privacidad aceptada"
 
 #: .\contest\models.py:65 .\contest\templates\contest\profile.html:40
-#| msgid "Method code"
 msgid "Rebate code"
 msgstr "Código de descuento"
 
@@ -1038,6 +1037,10 @@ msgstr "No tiene inscripciones"
 #: .\contest\templates\contest\partners_gallery_template.html:3
 msgid "Partners"
 msgstr "Socios"
+
+#: .\contest\templates\contest\partners_strategic.html:4
+msgid "Strategic Partner - Województwo Podlaskie"
+msgstr "Socio Estratégico - Województwo Podlaskie"
 
 #: .\contest\templates\contest\payment_confirm_delete.html:7
 msgid "Are you sure you want to confirm following payment?"
