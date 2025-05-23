@@ -1,14 +1,13 @@
 from allauth.account.forms import SignupForm
 from django import forms
 from django.core.exceptions import ValidationError
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, get_language
 
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 from django_countries.widgets import CountrySelectWidget
-from tinymce.widgets import TinyMCE
 
 from .models import (
     Entry,
