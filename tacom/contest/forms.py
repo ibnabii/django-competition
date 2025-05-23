@@ -232,6 +232,7 @@ class ScoreSheetForm(forms.ModelForm):
 
 class CustomSignupForm(SignupForm):
     gdpr_consent = forms.BooleanField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
