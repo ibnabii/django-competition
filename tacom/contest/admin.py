@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
@@ -167,7 +168,7 @@ class ContestAdmin(admin.ModelAdmin):
 
 
 @admin.register(User)
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     readonly_fields = [
         "date_joined",
         "last_login",
