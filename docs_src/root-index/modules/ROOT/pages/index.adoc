@@ -1,0 +1,16 @@
+include::root-index:partial$shared_attributes.adoc[]
+= {project} - documentation
+// :toc:
+:icons: font
+:doctype: book
+
+[preface]
+== Introduction
+
+Welcome to the documentation for {project}!
+
+// Point users to the right sections:
+* If you're a **regular user**, start with the xref:user_guide/index.adoc[User Guide].
+* If you're an **administrator**, see the xref:admin_guide/index.adoc[Admin Guide].
+* If you're a **developer** or want to contribute, consult the xref:developer_guide/index.adoc[Developer Guide].
+

@@ -1,0 +1,5 @@
+include::root-index:partial$shared_attributes.adoc[]
+
+= {project} - User guide
+
+*Under construction*

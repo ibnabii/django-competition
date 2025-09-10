@@ -7,3 +7,4 @@
 /data_dumps/
 /tacom/serving_static
 /tacom/contest_data_migration
+*/node_modules/
