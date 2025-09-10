@@ -1,5 +1,10 @@
-include::root-index:partial$shared_attributes.adoc[]
+include::root-index::partial$shared_attributes.adoc[]
 
 = {project} - User guide
 
 *Under construction*
+
+
+++++
+<script src="../_/anchor-fix.js"></script>
+++++

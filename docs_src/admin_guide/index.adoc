@@ -1,5 +1,0 @@
-include::root-index:partial$shared_attributes.adoc[]
-
-= {project} - Admin guide
-
-*Under construction*

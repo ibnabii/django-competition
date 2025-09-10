@@ -1,0 +1,5 @@
+name: root-index
+title: Home
+version: ~
+nav:
+  - modules/ROOT/nav.adoc
