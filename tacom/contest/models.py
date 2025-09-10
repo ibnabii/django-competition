@@ -491,7 +491,7 @@ class Category(models.Model):
             return True
         # if not 3, check if there were sufficient entries in finals
         entries_in_final = len(self.entries_in_final)
-        print(self, entries_in_final)
+        # print(self, entries_in_final)
         # no final round
         if entries_in_final == 0:
             return True
