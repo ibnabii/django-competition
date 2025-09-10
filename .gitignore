@@ -8,3 +8,11 @@
 /tacom/serving_static
 /tacom/contest_data_migration
 */node_modules/
+
+# docs/Antora stuff
+# nested git repos required by Antora
+docs_src/**/.git/
+# build
+docs_src/build
+# libs
+docs_src/node_modules

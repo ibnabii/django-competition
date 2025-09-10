@@ -1,9 +1,10 @@
 site:
   title: KMP Bartnik Documentation           # The site-wide title, shown in generated pages
-  start_page: root-index::index.adoc              # This sets the "home page" for your documentation.
+  start_page: root-index::/index.adoc              # This sets the "home page" for your documentation.
                                                   # Format: <component-name>::<module-name>/<page-name>.adoc
 
 content:
+  edit_url: ~
   sources:
     - url: ./root-index                           # Each "source" is a directory containing an Antora component (with its own antora.yml)
       branches: HEAD                              # 'HEAD' means "use the current working files" (for local folders)
@@ -20,3 +21,13 @@ ui:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
                                                   # This sets the Antora UI bundle to use (here, the default UI from GitLab)
     snapshot: true                                # Download and extract it on each build (not from cache)
+  supplemental_files: ./site-scripts
+
+
+asciidoc:
+  attributes:
+    sectnums: ''
+    toclevels: 4
+    kroki-fetch-diagram: true
+  extensions:
+    - asciidoctor-kroki

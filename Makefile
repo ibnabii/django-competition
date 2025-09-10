@@ -2,6 +2,8 @@
 DOCS_DIR=docs_src
 ANTORA_CLI=@antora/cli
 ANTORA_GEN=@antora/site-generator-default
+DOC_DIRS = root-index user_guide developer_guide admin_guide
+COMMIT_MSG = "Update docs"
 
 .PHONY: help test lint build-docs clean-docs
 
@@ -11,12 +13,27 @@ help:
 #    @echo "  make lint        - Run flake8 linting"
 	@echo Docs:
 	@echo   make antora-install	- Install Antora (npm docs engine)
+	@echo   make commit-docs  	- Commit latest version of docs to local repos
 	@echo   make build-docs  	- Build documentation
 	@echo   make clean-docs  	- Clean documentation artifacts
 
 antora-install:
     # Installs Antora CLI & site generator locally
-	cd $(DOCS_DIR) && npm install $(ANTORA_CLI) $(ANTORA_GEN)
+	cd $(DOCS_DIR) && npm install $(ANTORA_CLI) $(ANTORA_GEN) asciidoctor-kroki
+
+
+# commit all docs into it's respective git repos
+commit-docs:
+	cd $(DOCS_DIR) & \
+	@for %%d in ($(DOC_DIRS)) do ( \
+		echo Committing in %%d... & \
+		cd %%d & \
+		git add . & \
+		echo Added to git & \
+		git commit -m "$(COMMIT_MSG)" & \
+		echo Commited to git & \
+		cd .. \
+    )
 
 # TODO: test
 #test:
@@ -30,6 +47,8 @@ lint:
 build-docs: antora-install
 	cd $(DOCS_DIR) && npx antora antora-playbook.yml
 
-clean-docs:
-	rm -rf $(DOCS_DIR)/build/
-	rm -rf $(DOCS_DIR)/node_modules/
+clean-docs-build:
+	if exist $(DOCS_DIR)\build rmdir /S /Q $(DOCS_DIR)\build
+
+clean-docs: clean-docs-build
+	if exist $(DOCS_DIR)\node_modules rmdir /S /Q $(DOCS_DIR)\node_modules
