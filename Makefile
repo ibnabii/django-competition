@@ -16,6 +16,10 @@ help:
 	@echo   make commit-docs  	- Commit latest version of docs to local repos
 	@echo   make build-docs  	- Build documentation
 	@echo   make clean-docs  	- Clean documentation artifacts
+	@echo Dev-env setup:
+	@echo   make requirements		- install prod python packages
+	@echo   make requirements-dev	- install dev python packages
+
 
 antora-install:
     # Installs Antora CLI & site generator locally
@@ -52,3 +56,11 @@ clean-docs-build:
 
 clean-docs: clean-docs-build
 	if exist $(DOCS_DIR)\node_modules rmdir /S /Q $(DOCS_DIR)\node_modules
+
+
+# requirements
+requirements:
+	pip install -r requirements/base.txt
+
+requirements-dev:
+	pip install -r requirements/local.txt
