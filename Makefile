@@ -6,7 +6,7 @@ DOC_DIRS = root-index user_guide developer_guide admin_guide
 COMMIT_MSG = "Update docs"
 
 .PHONY: help test lint build-docs clean-docs
-.PHONY: requirements requirements-dev
+.PHONY: requirements requirements-dev test-coverage
 help:
 	@echo Targets:
 #    @echo "  make test        - Run Django tests"
@@ -64,3 +64,7 @@ requirements:
 
 requirements-dev:
 	pip install -r requirements/local.txt
+
+# tests
+test-coverage:
+	pytest --cov=. --cov-report html

@@ -45,10 +45,12 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.facebook',
-    "bootstrap5",
+    # "bootstrap5", # django-bootstrap-v5==1.0.11
+    "django_bootstrap5",
     "django_bootstrap_icons",
     "rosetta",
-    "captcha",
+    # "captcha",  # in djagno_recaptcha 3.0.0
+    "django_recaptcha", # since djagno_recaptcha 4.0.0
     "django_countries",
     "simple_history",
     "paypal.standard.ipn",
@@ -160,8 +162,11 @@ USE_I18N = True
 
 LANGUAGES = [("pl", "Polski"), ("en", "English"), ("es", "Español")]
 
+# RemovedInDjango50Warning:
+# The default value of USE_TZ will change from False to True in Django 5.0.
+# Set USE_TZ to False in your project settings if you want to keep the current default behavior.
+USE_TZ = False
 
-# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -230,9 +235,17 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 # Allauth settings
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
+
+# ACCOUNT_AUTHENTICATION_METHOD = "email"
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_SIGNUP_FIELDS = {"email*", "password1*", "password2*"}
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USER_MODEL_EMAIL_FIELD = "email"
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+ACCOUNT_USERNAME_BLACKLIST = ["admin", "user", "username"]
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
@@ -274,7 +287,7 @@ BOOTSTRAP5 = {
 
 # ReCaptcha
 if TEST_ENV:
-    SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
+    SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
 else:
     RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
     RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
