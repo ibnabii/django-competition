@@ -1,11 +1,10 @@
-import logging.config
+# import logging.config
 from pathlib import Path
 
+import environ
 from django.contrib.messages import constants as messages
 from django.core.management.utils import get_random_secret_key
 from django.urls import reverse_lazy
-
-import environ
 
 env = environ.Env()
 environ.Env.read_env()
@@ -50,7 +49,7 @@ INSTALLED_APPS = [
     "django_bootstrap_icons",
     "rosetta",
     # "captcha",  # in djagno_recaptcha 3.0.0
-    "django_recaptcha", # since djagno_recaptcha 4.0.0
+    "django_recaptcha",  # since djagno_recaptcha 4.0.0
     "django_countries",
     "simple_history",
     "paypal.standard.ipn",
@@ -166,7 +165,6 @@ LANGUAGES = [("pl", "Polski"), ("en", "English"), ("es", "Español")]
 # The default value of USE_TZ will change from False to True in Django 5.0.
 # Set USE_TZ to False in your project settings if you want to keep the current default behavior.
 USE_TZ = False
-
 
 
 # Static files (CSS, JavaScript, Images)

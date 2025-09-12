@@ -68,3 +68,18 @@ requirements-dev:
 # tests
 test-coverage:
 	pytest --cov=. --cov-report html
+
+
+# linting
+isort-check:
+	isort . --check-only --skip .venv --skip migrations
+
+isort-diff:
+	isort . --diff --skip .venv --skip migrations
+
+isort:
+	isort . --skip .venv --skip migrations
+
+# deploy
+check:
+	./tacom/manage.py check --deploy

@@ -6,35 +6,27 @@ from logging import getLogger
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.mixins import (
-    LoginRequiredMixin,
-    UserPassesTestMixin,
-)
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
-from django.db.models import (
-    Prefetch,
-    Count,
-    Case,
-    When,
-    IntegerField,
-)
+from django.db.models import Case, Count, IntegerField, Prefetch, When
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, get_object_or_404, Http404, render
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import Http404, get_object_or_404, redirect, render
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _, get_language
+from django.utils.translation import get_language
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import (
-    ListView,
-    TemplateView,
-    UpdateView,
-    DetailView,
     CreateView,
     DeleteView,
+    DetailView,
     FormView,
+    ListView,
     RedirectView,
+    TemplateView,
+    UpdateView,
     View,
 )
 from django.views.generic.base import ContextMixin
@@ -42,30 +34,29 @@ from paypal.standard.forms import PayPalPaymentsForm
 
 from . import payu
 from .forms import (
+    BlankForm,
+    ContestBestOfShowForm,
+    EditEntryForm,
+    FakePaymentForm,
+    FinalEntriesFormset,
+    NewAdminPackage,
     NewEntryForm,
-    ProfileForm,
     NewPackageForm,
     NewPaymentForm,
-    FakePaymentForm,
-    BlankForm,
-    NewAdminPackage,
+    ProfileForm,
     ScoreSheetForm,
-    EditEntryForm,
-    FinalEntriesFormset,
-    ContestBestOfShowForm,
 )
 from .models import (
-    Contest,
     Category,
-    Entry,
-    User,
+    Contest,
     EntriesPackage,
+    Entry,
     Payment,
     RebateCode,
     ScoreSheet,
+    User,
 )
 from .utils import get_client_ip, mail_entry_status_change
-
 
 logger = getLogger("views")
 
@@ -734,7 +725,8 @@ class PayPalDispatchView(PaymentView):
         paypal_data = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
             "amount": self.payment.amount,
-            "item_name": f"{self.payment.contest.title} - {_('Entries')}: {[entry.code for entry in self.payment.entries.all()]}",
+            "item_name": f"{self.payment.contest.title} - {_('Entries')}: "
+            f"{[entry.code for entry in self.payment.entries.all()]}",
             "invoice": self.payment.id,
             "currency_code": self.payment.currency,
             # 'charset': 'UTF-8',

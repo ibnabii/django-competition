@@ -2,21 +2,21 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
-from tinymce.widgets import TinyMCE
 from simple_history.admin import SimpleHistoryAdmin
+from tinymce.widgets import TinyMCE
 
 from .models import (
-    Contest,
-    Style,
-    Entry,
     Category,
-    User,
-    Participant,
+    Contest,
     EntriesPackage,
-    PaymentMethod,
+    Entry,
+    Participant,
     Payment,
-    ScoreSheet,
+    PaymentMethod,
     RebateCode,
+    ScoreSheet,
+    Style,
+    User,
 )
 
 

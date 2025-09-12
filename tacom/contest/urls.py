@@ -1,5 +1,5 @@
-from django.views.generic import DetailView
 from django.urls import path
+from django.views.generic import DetailView
 
 from . import views
 from .models import Style

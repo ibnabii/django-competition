@@ -1,8 +1,9 @@
-import environ
 import gzip
-import subprocess
 import os
+import subprocess
 from datetime import datetime
+
+import environ
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 

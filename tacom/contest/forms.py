@@ -3,21 +3,21 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _, get_language
-
+from django.utils.translation import get_language
+from django.utils.translation import gettext_lazy as _
+from django_countries.widgets import CountrySelectWidget
 from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV2Checkbox
-from django_countries.widgets import CountrySelectWidget
 
 from .models import (
-    Entry,
-    User,
+    Contest,
     EntriesPackage,
+    Entry,
     Payment,
     PaymentMethod,
-    ScoreSheet,
-    Contest,
     RebateCode,
+    ScoreSheet,
+    User,
 )
 
 
@@ -248,7 +248,8 @@ class CustomSignupForm(SignupForm):
             )
         else:
             self.fields["gdpr_consent"].label = mark_safe(
-                f"I accept processing of my data<br />per KMP Bartnik's <a href='{url}' target='_blank'>Privacy Policy</a>"
+                f"I accept processing of my data<br />per "
+                f"KMP Bartnik's <a href='{url}' target='_blank'>Privacy Policy</a>"
             )
 
     def save(self, request):

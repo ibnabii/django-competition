@@ -1,32 +1,30 @@
-from datetime import date
-from datetime import datetime
+from datetime import date, datetime
 from logging import getLogger
-from uuid import uuid1
 from random import choices
 from string import ascii_uppercase, digits
+from uuid import uuid1
 
+from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.utils import OperationalError
-from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-
 from django_countries.fields import CountryField
 from simple_history.models import HistoricalRecords
 
 from .managers import (
-    StyleManager,
-    ContestManager,
-    RegistrableContestManager,
-    PublishedContestManager,
     CategoryManager,
-    PaymentManagerExcludeStatuses,
+    ContestManager,
     DefaultManager,
+    PaymentManagerExcludeStatuses,
     PaymentMethodManager,
+    PublishedContestManager,
+    RegistrableContestManager,
+    StyleManager,
 )
 from .utils import mail_entry_status_change
 
@@ -623,7 +621,7 @@ class Entry(models.Model):
                 .count()
             ):
                 raise ValidationError(
-                    _(f"Cannot change category due to target category limit")
+                    _("Cannot change category due to target category limit")
                 )
         else:
             # insert
