@@ -1,6 +1,7 @@
 from contest.models import Contest
 from django.test import TestCase
 from django.urls import reverse
+from contest.factories import ContestFactory
 
 
 class FirstPageTests(TestCase):
@@ -36,26 +37,20 @@ class FirstPageTests(TestCase):
         self.assertEqual(self.check_no_contests(), True)
 
     def test_only_unpublished_contests(self):
-        Contest.objects.create(
-            title="Unpublished contest", competition_is_published=False
-        )
+        ContestFactory(title="Unpublished contest", competition_is_published=False)
         self.assertEqual(self.check_no_contests(), True)
 
     def test_one_published_contest(self):
-        Contest.objects.create(
-            title="Unpublished contest", competition_is_published=False
-        )
-        Contest.objects.create(
+        ContestFactory(title="Unpublished contest", competition_is_published=False)
+        ContestFactory(
             title="Published contest", slug="published", competition_is_published=True
         )
         self.assertEqual(self.check_one_contest_redirected(), True)
 
     def test_multiple_published_contests(self):
-        Contest.objects.create(
-            title="Unpublished contest", competition_is_published=False
-        )
-        Contest.objects.create(title="PublishedContest1", competition_is_published=True)
-        Contest.objects.create(title="PublishedContest2", competition_is_published=True)
+        ContestFactory(title="Unpublished contest", competition_is_published=False)
+        ContestFactory(title="PublishedContest1", competition_is_published=True)
+        ContestFactory(title="PublishedContest2", competition_is_published=True)
 
         response = self.check_redirected_to_home()
         self.assertContains(response, "PublishedContest1")
