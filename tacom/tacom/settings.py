@@ -218,7 +218,7 @@ LOGGING = {
 }
 
 # Testing
-TESTING_LOCALES = ["zh_CN", "uk_UA", "pl_PL", "es_ES"]
+TESTING_LOCALES = ["zh_CN", "uk_UA", "pl_PL", "es_ES", "en_US"]
 
 # TinyMCE settings
 TINYMCE_DEFAULT_CONFIG = {

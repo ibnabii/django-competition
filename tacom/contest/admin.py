@@ -1,3 +1,5 @@
+import copy
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.db.models import TextField
@@ -40,8 +42,23 @@ class CategoriesForContest(admin.TabularInline):
     extra = 0
 
 
+@admin.action(description=_("Create copies of selected objects"))
+def duplicate_contest(_modeladmin, _request, queryset):
+    for obj in queryset:
+        obj_copy = copy.copy(obj)
+        obj_copy.pk = None  # This will save as a new object
+        obj_copy.slug = ""
+        obj_copy.title = f"{obj.title} ({_('copy')})"
+        obj_copy.save()
+        # If your model has many-to-many fields, also duplicate them
+        for m2m_field in obj._meta.many_to_many:
+            field = getattr(obj, m2m_field.name)
+            getattr(obj_copy, m2m_field.name).set(field.all())
+
+
 @admin.register(Contest)
 class ContestAdmin(admin.ModelAdmin):
+    actions = [duplicate_contest]
     # save_on_top = True
     model = Contest
     inlines = (CategoriesForContest,)

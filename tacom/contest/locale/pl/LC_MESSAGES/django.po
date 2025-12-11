@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 11:31+0100\n"
-"PO-Revision-Date: 2025-03-13 11:33+0100\n"
+"POT-Creation-Date: 2025-12-11 17:03+0100\n"
+"PO-Revision-Date: 2025-12-11 17:07+0100\n"
 "Last-Translator: admin bardzo ważny <pasieczny.a+adminkonkurs@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,71 +17,79 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Translated-Using: django-rosetta 0.9.9\n"
+"X-Translated-Using: django-rosetta 0.10.3\n"
 
-#: .\contest\admin.py:56
+#: .\contest\admin.py:45
+msgid "Create copies of selected objects"
+msgstr "Skopiuj wybrane obiekty"
+
+#: .\contest\admin.py:51
+msgid "copy"
+msgstr "kopia"
+
+#: .\contest\admin.py:74
 #: .\contest\templates\contest\scoresheet_card_template.html:30
 msgid "Description"
 msgstr "Opis"
 
-#: .\contest\admin.py:63 .\contest\models.py:169 .\contest\models.py:238
+#: .\contest\admin.py:81 .\contest\models.py:168 .\contest\models.py:237
 msgid "Description in polish"
 msgstr "Opis po polsku"
 
-#: .\contest\admin.py:70 .\contest\models.py:240
+#: .\contest\admin.py:88 .\contest\models.py:239
 #: .\contest\templates\contest\contest_detail.html:8
 #: .\contest\templates\contest\contest_rules.html:6
 msgid "Rules"
 msgstr "Regulamin"
 
-#: .\contest\admin.py:77 .\contest\models.py:241
+#: .\contest\admin.py:95 .\contest\models.py:240
 msgid "Rules in polish"
 msgstr "Regulamin po polsku"
 
-#: .\contest\admin.py:84 .\contest\models.py:279
+#: .\contest\admin.py:102 .\contest\models.py:278
 msgid "Delivery address"
 msgstr "Adres do dostawy"
 
-#: .\contest\admin.py:91
+#: .\contest\admin.py:109
 msgid "Fees"
 msgstr "Opłaty"
 
-#: .\contest\admin.py:103
+#: .\contest\admin.py:121
 #: .\contest\templates\contest\judging_finals_list.html:22
 #: .\contest\templates\contest\navbar.html:138
 msgid "Judging"
 msgstr "Sędziowanie"
 
-#: .\contest\admin.py:111
+#: .\contest\admin.py:129
 msgid "Check which part of judging you want to make available to judges NOW"
 msgstr ""
 "Zaznacz, do której części sędziowania sędziowie mają mieć dostęp TERAZ"
 
-#: .\contest\admin.py:115
+#: .\contest\admin.py:133
 msgid "Limits"
 msgstr "Limity"
 
-#: .\contest\admin.py:117
+#: .\contest\admin.py:135
 msgid "Dates"
 msgstr "Daty"
 
-#: .\contest\admin.py:127
+#: .\contest\admin.py:145
 msgid "Publish competition page"
 msgstr "Opublikuj stronę konkursu"
 
-#: .\contest\admin.py:136
+#: .\contest\admin.py:154
 msgid "Publish competition results"
 msgstr "Opublikuj wyniki konkursu"
 
-#: .\contest\admin.py:140
+#: .\contest\admin.py:158
 msgid "Audit"
 msgstr "Audyt"
 
-#: .\contest\admin.py:269 .\contest\models.py:758
+#: .\contest\admin.py:287 .\contest\models.py:760
 msgid "Contest"
 msgstr "Konkurs"
 
-#: .\contest\admin.py:273
+#: .\contest\admin.py:291
 #: .\contest\templates\contest\add_entry_style_list.html:60
 #: .\contest\templates\contest\entries.html:37
 #: .\contest\templates\contest\entry_confirm_delete.html:8
@@ -93,104 +101,104 @@ msgstr "Styl"
 
 #. Translators: name of the app that's displayed in admin panel for managing
 #. data
-#: .\contest\apps.py:8
+#: .\contest\apps.py:9
 msgid "Competitions"
 msgstr "Konkursy"
 
-#: .\contest\forms.py:92
+#: .\contest\forms.py:91
 msgid "This code has already been used."
 msgstr "Ten kod już został użyty"
 
-#: .\contest\forms.py:98
+#: .\contest\forms.py:97
 msgid "Wrong code"
 msgstr "Błędny kod"
 
-#: .\contest\forms.py:145
+#: .\contest\forms.py:144
 msgid "Cannot add entry that does not belong to user"
 msgstr "Nie możesz dodać nie swojego zgłoszenia"
 
-#: .\contest\forms.py:148 .\contest\forms.py:163
+#: .\contest\forms.py:147 .\contest\forms.py:162
 msgid "Cannot add entry from another contest"
 msgstr "Nie możesz dodać zgłoszenia z innego konkursu"
 
-#: .\contest\forms.py:196
+#: .\contest\forms.py:195
 msgid "This method is not allowed for this contest"
 msgstr "Ta metoda płatności nie jest dozwolona w tym konkursie"
 
-#: .\contest\forms.py:216
+#: .\contest\forms.py:215
 msgid "Is payment successful?"
 msgstr "Czy płatność ma się udać"
 
-#: .\contest\forms.py:217
+#: .\contest\forms.py:216
 #: .\contest\templates\contest\scoresheet_detail.html:13
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:59
 msgid "Yes"
 msgstr "Tak"
 
-#: .\contest\forms.py:217
+#: .\contest\forms.py:216
 #: .\contest\templates\contest\scoresheet_detail.html:15
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:61
 msgid "No"
 msgstr "Nie"
 
-#: .\contest\models.py:45
+#: .\contest\models.py:44
 msgid "Polish"
 msgstr "polski"
 
-#: .\contest\models.py:46
+#: .\contest\models.py:45
 msgid "English"
 msgstr "angielski"
 
-#: .\contest\models.py:48
+#: .\contest\models.py:47
 #: .\contest\templates\contest\medal_list_by_style.html:15
 msgid "Country"
 msgstr "Kraj"
 
-#: .\contest\models.py:49 .\contest\templates\contest\profile.html:28
+#: .\contest\models.py:48 .\contest\templates\contest\profile.html:28
 msgid "Phone number"
 msgstr "Numer telefonu"
 
-#: .\contest\models.py:50 .\contest\templates\contest\profile.html:32
+#: .\contest\models.py:49 .\contest\templates\contest\profile.html:32
 msgid "Address"
 msgstr "Adres"
 
-#: .\contest\models.py:52
+#: .\contest\models.py:51
 msgid "I would like to get feedback on my meads in"
 msgstr "Proszę o opis moich miodów w języku"
 
-#: .\contest\models.py:60
+#: .\contest\models.py:59
 msgid "Privacy Policy accepted"
 msgstr "Polityka Prywatności zaakceptowana"
 
-#: .\contest\models.py:65 .\contest\templates\contest\profile.html:40
+#: .\contest\models.py:64 .\contest\templates\contest\profile.html:40
 msgid "Rebate code"
 msgstr "Kod rabatowy"
 
-#: .\contest\models.py:66
+#: .\contest\models.py:65
 msgid "Add rebate code if you have one"
 msgstr "Dodaj kod rabatowy, jeśli go masz"
 
-#: .\contest\models.py:96
+#: .\contest\models.py:95
 msgid "Participant"
 msgstr "Uczestnik"
 
-#: .\contest\models.py:97
+#: .\contest\models.py:96
 msgid "Participants"
 msgstr "Uczestnicy"
 
-#: .\contest\models.py:116
+#: .\contest\models.py:115
 msgid "Registered"
 msgstr "Zarejestrowane"
 
-#: .\contest\models.py:122
+#: .\contest\models.py:121
 msgid "Paid"
 msgstr "Opłacone"
 
-#: .\contest\models.py:128
+#: .\contest\models.py:127
 msgid "Received"
 msgstr "Dostarczone"
 
-#: .\contest\models.py:132 .\contest\models.py:539 .\contest\models.py:712
+#: .\contest\models.py:131 .\contest\models.py:541 .\contest\models.py:714
 #: .\contest\templates\contest\entries.html:40
 #: .\contest\templates\contest\entry_confirm_delete.html:9
 #: .\contest\templates\contest\payment_confirm_delete.html:49
@@ -198,25 +206,25 @@ msgstr "Dostarczone"
 msgid "Name"
 msgstr "Nazwa"
 
-#: .\contest\models.py:137 .\contest\models.py:233
+#: .\contest\models.py:136 .\contest\models.py:232
 msgid "will be used in contest URL, can be derrived automatically from titile"
 msgstr ""
 "będzie użyte do budowy adresu URL konkursu, może powstać automatycznie na "
 "bazie tytułu"
 
-#: .\contest\models.py:141
+#: .\contest\models.py:140
 msgid "Allow to use this category in competitions"
 msgstr "Zezwól na wybór tej kategorii w konkursach"
 
-#: .\contest\models.py:144
+#: .\contest\models.py:143
 msgid "Require extra information for entries?"
 msgstr "Wymagane dodatkowe dane o zgłoszeniu"
 
-#: .\contest\models.py:148
+#: .\contest\models.py:147
 msgid "Required information hint"
 msgstr "Informacja o wymaganych danych"
 
-#: .\contest\models.py:150 .\contest\models.py:159
+#: .\contest\models.py:149 .\contest\models.py:158
 msgid ""
 "This will instruct the participants what information they need to provide "
 "for an entry.</br>Fill only if you require extra information for entries"
@@ -224,101 +232,101 @@ msgstr ""
 "Podpowiedź dla uczestnika, jakie dodatkowe dane powinien podać</br>Wypełnij "
 "tylko jeśli wymagasz podania dodatkowych danych."
 
-#: .\contest\models.py:157
+#: .\contest\models.py:156
 msgid "Required information hint in Polish"
 msgstr "Informacja o wymaganych danych po polsku"
 
-#: .\contest\models.py:166
+#: .\contest\models.py:165
 msgid "Description in english"
 msgstr "Opis po angielsku"
 
-#: .\contest\models.py:194
+#: .\contest\models.py:193
 msgid "style"
 msgstr "styl"
 
-#: .\contest\models.py:195
+#: .\contest\models.py:194
 msgid "styles"
 msgstr "style"
 
-#: .\contest\models.py:207
+#: .\contest\models.py:206
 msgid ""
 "If you require extra information from participants, provide them with a "
 "hint!"
 msgstr "Jeśli wymagasz dodatkowych danych od uczestnika, powiedz im jakich"
 
-#: .\contest\models.py:224
+#: .\contest\models.py:223
 msgid "contest"
 msgstr "konkurs"
 
-#: .\contest\models.py:225
+#: .\contest\models.py:224
 msgid "contests"
 msgstr "konkursy"
 
-#: .\contest\models.py:228
+#: .\contest\models.py:227
 msgid "title"
 msgstr "tytuł"
 
-#: .\contest\models.py:244
+#: .\contest\models.py:243
 msgid "Entry fee amount"
 msgstr "Wpisowe"
 
-#: .\contest\models.py:247
+#: .\contest\models.py:246
 msgid "Fee currency code"
 msgstr "Kod waluty wpisowego"
 
-#: .\contest\models.py:251
+#: .\contest\models.py:250
 msgid "Allowed payment methods"
 msgstr "Dozwolone metody płatności"
 
-#: .\contest\models.py:256
+#: .\contest\models.py:255
 msgid "Transfer payment instructions"
 msgstr "Dane do przelewu"
 
-#: .\contest\models.py:257
+#: .\contest\models.py:256
 msgid "Mandatory if contest allows transfer payment method."
 msgstr "Obowiązkowe jeśli można płacić przelewem"
 
-#: .\contest\models.py:262
+#: .\contest\models.py:261
 msgid "Discount rate with promo code (in %)"
 msgstr "% zniżki z kodem rabatowym"
 
-#: .\contest\models.py:267
+#: .\contest\models.py:266
 msgid "Limit of entries in the contest"
 msgstr "Całkowity limit zgłoszeń w tym konkursie"
 
-#: .\contest\models.py:268 .\contest\models.py:274
+#: .\contest\models.py:267 .\contest\models.py:273
 msgid "Leave blank if no limit should be applied"
 msgstr "Puste jeśli brak limitu"
 
-#: .\contest\models.py:273
+#: .\contest\models.py:272
 msgid "Limit of entries per participant"
 msgstr "Limit liczby zgłoszeń w konkursie na uczestnika"
 
-#: .\contest\models.py:282
+#: .\contest\models.py:281
 msgid "Entry registration from"
 msgstr "Rejestracja zgłoszeń od"
 
-#: .\contest\models.py:284 .\contest\models.py:288 .\contest\models.py:292
+#: .\contest\models.py:283 .\contest\models.py:287 .\contest\models.py:291
 msgid "to"
 msgstr "do"
 
-#: .\contest\models.py:286
+#: .\contest\models.py:285
 msgid "Delivery from"
 msgstr "Dostarczanie od"
 
-#: .\contest\models.py:290
+#: .\contest\models.py:289
 msgid "Judging sessions from"
 msgstr "Sędziowanie konkursu od"
 
-#: .\contest\models.py:296 .\contest\models.py:309
+#: .\contest\models.py:295 .\contest\models.py:308
 msgid "Ignores auto-publish date"
 msgstr "Ignoruje datę automatycznej publikacji"
 
-#: .\contest\models.py:297
+#: .\contest\models.py:296
 msgid "Competition page is published"
 msgstr "Strona konkursu jest opublikowana"
 
-#: .\contest\models.py:303
+#: .\contest\models.py:302
 msgid ""
 "Fill only if you want the competition page to be published automatically at "
 "that time"
@@ -326,15 +334,15 @@ msgstr ""
 "Wypełnij tylko, jeśli chcesz, by strona konkursu była automatycznie "
 "opublikowana o tej godzinie"
 
-#: .\contest\models.py:305
+#: .\contest\models.py:304
 msgid "When to publish competition page automatically"
 msgstr "Kiedy automatycznie opublikować stronę konkursu"
 
-#: .\contest\models.py:310
+#: .\contest\models.py:309
 msgid "Competition results are published"
 msgstr "Wyniki konkursu są opublikowane"
 
-#: .\contest\models.py:316
+#: .\contest\models.py:315
 msgid ""
 "Fill only if you want the competition <b>results</b> to be published "
 "automatically at that time"
@@ -342,73 +350,73 @@ msgstr ""
 "Wypełnij tylko, jeśli chcesz, by <b>wyniki</b> konkursu były automatycznie "
 "opublikowane o tej godzinie"
 
-#: .\contest\models.py:318
+#: .\contest\models.py:317
 msgid "When to publish results automatically"
 msgstr "Kiedy automatycznie opublikować wyniki konkursu"
 
-#: .\contest\models.py:326
+#: .\contest\models.py:325
 msgid "Enable judges to judge elimination round."
 msgstr "Zezwól na sędziowanie rundy eleminacyjnej"
 
-#: .\contest\models.py:330
+#: .\contest\models.py:329
 msgid "Enable judges to judge final round."
 msgstr "Zezwól na sędziowanie rundy finałowej"
 
-#: .\contest\models.py:333
+#: .\contest\models.py:332
 msgid "Enable judges to judge Best Of Show."
 msgstr "Zezwól na sędziowanie Best Of Show"
 
-#: .\contest\models.py:337
+#: .\contest\models.py:336
 msgid "Best Of Show winner"
 msgstr "Zwycięzca Best Of Show"
 
-#: .\contest\models.py:415
+#: .\contest\models.py:414
 msgid ""
 "You have chosen to allow transfer payments. You need to provide payment "
 "info!"
 msgstr "Wybrano możliwość płacenia przelewem, podaj dane do przelewu"
 
-#: .\contest\models.py:449
+#: .\contest\models.py:448
 msgid "Entries limit per user"
 msgstr "Limit zgłoszeń na uczestnika"
 
-#: .\contest\models.py:473
+#: .\contest\models.py:472
 msgid "category"
 msgstr "kategoria"
 
-#: .\contest\models.py:474
+#: .\contest\models.py:473
 msgid "categories"
 msgstr "kategorie"
 
-#: .\contest\models.py:517
+#: .\contest\models.py:519
 msgid "Dry"
 msgstr "Wytrawny"
 
-#: .\contest\models.py:518
+#: .\contest\models.py:520
 msgid "Medium"
 msgstr "Półsłodki"
 
-#: .\contest\models.py:519
+#: .\contest\models.py:521
 msgid "Sweet"
 msgstr "Słodki"
 
-#: .\contest\models.py:522
+#: .\contest\models.py:524
 msgid "Still"
 msgstr "Spokojny"
 
-#: .\contest\models.py:523
+#: .\contest\models.py:525
 msgid "Petillant"
 msgstr "Musujący"
 
-#: .\contest\models.py:524
+#: .\contest\models.py:526
 msgid "Sparkling"
 msgstr "Gazowany"
 
-#: .\contest\models.py:528
+#: .\contest\models.py:530
 msgid "code"
 msgstr "kod"
 
-#: .\contest\models.py:534
+#: .\contest\models.py:536
 #: .\contest\templates\contest\judging_bos_list.html:11
 #: .\contest\templates\contest\judging_bos_list.html:25
 #: .\contest\templates\contest\judging_finals_list.html:13
@@ -416,71 +424,58 @@ msgstr "kod"
 msgid "Category"
 msgstr "Kategoria"
 
-#: .\contest\models.py:541
+#: .\contest\models.py:543
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:30
 #: .\contest\templates\contest\scoresheet_entry.html:17
 msgid "Sweetness"
 msgstr "Poziom słodyczy"
 
-#: .\contest\models.py:544
+#: .\contest\models.py:546
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:39
 #: .\contest\templates\contest\scoresheet_entry.html:26
 msgid "Carbonation"
 msgstr "Nagazowanie"
 
-#: .\contest\models.py:547
+#: .\contest\models.py:549
 msgid "Ingredients"
 msgstr "Składniki"
 
-#: .\contest\models.py:552
+#: .\contest\models.py:554
 msgid "Alcohol content (ABV)"
 msgstr "Zawartość alkoholu (alk. obj.)"
 
-#: .\contest\models.py:556
+#: .\contest\models.py:558
 #: .\contest\templates\contest\medal_list_by_style.html:13
 msgid "Place"
 msgstr "Miejsce"
 
-#: .\contest\models.py:558 .\contest\templates\contest\entries.html:30
+#: .\contest\models.py:560 .\contest\templates\contest\entries.html:30
 msgid "Is paid"
 msgstr "Opłacono"
 
-#: .\contest\models.py:561 .\contest\templates\contest\entries.html:33
+#: .\contest\models.py:563 .\contest\templates\contest\entries.html:33
 msgid "Is received"
 msgstr "Dostarczono"
 
-#: .\contest\models.py:566
+#: .\contest\models.py:568
 msgid "entry"
 msgstr "zgłoszenie"
 
-#: .\contest\models.py:567 .\contest\templates\contest\profile.html:57
+#: .\contest\models.py:569 .\contest\templates\contest\profile.html:57
 msgid "entries"
 msgstr "zgłoszenia"
 
-#: .\contest\models.py:586
-#, python-brace-format
-msgid "Providing \"{self.category.style.extra_info_hint}\" is mandatory!"
-msgstr "Wypełnienie \"{self.category.style.extra_info_hint}\" jest obowiązkowe!"
-
-#: .\contest\models.py:609
+#: .\contest\models.py:611
 msgid "Entry cannot be edited anymore!"
 msgstr "Nie można już edytować zgłoszeń!"
 
-#: .\contest\models.py:622
+#: .\contest\models.py:624
 msgid "Cannot change category due to target category limit"
 msgstr ""
 "Nie można zmienić kategorii zgłoszenia, ze względu na limit zgłoszeń w "
 "kategorii docelowej."
 
-#: .\contest\models.py:640
-#, python-brace-format
-msgid ""
-"You have reached entry limit for this category "
-"({self.category.entries_limit})!"
-msgstr ""
-"Osiągnięto limit zgłoszeń w tej kategorii ({self.category.entries_limit})! "
-
-#: .\contest\models.py:651
+#: .\contest\models.py:653
 msgid ""
 "This contest has reached maximum number of entries, no more entries can be "
 "registered."
@@ -488,167 +483,167 @@ msgstr ""
 "Konkurs osiągnął maksymalną liczbę zgłoszeń, nie można już rejestrować "
 "kolejnych."
 
-#: .\contest\models.py:660
+#: .\contest\models.py:662
 msgid ""
 "You have reached maximum number of entries per user in this competition."
 msgstr "Osiągnięto limit liczby zgłoszeń na uczestnika."
 
-#: .\contest\models.py:667
+#: .\contest\models.py:669
 msgid "Entries that has been paid or received cannot be deleted!"
 msgstr "Nie można usunąć opłaconych zgłoszeń"
 
-#: .\contest\models.py:705
+#: .\contest\models.py:707
 msgid "Payment Method"
 msgstr "Metoda Płatności"
 
-#: .\contest\models.py:706
+#: .\contest\models.py:708
 msgid "Payment Methods"
 msgstr "Metody Płatności"
 
-#: .\contest\models.py:710
+#: .\contest\models.py:712
 msgid "Displayed at payment method selection page"
 msgstr "Wyświetlane na stronie wyboru płatności"
 
-#: .\contest\models.py:713
+#: .\contest\models.py:715
 msgid "Polish name"
 msgstr "Nazwa polska"
 
-#: .\contest\models.py:717
+#: .\contest\models.py:719
 msgid "Method code"
 msgstr "Kod metody"
 
-#: .\contest\models.py:718
+#: .\contest\models.py:720
 msgid "Code is used by the software, do not change!"
 msgstr "Kod jest używany przez system, nie zmieniaj go"
 
-#: .\contest\models.py:734
+#: .\contest\models.py:736
 msgid "payment"
 msgstr "płatność"
 
-#: .\contest\models.py:735
+#: .\contest\models.py:737
 msgid "payments"
 msgstr "płatności"
 
-#: .\contest\models.py:738
+#: .\contest\models.py:740
 msgid "Created"
 msgstr "Utworzona"
 
-#: .\contest\models.py:739
+#: .\contest\models.py:741
 msgid "Canceled"
 msgstr "Anulowany"
 
-#: .\contest\models.py:740
+#: .\contest\models.py:742
 msgid "OK"
 msgstr "OK"
 
-#: .\contest\models.py:741
+#: .\contest\models.py:743
 msgid "Failed"
 msgstr "Niepowodzenie"
 
-#: .\contest\models.py:742
+#: .\contest\models.py:744
 msgid "Confirmation pending"
 msgstr "Czeka na potwierdzenie"
 
-#: .\contest\models.py:749
+#: .\contest\models.py:751
 msgid "Method"
 msgstr "Metoda"
 
-#: .\contest\models.py:752
+#: .\contest\models.py:754
 msgid "User"
 msgstr "Użytkownik"
 
-#: .\contest\models.py:761
+#: .\contest\models.py:763
 #: .\contest\templates\contest\payment_confirm_delete.html:43
-#: .\contest\templates\contest\payment_list.html:21
+#: .\contest\templates\contest\payment_list.html:21 .\contest\views.py:728
 msgid "Entries"
 msgstr "Zgłoszenia"
 
-#: .\contest\models.py:764
+#: .\contest\models.py:766
 #: .\contest\templates\contest\payment_confirm_delete.html:35
 #: .\contest\templates\contest\payment_list.html:18
 msgid "Amount"
 msgstr "Kwota"
 
-#: .\contest\models.py:766
+#: .\contest\models.py:768
 msgid "Currency"
 msgstr "Waluta"
 
-#: .\contest\models.py:800
+#: .\contest\models.py:802
 #: .\contest\templates\contest\scoresheet_entry.html:12
 msgid "Entry"
 msgstr "Zgłoszenie"
 
-#: .\contest\models.py:803
+#: .\contest\models.py:805
 #: .\contest\templates\contest\judging_finals_list.html:6
 #: .\contest\templates\contest\scoresheet_detail.html:10
 #: .\contest\templates\contest\scoresheet_detail_brewer.html:56
 msgid "Final round"
 msgstr "Runda finałowa"
 
-#: .\contest\models.py:805 .\contest\views.py:920
+#: .\contest\models.py:807 .\contest\views.py:912
 msgid "Appearance"
 msgstr "Wygląd"
 
-#: .\contest\models.py:807
+#: .\contest\models.py:809
 msgid "Appearance score"
 msgstr "Punkty za wygląd"
 
-#: .\contest\models.py:810 .\contest\views.py:921
+#: .\contest\models.py:812 .\contest\views.py:913
 msgid "Aroma"
 msgstr "Aromat"
 
-#: .\contest\models.py:812
+#: .\contest\models.py:814
 msgid "Aroma score"
 msgstr "Punkty za aromat"
 
-#: .\contest\models.py:814
+#: .\contest\models.py:816
 msgid "Flavor and body"
 msgstr "Smak"
 
-#: .\contest\models.py:816
+#: .\contest\models.py:818
 msgid "Flavor and body score"
 msgstr "Punkty za smak"
 
-#: .\contest\models.py:818 .\contest\views.py:923
+#: .\contest\models.py:820 .\contest\views.py:915
 msgid "Finish"
 msgstr "Finisz"
 
-#: .\contest\models.py:820
+#: .\contest\models.py:822
 msgid "Finish score"
 msgstr "Punkty za finisz"
 
-#: .\contest\models.py:822
+#: .\contest\models.py:824
 msgid "Overall impression"
 msgstr "Wrażenie ogólne"
 
-#: .\contest\models.py:824
+#: .\contest\models.py:826
 msgid "Overal impression score"
 msgstr "Punkty za wrażenie ogólne"
 
-#: .\contest\models.py:829
+#: .\contest\models.py:831
 msgid "Score Sheet"
 msgstr "Arkusz Oceny"
 
-#: .\contest\models.py:830
+#: .\contest\models.py:832
 msgid "Score Sheets"
 msgstr "Arkusze Oceny"
 
-#: .\contest\models.py:856
+#: .\contest\models.py:858
 msgid "Rebate Code"
 msgstr "Kod rabatowy"
 
-#: .\contest\models.py:857
+#: .\contest\models.py:859
 msgid "Rebate Codes"
 msgstr "Kody rabatowe"
 
-#: .\contest\models.py:865
+#: .\contest\models.py:867
 #: .\contest\templates\contest\judging_finals_category.html:18
 #: .\contest\templates\contest\judging_list_by_style.html:14
 #: .\contest\templates\contest\payment_confirm_delete.html:48
 msgid "Code"
 msgstr "Kod"
 
-#: .\contest\models.py:867
+#: .\contest\models.py:869
 msgid "Is used"
 msgstr "Użyty"
 
@@ -1141,218 +1136,229 @@ msgstr "Edycja"
 msgid "TEST ENVIRONMENT"
 msgstr "ŚRODOWISKO TESTOWE"
 
-#: .\contest\views.py:151
+#: .\contest\views.py:142
 msgid "Complete your profile, please."
 msgstr "Proszę uzupełnić dane."
 
-#: .\contest\views.py:167
+#: .\contest\views.py:158
 msgid "You do not have permission to access this site!"
 msgstr "Brak uprawnień, by wejść na stronę!"
 
-#: .\contest\views.py:246
+#: .\contest\views.py:237
 msgid "You have reached the limit of entries allowed per participant."
 msgstr "Osiągnięto limit liczby zgłoszeń na uczestnika"
 
-#: .\contest\views.py:250
+#: .\contest\views.py:241
 msgid "This competition has reached it's entries limit."
 msgstr "Konkurs osiągnął swój łączny limit zgłoszeń"
 
-#: .\contest\views.py:311
+#: .\contest\views.py:302
 msgid "Entry has been added successfully"
 msgstr "Dodano zgłoszenie"
 
-#: .\contest\views.py:349
+#: .\contest\views.py:340
 msgid "Entry has been updated successfully"
 msgstr "Zmodyfikowano zgłoszenie"
 
-#: .\contest\views.py:382
+#: .\contest\views.py:373
 msgid "Entry has been deleted"
 msgstr "Usunięto zgłoszenie"
 
-#: .\contest\views.py:488
+#: .\contest\views.py:479
 msgid "for payment"
 msgstr "do opłacenia"
 
-#: .\contest\views.py:502
+#: .\contest\views.py:493
 msgid "to print labels"
 msgstr "do druku etykiet"
 
-#: .\contest\views.py:522
+#: .\contest\views.py:513
 msgid "to mark as delivered"
 msgstr "do oznaczenia jako dostarczone"
 
-#: .\contest\views.py:538
+#: .\contest\views.py:529
 msgid "Are you sure, you want to mark following entries as delivered?"
 msgstr "Czy na pewno chcesz oznaczyć poniższe zgłoszenia jako dostarczone?"
 
-#: .\contest\views.py:660
+#: .\contest\views.py:651
 msgid "We are awaiting your payment. Once it is received we will notify you."
 msgstr "Czekamy na płatność, poinformujemy Cię gdy dotrze."
 
-#: .\contest\views.py:686 .\contest\views.py:778
+#: .\contest\views.py:677 .\contest\views.py:770
 msgid "Payment failed"
 msgstr "Płatność nieudana"
 
-#: .\contest\views.py:691
+#: .\contest\views.py:682
 msgid ""
 "Status of your entries will be updated upon receiving confirmation from PayU"
 msgstr ""
 "Status zgłoszeń zostanie zaktualizowany po otrzymaniu potwierdzenia z PayU"
 
-#: .\contest\views.py:770
+#: .\contest\views.py:762
 msgid "Payment successful"
 msgstr "Płatność zakończona sukcesem"
 
-#: .\contest\views.py:922
+#: .\contest\views.py:914
 msgid "Flavor and Body"
 msgstr "Smak i ciało"
 
-#: .\contest\views.py:924
+#: .\contest\views.py:916
 msgid "Overall Impression"
 msgstr "Wrażenie ogólne"
 
-#: .\contest\views.py:929 .\contest\views.py:963 .\contest\views.py:997
-#: .\contest\views.py:1031 .\contest\views.py:1065
+#: .\contest\views.py:921 .\contest\views.py:955 .\contest\views.py:989
+#: .\contest\views.py:1023 .\contest\views.py:1057
 msgid "UNACCEPTABLE"
 msgstr "NIEAKCEPTOWALNY"
 
-#: .\contest\views.py:930
+#: .\contest\views.py:922
 msgid "Major faults"
 msgstr "Bardzo poważne wady"
 
-#: .\contest\views.py:934 .\contest\views.py:968 .\contest\views.py:1002
-#: .\contest\views.py:1036 .\contest\views.py:1070
+#: .\contest\views.py:926 .\contest\views.py:960 .\contest\views.py:994
+#: .\contest\views.py:1028 .\contest\views.py:1062
 msgid "BELOW AVERAGE"
 msgstr "PONIŻEJ PRZECIĘTNEJ"
 
-#: .\contest\views.py:935 .\contest\views.py:969 .\contest\views.py:1003
-#: .\contest\views.py:1071
+#: .\contest\views.py:927 .\contest\views.py:961 .\contest\views.py:995
+#: .\contest\views.py:1063
 msgid "Serious faults, poor quality"
 msgstr "Poważne wady, niska jakość"
 
-#: .\contest\views.py:939 .\contest\views.py:973 .\contest\views.py:1007
-#: .\contest\views.py:1041 .\contest\views.py:1075
+#: .\contest\views.py:931 .\contest\views.py:965 .\contest\views.py:999
+#: .\contest\views.py:1033 .\contest\views.py:1067
 msgid "AVERAGE"
 msgstr "ŚREDNI"
 
-#: .\contest\views.py:940
+#: .\contest\views.py:932
 msgid "Few minor faults"
 msgstr "Kilka małych wad"
 
-#: .\contest\views.py:944 .\contest\views.py:978 .\contest\views.py:1012
-#: .\contest\views.py:1046 .\contest\views.py:1080
+#: .\contest\views.py:936 .\contest\views.py:970 .\contest\views.py:1004
+#: .\contest\views.py:1038 .\contest\views.py:1072
 msgid "GOOD"
 msgstr "DOBRY"
 
-#: .\contest\views.py:945
+#: .\contest\views.py:937
 msgid "Mainly within style, minor faults"
 msgstr "W większości w stylu, małe wady"
 
-#: .\contest\views.py:949 .\contest\views.py:983 .\contest\views.py:1017
-#: .\contest\views.py:1051 .\contest\views.py:1085
+#: .\contest\views.py:941 .\contest\views.py:975 .\contest\views.py:1009
+#: .\contest\views.py:1043 .\contest\views.py:1077
 msgid "VERY GOOD"
 msgstr "BARDZO DOBRY"
 
-#: .\contest\views.py:950
+#: .\contest\views.py:942
 msgid "No faults, Mead mostly within style"
 msgstr "Bez wad, w większości w stylu"
 
-#: .\contest\views.py:954 .\contest\views.py:988 .\contest\views.py:1022
-#: .\contest\views.py:1056 .\contest\views.py:1090
+#: .\contest\views.py:946 .\contest\views.py:980 .\contest\views.py:1014
+#: .\contest\views.py:1048 .\contest\views.py:1082
 msgid "PERFECT"
 msgstr "DOSKONAŁY"
 
-#: .\contest\views.py:955
+#: .\contest\views.py:947
 msgid "Appearance ideal with style"
 msgstr "Wygląd dokładnie w stylu"
 
-#: .\contest\views.py:964
+#: .\contest\views.py:956
 msgid "Repulsing smell, major faults"
 msgstr "Odrażający zapach, bardzo poważne wady"
 
-#: .\contest\views.py:974
+#: .\contest\views.py:966
 msgid "Aroma mostly within style, minor faults"
 msgstr "W większości w stylu, małe wady"
 
-#: .\contest\views.py:979
+#: .\contest\views.py:971
 msgid "Pleasant bouquet mostly within style"
 msgstr "Przyjemny aromat w większości w stylu"
 
-#: .\contest\views.py:984
+#: .\contest\views.py:976
 msgid "Pleasant bouquet within the style"
 msgstr "Przyjemny aromat, w stylu"
 
-#: .\contest\views.py:989 .\contest\views.py:1023
+#: .\contest\views.py:981 .\contest\views.py:1015
 msgid "Complex and pleasant, ideal with style"
 msgstr "Złożony i przyjemny, dokładnie w stylu"
 
-#: .\contest\views.py:998
+#: .\contest\views.py:990
 msgid "Repulsing taste, major faults"
 msgstr "Odpychający smak, bardzo poważne wady"
 
-#: .\contest\views.py:1008
+#: .\contest\views.py:1000
 msgid "Flavor mostly within the style, minor faults"
 msgstr "W większości w stylu, małe wady"
 
-#: .\contest\views.py:1013
+#: .\contest\views.py:1005
 msgid "Pleasant flavor mostly within style"
 msgstr "Przyjemny smak, w większości stylu"
 
-#: .\contest\views.py:1018
+#: .\contest\views.py:1010
 msgid "Pleasant flavor within the style"
 msgstr "Przyjemny smak, w stylu"
 
-#: .\contest\views.py:1032
+#: .\contest\views.py:1024
 msgid "Repulsing aftertaste"
 msgstr "Odpychający posmak"
 
-#: .\contest\views.py:1037
+#: .\contest\views.py:1029
 msgid "No finish and/or bad aftertaste"
 msgstr "Bez finiszu i/lub zły posmak"
 
-#: .\contest\views.py:1042
+#: .\contest\views.py:1034
 msgid "Short finish with neutral aftertaste"
 msgstr "Krótki finisz z neutralnym posmakiem"
 
-#: .\contest\views.py:1047
+#: .\contest\views.py:1039
 msgid "Medium finish with pleasant aftertaste"
 msgstr "Średni finisz, przyjemny posmak"
 
-#: .\contest\views.py:1052
+#: .\contest\views.py:1044
 msgid "Medium/long finish, pleasant aftertaste"
 msgstr "Średni/długi finisz, przyjemny posmak"
 
-#: .\contest\views.py:1057
+#: .\contest\views.py:1049
 msgid "Long and pleasant finish and aftertaste"
 msgstr "Długi i przyjemny finisz i posmak"
 
-#: .\contest\views.py:1066
+#: .\contest\views.py:1058
 msgid "Major faults and/or style differences"
 msgstr "Bardzo poważne wady i/lub odbiega od stylu"
 
-#: .\contest\views.py:1076
+#: .\contest\views.py:1068
 msgid "Mead mostly within the style, minor faults"
 msgstr "W większości w stylu, małe wady"
 
-#: .\contest\views.py:1081
+#: .\contest\views.py:1073
 msgid "Most of the attributes within the style"
 msgstr "W większości w stylu"
 
-#: .\contest\views.py:1086
+#: .\contest\views.py:1078
 msgid "No faults, Mead mostly within the style"
 msgstr "Bez wad, w większości w stylu"
 
-#: .\contest\views.py:1091
+#: .\contest\views.py:1083
 msgid "Mead ideal with the style"
 msgstr "Dokładnie w stylu"
 
-#: .\contest\views.py:1293
+#: .\contest\views.py:1285
 msgid "Final round results saved for category: "
 msgstr "Rezultaty finałów zapisane dla kategorii:"
 
-#: .\contest\views.py:1367
+#: .\contest\views.py:1359
 msgid "Best Of Show saved"
 msgstr "Best Of Show zapisany"
+
+#, python-brace-format
+#~ msgid "Providing \"{self.category.style.extra_info_hint}\" is mandatory!"
+#~ msgstr "Wypełnienie \"{self.category.style.extra_info_hint}\" jest obowiązkowe!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "You have reached entry limit for this category "
+#~ "({self.category.entries_limit})!"
+#~ msgstr ""
+#~ "Osiągnięto limit zgłoszeń w tej kategorii ({self.category.entries_limit})! "
 
 #~ msgid "I agree to KMP Bartnik's Privacy Policy"
 #~ msgstr ""
