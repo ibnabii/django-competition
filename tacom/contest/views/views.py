@@ -32,8 +32,8 @@ from django.views.generic import (
 from django.views.generic.base import ContextMixin
 from paypal.standard.forms import PayPalPaymentsForm
 
-from . import payu
-from .forms import (
+from contest import payu
+from contest.forms import (
     BlankForm,
     ContestBestOfShowForm,
     EditEntryForm,
@@ -46,7 +46,7 @@ from .forms import (
     ProfileForm,
     ScoreSheetForm,
 )
-from .models import (
+from contest.models import (
     Category,
     Contest,
     EntriesPackage,
@@ -56,20 +56,9 @@ from .models import (
     ScoreSheet,
     User,
 )
-from .utils import get_client_ip, mail_entry_status_change
+from contest.utils import get_client_ip, mail_entry_status_change
 
 logger = getLogger("views")
-
-
-class PublishedContestListView(ListView):
-    ordering = ["-judging_date_from"]
-    queryset = Contest.published
-    template_name = "contest/contest_list.html"
-
-    def get(self, *args, **kwargs):
-        if self.queryset.count() == 1:
-            return redirect("contest:contest_detail", slug=self.queryset.first().slug)
-        return super().get(*args, **kwargs)
 
 
 class AddEntryContestListView(ListView):
@@ -1184,12 +1173,19 @@ class PartnersGalleryView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         # Parameters
-        images_path = "contest/partners"
+        images_path = os.path.join("contest", "partners")
         context["max_width"] = 150
         context["max_height"] = 150
 
         # Path to the static/partners directory
-        images_dir = os.path.join(settings.STATIC_ROOT, images_path)
+        app_static_path = os.path.join(
+            settings.BASE_DIR, "contest", "static", images_path
+        )
+        collectstatic_path = os.path.join(settings.STATIC_ROOT, images_path)
+        # Prefer collectstatic location if it exists (i.e. in prod)
+        images_dir = (
+            collectstatic_path if os.path.isdir(collectstatic_path) else app_static_path
+        )
 
         # List all valid image files (e.g., jpg, png, gif, etc.)
         valid_extensions = (".jpg", ".jpeg", ".png", ".gif", ".webp")
