@@ -1,7 +1,7 @@
+from contest.factories import ContestFactory
 from contest.models import Contest
 from django.test import TestCase
 from django.urls import reverse
-from contest.factories import ContestFactory
 
 
 class FirstPageTests(TestCase):

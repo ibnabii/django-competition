@@ -1,13 +1,11 @@
+import random
+from datetime import datetime, timedelta
+from enum import Enum
 from typing import Any
 
 import factory
-from datetime import datetime, timedelta
-from enum import Enum
-import random
-
-from django.utils import timezone
-
 from contest.models import Contest
+from django.utils import timezone
 from factories import RandomLocaleDjangoModelFactory
 from pydantic import BaseModel
 
@@ -94,7 +92,7 @@ class ContestFactory(RandomLocaleDjangoModelFactory):
             return now + timedelta(days=20)
         elif mode == PeriodState.after:
             return now - timedelta(days=5)
-        else:  #  mode == PeriodState.during:
+        else:  # mode == PeriodState.during:
             return now + timedelta(days=2)
 
     @factory.lazy_attribute
