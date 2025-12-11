@@ -1,6 +1,8 @@
 from datetime import date
 
 from django.db import models
+from django.db.models import Q
+from django.utils import timezone
 
 
 class StyleManager(models.Manager):
@@ -15,7 +17,15 @@ class ContestManager(models.Manager):
 
 class PublishedContestManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(competition_is_published=True)
+        now = timezone.now()
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                Q(competition_is_published=True)
+                | Q(competition_autopublish_datetime__lte=now)
+            )
+        )
 
 
 class RegistrableContestManager(models.Manager):
