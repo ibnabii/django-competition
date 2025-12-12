@@ -1,0 +1,49 @@
+{% extends 'contest/base.html' %}
+{% block content %}
+
+
+<!--<ul>-->
+<!--    {% for contest in object_list %}-->
+<!--        <li>-->
+<!--            <a href = "{% url 'contest:contest_detail' contest.slug %}">-->
+<!--                {{ contest.title }}-->
+<!--            </a>-->
+<!--        </li>-->
+
+<!--    {% empty %}-->
+<!--        No contests available-->
+
+<!--    {% endfor %}-->
+<!--</ul>-->
+
+<div class="accordion" id="contestAccordion">
+    {% for contest in object_list %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#{{contest.slug}}"
+                    hx-get="{% url 'contest:contest_detail' contest.slug %}"
+                    hx-target="#content_{{contest.slug}}"
+                    {% if forloop.first %}
+                    aria-expanded="true"
+                    hx-trigger="load"
+                    {% endif %}
+                    aria-controls="{{contest.slug}}">
+                {{contest.title}}
+            </button>
+        </h2>
+        <div id="{{contest.slug}}"
+             class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
+             data-bs-parent="#contestAccordion"
+        >
+            <div class="accordion-body bg-light" id="content_{{contest.slug}}">
+                Loading...
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    No contests available
+
+    {% endfor %}
+</div>
+{% endblock content %}

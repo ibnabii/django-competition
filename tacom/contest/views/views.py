@@ -384,19 +384,6 @@ class DeleteEntryView(UserPassesTestMixin, DeleteView):
             raise Http404
 
 
-class ContestDetailView(DetailView):
-    model = Contest
-    # queryset = Contest.objects.prefetch_related('categories__style')  # 2 queries
-    queryset = Contest.published.prefetch_related(
-        Prefetch("categories", queryset=Category.objects.select_related("style"))
-    )  # 1 query
-
-
-class ContestRulesView(DetailView):
-    model = Contest
-    template_name = "contest/contest_rules.html"
-
-
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = "contest/profile.html"
 
@@ -419,12 +406,6 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
-
-
-class ContestDeliveryAddressView(DetailView):
-    model = Contest
-    template_name = "contest/contest_delivery_addr.html"
-    queryset = Contest.published
 
 
 class AddPackageView(LoginRequiredMixin, UserFullProfileMixin, CreateView):

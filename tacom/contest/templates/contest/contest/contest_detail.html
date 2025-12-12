@@ -1,7 +1,4 @@
-{% extends 'contest/base.html' %}
 {%  load i18n %}
-{% block content %}
-
     <h1> {{ contest.title }}</h1>
     <a class="btn btn-primary"
        href="{% url 'contest:contest_rules' contest.slug %}">
@@ -72,4 +69,3 @@
     {% endif %}
     {% include "contest/partners_strategic.html" %}
 
-{% endblock content %}
