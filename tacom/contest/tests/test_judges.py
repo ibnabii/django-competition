@@ -1,8 +1,7 @@
-from django.test import TestCase
-from django.urls import reverse
-
 from contest.factories import ContestFactory, ContestState, PeriodState
 from contest.models import User
+from django.test import TestCase
+from django.urls import reverse
 
 
 class JudgeRegistrationJourneyTests(TestCase):

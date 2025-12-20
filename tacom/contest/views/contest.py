@@ -1,9 +1,8 @@
+from contest.models import Category, Contest
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404
 from django.utils.functional import cached_property
 from django.views.generic import DetailView
-
-from contest.models import Contest, Category
 
 
 class ContestDetailView(DetailView):

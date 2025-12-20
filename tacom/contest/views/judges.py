@@ -1,22 +1,17 @@
 from dataclasses import dataclass
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import (
-    Http404,
-    HttpResponseRedirect,
-    HttpRequest,
-)
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.utils.functional import cached_property, Promise
-from django.utils.translation import gettext_lazy as _
-from django.views import View
-from django.views.generic import TemplateView, UpdateView
-
 from contest.models import Contest
 from contest.models.judges import JudgeCertification, JudgeInCompetition
 from contest.views import UserFullProfileMixin
 from contest.views.contest import ContestContextMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404, HttpRequest, HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils.functional import Promise, cached_property
+from django.utils.translation import gettext_lazy as _
+from django.views import View
+from django.views.generic import TemplateView, UpdateView
 
 
 class JudgesCanRegisterMixin(ContestContextMixin, View):

@@ -3,6 +3,7 @@
 - [ ] W zgłoszeniach jest dostepna ikona wyników
 # Refactoring
 - [ ] Use ContextContextMixin where contest context is required
+- [ ] Co się stanie z danymi jak zostanie usunięte kjonto użytkownika?
 # Dev
 ## User journey
 ### User profile

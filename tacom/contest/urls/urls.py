@@ -1,9 +1,7 @@
-from django.urls import path
-from django.views.generic import DetailView
-
 from contest import views
 from contest.models import Style
-
+from django.urls import path
+from django.views.generic import DetailView
 
 urlpatterns = [
     path("profile/", views.ProfileView.as_view(), name="profile"),

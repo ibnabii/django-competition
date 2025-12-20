@@ -4,6 +4,31 @@ import os
 from decimal import Decimal
 from logging import getLogger
 
+from contest import payu
+from contest.forms import (
+    BlankForm,
+    ContestBestOfShowForm,
+    EditEntryForm,
+    FakePaymentForm,
+    FinalEntriesFormset,
+    NewAdminPackage,
+    NewEntryForm,
+    NewPackageForm,
+    NewPaymentForm,
+    ProfileForm,
+    ScoreSheetForm,
+)
+from contest.models import (
+    Category,
+    Contest,
+    EntriesPackage,
+    Entry,
+    Payment,
+    RebateCode,
+    ScoreSheet,
+    User,
+)
+from contest.utils import get_client_ip, mail_entry_status_change
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -31,32 +56,6 @@ from django.views.generic import (
 )
 from django.views.generic.base import ContextMixin
 from paypal.standard.forms import PayPalPaymentsForm
-
-from contest import payu
-from contest.forms import (
-    BlankForm,
-    ContestBestOfShowForm,
-    EditEntryForm,
-    FakePaymentForm,
-    FinalEntriesFormset,
-    NewAdminPackage,
-    NewEntryForm,
-    NewPackageForm,
-    NewPaymentForm,
-    ProfileForm,
-    ScoreSheetForm,
-)
-from contest.models import (
-    Category,
-    Contest,
-    EntriesPackage,
-    Entry,
-    Payment,
-    RebateCode,
-    ScoreSheet,
-    User,
-)
-from contest.utils import get_client_ip, mail_entry_status_change
 
 logger = getLogger("views")
 

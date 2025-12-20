@@ -1,7 +1,8 @@
-from contest.factories import ContestFactory, PeriodState, ContestState
-from django.test import TestCase
-from bs4 import BeautifulSoup
 from itertools import product
+
+from bs4 import BeautifulSoup
+from contest.factories import ContestFactory, ContestState, PeriodState
+from django.test import TestCase
 from django.urls import reverse
 
 

@@ -1,6 +1,6 @@
+import pytest
 from contest.factories import ContestFactory, ContestState, PeriodState
 from django.test import TestCase
-import pytest
 
 
 @pytest.mark.unit

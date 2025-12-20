@@ -2,7 +2,7 @@ import copy
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.db.models import TextField, QuerySet
+from django.db.models import QuerySet, TextField
 from django.shortcuts import redirect
 from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
@@ -22,7 +22,7 @@ from .models import (
     Style,
     User,
 )
-from .models.judges import JudgeInCompetition, JudgeCertification
+from .models.judges import JudgeCertification, JudgeInCompetition
 
 
 @admin.register(Style)

@@ -4,6 +4,8 @@ from django.db import models
 from django.db.models import Q
 from django.utils import timezone
 
+from contest.models import Contest
+
 
 class StyleManager(models.Manager):
     def get_by_natural_key(self, slug):

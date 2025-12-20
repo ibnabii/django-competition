@@ -1,5 +1,5 @@
-from django.urls import path
 import contest.views.judges as views
+from django.urls import path
 
 urlpatterns = [
     path(
