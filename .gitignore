@@ -232,3 +232,5 @@ docs_src/**/.git/
 docs_src/build
 # libs
 docs_src/node_modules
+
+tacom/db_backup
