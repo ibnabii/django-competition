@@ -1,0 +1,54 @@
+{% load i18n %}
+<div id="certification">
+    <form hx-post="{% url 'contest:judge_certification_edit' %}" hx-target="#certification" hx-swap="outerHTML">
+        {% csrf_token %}
+        <table valign="top">
+            <tr>
+                <td class="align-top pe-3">
+                    {{ form.is_mjp.label_tag }}
+                </td>
+                <td>
+                    {{ form.is_mjp }}
+                    <div id="mjp-level-wrapper">
+                        {{ form.mjp_level.label_tag }}
+                        {{ form.mjp_level }}
+                        {% include 'contest/widgets/error.html' with form_errors=form.mjp_level.errors %}
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="align-top pe-3">
+                    {{ form.is_mead_bjcp.label_tag }}
+                </td>
+                <td>
+                    {{ form.is_mead_bjcp }}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="align-top pe-3">
+                    {{ form.is_other.label_tag }}
+                </td>
+                <td>
+                    {{ form.is_other }}
+                    <div id="other-description-wrapper">
+                    {{ form.other_description.label_tag }}</br>
+                    {{ form.other_description }}
+                    {% include 'contest/widgets/error.html' with form_errors=form.other_description.errors %}
+            </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+
+        {% include 'contest/widgets/error.html' with form_errors=form.non_field_errors %}
+
+        <button class="btn btn-primary" type="submit">{% translate "Save" %}</button>
+        <button class="btn btn-secondary" hx-get="{% url 'contest:judge_certification_read' %}">{% translate "Cancel"%}
+        </button>
+    </form>
+</div>

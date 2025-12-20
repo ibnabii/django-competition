@@ -1,0 +1,26 @@
+{% load i18n %}
+
+{% if application.status == 'application' %}
+<div class="m-2">{% translate 'You have already applied for this competition.' %}</div>
+<div class="m-2">{% translate 'Your application will be reviewed by the organizers shortly.' %}</div>
+{% endif %}
+{% if application.status == 'approved' %}
+<div class="m-2">{% translate 'Your application has been approved. We will contact you shortly.' %}</div>
+{% endif %}
+<div class="m-2">{% translate 'You can cancel your application, but you may not be able to apply again. Choose wisely!' %}</div>
+<div>
+    <button class="btn btn-primary" onclick="window.history.back();">{% translate "Go back" %}</button>
+    <button class="btn btn-danger"
+            hx-post="{% url 'contest:judge_widget_cancel' contest.slug %}"
+            hx-vals='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
+            hx-target="#judge_application_widget"
+            hx-confirm="{% translate 'Are you sure you want to cancel your application?' %}"
+            hx-indicator="#spinner"
+            hx-disabled-elt="this"
+    >
+        {% translate "I want to cancel my application" %}
+        <span class="spinner-border spinner-border-sm text-light htmx-indicator" role="status" id="spinner"></span>
+    </button>
+
+</div>
+</pre>

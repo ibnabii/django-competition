@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load bootstrap_icons %}
+<div id="certification">
+     <div class="m-2"><a class="btn btn-secondary" hx-get="{% url 'contest:judge_certification_edit' %}" hx-target="#certification"
+            hx-swap="outerHTML">{% bs_icon 'pencil-square' %}
+    </a></div>
+    <div class="m-2">
+        <ul>
+            {% if object.is_mjp %}
+            <li>Mead Judging Programme, {% translate 'level' %} {{ object.mjp_level }} {% bs_icon 'check2'%}</li>
+            {% endif %}
+            {% if object.is_mead_bjcp %}
+            <li>BJCP Mead  {% bs_icon 'check2'%}</li>
+            {% endif %}
+            {% if object.is_other %}
+            <li>{% translate 'Other' %}: {{ object.other_description }}</li>
+            {% endif %}
+        </ul>
+    </div>
+<!--    <pre>-->
+<!--    BJCP: {{ object.is_mead_bjcp }}-->
+<!--    MJP: {{ object.is_mjp }}, {{ object.mjp_level }}-->
+<!--    Other: {{ object.is_other }}, {{ object.other_description }}-->
+<!--</pre>-->
+
+</div>

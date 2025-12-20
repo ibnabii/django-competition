@@ -2,7 +2,9 @@ import copy
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.db.models import TextField
+from django.db.models import TextField, QuerySet
+from django.shortcuts import redirect
+from django.utils.http import urlencode
 from django.utils.translation import gettext_lazy as _
 from simple_history.admin import SimpleHistoryAdmin
 from tinymce.widgets import TinyMCE
@@ -20,6 +22,7 @@ from .models import (
     Style,
     User,
 )
+from .models.judges import JudgeInCompetition, JudgeCertification
 
 
 @admin.register(Style)
@@ -135,6 +138,7 @@ class ContestAdmin(admin.ModelAdmin):
             _("Dates"),
             {
                 "fields": [
+                    ("judge_registration_date_from", "judge_registration_date_to"),
                     ("registration_date_from", "registration_date_to"),
                     ("delivery_date_from", "delivery_date_to"),
                     ("judging_date_from", "judging_date_to"),
@@ -352,3 +356,70 @@ class RebateCodeAdmin(admin.ModelAdmin):
             obj.is_used = False
             obj.user = None
         super().save_model(request, obj, form, change)
+
+
+@admin.action(description=_("Reject judge application(s)"))
+def reject_judge_applications(
+    _modeladmin, _request, queryset: QuerySet[JudgeInCompetition]
+):
+    objs_to_update = list(queryset)
+    for obj in objs_to_update:
+        obj.status = JudgeInCompetition.Status.REJECTED
+    JudgeInCompetition.objects.bulk_update(objs_to_update, ["status"])
+
+
+@admin.action(description=_("Approve judge application(s)"))
+def approve_judge_applications(
+    _modeladmin, _request, queryset: QuerySet[JudgeInCompetition]
+):
+    objs_to_update = list(queryset)
+    for obj in objs_to_update:
+        obj.status = JudgeInCompetition.Status.APPROVED
+    JudgeInCompetition.objects.bulk_update(objs_to_update, ["status"])
+
+
+@admin.register(JudgeInCompetition)
+class JudgeApplicationAdin(admin.ModelAdmin):
+    actions = [approve_judge_applications, reject_judge_applications]
+    list_display = ("contest", "user", "status", "mjp_level", "bjcp", "other")
+    list_filter = ("contest", "status")
+    # list_select_related = ("user", "contest", "judge")
+
+    @admin.display(description="MJP", ordering="user__judgecertification__mjp_level")
+    def mjp_level(self, obj):
+        try:
+            return obj.user.judgecertification.mjp_level
+        except JudgeCertification.DoesNotExist:
+            return "-"
+
+    @admin.display(
+        description="BJCP",
+        ordering="user__judgecertification__is_mead_bjcp",
+        boolean=True,
+    )
+    def bjcp(self, obj):
+        try:
+            return obj.user.judgecertification.is_mead_bjcp
+        except JudgeCertification.DoesNotExist:
+            return False
+
+    @admin.display(
+        description="Other", ordering="user__judgecertification__other_description"
+    )
+    def other(self, obj):
+        try:
+            return obj.user.judgecertification.other_description
+        except JudgeCertification.DoesNotExist:
+            return "-"
+
+    # make sure to filter by one contest by defaul
+    def changelist_view(self, request, extra_context=None):
+        # Only apply default filter when no filters are active
+        if "contest__id__exact" not in request.GET:
+            contest = Contest.objects.get_default()
+
+            if contest:
+                params = urlencode({"contest__id__exact": contest.id})
+                return redirect(f"{request.path}?{params}")
+
+        return super().changelist_view(request, extra_context)

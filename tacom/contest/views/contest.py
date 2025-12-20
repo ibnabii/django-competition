@@ -1,4 +1,6 @@
 from django.db.models import Prefetch
+from django.shortcuts import get_object_or_404
+from django.utils.functional import cached_property
 from django.views.generic import DetailView
 
 from contest.models import Contest, Category
@@ -40,3 +42,12 @@ class ContestDeliveryAddressView(DetailView):
     model = Contest
     template_name = "contest/contest/contest_delivery_addr.html"
     queryset = Contest.published
+
+
+class ContestContextMixin:
+    contest_slug_kwarg = "slug"
+
+    @cached_property
+    def contest(self) -> Contest:
+        slug = self.kwargs.get("slug")
+        return get_object_or_404(Contest, slug=slug)

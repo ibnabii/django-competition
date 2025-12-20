@@ -16,7 +16,7 @@ from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from simple_history.models import HistoricalRecords
 
-from .managers import (
+from contest.managers import (
     CategoryManager,
     ContestManager,
     DefaultManager,
@@ -26,7 +26,7 @@ from .managers import (
     RegistrableContestManager,
     StyleManager,
 )
-from .utils import mail_entry_status_change
+from contest.utils import mail_entry_status_change
 
 logger = getLogger("models")
 
@@ -231,6 +231,7 @@ class Contest(models.Model):
         help_text=_(
             "will be used in contest URL, can be derrived automatically from titile"
         ),
+        allow_unicode=True,
     )
     description = models.TextField(blank=False, null=False)
     description_pl = models.TextField(
@@ -276,6 +277,12 @@ class Contest(models.Model):
     )
     delivery_address = models.TextField(
         blank=False, null=False, verbose_name=_("Delivery address")
+    )
+    judge_registration_date_from = models.DateField(
+        blank=True, null=True, verbose_name=_("Judge registration from")
+    )
+    judge_registration_date_to = models.DateField(
+        blank=True, null=True, verbose_name=_("to")
     )
     registration_date_from = models.DateField(
         blank=True, null=True, verbose_name=_("Entry registration from")
@@ -371,6 +378,21 @@ class Contest(models.Model):
         )
 
     @cached_property
+    def can_judges_register(self):
+        today = date.today()
+
+        if (
+            self.judge_registration_date_from
+            and today < self.judge_registration_date_from
+        ):
+            return False
+
+        if self.judge_registration_date_to and today > self.judge_registration_date_to:
+            return False
+
+        return True
+
+    @cached_property
     def show_results(self):
         return self.result_is_published or (
             self.result_autopublish_datetime
@@ -418,10 +440,11 @@ class Contest(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title, allow_unicode=True)
             if Contest.objects.filter(slug=self.slug).exists():
                 self.slug = slugify(
-                    self.title + "-" + str(Contest.objects.latest("id").id)
+                    self.title + "-" + str(Contest.objects.latest("id").id),
+                    allow_unicode=True,
                 )
 
         super(Contest, self).save(*args, **kwargs)

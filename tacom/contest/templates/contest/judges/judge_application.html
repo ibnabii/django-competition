@@ -1,0 +1,11 @@
+{% extends 'contest/base.html' %}
+{% load i18n %}
+{% block content %}
+<h2 class="m-2">{% translate 'Your judge certification information' %}: </h2>
+{% include 'contest/judges/judge_certification.html' %}
+
+<h2 class="m-2">{% translate 'Apply for judging' %}</h2>
+<div hx-get="{% url 'contest:judge_application_widget' contest.slug %}" hx-trigger="load"
+     id="judge_application_widget"></div>
+
+{% endblock %}

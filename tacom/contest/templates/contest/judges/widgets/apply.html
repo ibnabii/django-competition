@@ -1,0 +1,21 @@
+{% load i18n %}
+<div class="mb-2">{% translate 'Make sure your judge certification data is up to date. You cen edit it above or in your profile.' %}</div>
+<div class="mb-2">{% translate 'Make sure will be available during judging ie.' %} {{contest.judging_date_from}} - {{contest.judging_date_to}} </div>
+
+<!-- Error container -->
+{% include 'contest/widgets/error.html' %}
+
+<div>
+    <button class="btn btn-primary"
+            hx-post="{% url 'contest:judge_widget_apply' contest.slug %}"
+            hx-vals='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
+            hx-target="#judge_application_widget"
+            hx-indicator="#spinner"
+            hx-disabled-elt="this"
+
+    >
+        {% translate "I want to judge in this competition" %}
+        <span class="spinner-border spinner-border-sm text-light htmx-indicator" role="status" id="spinner"></span>
+    </button>
+    <button class="btn btn-secondary" onclick="window.history.back();">{% translate "Cancel" %}</button>
+</div>

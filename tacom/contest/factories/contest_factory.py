@@ -21,6 +21,7 @@ class PeriodState(str, Enum):
 
 
 class ContestState(BaseModel):
+    judge_registration: PeriodState = PeriodState.during
     registration: PeriodState = PeriodState.during
     delivery: PeriodState = PeriodState.during
     judging: PeriodState = PeriodState.during
@@ -93,6 +94,28 @@ class ContestFactory(RandomLocaleDjangoModelFactory):
         elif mode == PeriodState.after:
             return now - timedelta(days=5)
         else:  # mode == PeriodState.during:
+            return now + timedelta(days=2)
+
+    @factory.lazy_attribute
+    def judge_registration_date_from(self):
+        now = timezone.now().date()
+        mode = self._state.judge_registration
+        if mode == PeriodState.before:
+            return now + timedelta(days=10)
+        elif mode == PeriodState.after:
+            return now - timedelta(days=20)
+        else:
+            return now - timedelta(days=2)
+
+    @factory.lazy_attribute
+    def judge_registration_date_to(self):
+        now = timezone.now().date()
+        mode = self._state.judge_registration
+        if mode == PeriodState.before:
+            return now + timedelta(days=20)
+        elif mode == PeriodState.after:
+            return now - timedelta(days=10)
+        else:
             return now + timedelta(days=2)
 
     @factory.lazy_attribute

@@ -1,0 +1,42 @@
+<div class="container border rounded d-md-inline-block p-3">
+    <div id="certification" hx-get="{% url 'contest:judge_certification_read' %}" hx-trigger="load" hx-swap="outerHTML"></div>
+</div>
+    <script>
+        function initJudgeCertificationForm(container) {
+            const isMjp = container.querySelector("#id_is_mjp");
+            const isOther = container.querySelector("#id_is_other");
+            const mjpWrapper = container.querySelector("#mjp-level-wrapper");
+            const otherWrapper = container.querySelector("#other-description-wrapper");
+
+            if (!isMjp || !isOther || !mjpWrapper || !otherWrapper) return;
+
+            function toggleFields() {
+                // ALWAYS read the actual current checkbox state
+                mjpWrapper.style.display = isMjp.checked ? "block" : "none";
+                otherWrapper.style.display = isOther.checked ? "block" : "none";
+            }
+
+            // Remove previous listeners
+            isMjp.onchange = null;
+            isOther.onchange = null;
+
+            // Attach listeners
+            isMjp.addEventListener("change", toggleFields);
+            isOther.addEventListener("change", toggleFields);
+
+            // Initialize visibility once after listeners are attached
+            toggleFields();
+        }
+
+        // Initial load
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.querySelector("#certification");
+            if (container) initJudgeCertificationForm(container);
+        });
+
+        // HTMX swap: use afterSettle to ensure DOM is ready
+        document.body.addEventListener("htmx:afterSettle", function (event) {
+            const container = document.querySelector("#certification");
+            if (container) initJudgeCertificationForm(container);
+        });
+    </script>

@@ -14,6 +14,9 @@ class ContestManager(models.Manager):
     def get_by_natural_key(self, slug):
         return self.get(slug=slug)
 
+    def get_default(self) -> "Contest":
+        return super().get_queryset().first()
+
 
 class PublishedContestManager(models.Manager):
     def get_queryset(self):

@@ -1,0 +1,12 @@
+<!-- Error container -->
+{% if error %}
+<div class="text-danger my-2 p-2 d-inline-block" role="alert">
+    {{ error }}
+</div>
+{% endif %}
+
+{% if form_errors %}
+<div class="text-danger my-2 p-2" role="alert">
+{{ form_errors }}
+</div>
+{% endif %}
