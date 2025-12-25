@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from http import HTTPStatus
 
 from contest.models import Contest
 from contest.models.judges import JudgeCertification, JudgeInCompetition
@@ -212,7 +213,9 @@ class JudgeApplicationCreateView(
     def post(self, request, *args, **kwargs):
         decision = self.can_apply()
         if not decision.allowed:
-            return self.render_widget(request, error=decision.reason)
+            response = self.render_widget(request, error=decision.reason)
+            response["X-Application-Error"] = True
+            return response
 
         JudgeInCompetition.objects.get_or_create(
             contest=self.contest, user=request.user
@@ -227,7 +230,9 @@ class JudgeApplicationCancelView(
     def post(self, request, *args, **kwargs):
         decision = self.can_withdraw()
         if not decision.allowed:
-            return self.render_widget(request, error=decision.reason)
+            response = self.render_widget(request, error=decision.reason)
+            response["X-Application-Error"] = True
+            return response
 
         self.application.delete()
         self.refresh_application_cache()
