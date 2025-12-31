@@ -1,13 +1,13 @@
 import pytest
-from django.templatetags.i18n import language
-from django.utils.translation import override
-
-from contest.factories import ContestFactory, ContestState, PeriodState
-from contest.models import User
+from contest.factories import (
+    ContestFactory,
+    ContestState,
+    PeriodState,
+    UserFactory,
+)
+from contest.models.judges import JudgeCertification, JudgeInCompetition
 from django.test import TestCase
 from django.urls import reverse
-
-from contest.models.judges import JudgeInCompetition, JudgeCertification
 
 
 @pytest.mark.judges
@@ -20,18 +20,8 @@ class JudgeRegistrationJourneyTests(TestCase):
         cls.contest_no_registration = ContestFactory(
             _state=ContestState(judge_registration=PeriodState.after)
         )
-        cls.user = User.objects.create_user(
-            username="testuser",
-            first_name="Test",
-            last_name="User",
-            country="CZ",
-            phone="123",
-            address="abc",
-            language="en",
-        )
-
-        # TODO: add profile for testuser
-        cls.user_no_profile = User.objects.create_user(username="testuser2")
+        cls.user = UserFactory.create(profile=True)
+        cls.user_no_profile = UserFactory.create(profile=False)
 
     # TODO
     def get_url(self, slug): ...
@@ -83,7 +73,7 @@ class JudgeCertificationForLoggedInOnlyTests(TestCase):
         cls.contest = ContestFactory(
             _state=ContestState(judge_registration=PeriodState.during)
         )
-        cls.user = User.objects.create_user(username="testuser")
+        cls.user = UserFactory.create()
         cls.views = [
             "contest:judge_certification_read",
             "contest:judge_certification_edit",
@@ -114,15 +104,7 @@ class JudgeApplicationActionTests(TestCase):
             _state=ContestState(judge_registration=PeriodState.during)
         )
         # User with full profile
-        cls.user = User.objects.create_user(
-            first_name="John",
-            last_name="Doe",
-            country="PL",
-            phone="123",
-            address="Street",
-            language="en",
-            username="testuser",
-        )
+        cls.user = UserFactory.create(profile=True)
         cls.apply_url = reverse(
             "contest:judge_widget_apply", kwargs={"slug": cls.contest.slug}
         )

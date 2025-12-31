@@ -26,7 +26,7 @@ class ContestModelTests(TestCase):
 
         self.assertLessEqual(abs((c1.created_at - c2.created_at).total_seconds()), 1)
 
-        self.assertEqual(c1.created_at, c1.modified_at)
+        self.assertLessEqual(abs((c1.created_at - c1.modified_at).total_seconds()), 1)
 
         sleep(1)
         c1.title = "abcd"

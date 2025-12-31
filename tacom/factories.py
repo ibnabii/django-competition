@@ -15,7 +15,7 @@ class RandomLocaleDjangoModelFactory(factory.django.DjangoModelFactory):
     _locale = factory.LazyFunction(lambda: random.choice(LOCALES))
 
     @factory.lazy_attribute
-    def faker(self):
+    def faker(self) -> Faker:
         locale = self._locale if hasattr(self, "_locale") else "pl_PL"
         if locale not in _faker_cache:
             _faker_cache[locale] = Faker(locale)
