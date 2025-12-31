@@ -41,7 +41,7 @@ class ContestFactory(RandomLocaleDjangoModelFactory):
     class Meta:
         model = Contest
         # exclude factory only attributes from passing to model
-        exclude = ("_state", "faker", "_locale")
+        exclude = ("_state",)
 
     title = factory.LazyAttribute(lambda o: o.faker.sentence(nb_words=5))
     # slug = factory.LazyAttribute(lambda o: o.faker.slug())
