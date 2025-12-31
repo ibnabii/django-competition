@@ -1,0 +1,2 @@
+import factory
+from factories import RandomLocaleDjangoModelFactory

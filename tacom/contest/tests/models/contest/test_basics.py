@@ -21,25 +21,20 @@ class ContestModelTests(TestCase):
     def test_timestamps(self):
         c1 = ContestFactory(title="Test test test")
         c2 = ContestFactory(title="Test test test")
-        self.assertEqual(
-            c1.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        )
-        self.assertEqual(
-            c1.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-            c2.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-        )
+        now = datetime.now()
+        self.assertLessEqual(abs((c1.created_at - now).total_seconds()), 1)
+
+        self.assertLessEqual(abs((c1.created_at - c2.created_at).total_seconds()), 1)
+
         self.assertEqual(c1.created_at, c1.modified_at)
 
         sleep(1)
         c1.title = "abcd"
         c1.save()
+        now = datetime.now()
+
         self.assertNotEqual(c1.created_at, c1.modified_at)
-        self.assertEqual(
-            c1.modified_at.strftime("%Y-%m-%d %H:%M:%S"),
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        )
-        self.assertEqual(
-            c1.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-            c2.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-        )
+
+        self.assertLessEqual(abs((c1.modified_at - now).total_seconds()), 1)
+
+        self.assertLessEqual(abs((c1.created_at - c2.created_at).total_seconds()), 1)

@@ -9,9 +9,9 @@ from django.utils import timezone
 from factories import RandomLocaleDjangoModelFactory
 from pydantic import BaseModel
 
-
-def make_contest(*args, **kwargs) -> Contest:
-    return ContestFactory(*args, **kwargs)
+# TODO: seems this wasn't necessary?
+# def make_contest(*args, **kwargs) -> Contest:
+#     return ContestFactory(*args, **kwargs)
 
 
 class PeriodState(str, Enum):
@@ -41,10 +41,10 @@ class ContestFactory(RandomLocaleDjangoModelFactory):
     class Meta:
         model = Contest
         # exclude factory only attributes from passing to model
-        exclude = ("_state", "_faker", "_locale")
+        exclude = ("_state", "faker", "_locale")
 
-    title = factory.LazyAttribute(lambda o: o._faker.sentence(nb_words=5))
-    # slug = factory.LazyAttribute(lambda o: o._faker.slug())
+    title = factory.LazyAttribute(lambda o: o.faker.sentence(nb_words=5))
+    # slug = factory.LazyAttribute(lambda o: o.faker.slug())
     description = factory.Faker(locale="en_US", provider="paragraph", nb_sentences=15)
     description_pl = factory.Faker(
         locale="pl_PL", provider="paragraph", nb_sentences=15
@@ -59,14 +59,14 @@ class ContestFactory(RandomLocaleDjangoModelFactory):
         lambda: random.choice(["PLN", "EUR", "USD", "SEK"])
     )
     payment_transfer_info = factory.LazyAttribute(
-        lambda o: "\n".join((o._faker.name(), o._faker.address(), o._faker.iban()))
+        lambda o: "\n".join((o.faker.name(), o.faker.address(), o.faker.iban()))
     )
     discount_rate = 10
     entry_global_limit = None
     entry_user_limit = None
     delivery_address = factory.LazyAttribute(
         lambda o: "\n".join(
-            (o._faker.company(), o._faker.address(), o._faker.phone_number())
+            (o.faker.company(), o.faker.address(), o.faker.phone_number())
         )
     )
     # --- Contest state input ---
