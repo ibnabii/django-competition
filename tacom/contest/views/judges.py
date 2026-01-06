@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from http import HTTPStatus
 
 from contest.models import Contest
 from contest.models.judges import JudgeCertification, JudgeInCompetition
@@ -31,23 +30,6 @@ class MainJudgeApplicationView(
     JudgesCanRegisterMixin, LoginRequiredMixin, UserFullProfileMixin, TemplateView
 ):
     template_name = "contest/judges/judge_application.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["contest"] = self.contest
-        context["application_status"] = self.get_application_status()
-        return context
-
-    def get_application_status(self):
-        try:
-            application = JudgeInCompetition.objects.get(
-                user=self.request.user,
-                contest=self.contest,
-            )
-        except JudgeInCompetition.DoesNotExist:
-            return None
-
-        return application.status
 
 
 class JudgeCertificationUpdateView(LoginRequiredMixin, UpdateView):

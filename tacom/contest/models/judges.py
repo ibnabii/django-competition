@@ -66,15 +66,15 @@ class JudgeInCompetition(models.Model):
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
 
     class Status(models.TextChoices):
-        APPLICATION = "application", "Application"
-        APPROVED = "approved", "Approved"
-        REJECTED = "rejected", "Rejected"
+        APPLICATION = "application", _("Application")
+        APPROVED = "approved", _("Approved")
+        REJECTED = "rejected", _("Rejected")
 
     status = models.CharField(
         max_length=20, choices=Status.choices, default=Status.APPLICATION
     )
 
-    approved = "ApprovedJudgeManager"
+    # approved = "ApprovedJudgeManager"
 
     class Meta:
         constraints = [
@@ -89,4 +89,9 @@ class JudgeInCompetition(models.Model):
 
 class ApprovedJudgeManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(status=JudgeInCompetition.Status.APPROVED)
+        return JudgeInCompetition.objects.filter(
+            status=JudgeInCompetition.Status.APPROVED
+        )
+
+
+JudgeInCompetition.approved = ApprovedJudgeManager()

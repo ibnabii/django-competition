@@ -1,3 +1,5 @@
+from django.views.generic.base import ContextMixin
+
 from contest.models import Category, Contest
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404
@@ -43,10 +45,16 @@ class ContestDeliveryAddressView(DetailView):
     queryset = Contest.published
 
 
-class ContestContextMixin:
+class ContestContextMixin(ContextMixin):
     contest_slug_kwarg = "slug"
+    kwargs: dict
 
     @cached_property
     def contest(self) -> Contest:
-        slug = self.kwargs.get("slug")
+        slug = self.kwargs.get(self.contest_slug_kwarg)
         return get_object_or_404(Contest, slug=slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["contest"] = self.contest
+        return context

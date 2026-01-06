@@ -23,16 +23,6 @@ class UserFactory(RandomLocaleDjangoModelFactory):
     profile = False
     judge = False
 
-    # @factory.post_generation
-    # def profile_fields(self, create, extracted, **kwargs):
-    #     if getattr(self, "profile", False):
-    #         self.first_name = factory.LazyAttribute(lambda o: o.faker.first_name())
-    #         self.last_name = factory.LazyAttribute(lambda o: o.faker.last_name())
-    #         self.country = factory.LazyAttribute(lambda o: o.faker.country())
-    #         self.phone = factory.LazyAttribute(lambda o: o.faker.phone_number())
-    #         self.address = factory.LazyAttribute(lambda o: o.faker.address())
-    #         self.language = "pl" if self._locale == "pl_PL" else "en"
-
     class Params:
         profile = factory.Trait(
             first_name=factory.LazyAttribute(lambda o: o.faker.first_name()),
@@ -45,9 +35,10 @@ class UserFactory(RandomLocaleDjangoModelFactory):
             ),
         )
 
-        # @factory.trait  # type: ignore
-        # def judge(self):
-        #     factory.RelatedFactory("JudgeProfileFactory", factory_related_name="user")
+    # TODO: add judge certification
+    # @factory.trait  # type: ignore
+    # def judge(self):
+    #     factory.RelatedFactory("JudgeProfileFactory", factory_related_name="user")
 
 
 #

@@ -5,8 +5,8 @@
 - [ ] Results
 - [ ] Admin panel - participants
 # Refactoring
-- [ ] Use ContextContextMixin where contest context is required
-- [ ] Co się stanie z danymi jak zostanie usunięte kjonto użytkownika?
+- [ ] Use ContestContextMixin where contest context is required
+- [ ] Co się stanie z danymi jak zostanie usunięte konto użytkownika?
 # Dev
 ## User journey
 ### User profile
@@ -23,9 +23,9 @@
 - [ ] Wyniki konkursu
 - [ ] Judge application
 # Translations
-- [ ] Judge application statuses
+- [X] Judge application statuses
 # Tests
-- [ ] User factory]
+- [ ] User factory - add judge profile
 ## Access
 ### Only translators can access
 - [ ] Rosetta
@@ -44,6 +44,7 @@
 - [ ] Partners' logos, including in production (different path)
 ## User journeys
 - [ ] Register as a judge journey
+- [ ] Judge certiofication in context of contest application and in the profile 
 ## Organizers' journeys
 - [ ] Select judging team
 
