@@ -6,6 +6,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 
+
 # from contest.managers import UserManager
 
 
@@ -106,3 +107,45 @@ class User(AbstractBaseUser, PermissionsMixin):
         from contest.models import Contest
 
         return Contest.objects.first().slug
+
+
+class Participant(User):
+    class Meta:
+        proxy = True
+        verbose_name = _("Participant")
+        verbose_name_plural = _("Participants")
+
+    @property
+    def entries_stats(self, contest=None):
+        entries_qs = self.entries.all()
+        if contest:
+            entries_qs = entries_qs.filter(category__contest=contest)
+
+        entries = (
+            entries_qs.values("is_paid", "is_received")
+            # .annotate(paid=models.Count('is_paid'), received=models.Count('is_received'))
+            .annotate(count=models.Count("is_paid"))
+        )
+        return {
+            "total": entries.aggregate(total=models.Sum("count")).get("total") or 0,
+            "paid": entries.filter(is_paid=True).count(),
+            "received": entries.filter(is_received=True).count(),
+        }
+
+    @property
+    def entries_total(self):
+        return self.entries_stats.get("total")
+
+    entries_total.fget.short_description = _("Registered")
+
+    @property
+    def entries_paid(self):
+        return self.entries_stats.get("paid")
+
+    entries_paid.fget.short_description = _("Paid")
+
+    @property
+    def entries_received(self):
+        return self.entries_stats.get("received")
+
+    entries_received.fget.short_description = _("Received")

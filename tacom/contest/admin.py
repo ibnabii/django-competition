@@ -1,7 +1,6 @@
 import copy
 
 from django.contrib import admin
-from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.db.models import QuerySet, TextField
 from django.shortcuts import redirect
@@ -255,8 +254,37 @@ class ParticipantAdmin(admin.ModelAdmin):
         "entries_received",
     )
 
+    list_filter = (
+        "entries__category__contest",  # Filter by contest through entries
+        "is_active",
+        "date_joined",
+    )
+
+    # def get_queryset(self, request):
+    #     return super().get_queryset(request).prefetch_related("entries")
+
     def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related("entries")
+        qs = (
+            super().get_queryset(request).prefetch_related("entries__category__contest")
+        )
+        # Store the request on the queryset so we can access it in display methods
+        self._current_request = request
+        return qs
+
+    def _get_filtered_contest(self):
+        """Get the contest from the current filter, if any."""
+        if hasattr(self, "_current_request"):
+            contest_id = self._current_request.GET.get(
+                "entries__category__contest__id__exact"
+            )
+            if contest_id:
+                from contest.models import Contest
+
+                try:
+                    return Contest.objects.get(id=contest_id)
+                except Contest.DoesNotExist:
+                    pass
+        return None
 
 
 @admin.register(Entry)
@@ -305,7 +333,11 @@ class EntryAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["style__name", "contest", "entries_limit"]
+    list_filter = ["contest"]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related("style", "contest")
 
 
 @admin.register(EntriesPackage)
