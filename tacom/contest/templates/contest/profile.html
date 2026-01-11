@@ -2,6 +2,7 @@
 {% block content %}
 {% load bootstrap_icons %}
 {% load i18n %}
+<div class="container border rounded-3 p-3">
     <h2>{% translate 'My User Profile' %}</h2>
     <table>
         <tr>
@@ -48,6 +49,7 @@
         </tr>
     </table>
     <br />
+    <div>
     <a class="btn btn-primary" href="{% url 'account_change_password' %}">{% translate "change password" %}</a>
     <a class="btn btn-primary" href="{% url 'account_email' %}">{% translate "edit email" %}</a>
     <a class="btn btn-primary" href="{% url 'contest:profile_edit' %}">{% translate "edit profile data" %}</a>
@@ -55,6 +57,12 @@
     <a class="btn btn-primary"
        href="{% url 'contest:add_entry' %}">
         {% translate "entries" %}
-    </a>
+    </a></div>
+</div>
+<br/>
+<div class="container border rounded-3 p-3">
+    <h2 class="m-2">{% translate 'Your judge certification information' %}: </h2>
+    {% include 'contest/judges/judge_certification.html' %}
+    </div>
 
 {% endblock content %}

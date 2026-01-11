@@ -18,6 +18,7 @@
 ## UI
 - [x] Judge certification improvements
 - [ ] Add contest banner on top on pages that are run in context of the contest
+- [ ] User profile - participant data editing fix for consistent look & feel
 ## Email
 - [ ] Async task
 - [ ] Wyniki konkursu
