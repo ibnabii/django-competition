@@ -68,7 +68,6 @@ class ProfileForm(forms.ModelForm):
             "country": CountrySelectWidget(),
         }
         fields = [
-            "username",
             "first_name",
             "last_name",
             "country",

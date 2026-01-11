@@ -8,7 +8,8 @@ class UserFactory(RandomLocaleDjangoModelFactory):
         model = User
         exclude = ("profile", "judge")
 
-    username = factory.LazyAttribute(lambda o: o.faker.user_name())
+    # TODO: remove
+    # username = factory.LazyAttribute(lambda o: o.faker.user_name())
     email = factory.LazyAttribute(lambda o: o.faker.email())
     gdpr_consent = True
 

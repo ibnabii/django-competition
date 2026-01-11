@@ -1,6 +1,7 @@
 import copy
 
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.db.models import QuerySet, TextField
 from django.shortcuts import redirect
@@ -20,9 +21,9 @@ from .models import (
     RebateCode,
     ScoreSheet,
     Style,
-    User,
 )
 from .models.judges import JudgeCertification, JudgeInCompetition
+from .models.user import User
 
 
 @admin.register(Style)
@@ -194,7 +195,7 @@ class CustomUserAdmin(UserAdmin):
         "date_joined",
         "last_login",
     ]
-    list_display = ("username", "last_name", "first_name", "email")
+    list_display = ("last_name", "first_name", "email")
     list_display_links = list_display
 
     def get_form(self, request, obj=None, **kwargs):
@@ -228,7 +229,6 @@ class EntriesForParticipant(admin.TabularInline):
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
     f = (
-        "username",
         "first_name",
         "last_name",
         "email",
@@ -245,7 +245,6 @@ class ParticipantAdmin(admin.ModelAdmin):
     save_on_top = True
 
     list_display = (
-        "username",
         "last_name",
         "first_name",
         "email",
@@ -282,7 +281,6 @@ class EntryAdmin(admin.ModelAdmin):
         "category__style__name",
     ]
     search_fields = [
-        "brewer__username",
         "brewer__first_name",
         "brewer__last_name",
         "brewer__email",

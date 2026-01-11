@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 
@@ -87,3 +88,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         if self.last_name and self.first_name:
             return f"{self.last_name} {self.first_name}"
         return self.email
+
+    @cached_property
+    def profile_complete(self):
+        return (
+            self.first_name
+            and self.last_name
+            and self.country
+            and self.phone
+            and self.address
+            and self.language
+        )
