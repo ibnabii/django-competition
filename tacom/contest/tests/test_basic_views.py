@@ -2,9 +2,11 @@ from contest.factories import ContestFactory
 from django.test import TestCase
 from django.urls import reverse
 
+from contest.tests.conftest import warn_on_repeated_table_queries
+
 
 class FirstPageTests(TestCase):
-
+    @warn_on_repeated_table_queries
     def check_redirected_to_home(self):
         response = self.client.get("", follow=True)
         self.assertRedirects(
