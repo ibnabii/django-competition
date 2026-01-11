@@ -247,6 +247,7 @@ ACCOUNT_USER_MODEL_EMAIL_FIELD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
+# TODO: delete here and  above
 # ACCOUNT_USERNAME_MIN_LENGTH = 3
 # ACCOUNT_USERNAME_BLACKLIST = ["admin", "user", "username"]
 

@@ -2,8 +2,8 @@ import re
 import warnings
 
 import pytest
-from django.test.utils import CaptureQueriesContext
 from django.db import connection
+from django.test.utils import CaptureQueriesContext
 
 
 @pytest.fixture(autouse=True)

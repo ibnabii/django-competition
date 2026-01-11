@@ -4,8 +4,6 @@ from random import choices
 from string import ascii_uppercase, digits
 from uuid import uuid1
 
-from django.contrib.auth import get_user_model
-
 from contest.managers import (
     CategoryManager,
     ContestManager,
@@ -17,6 +15,7 @@ from contest.managers import (
     StyleManager,
 )
 from contest.utils import mail_entry_status_change
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
