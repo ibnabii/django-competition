@@ -99,3 +99,10 @@ class User(AbstractBaseUser, PermissionsMixin):
             and self.address
             and self.language
         )
+
+    @cached_property
+    def contest(self):
+        # temp solution for one-competition site
+        from contest.models import Contest
+
+        return Contest.objects.first().slug

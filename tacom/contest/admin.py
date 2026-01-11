@@ -191,6 +191,7 @@ class ContestAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
+    ordering = ("email",)
     readonly_fields = [
         "date_joined",
         "last_login",

@@ -1,7 +1,11 @@
 from datetime import date
+from random import choices
+from string import ascii_uppercase, digits
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.db import models
+from django.db.utils import OperationalError
 from django.template.loader import get_template
 from django.urls import reverse
 from django.utils import translation
@@ -61,3 +65,27 @@ def mail_entry_status_change(entries, new_status):
     msg.send()
 
     translation.activate(old_language)
+
+
+def code_generator():
+    from contest.models import Entry
+
+    # for migration only:
+    # return 0
+    try:
+        maximum_code = Entry.objects.aggregate(models.Max("code"))["code__max"]
+    except OperationalError:
+        maximum_code = 1000
+    if maximum_code:
+        return int(maximum_code) + 1
+    return 1000
+
+
+def rebate_code_generator():
+    from contest.models import RebateCode
+
+    """Generate a unique 10-character alphanumeric code (uppercase letters and digits)."""
+    while True:
+        code = "".join(choices(ascii_uppercase + digits, k=10))
+        if not RebateCode.objects.filter(code=code).exists():
+            return code

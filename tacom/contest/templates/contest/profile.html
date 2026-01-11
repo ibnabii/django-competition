@@ -6,9 +6,8 @@
     <h2>{% translate 'My User Profile' %}</h2>
     <table>
         <tr>
-            <td>{% translate "Username" %}:</td>
-            <td> {{  user.username }}
-                {% if user.country %}
+            <td>{% translate "Country" %}:</td>
+            <td> {% if user.country %}
                     <img src="{{ user.country.flag }}" alt="User country flag"/>
                 {% endif %}
             </td>

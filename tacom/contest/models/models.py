@@ -3,7 +3,6 @@ from logging import getLogger
 from random import choices
 from string import ascii_uppercase, digits
 from uuid import uuid1
-
 from contest.managers import (
     CategoryManager,
     ContestManager,
@@ -16,7 +15,6 @@ from contest.managers import (
 )
 from contest.utils import mail_entry_status_change
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -27,9 +25,12 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from simple_history.models import HistoricalRecords
+from .user import User
+from contest.utils import code_generator, rebate_code_generator
 
 logger = getLogger("models")
-User = get_user_model()
+
+# User = get_user_model()
 
 
 def validate_gdpr_consent(value):
@@ -529,18 +530,6 @@ class Category(models.Model):
         return [entry.id for entry in self.entries.all() if entry.in_final_round]
 
 
-def code_generator():
-    # for migration only:
-    # return 0
-    try:
-        maximum_code = Entry.objects.aggregate(models.Max("code"))["code__max"]
-    except OperationalError:
-        maximum_code = 1000
-    if maximum_code:
-        return int(maximum_code) + 1
-    return 1000
-
-
 class Entry(models.Model):
     class SweetnessLevel(models.TextChoices):
         DRY = "dry", _("Dry")
@@ -870,14 +859,6 @@ class ScoreSheet(models.Model):
             + self.finish_score
             + self.overall_score
         )
-
-
-def rebate_code_generator():
-    """Generate a unique 10-character alphanumeric code (uppercase letters and digits)."""
-    while True:
-        code = "".join(choices(ascii_uppercase + digits, k=10))
-        if not RebateCode.objects.filter(code=code).exists():
-            return code
 
 
 class RebateCode(models.Model):
