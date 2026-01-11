@@ -4,6 +4,8 @@ from random import choices
 from string import ascii_uppercase, digits
 from uuid import uuid1
 
+from django.contrib.auth import get_user_model
+
 from contest.managers import (
     CategoryManager,
     ContestManager,
@@ -28,6 +30,7 @@ from django_countries.fields import CountryField
 from simple_history.models import HistoricalRecords
 
 logger = getLogger("models")
+User = get_user_model()
 
 
 def validate_gdpr_consent(value):
@@ -35,59 +38,62 @@ def validate_gdpr_consent(value):
         raise ValidationError("You must accept Privacy Policy to create an account.")
 
 
-class User(AbstractUser):
-    class Meta:
-        db_table = "auth_user"
+# TODO: remove
+#
+# class User(AbstractUser):
+#     class Meta:
+#         db_table = "auth_user"
+#
+#     class JudgingLanguage(models.TextChoices):
+#         polish = "pl", _("Polish")
+#         english = "en", _("English")
+#
+#     country = CountryField(verbose_name=_("Country"), blank=True)
+#     phone = models.CharField(max_length=15, verbose_name=_("Phone number"), blank=True)
+#     address = models.CharField(max_length=200, blank=True, verbose_name=_("Address"))
+#     language = models.CharField(
+#         verbose_name=_("I would like to get feedback on my meads in"),
+#         choices=JudgingLanguage.choices,
+#         blank=True,
+#         max_length=2,
+#     )
+#     gdpr_consent = models.BooleanField(
+#         default=False,
+#         validators=[validate_gdpr_consent],
+#         verbose_name=_("Privacy Policy accepted"),
+#     )
+#     gdpr_consent_date = models.DateTimeField(auto_now_add=True)
+#     rebate_code_text = models.CharField(
+#         max_length=15,
+#         verbose_name=_("Rebate code"),
+#         help_text=_("Add rebate code if you have one"),
+#         blank=True,
+#     )
+#
+#     @property
+#     def profile_complete(self):
+#         return (
+#             self.username
+#             and self.first_name
+#             and self.last_name
+#             and self.country
+#             and self.phone
+#             and self.address
+#             and self.language
+#         )
+#
+#     @cached_property
+#     def contest(self):
+#         # temp solution for one-competition site
+#         return Contest.objects.first().slug
+#
+#     def __str__(self):
+#         if self.last_name and self.first_name:
+#             return f"{self.last_name} {self.first_name}"
+#         return self.email
 
-    class JudgingLanguage(models.TextChoices):
-        polish = "pl", _("Polish")
-        english = "en", _("English")
 
-    country = CountryField(verbose_name=_("Country"), blank=True)
-    phone = models.CharField(max_length=15, verbose_name=_("Phone number"), blank=True)
-    address = models.CharField(max_length=200, blank=True, verbose_name=_("Address"))
-    language = models.CharField(
-        verbose_name=_("I would like to get feedback on my meads in"),
-        choices=JudgingLanguage.choices,
-        blank=True,
-        max_length=2,
-    )
-    gdpr_consent = models.BooleanField(
-        default=False,
-        validators=[validate_gdpr_consent],
-        verbose_name=_("Privacy Policy accepted"),
-    )
-    gdpr_consent_date = models.DateTimeField(auto_now_add=True)
-    rebate_code_text = models.CharField(
-        max_length=15,
-        verbose_name=_("Rebate code"),
-        help_text=_("Add rebate code if you have one"),
-        blank=True,
-    )
-
-    @property
-    def profile_complete(self):
-        return (
-            self.username
-            and self.first_name
-            and self.last_name
-            and self.country
-            and self.phone
-            and self.address
-            and self.language
-        )
-
-    @cached_property
-    def contest(self):
-        # temp solution for one-competition site
-        return Contest.objects.first().slug
-
-    def __str__(self):
-        if self.last_name and self.first_name:
-            return f"{self.last_name} {self.first_name}"
-        return self.email
-
-
+# TODO: move to user.py
 class Participant(User):
     class Meta:
         proxy = True

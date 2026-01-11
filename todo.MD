@@ -7,6 +7,7 @@
 # Refactoring
 - [ ] Use ContestContextMixin where contest context is required
 - [ ] Co się stanie z danymi jak zostanie usunięte konto użytkownika?
+- [ ] Cleanup requirements
 # Dev
 ## User journey
 ### User profile
