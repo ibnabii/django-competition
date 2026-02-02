@@ -1,6 +1,8 @@
 # Fixes
-- [ ] Allauth now does not set username to login from before @, resulting in blank name https://chatgpt.com/c/694428e2-c238-832c-8a6f-233adc497be3
+- [X] Allauth now does not set username to login from before @, resulting in blank name https://chatgpt.com/c/694428e2-c238-832c-8a6f-233adc497be3
 - [ ] W zgłoszeniach jest dostepna ikona wyników
+- [X] Does copying a contest maintain it's creator, or current user is set (same for dates)?
+- [X] How does copying a contest maintain categories/styles? - Creates a copy of category linking to the same style
 ## Multicompetition
 - [ ] Results
 - [ ] Admin panel - participants
@@ -8,13 +10,19 @@
 - [ ] Use ContestContextMixin where contest context is required
 - [ ] Co się stanie z danymi jak zostanie usunięte konto użytkownika?
 - [ ] Cleanup requirements
-- [ ] Modify Style-Category-Contest - maybe Category should feature it's own name, not necesarly a copy fo the style?
+- [X] Modify Style-Category-Contest - maybe Category should feature it's own name, not necesarly a copy fo the style?
+- No, this would imply necesity to create name and translated name.we already have a feature on style level to prevent further use in contests.
+- [ ] User roles refactor - users need to have role(s) in the context of contest. Ensure each role can act only if contest is in particular status
+- [ ] Role-Capability-Preicate policy roles maping
 # Dev
 ## User journey
 ### User profile
 - [ ] My entries - make ready for multi-contests
 - [ ] Judge certification
 - [ ] Judge applications
+### Entry registration
+- [ ] New coding (per competition)
+- [ ] Recoding
 ## Security
 - [ ] Currently unpublished competitions are accessible via direct urls...
 ## UI

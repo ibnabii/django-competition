@@ -46,12 +46,14 @@ class CategoriesForContest(admin.TabularInline):
 
 
 @admin.action(description=_("Create copies of selected objects"))
-def duplicate_contest(_modeladmin, _request, queryset):
+def duplicate_contest(_modeladmin, request, queryset):
     for obj in queryset:
         obj_copy = copy.copy(obj)
         obj_copy.pk = None  # This will save as a new object
         obj_copy.slug = ""
         obj_copy.title = f"{obj.title} ({_('copy')})"
+        obj_copy.created_by = request.user
+        obj_copy.modified_by = request.user
         obj_copy.save()
         # If your model has many-to-many fields, also duplicate them
         for m2m_field in obj._meta.many_to_many:
@@ -197,6 +199,48 @@ class CustomUserAdmin(UserAdmin):
     ]
     list_display = ("last_name", "first_name", "email")
     list_display_links = list_display
+
+    # Remove username-related fields
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        (
+            _("Personal info"),
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "phone",
+                    "address",
+                    "country",
+                    "language",
+                    "rebate_code_text",
+                )
+            },
+        ),
+        (
+            _("Permissions"),
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+            },
+        ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )
+
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("email", "password1", "password2"),
+            },
+        ),
+    )
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
