@@ -13,12 +13,13 @@
 - [X] Modify Style-Category-Contest - maybe Category should feature it's own name, not necesarly a copy fo the style?
 - No, this would imply necesity to create name and translated name.we already have a feature on style level to prevent further use in contests.
 - [ ] User roles refactor - users need to have role(s) in the context of contest. Ensure each role can act only if contest is in particular status
-- [ ] Role-Capability-Preicate policy roles maping
+- [ ] Role-Capability-Predicate policy roles maping
+- [ ] Docs are tracked as git submodules
 # Dev
 ## User journey
 ### User profile
 - [ ] My entries - make ready for multi-contests
-- [ ] Judge certification
+- [X] Judge certification
 - [ ] Judge applications
 ### Entry registration
 - [ ] New coding (per competition)
