@@ -1,4 +1,5 @@
 from enum import Enum
+
 from .capabilities import Capability
 
 

@@ -1,7 +1,7 @@
+from contest.permissions.capabilities import CONTEST_CAPABILITIES, Capability
+from contest.permissions.request_types import AppRequest
 from django import template
 from django.conf import settings
-from contest.permissions.capabilities import Capability, CONTEST_CAPABILITIES
-from contest.permissions.request_types import AppRequest
 
 register = template.Library()
 

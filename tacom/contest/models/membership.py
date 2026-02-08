@@ -1,8 +1,7 @@
+from contest.permissions.roles import CONTEST_ROLE_CAPABILITIES
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
-from contest.permissions.roles import Role, CONTEST_ROLE_CAPABILITIES
 
 User = settings.AUTH_USER_MODEL
 

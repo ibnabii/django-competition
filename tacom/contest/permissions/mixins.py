@@ -1,10 +1,9 @@
 from typing import cast
 
-from django.core.exceptions import PermissionDenied
-from django.views import View
-
 from capabilities import Capability
 from contest.permissions.request_types import AppRequest
+from django.core.exceptions import PermissionDenied
+from django.views import View
 
 
 class CapabilityRequiredMixin:

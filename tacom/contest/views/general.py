@@ -1,8 +1,7 @@
-from django.http import Http404
-from django.urls import NoReverseMatch
-
 from contest.models import Contest
+from django.http import Http404
 from django.shortcuts import redirect
+from django.urls import NoReverseMatch
 from django.views.generic import ListView
 
 

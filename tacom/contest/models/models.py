@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from logging import getLogger
 from uuid import uuid1
+
 from contest.managers import (
     CategoryManager,
     ContestManager,
@@ -11,7 +12,11 @@ from contest.managers import (
     RegistrableContestManager,
     StyleManager,
 )
-from contest.utils import mail_entry_status_change
+from contest.utils import (
+    code_generator,
+    mail_entry_status_change,
+    rebate_code_generator,
+)
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -21,7 +26,6 @@ from django.utils.functional import cached_property
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
-from contest.utils import code_generator, rebate_code_generator
 
 # from .user import User
 

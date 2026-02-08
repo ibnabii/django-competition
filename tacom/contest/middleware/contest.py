@@ -1,6 +1,5 @@
-from django.shortcuts import get_object_or_404
-
 from contest.models import Contest
+from django.shortcuts import get_object_or_404
 
 
 class ContestMiddleware:

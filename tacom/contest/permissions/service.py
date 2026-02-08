@@ -1,14 +1,14 @@
+from contest.models import Contest
+from contest.models.membership import ContestMembershipRole
 from django.utils.functional import cached_property
 
 from .capabilities import CAPABILITIES, Capability
 from .roles import (
-    GLOBAL_ROLE_CAPABILITIES,
     CONTEST_ROLE_CAPABILITIES,
+    GLOBAL_ROLE_CAPABILITIES,
     GLOBAL_ROLE_NAMES,
     Role,
 )
-from contest.models import Contest
-from contest.models.membership import ContestMembershipRole
 
 
 class PermissionService:

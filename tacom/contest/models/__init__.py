@@ -1,2 +1,2 @@
-from .user import User, Participant
+from .user import Participant, User
 from .models import *

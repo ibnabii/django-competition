@@ -1,10 +1,10 @@
-import pytest
 from unittest import TestCase
 
+import pytest
 from contest.permissions.capabilities import CAPABILITIES, Capability
 from contest.permissions.roles import (
-    GLOBAL_ROLE_CAPABILITIES,
     CONTEST_ROLE_CAPABILITIES,
+    GLOBAL_ROLE_CAPABILITIES,
 )
 
 

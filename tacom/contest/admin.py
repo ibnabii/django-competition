@@ -22,8 +22,8 @@ from .models import (
     Style,
 )
 from .models.judges import JudgeCertification, JudgeInCompetition
-from .models.user import User
 from .models.membership import ContestMembership, ContestMembershipRole
+from .models.user import User
 
 
 @admin.register(ContestMembership)
