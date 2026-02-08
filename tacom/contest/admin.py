@@ -23,6 +23,16 @@ from .models import (
 )
 from .models.judges import JudgeCertification, JudgeInCompetition
 from .models.user import User
+from .models.membership import ContestMembership, ContestMembershipRole
+
+
+@admin.register(ContestMembership)
+class ContestMembershipAdmin(admin.ModelAdmin): ...
+
+
+@admin.register(ContestMembershipRole)
+class ContestMembershipRoleAdmin(admin.ModelAdmin):
+    list_display = ["membership__user", "membership__contest", "role"]
 
 
 @admin.register(Style)
@@ -52,10 +62,10 @@ def duplicate_contest(_modeladmin, request, queryset):
         obj_copy.pk = None  # This will save as a new object
         obj_copy.slug = ""
         obj_copy.title = f"{obj.title} ({_('copy')})"
-        obj_copy.created_by = request.user
-        obj_copy.modified_by = request.user
+        obj_copy.created_by = request.user if request else None
+        obj_copy.modified_by = request.user if request else None
         obj_copy.save()
-        # If your model has many-to-many fields, also duplicate them
+        # If model has many-to-many fields, also duplicate them
         for m2m_field in obj._meta.many_to_many:
             field = getattr(obj, m2m_field.name)
             getattr(obj_copy, m2m_field.name).set(field.all())

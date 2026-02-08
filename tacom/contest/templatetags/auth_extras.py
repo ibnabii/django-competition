@@ -2,11 +2,14 @@ from django import template
 
 register = template.Library()
 
+# TODO drop it as it is upposed to be replaced by permissions_tags
+
 
 @register.simple_tag(takes_context=True)
 def get_user_permissions(context):
     user = context["request"].user
     groups = user.groups.values_list("name", flat=True)
+    print(groups)
     return {
         "is_translator": "translators" in groups,
         "is_contest_staff": "contest_staff" in groups,

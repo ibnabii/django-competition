@@ -87,7 +87,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         if self.last_name and self.first_name:
-            return f"{self.last_name} {self.first_name}"
+            return f"{self.last_name} {self.first_name}, {self.email}"
         return self.email
 
     @cached_property
@@ -101,12 +101,12 @@ class User(AbstractBaseUser, PermissionsMixin):
             and self.language
         )
 
-    @cached_property
-    def contest(self):
-        # temp solution for one-competition site
-        from contest.models import Contest
-
-        return Contest.objects.first().slug
+    # @cached_property
+    # def contest(self):
+    #     # temp solution for one-competition site
+    #     from contest.models import Contest
+    #
+    #     return Contest.objects.first().slug
 
 
 class Participant(User):

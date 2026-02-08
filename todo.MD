@@ -7,7 +7,7 @@
 - [ ] Results
 - [ ] Admin panel - participants
 # Refactoring
-- [ ] Use ContestContextMixin where contest context is required
+- [ ] Use ContestContextMixin where contest context is required (or rather use middleware?)
 - [ ] Co się stanie z danymi jak zostanie usunięte konto użytkownika?
 - [ ] Cleanup requirements
 - [X] Modify Style-Category-Contest - maybe Category should feature it's own name, not necesarly a copy fo the style?
@@ -15,6 +15,7 @@
 - [ ] User roles refactor - users need to have role(s) in the context of contest. Ensure each role can act only if contest is in particular status
 - [ ] Role-Capability-Predicate policy roles maping
 - [ ] Docs are tracked as git submodules
+- [ ] Change name of the slug to contest_slug in urls, middleware and mixins (remove mixins?) to avoid confusion with competition slug
 # Dev
 ## User journey
 ### User profile
@@ -24,6 +25,8 @@
 ### Entry registration
 - [ ] New coding (per competition)
 - [ ] Recoding
+### Contest management
+- [ ] Manage judges views (admin panel is not convenient)
 ## Security
 - [ ] Currently unpublished competitions are accessible via direct urls...
 ## UI

@@ -3,4 +3,9 @@ from django.urls import path
 
 urlpatterns = [
     path("", views.PublishedContestListView.as_view(), name="contest_list"),
+    path(
+        "disambiguation/<str:functionality>/",
+        views.DisambiguationView.as_view(),
+        name="disambiguation",
+    ),
 ]

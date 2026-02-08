@@ -68,6 +68,8 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
     # 'crum.CurrentRequestUserMiddleware',
     "simple_history.middleware.HistoryRequestMiddleware",
+    "contest.middleware.contest.ContestMiddleware",
+    "contest.middleware.permissions.PermissionMiddleware",
 ]
 
 if DEBUG:

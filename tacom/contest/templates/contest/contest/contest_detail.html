@@ -1,5 +1,5 @@
 {%  load i18n %}
-<h1> {{ contest.title }}</h1>
+<div><a href="{% url 'contest:contest_detail' contest.slug %}" class="btn"><h1> {{ contest.title }}</h1></a></div>
 <a class="btn btn-primary"
    id="contest-rules"
    href="{% url 'contest:contest_rules' contest.slug %}">
