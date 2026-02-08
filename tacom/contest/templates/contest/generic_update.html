@@ -5,10 +5,35 @@
     {%  if form.head_info %}
         {{ form.head_info }}
     {% endif %}
+<!--<form method="post" action="">-->
+<!--  {% csrf_token %}-->
+<!--    <table>-->
+<!--        {{form.as_table}}-->
+<!--    </table>-->
+<div class="container">
 <form method="post" action="">
-  {% csrf_token %}
+    {% csrf_token %}
     <table>
-        {{form.as_table}}
+    {% for field in form %}
+        <tr><td class="pe-2">
+            <label class="form-label">
+                {{ field.label }}
+            </label>
+            </td><td>
+
+                {{ field }}
+
+                {% if field.help_text %}
+                    <div class="form-text">{{ field.help_text }}</div>
+                {% endif %}
+
+                <div class="text-danger">
+                    {{ field.errors }}
+                </div>
+            </td>
+
+        </tr>
+    {% endfor %}
     </table>
   <button type="submit" class="btn btn-primary">
       {% translate "Save" %}
@@ -23,5 +48,5 @@
       {% translate "Cancel" %}
   </a>
 </form>
-
+</div>
 {% endblock %}
