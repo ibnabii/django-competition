@@ -33,12 +33,11 @@ class PublishedContestManager(models.Manager):
         )
 
 
-class RegistrableContestManager(models.Manager):
+class RegistrableContestManager(PublishedContestManager):
     def get_queryset(self):
         return (
             super()
             .get_queryset()
-            .filter(competition_is_published=True)
             .filter(registration_date_from__lte=date.today())
             .filter(registration_date_to__gte=date.today())
         )
