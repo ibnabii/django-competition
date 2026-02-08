@@ -287,7 +287,7 @@ class Contest(models.Model):
     def is_published(self):
         return (
             self.competition_is_published
-            or self.competition_autopublish_datetime <= date.today()
+            or self.competition_autopublish_datetime <= datetime.now()
         )
 
     @cached_property

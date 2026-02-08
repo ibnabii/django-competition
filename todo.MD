@@ -25,6 +25,7 @@
 ### Entry registration
 - [ ] New coding (per competition)
 - [ ] Recoding
+- [ ] Entry registration journey could be more dynamic
 ### Contest management
 - [ ] Manage judges views (admin panel is not convenient)
 ## Security
