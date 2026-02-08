@@ -7,12 +7,6 @@ urlpatterns = [
     path("profile/", views.ProfileView.as_view(), name="profile"),
     path("profile/edit/", views.ProfileEditView.as_view(), name="profile_edit"),
     path("style/<str:slug>/", DetailView.as_view(model=Style), name="style_detail"),
-    path("entry/add/", views.AddEntryContestListView.as_view(), name="add_entry"),
-    path(
-        "entry/add/contest/<str:slug>/",
-        views.AddEntryStyleListView.as_view(),
-        name="add_entry_contest",
-    ),
     path(
         "entry/contest/<str:slug>/",
         views.UsersEntryListView.as_view(),

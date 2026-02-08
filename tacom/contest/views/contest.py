@@ -1,9 +1,13 @@
+from django.http import Http404
+
 from contest.models import Category, Contest
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404
 from django.utils.functional import cached_property
 from django.views.generic import DetailView
 from django.views.generic.base import ContextMixin
+
+from contest.permissions.request_types import AppRequest
 
 
 class ContestDetailView(DetailView):
@@ -44,7 +48,12 @@ class ContestDeliveryAddressView(DetailView):
     queryset = Contest.published
 
 
+# TODO: should this be a contxt mixin?
 class ContestContextMixin(ContextMixin):
+    """
+    Ensures self.contest is set
+    """
+
     contest_slug_kwarg = "slug"
     kwargs: dict
 
@@ -57,3 +66,15 @@ class ContestContextMixin(ContextMixin):
         context = super().get_context_data(**kwargs)
         context["contest"] = self.contest
         return context
+
+
+class ContestAcceptsRegistration(ContestContextMixin):
+
+    def get(self, request: AppRequest, *args, **kwargs):
+        # TODO: cleanup
+        # self.contest = get_object_or_404(Contest.registrable, slug=self.kwargs["slug"])
+        # if request.contest and request.contest.is_published:
+        if self.contest.is_registrable:
+            return super().get(request, *args, **kwargs)
+        else:
+            raise Http404
