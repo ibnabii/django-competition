@@ -2,6 +2,8 @@ from datetime import date, datetime
 from logging import getLogger
 from uuid import uuid1
 
+from django.core.checks.security.base import check_allowed_hosts
+
 from contest.managers import (
     CategoryManager,
     ContestManager,
@@ -282,9 +284,16 @@ class Contest(models.Model):
     registrable = RegistrableContestManager()
 
     @cached_property
-    def is_registrable(self):
+    def is_published(self):
         return (
             self.competition_is_published
+            or self.competition_autopublish_datetime <= date.today()
+        )
+
+    @cached_property
+    def is_registrable(self):
+        return (
+            self.is_published
             and self.registration_date_from <= date.today() <= self.registration_date_to
             and (self.entry_global_limit is None or self.global_limit_left)
         )
