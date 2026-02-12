@@ -136,7 +136,7 @@
                     {% endif %}
 {#                    Judging#}
                     {# {% can_any_contest "JUDGE" as is_judge %} #}
-                    {% can "JUDGE" as is_judge %}
+                    {% can "VIEW_JUDGING_ENTRIES_LIST" as is_judge %}
                     {% if is_judge %}
                             <li>
                                 <a class="dropdown-item" href="{% contest_url 'judging_list' %}">

@@ -16,6 +16,7 @@
 - [ ] Role-Capability-Predicate policy roles maping
 - [ ] Docs are tracked as git submodules
 - [ ] Change name of the slug to contest_slug in urls, middleware and mixins (remove mixins?) to avoid confusion with competition slug
+- [ ] Packages handling permissions
 # Dev
 ## User journey
 ### User profile
@@ -26,6 +27,7 @@
 - [ ] New coding (per competition)
 - [ ] Recoding
 - [ ] Entry registration journey could be more dynamic
+- [ ] Old coding (1xxx should be per contest)
 ### Contest management
 - [ ] Manage judges views (admin panel is not convenient)
 ## Security

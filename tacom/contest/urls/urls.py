@@ -6,7 +6,11 @@ from django.views.generic import DetailView
 urlpatterns = [
     path("profile/", views.ProfileView.as_view(), name="profile"),
     path("profile/edit/", views.ProfileEditView.as_view(), name="profile_edit"),
-    path("style/<str:slug>/", DetailView.as_view(model=Style), name="style_detail"),
+    path(
+        "style/<slug:style_slug>/",
+        DetailView.as_view(model=Style, slug_url_kwarg="style_slug"),
+        name="style_detail",
+    ),
     path(
         "entry/contest/<str:slug>/",
         views.UsersEntryListView.as_view(),
@@ -90,7 +94,7 @@ urlpatterns = [
         name="delivery_select",
     ),
     path(
-        "mgmt/delivery/<uuid:pk>/",
+        "<str:slug>/mgmt/delivery/<uuid:pk>/",
         views.ProcessPackageDelivered.as_view(),
         name="delivery_process",
     ),
@@ -100,7 +104,7 @@ urlpatterns = [
         name="payment_list",
     ),
     path(
-        "mgmt/payments/<uuid:pk>/",
+        "m<str:slug>/gmt/payments/<uuid:pk>/",
         views.PaymentReceivedView.as_view(),
         name="payment_process",
     ),
@@ -126,15 +130,17 @@ urlpatterns = [
         name="judging_finals_category",
     ),
     path(
-        "scoresheet/<uuid:pk>/", views.ScoreSheetView.as_view(), name="scoresheet_view"
+        "<str:slug>/scoresheet/<uuid:pk>/",
+        views.ScoreSheetView.as_view(),
+        name="scoresheet_view",
     ),
     path(
-        "scoresheet/<uuid:pk>/edit/",
+        "<str:slug>/scoresheet/<uuid:pk>/edit/",
         views.ScoreSheetEdit.as_view(),
         name="scoresheet_edit",
     ),
     path(
-        "entry/<uuid:entry>/scoresheet/",
+        "<str:slug>/entry/<uuid:entry>/scoresheet/",
         views.ScoreSheetCreate.as_view(),
         name="scoresheet_create",
     ),

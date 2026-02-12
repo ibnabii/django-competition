@@ -1,13 +1,16 @@
-from django.http import Http404
+import abc
+from abc import ABC
 
 from contest.models import Category, Contest
+from contest.permissions.request_types import AppRequest
+from django.contrib import messages
 from django.db.models import Prefetch
-from django.shortcuts import get_object_or_404
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect
 from django.utils.functional import cached_property
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.base import ContextMixin
-
-from contest.permissions.request_types import AppRequest
 
 
 class ContestDetailView(DetailView):
@@ -66,6 +69,29 @@ class ContestContextMixin(ContextMixin):
         context = super().get_context_data(**kwargs)
         context["contest"] = self.contest
         return context
+
+
+class ContestPassesTestMixin(ContestContextMixin, ABC):
+    """
+    Ensures contest passes test
+    """
+
+    @abc.abstractmethod
+    def test_func(self) -> bool: ...
+
+    def dispatch(self, request, *args, **kwargs):
+        contest_test_result = self.test_func()
+        if not contest_test_result:
+            messages.warning(
+                request, self.contest.title + " " + _("is not enabled for this")
+            )
+            previous = request.META.get("HTTP_REFERER")
+            if previous and request.path not in previous:
+                return redirect(previous)
+            else:
+                return redirect("contest:contest_detail", slug=self.contest.slug)
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ContestAcceptsRegistration(ContestContextMixin):

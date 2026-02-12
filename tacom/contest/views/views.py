@@ -1,4 +1,3 @@
-import abc
 import json
 import os
 from decimal import Decimal
@@ -28,7 +27,10 @@ from contest.models import (
     ScoreSheet,
     User,
 )
+from contest.permissions.capabilities import Capability
+from contest.permissions.mixins import CapabilityRequiredMixin
 from contest.utils import get_client_ip, mail_entry_status_change
+from contest.views.contest import ContestContextMixin, ContestPassesTestMixin
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -71,23 +73,6 @@ class UserFullProfileMixin(UserPassesTestMixin):
     def handle_no_permission(self):
         messages.warning(self.request, _("Complete your profile, please."))
         return redirect("contest:profile_edit")
-
-
-class GroupRequiredMixin(UserPassesTestMixin):
-    groups_required = None
-
-    def test_func(self):
-        if len(self.groups_required) == 0:
-            return True
-        groups = set(self.groups_required)
-        user_groups = set(self.request.user.groups.values_list("name", flat=True))
-        return groups == groups.intersection(user_groups)
-
-    def handle_no_permission(self):
-        messages.warning(
-            self.request, _("You do not have permission to access this site!")
-        )
-        return redirect("contest:contest_list")
 
 
 class UserOwnsPackageMixin(UserPassesTestMixin):
@@ -342,7 +327,7 @@ class AddPackageView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
         return context
 
 
-class AddPackageForPayment(AddPackageView):
+class AddPackageForPayment(AddPackageView, ContestContextMixin):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["entries"] = kwargs["entries"].filter(is_paid=False)
@@ -368,8 +353,10 @@ class AddPackageForPrinting(AddPackageView):
         return reverse("contest:labels_print", kwargs={"package_id": self.object.id})
 
 
-class AddPackageOfDelivered(GroupRequiredMixin, AddPackageView):
-    groups_required = ("reception",)
+class AddPackageOfDelivered(
+    CapabilityRequiredMixin, ContestContextMixin, AddPackageView
+):
+    required_capability = Capability.ENTRY_RECEIVE
     form_class = NewAdminPackage
 
     def get_form_kwargs(self):
@@ -385,14 +372,20 @@ class AddPackageOfDelivered(GroupRequiredMixin, AddPackageView):
         return kwargs
 
     def get_success_url(self):
-        return reverse("contest:delivery_process", args=(self.object.id,))
+        return reverse(
+            "contest:delivery_process",
+            args=(
+                self.contest.slug,
+                self.object.id,
+            ),
+        )
 
 
-class ProcessPackageDelivered(GroupRequiredMixin, UserOwnsPackageMixin, DeleteView):
+class ProcessPackageDelivered(CapabilityRequiredMixin, ContestContextMixin, DeleteView):
     model = EntriesPackage
     template_name = "contest/generic_update.html"
     form_class = BlankForm
-    groups_required = ("reception",)
+    required_capability = Capability.ENTRY_RECEIVE
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -413,7 +406,9 @@ class ProcessPackageDelivered(GroupRequiredMixin, UserOwnsPackageMixin, DeleteVi
         return reverse("contest:delivery_select", args=(contest.slug,))
 
 
-class SelectPaymentMethodView(LoginRequiredMixin, UserOwnsPackageMixin, CreateView):
+class SelectPaymentMethodView(
+    LoginRequiredMixin, UserOwnsPackageMixin, ContestContextMixin, CreateView
+):
     model = Payment
     form_class = NewPaymentForm
 
@@ -663,17 +658,9 @@ class LabelPrintoutView(LoginRequiredMixin, UserOwnsPackageMixin, TemplateView):
         return context
 
 
-class PaymentManagementView(GroupRequiredMixin, ListView):
-    groups_required = ("payment_mgmt",)
+class PaymentManagementView(CapabilityRequiredMixin, ContestContextMixin, ListView):
+    required_capability = Capability.ENTRY_PAYMENTS
     model = Payment
-
-    def __init__(self):
-        super().__init__()
-        self.contest = None
-
-    def dispatch(self, request, *args, **kwargs):
-        self.contest = Contest.objects.get(slug=self.kwargs["slug"])
-        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         return (
@@ -685,8 +672,8 @@ class PaymentManagementView(GroupRequiredMixin, ListView):
         )
 
 
-class PaymentReceivedView(GroupRequiredMixin, DeleteView):
-    groups_required = ("payment_mgmt",)
+class PaymentReceivedView(CapabilityRequiredMixin, ContestContextMixin, DeleteView):
+    required_capability = Capability.ENTRY_PAYMENTS
 
     def get_object(self, queryset=None):
         return get_object_or_404(
@@ -697,7 +684,7 @@ class PaymentReceivedView(GroupRequiredMixin, DeleteView):
         )
 
     def get_success_url(self):
-        return reverse("contest:payment_list", args=(self.object.contest.slug,))
+        return reverse("contest:payment_list", args=(self.contest.slug,))
 
     def form_valid(self, form):
         success_url = self.get_success_url()
@@ -706,41 +693,31 @@ class PaymentReceivedView(GroupRequiredMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class ContestJudgingEliminationsMixin(UserPassesTestMixin):
-
-    @abc.abstractmethod
-    def get_contest(self) -> Contest:
-        pass
+class ContestJudgingEliminationsMixin(ContestPassesTestMixin):
 
     def test_func(self):
-        return self.get_contest().is_judging_eliminations
+        return self.contest.is_judging_eliminations
 
 
-# class ContestJudgingFinalsMixin(UserPassesTestMixin):
-#
-#     @abc.abstractmethod
-#     def get_contest(self) -> Contest:
-#         pass
-#
-#     def test_func(self):
-#         return self.get_contest().is_judging_finals
-class ContestJudgingFinalsMixin:
+class ContestJudgingFinalsMixin(ContestPassesTestMixin):
 
-    @abc.abstractmethod
-    def get_contest(self) -> Contest:
-        pass
-
-    def dispatch(self, request, *args, **kwargs):
-        if not self.get_contest().is_judging_finals:
-            raise PermissionDenied()
-        return super().dispatch(request, *args, **kwargs)
+    def test_func(self):
+        return self.contest.is_judging_finals
 
 
-class JudgingListView(GroupRequiredMixin, ListView):
+class ContestJudgingBOSMixin(ContestPassesTestMixin):
+
+    def test_func(self):
+        return self.contest.is_judging_bos
+
+
+class JudgingListView(
+    CapabilityRequiredMixin, ContestJudgingEliminationsMixin, ListView
+):
     model = Entry
     template_name = "contest/judging_list_by_style.html"
     context_object_name = "entries"
-    groups_required = ("judge",)
+    required_capability = Capability.VIEW_JUDGING_ENTRIES_LIST
 
     def get_queryset(self):
         return (
@@ -752,9 +729,9 @@ class JudgingListView(GroupRequiredMixin, ListView):
         )
 
 
-class ScoreSheetView(GroupRequiredMixin, DetailView):
+class ScoreSheetView(CapabilityRequiredMixin, ContestContextMixin, DetailView):
     model = ScoreSheet
-    groups_required = ("judge",)
+    required_capability = Capability.VIEW_SCORESHEET
 
 
 class MyScoreSheetView(DetailView):
@@ -960,37 +937,46 @@ class ScoreSheetTableMixin(ContextMixin):
 
 class ScoreSheetEdit(
     ContestJudgingEliminationsMixin,
-    GroupRequiredMixin,
+    CapabilityRequiredMixin,
     ScoreSheetTableMixin,
     UpdateView,
 ):
     model = ScoreSheet
     form_class = ScoreSheetForm
-    groups_required = ("judge",)
+    required_capability = Capability.EDIT_SCORESHEET
 
     def get_success_url(self):
-        return reverse("contest:scoresheet_view", args=(self.object.id,))
-
-    def get_contest(self):
-        return self.get_object().entry.category.contest
+        return reverse(
+            "contest:scoresheet_view",
+            args=(
+                self.contest.slug,
+                self.object.id,
+            ),
+        )
 
 
 class ScoreSheetCreate(
     ContestJudgingEliminationsMixin,
-    GroupRequiredMixin,
+    CapabilityRequiredMixin,
     ScoreSheetTableMixin,
     CreateView,
 ):
     model = ScoreSheet
     form_class = ScoreSheetForm
-    groups_required = ("judge",)
+    required_capability = Capability.EDIT_SCORESHEET
 
     def form_valid(self, form):
         form.instance.entry = get_object_or_404(Entry, pk=self.kwargs["entry"])
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("contest:scoresheet_view", args=(self.object.id,))
+        return reverse(
+            "contest:scoresheet_view",
+            args=(
+                self.contest.slug,
+                self.object.id,
+            ),
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -998,9 +984,6 @@ class ScoreSheetCreate(
             "entry": get_object_or_404(Entry, pk=self.kwargs["entry"])
         }
         return context
-
-    def get_contest(self):
-        return Entry.objects.get(pk=self.kwargs["entry"]).category.contest
 
 
 class MedalsListView(ListView):
@@ -1085,10 +1068,12 @@ class PartnersGalleryView(TemplateView):
         return context
 
 
-class JudgingFinalsListView(ContestJudgingFinalsMixin, GroupRequiredMixin, ListView):
+class JudgingFinalsListView(
+    CapabilityRequiredMixin, ContestJudgingFinalsMixin, ListView
+):
     template_name = "contest/judging_finals_list.html"
     context_object_name = "categories"
-    groups_required = ("judge_final",)
+    required_capability = Capability.JUDGE_FINALS
 
     def get_queryset(self):
         categories = (
@@ -1117,16 +1102,12 @@ class JudgingFinalsListView(ContestJudgingFinalsMixin, GroupRequiredMixin, ListV
         )
         return categories
 
-    def get_contest(self) -> Contest:
-        return Contest.objects.get(slug=self.kwargs["slug"])
-
 
 class JudgingFinalsCategoryView(
-    ContestJudgingFinalsMixin, GroupRequiredMixin, UpdateView
+    CapabilityRequiredMixin, ContestJudgingFinalsMixin, UpdateView
 ):
-    # model = Entry
     template_name = "contest/judging_finals_category.html"
-    groups_required = ("judge_final",)
+    required_capability = Capability.JUDGE_FINALS
 
     def get_success_url(self):
         return reverse("contest:judging_finals_list", args=(self.kwargs["slug"],))
@@ -1135,16 +1116,16 @@ class JudgingFinalsCategoryView(
         finals = Category.objects.get(id=self.kwargs["category_id"]).entries_in_final
         return Entry.objects.filter(id__in=finals)
 
-    def get_contest(self) -> Contest:
-        return Contest.objects.get(slug=self.kwargs["slug"])
-
-    def get(self, request, *args, **kwargs):
+    def get_context(self):
         context = {
             "formset": FinalEntriesFormset(queryset=self.get_queryset()),
             "style": Category.objects.get(id=self.kwargs["category_id"]).style.name,
+            "contest": self.contest,
         }
+        return context
 
-        return render(request, self.template_name, context)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, self.get_context())
 
     def post(self, request, *args, **kwargs):
         formset = FinalEntriesFormset(request.POST, queryset=self.get_queryset())
@@ -1152,7 +1133,7 @@ class JudgingFinalsCategoryView(
         if formset.is_valid():
             formset.save()
             return redirect(self.get_success_url())  # Replace with your success URL
-        return render(request, self.template_name, {"formset": formset})
+        return render(request, self.template_name, self.get_context())
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -1166,14 +1147,10 @@ class JudgingFinalsCategoryView(
         return response
 
 
-class JudgeBosView(GroupRequiredMixin, ListView):
-    groups_required = ("judge_bos",)
+class JudgeBosView(CapabilityRequiredMixin, ContestJudgingBOSMixin, ListView):
+    required_capability = Capability.JUDGE_BOS
     context_object_name = "entries"
     template_name = "contest/judging_bos_list.html"
-
-    def __init__(self, *args, **kwargs):
-        self.contest = None
-        super().__init__(*args, **kwargs)
 
     def get_queryset(self):
         queryset = (
@@ -1185,14 +1162,6 @@ class JudgeBosView(GroupRequiredMixin, ListView):
         logger.debug(f"JudgeBossView:\n{queryset.values()}")
         return queryset
 
-    def dispatch(self, request, *args, **kwargs):
-        self.contest = Contest.objects.select_related("bos_entry").get(
-            slug=self.kwargs["slug"]
-        )
-        if not self.contest:
-            raise Http404
-        return super().dispatch(request, *args, **kwargs)
-
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["best_of_show"] = self.contest.bos_entry
@@ -1200,15 +1169,15 @@ class JudgeBosView(GroupRequiredMixin, ListView):
         return context
 
 
-class JudgeBosSelect(GroupRequiredMixin, UpdateView):
-    groups_required = ("judge_bos",)
+class JudgeBosSelect(CapabilityRequiredMixin, ContestJudgingBOSMixin, UpdateView):
+    required_capability = Capability.JUDGE_BOS
     model = Contest
     form_class = ContestBestOfShowForm
     template_name = "contest/judging_bos_selection.html"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        contest = self.get_object()
+        contest = self.contest
         candidates = (
             Entry.objects.filter(category__contest=contest)
             .filter(place=1)

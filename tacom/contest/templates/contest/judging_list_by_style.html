@@ -31,7 +31,7 @@
                     <a
                         class="btn btn-outline-primary {% if not entry.scoresheet %}disabled{% endif %}"
                         {% if entry.scoresheet %}
-                            href="{% url 'contest:scoresheet_view' entry.scoresheet.id %}"
+                            href="{% url 'contest:scoresheet_view' contest.slug entry.scoresheet.id %}"
                         {% endif %}
                         title="{% translate 'View score sheet' %}"
                         data-toggle="tooltip"
@@ -41,13 +41,13 @@
 
                     {% if entry.scoresheet %}
                         <a class="btn btn-outline-primary"
-                           href="{% url 'contest:scoresheet_edit' entry.scoresheet.id %}"
+                           href="{% url 'contest:scoresheet_edit' contest.slug entry.scoresheet.id %}"
                            title="{% translate 'Edit score sheet' %}"
                            data-toggle="tooltip"
                        >
                     {% else %}
                         <a class="btn btn-primary"
-                           href="{% url 'contest:scoresheet_create' entry.id %}"
+                           href="{% url 'contest:scoresheet_create' contest.slug entry.id %}"
                            title="{% translate 'Create score sheet' %}"
                            data-toggle="tooltip"
                        >

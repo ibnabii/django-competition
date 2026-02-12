@@ -40,7 +40,7 @@
                     <a class="btn btn-outline-primary"
                        data-toggle="tooltip"
                        title="{% translate 'Confirm received' %}"
-                       href="{% url 'contest:payment_process' payment.id %}"
+                       href="{% url 'contest:payment_process' contest.slug payment.id %}"
 
                     >
                         {% bs_icon 'check2-square' size='1.5em'%}

@@ -2,8 +2,6 @@ from datetime import date, datetime
 from logging import getLogger
 from uuid import uuid1
 
-from django.core.checks.security.base import check_allowed_hosts
-
 from contest.managers import (
     CategoryManager,
     ContestManager,
@@ -29,7 +27,6 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
 
-# from .user import User
 
 logger = getLogger("models")
 

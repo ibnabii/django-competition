@@ -24,11 +24,18 @@ GLOBAL_ROLE_CAPABILITIES = {
 GLOBAL_ROLE_NAMES = [role.value for role in GLOBAL_ROLE_CAPABILITIES.keys()]
 
 CONTEST_ROLE_CAPABILITIES = {
-    Role.JUDGE: {Capability.JUDGE},
-    Role.JUDGE_FINALS: {Capability.JUDGE_FINALS},
+    Role.JUDGE: {
+        Capability.VIEW_JUDGING_ENTRIES_LIST,
+        Capability.EDIT_SCORESHEET,
+        Capability.VIEW_SCORESHEET,
+    },
+    Role.JUDGE_FINALS: {
+        Capability.JUDGE_FINALS,
+        Capability.VIEW_SCORESHEET,
+    },
     Role.JUDGE_BOS: {Capability.JUDGE_BOS},
     Role.HEAD_JUDGE: {
-        Capability.JUDGE,
+        Capability.VIEW_JUDGING_ENTRIES_LIST,
         Capability.JUDGE_FINALS,
         Capability.JUDGE_BOS,
         Capability.CONTEST_MANAGE_JUDGES,

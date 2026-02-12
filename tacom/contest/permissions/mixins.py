@@ -1,9 +1,10 @@
 from typing import cast
 
-from capabilities import Capability
 from contest.permissions.request_types import AppRequest
-from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect
 from django.views import View
+
+from .capabilities import Capability
 
 
 class CapabilityRequiredMixin:
@@ -15,11 +16,13 @@ class CapabilityRequiredMixin:
 
     def dispatch(self, request: AppRequest, *args, **kwargs):
         contest = request.contest
-
         if not self.required_capability:
             raise ValueError("required_capability must be set on the view")
 
         if not request.perm.can(self.required_capability, contest):
-            raise PermissionDenied()
+            if contest:
+                return redirect("contest:contest_detail", contest.slug)
+            else:
+                return redirect("contest:contest_list")
 
         return cast(View, super()).dispatch(request, *args, **kwargs)

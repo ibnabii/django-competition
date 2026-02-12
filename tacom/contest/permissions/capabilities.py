@@ -2,9 +2,12 @@ from enum import Enum
 
 
 class Capability(Enum):
-    JUDGE = "judge"
+    # JUDGE = "judge"
     JUDGE_FINALS = "judge_finals"
     JUDGE_BOS = "judge_bos"
+    VIEW_JUDGING_ENTRIES_LIST = "view_judging_entries_list"
+    EDIT_SCORESHEET = "edit_scoresheet"
+    VIEW_SCORESHEET = "view_scoresheet"
 
     CONTEST_MANAGE_TEAM = "contest_manage_team"
     CONTEST_MANAGE_JUDGES = "contest_manage_judges"
@@ -18,8 +21,16 @@ class Capability(Enum):
 
 
 CAPABILITIES = {
-    Capability.JUDGE: {
-        "description": "Can judge entries, adding, editing and viewing scoresheets in competition",
+    Capability.VIEW_JUDGING_ENTRIES_LIST: {
+        "description": "Can view list of entries to be judged",
+        "scope": "contest",
+    },
+    Capability.EDIT_SCORESHEET: {
+        "description": "Can create or edit scoresheet",
+        "scope": "contest",
+    },
+    Capability.VIEW_SCORESHEET: {
+        "description": "Can view (read-only) scoresheet",
         "scope": "contest",
     },
     Capability.JUDGE_FINALS: {
