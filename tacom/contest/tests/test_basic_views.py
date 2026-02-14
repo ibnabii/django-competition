@@ -1,4 +1,4 @@
-from contest.factories import ContestFactory
+from contest.factories.contest_factory import ContestFactory
 from contest.tests.conftest import warn_on_repeated_table_queries
 from django.test import TestCase
 from django.urls import reverse

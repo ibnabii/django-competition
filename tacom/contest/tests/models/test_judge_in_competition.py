@@ -1,5 +1,6 @@
 import pytest
-from contest.factories import ContestFactory, UserFactory
+from contest.factories.contest_factory import ContestFactory
+from contest.factories.user_factory import UserFactory
 from contest.models.judges import JudgeInCompetition
 from django.db import IntegrityError
 from django.test import TestCase

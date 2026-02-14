@@ -2,6 +2,8 @@ from datetime import date, datetime
 from logging import getLogger
 from uuid import uuid1
 
+from django.db.models import Max
+
 from contest.managers import (
     CategoryManager,
     ContestManager,
@@ -13,14 +15,13 @@ from contest.managers import (
     StyleManager,
 )
 from contest.utils import (
-    code_generator,
     mail_entry_status_change,
     rebate_code_generator,
 )
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db import models
+from django.db import models, OperationalError
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.text import slugify
@@ -455,9 +456,7 @@ class Entry(models.Model):
         SPARKLING = "sparkling", _("Sparkling")
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
-    code = models.IntegerField(
-        verbose_name=_("code"), default=code_generator, editable=False
-    )
+    code = models.IntegerField(verbose_name=_("code"), editable=False)
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
@@ -605,6 +604,26 @@ class Entry(models.Model):
     def can_be_edited(self):
         # return not self.is_received
         return self.category.contest.registration_date_to >= date.today()
+
+    def _generate_code(self):
+        try:
+            contest = self.category.contest
+
+            maximum_code = Entry.objects.filter(category__contest=contest).aggregate(
+                Max("code")
+            )["code__max"]
+
+        except OperationalError:
+            return 1000
+
+        if maximum_code:
+            return maximum_code + 1
+        return 1000
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            self.code = self._generate_code()
+        super().save(*args, **kwargs)
 
     @cached_property
     def scoresheet(self):

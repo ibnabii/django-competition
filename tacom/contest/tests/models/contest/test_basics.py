@@ -1,7 +1,7 @@
 from datetime import datetime
 from time import sleep
 
-from contest.factories import ContestFactory
+from contest.factories.contest_factory import ContestFactory
 from django.test import TestCase
 
 

@@ -1,5 +1,5 @@
 import pytest
-from contest.factories import UserFactory
+from contest.factories.user_factory import UserFactory
 from contest.models.judges import JudgeCertification
 from django.core.exceptions import ValidationError
 from django.test import TestCase

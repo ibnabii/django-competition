@@ -9,10 +9,6 @@ from django.utils import timezone
 from factories import RandomLocaleDjangoModelFactory
 from pydantic import BaseModel
 
-# TODO: seems this wasn't necessary?
-# def make_contest(*args, **kwargs) -> Contest:
-#     return ContestFactory(*args, **kwargs)
-
 
 class PeriodState(str, Enum):
     before = "before"
@@ -42,6 +38,7 @@ class ContestFactory(RandomLocaleDjangoModelFactory):
         model = Contest
         # exclude factory only attributes from passing to model
         exclude = ("_state",)
+        skip_postgeneration_save = True
 
     title = factory.LazyAttribute(lambda o: o.faker.sentence(nb_words=5))
     # slug = factory.LazyAttribute(lambda o: o.faker.slug())
@@ -186,12 +183,20 @@ class ContestFactory(RandomLocaleDjangoModelFactory):
     def __new__(cls, *args: Any, **kwargs: Any) -> Contest:
         return super().__new__(cls)(*args, **kwargs)
 
-    # @factory.post_generation
-    # def styles(self, create, extracted, **kwargs):
-    #     # Optionally attach styles here
-    #     if extracted:
-    #         for style in extracted:
-    #             self.styles.add(style)
+    @factory.post_generation
+    def categories(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            for category in extracted:
+                category.contest = self
+                category.save()
+        else:
+            from contest.factories.category_factory import CategoryFactory
+
+            CategoryFactory.create_batch(2, contest=self)
+
     #
     # @factory.post_generation
     # def payment_methods(self, create, extracted, **kwargs):

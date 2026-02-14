@@ -1,5 +1,5 @@
 import pytest
-from contest.factories import ContestFactory, ContestState, PeriodState
+from contest.factories.contest_factory import ContestFactory, ContestState, PeriodState
 from django.test import TestCase
 
 

@@ -1,10 +1,6 @@
 import pytest
-from contest.factories import (
-    ContestFactory,
-    ContestState,
-    PeriodState,
-    UserFactory,
-)
+from contest.factories.contest_factory import ContestFactory, ContestState, PeriodState
+from contest.factories.user_factory import UserFactory
 from contest.models.judges import JudgeCertification, JudgeInCompetition
 from django.test import TestCase
 from django.urls import reverse

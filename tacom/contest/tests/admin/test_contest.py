@@ -1,6 +1,6 @@
 import pytest
 from contest.admin import duplicate_contest
-from contest.factories import ContestFactory
+from contest.factories.contest_factory import ContestFactory
 from contest.models import Contest
 from django.test import TestCase
 from django.utils.translation import override
