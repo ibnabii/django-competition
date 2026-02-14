@@ -966,7 +966,13 @@ class ScoreSheetCreate(
     required_capability = Capability.EDIT_SCORESHEET
 
     def form_valid(self, form):
-        form.instance.entry = get_object_or_404(Entry, pk=self.kwargs["entry"])
+        entry = get_object_or_404(Entry, pk=self.kwargs["entry"])
+        existing = ScoreSheet.objects.filter(entry=entry).first()
+        if existing:
+            # Redirect silently instead of creating
+            self.object = existing
+            return HttpResponseRedirect(self.get_success_url())
+        form.instance.entry = entry
         return super().form_valid(form)
 
     def get_success_url(self):
