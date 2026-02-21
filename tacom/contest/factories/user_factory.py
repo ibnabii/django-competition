@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING, Any
+
 import factory
 from contest.models import User
 from factories import RandomLocaleDjangoModelFactory
@@ -12,9 +14,15 @@ class UserFactory(RandomLocaleDjangoModelFactory):
     gdpr_consent = True
 
     # for typing only
-    @classmethod
-    def create(cls, **kwargs) -> User:
-        return super().create(**kwargs)
+    if TYPE_CHECKING:
+
+        def __call__(self, *args: Any, **kwargs: Any) -> User: ...
+
+        @classmethod
+        def create(cls, **kwargs: Any) -> User: ...
+
+        @classmethod
+        def build(cls, **kwargs: Any) -> User: ...
 
     # now the "specific" Users
 

@@ -457,6 +457,9 @@ class Entry(models.Model):
 
     id = models.UUIDField(primary_key=True, editable=False, default=uuid1)
     code = models.IntegerField(verbose_name=_("code"), editable=False)
+    secret_code = models.CharField(
+        editable=False, max_length=4, verbose_name=_("Judging code"), null=True
+    )
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
@@ -620,9 +623,39 @@ class Entry(models.Model):
             return maximum_code + 1
         return 1000
 
+    def _generate_secret_code(self, max_attempts=400_000):
+        def _random_ascii(length):
+            from string import ascii_uppercase
+            from random import choices
+
+            return "".join(choices(ascii_uppercase, k=length))
+
+        used_codes = set(
+            Entry.objects.filter(category__contest=self.category.contest).values_list(
+                "code", flat=True
+            )
+        )
+        for _ in range(max_attempts):
+            if (secret_code := _random_ascii(length=4)) not in used_codes:
+                return secret_code
+        raise ValidationError("Unable to generate random secret code!")
+
     def save(self, *args, **kwargs):
         if not self.code:
             self.code = self._generate_code()
+        if not self.secret_code:
+            self.secret_code = self._generate_secret_code()
+        else:
+            # Validate
+            if (
+                Entry.objects.filter(
+                    category__contest=self.category.contest,
+                    secret_code=self.secret_code,
+                )
+                .exclude(pk=self.pk)
+                .exists()
+            ):
+                raise ValidationError("Secret code must be unique for the contest.")
         super().save(*args, **kwargs)
 
     @cached_property

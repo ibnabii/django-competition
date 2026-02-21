@@ -16,7 +16,7 @@
             <tbody>
             {% for form in formset %}
                 <tr>
-                    <td>{% translate "Code" %}: <b>{{ form.instance.code }}</b></td>
+                    <td>{% translate "Code" %}: <b>{{ form.instance.secret_code }}</b></td>
                     <!-- Display entry_id (readonly) -->
 
                     <td>{{ form.as_div }}</td>     <!-- Editable place field -->

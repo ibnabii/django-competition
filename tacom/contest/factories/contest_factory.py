@@ -1,7 +1,7 @@
 import random
 from datetime import datetime, timedelta
 from enum import Enum
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 import factory
 from contest.models import Contest
@@ -180,8 +180,15 @@ class ContestFactory(RandomLocaleDjangoModelFactory):
     created_by = None
     modified_by = None
 
-    def __new__(cls, *args: Any, **kwargs: Any) -> Contest:
-        return super().__new__(cls)(*args, **kwargs)
+    # def __new__(cls, *args: Any, **kwargs: Any) -> Contest:
+    #     return super().__new__(cls)(*args, **kwargs)
+    if TYPE_CHECKING:
+
+        def __call__(self, *args: Any, **kwargs: Any) -> Contest: ...
+        @classmethod
+        def create(cls, **kwargs: Any) -> Contest: ...
+        @classmethod
+        def build(cls, **kwargs: Any) -> Contest: ...
 
     @factory.post_generation
     def categories(self, create, extracted, **kwargs):

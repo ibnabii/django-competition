@@ -14,7 +14,7 @@
         {% for entry in entries %}
             <tr>
                 <td>{{ entry.category.style.name }}</td>
-                <td>{{ entry.code }}</td>
+                <td>{{ entry.secret_code }}</td>
             </tr>
         {% endfor %}
         </table>
@@ -27,7 +27,7 @@
                 </tr>
                 <tr>
                     <td>{{ best_of_show.category.style.name }}</td>
-                    <td>{{ best_of_show.code }}</td>
+                    <td>{{ best_of_show.secret_code }}</td>
                 </tr>
             </table>
             <a class="btn btn-primary" href="{% url 'contest:judging_bos_select' contest.slug %}">{% translate "Change Best Of Show" %}</a>

@@ -297,4 +297,6 @@ class ContestBestOfShowForm(forms.ModelForm):
         candidates = kwargs.pop("candidates", None)
         super().__init__(*args, **kwargs)
         if candidates:
-            self.fields["bos_entry"].queryset = candidates
+            field = self.fields["bos_entry"]
+            field.queryset = candidates
+            field.label_from_instance = lambda obj: obj.secret_code

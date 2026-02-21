@@ -28,7 +28,12 @@
                 <tr>
                     <td>{{ category }}</td>
                     <td>{{ category.finals_count }} / {{ category.entries_delivered }}</td>
-                    <td>{{ category.winning_entries|join:", "|default_if_none:"" }}</td>
+                    <td>{% for entry in category.winning_entries %}
+                            {{ entry.secret_code }}
+                            {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+
+                    </td>
                     <td>
                         <a class="btn
                             {% if category.is_final_round_done %}btn-outline-primary
