@@ -68,9 +68,13 @@ class UserFullProfileMixin(UserPassesTestMixin):
     """
 
     def test_func(self):
+        if not self.request.user.is_authenticated:
+            return True
         return self.request.user.profile_complete
 
     def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return super().handle_no_permission()
         messages.warning(self.request, _("Complete your profile, please."))
         return redirect("contest:profile_edit")
 

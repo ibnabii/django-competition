@@ -140,7 +140,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Paths
-LOGIN_URL = "/accounts/login/"
+LOGIN_URL = "account_login"
 LOGIN_REDIRECT_URL = "/contest/profile"
 # LOCALE_PATHS = (BASE_DIR / 'locale/', )
 STATIC_URL = "static/"
