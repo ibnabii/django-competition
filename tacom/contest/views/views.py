@@ -1042,6 +1042,7 @@ class PrivacyView(TemplateView):
 
 class PartnersGalleryView(TemplateView):
     template_name = "contest/partners_gallery_template.html"
+    items_per_row = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1074,6 +1075,7 @@ class PartnersGalleryView(TemplateView):
 
         # Add the image URLs to the context
         context["image_urls"] = image_urls
+        context["items_per_row"] = self.items_per_row
 
         return context
 
