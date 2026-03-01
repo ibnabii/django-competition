@@ -40,7 +40,7 @@ def validate_gdpr_consent(value):
 
 
 class Style(models.Model):
-    name = models.CharField(max_length=50, verbose_name=_("Name"))
+    name = models.CharField(max_length=250, verbose_name=_("Name"))
     slug = models.SlugField(
         unique=True,
         blank=True,
