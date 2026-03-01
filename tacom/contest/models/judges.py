@@ -6,6 +6,14 @@ from django.utils.translation import gettext_lazy as _
 
 
 class JudgeCertification(models.Model):
+    class TShirtSize(models.TextChoices):
+        XS = "XS", "XS"
+        S = "S", "S"
+        M = "M", "M"
+        L = "L", "L"
+        XL = "XL", "XL"
+        XXL = "XXL", "XXL"
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_mead_bjcp = models.BooleanField(default=False, verbose_name=_("BJCP Mead"))
     is_mjp = models.BooleanField(default=False, verbose_name=_("MJP"))
@@ -17,6 +25,12 @@ class JudgeCertification(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)],
     )
     other_description = models.TextField(blank=True, verbose_name=_("Description"))
+    tshirt_size = models.CharField(
+        max_length=3,
+        choices=TShirtSize.choices,
+        default=TShirtSize.M,
+        verbose_name=_("T-shirt size"),
+    )
 
     def clean(self):
         super().clean()

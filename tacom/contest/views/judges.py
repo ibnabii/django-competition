@@ -34,7 +34,14 @@ class MainJudgeApplicationView(
 
 class JudgeCertificationUpdateView(LoginRequiredMixin, UpdateView):
     model = JudgeCertification
-    fields = ["is_mead_bjcp", "is_mjp", "is_other", "mjp_level", "other_description"]
+    fields = [
+        "is_mead_bjcp",
+        "is_mjp",
+        "is_other",
+        "mjp_level",
+        "other_description",
+        "tshirt_size",
+    ]
     template_name = "contest/judges/judge_certification_edit.html"
     success_url = reverse_lazy("contest:judge_certification_read")
 
@@ -168,13 +175,6 @@ class JudgeApplicationPolicyMixin:
             return PolicyResult(False, _("You have not applied for judging."))
 
         return PolicyResult(True)
-
-    # def can_view_widget(self) -> bool:
-    #     """
-    #     Optional: whether user can see the judge widget at all.
-    #     Useful if some users (e.g., non-judges) should not see it.
-    #     """
-    #     return True
 
 
 class JudgeApplicationWidgetView(
