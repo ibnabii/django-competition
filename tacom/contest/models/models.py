@@ -396,6 +396,11 @@ class Category(models.Model):
         default=1,
         validators=[MinValueValidator(1)],
     )
+    order = models.PositiveIntegerField(
+        verbose_name=_("Order"),
+        default=10,
+        help_text=_("Lower number means higher priority"),
+    )
     # audit fields
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
@@ -418,7 +423,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = _("category")
         verbose_name_plural = _("categories")
-        ordering = ["contest__title", "style__name"]
+        ordering = ["contest__title", "order", "style__name"]
         constraints = [
             models.UniqueConstraint(
                 fields=["style", "contest"], name="unique_contest_style"
