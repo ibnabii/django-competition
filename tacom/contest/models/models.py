@@ -44,6 +44,7 @@ class Style(models.Model):
     slug = models.SlugField(
         unique=True,
         blank=True,
+        max_length=255,
         help_text=_(
             "will be used in contest URL, can be derrived automatically from titile"
         ),
@@ -121,13 +122,17 @@ class Style(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
-            if Style.objects.filter(slug=self.slug).exists():
-                self.slug = slugify(
-                    self.name + "-" + str(Style.objects.latest("id").id)
-                )
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
 
-        super(Style, self).save(*args, **kwargs)
+            while Style.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
 
 
 class Contest(models.Model):
