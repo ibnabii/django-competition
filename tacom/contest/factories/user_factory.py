@@ -1,7 +1,11 @@
+import random
 from typing import TYPE_CHECKING, Any
 
 import factory
+from faker import Faker
+
 from contest.models import User
+from contest.models.judges import JudgeCertification, JudgeInCompetition
 from factories import RandomLocaleDjangoModelFactory
 
 
@@ -41,21 +45,52 @@ class UserFactory(RandomLocaleDjangoModelFactory):
                 lambda o: "pl" if getattr(o, "_locale", "") == "pl_PL" else "en"
             ),
         )
+        judge = factory.Trait(
+            judge_certification=factory.RelatedFactory(
+                "contest.factories.user_factory.JudgeCertificationFactory",
+                factory_related_name="user",
+            )
+        )
 
-    # TODO: add judge certification
-    # @factory.trait  # type: ignore
-    # def judge(self):
-    #     factory.RelatedFactory("JudgeProfileFactory", factory_related_name="user")
+
+_CERT_CYCLE = ["bjcp", "mjp", "other"]
 
 
-#
-# class JudgeProfileFactory(factory.django.DjangoModelFactory):
-#     class Meta:
-#         model = JudgeProfile
-#
-#     user = factory.SubFactory(UserFactory, profile=False, judge=False)
-#
-#     expertise = factory.Faker("job")
-#     years_experience = factory.Faker("random_int", min=1, max=20)
-#     website = factory.Faker("url")
-#     # ... other judge-specific fields
+class JudgeCertificationFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = JudgeCertification
+        exclude = ("_cert_type",)
+
+    user = None  # provided via RelatedFactory
+
+    # cycle BJCP → MJP → Other deterministically
+    _cert_type = factory.Sequence(lambda n: _CERT_CYCLE[n % len(_CERT_CYCLE)])
+
+    is_mead_bjcp = factory.LazyAttribute(lambda o: o._cert_type == "bjcp")
+    is_mjp = factory.LazyAttribute(lambda o: o._cert_type == "mjp")
+    is_other = factory.LazyAttribute(lambda o: o._cert_type == "other")
+
+    tshirt_size = factory.LazyAttribute(
+        lambda o: random.choice([s[0] for s in JudgeCertification.TShirtSize.choices])
+    )
+
+    mjp_level = factory.LazyAttribute(
+        lambda o: random.randint(1, 5) if o.is_mjp else None
+    )
+    other_description = factory.LazyAttribute(
+        lambda o: (Faker().sentence(nb_words=15) if o.is_other else "")
+    )
+
+
+class JudgeApplicationFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = JudgeInCompetition
+
+    contest = None
+    user = factory.LazyAttribute(lambda o: UserFactory.create(profile=True, judge=True))
+
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs):
+        if kwargs.get("contest") is None:
+            raise ValueError("JudgeApplicationFactory requires a 'contest' argument.")
+        return super()._create(model_class, *args, **kwargs)

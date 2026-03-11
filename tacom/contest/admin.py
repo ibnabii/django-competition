@@ -463,8 +463,19 @@ def approve_judge_applications(
     JudgeInCompetition.objects.bulk_update(objs_to_update, ["status"])
 
 
+@admin.register(JudgeCertification)
+class JudgeCertificationAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "mjp_level",
+        "is_mead_bjcp",
+        "other_description",
+    )
+    list_filter = ("is_mjp", "is_mead_bjcp", "is_other")
+
+
 @admin.register(JudgeInCompetition)
-class JudgeApplicationAdin(admin.ModelAdmin):
+class JudgeApplicationAdmin(admin.ModelAdmin):
     actions = [approve_judge_applications, reject_judge_applications]
     list_display = ("contest", "user", "status", "mjp_level", "bjcp", "other")
     list_filter = ("contest", "status")
