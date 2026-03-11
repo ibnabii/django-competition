@@ -7,7 +7,7 @@ class ContestMiddleware:
     Adds request.contest if 'contest_slug' is present in URL.
     """
 
-    contest_slug = "slug"
+    contest_slug = "contest_slug"
 
     def __init__(self, get_response):
         self.get_response = get_response

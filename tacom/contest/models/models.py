@@ -364,14 +364,17 @@ class Contest(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title, allow_unicode=True)
-            if Contest.objects.filter(slug=self.slug).exists():
-                self.slug = slugify(
-                    self.title + "-" + str(Contest.objects.latest("id").id),
-                    allow_unicode=True,
-                )
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
 
-        super(Contest, self).save(*args, **kwargs)
+            while Contest.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

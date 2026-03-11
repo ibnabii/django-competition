@@ -12,7 +12,7 @@ urlpatterns = [
         name="style_detail",
     ),
     path(
-        "entry/contest/<str:slug>/",
+        "entry/contest/<slug:contest_slug>/",
         views.UsersEntryListView.as_view(),
         name="user_entry_list",
     ),
@@ -31,12 +31,12 @@ urlpatterns = [
         name="entry_results",
     ),
     path(
-        "<str:slug>/payment/",
+        "<slug:contest_slug>/payment/",
         views.AddPackageForPayment.as_view(),
         name="payment_start",
     ),
     path(
-        "<str:slug>/payment/<uuid:package_id>/",
+        "<slug:contest_slug>/payment/<uuid:package_id>/",
         views.SelectPaymentMethodView.as_view(),
         name="payment_method_selection",
     ),
@@ -56,7 +56,7 @@ urlpatterns = [
         name="payment_payu",
     ),
     path(
-        "payment/payu/<str:contest_slug>/",
+        "payment/payu/<slug:contest_slug>/",
         views.PayUPaymentRedirectView.as_view(),
         name="payment_payu_redirect",
     ),
@@ -81,7 +81,9 @@ urlpatterns = [
         name="payment_paypal_failure",
     ),
     path(
-        "<str:slug>/print/", views.AddPackageForPrinting.as_view(), name="labels_start"
+        "<slug:contest_slug>/print/",
+        views.AddPackageForPrinting.as_view(),
+        name="labels_start",
     ),
     path(
         "print/<uuid:package_id>/",
@@ -89,63 +91,67 @@ urlpatterns = [
         name="labels_print",
     ),
     path(
-        "<str:slug>/mgmt/delivery/",
+        "<slug:contest_slug>/mgmt/delivery/",
         views.AddPackageOfDelivered.as_view(),
         name="delivery_select",
     ),
     path(
-        "<str:slug>/mgmt/delivery/<uuid:pk>/",
+        "<slug:contest_slug>/mgmt/delivery/<uuid:pk>/",
         views.ProcessPackageDelivered.as_view(),
         name="delivery_process",
     ),
     path(
-        "<str:slug>/mgmt/payments/",
+        "<slug:contest_slug>/mgmt/payments/",
         views.PaymentManagementView.as_view(),
         name="payment_list",
     ),
     path(
-        "m<str:slug>/gmt/payments/<uuid:pk>/",
+        "m<slug:contest_slug>/gmt/payments/<uuid:pk>/",
         views.PaymentReceivedView.as_view(),
         name="payment_process",
     ),
-    path("<str:slug>/judging/", views.JudgingListView.as_view(), name="judging_list"),
     path(
-        "<str:slug>/judging-finals/",
+        "<slug:contest_slug>/judging/",
+        views.JudgingListView.as_view(),
+        name="judging_list",
+    ),
+    path(
+        "<slug:contest_slug>/judging-finals/",
         views.JudgingFinalsListView.as_view(),
         name="judging_finals_list",
     ),
     path(
-        "<str:slug>/judging-bos/",
+        "<slug:contest_slug>/judging-bos/",
         views.JudgeBosView.as_view(),
         name="judging_bos_view",
     ),
     path(
-        "<slug:slug>/judging-bos/edit/",
+        "<slug:contest_slug>/judging-bos/edit/",
         views.JudgeBosSelect.as_view(),
         name="judging_bos_select",
     ),
     path(
-        "<str:slug>/judging-finals/<uuid:category_id>",
+        "<slug:contest_slug>/judging-finals/<uuid:category_id>",
         views.JudgingFinalsCategoryView.as_view(),
         name="judging_finals_category",
     ),
     path(
-        "<str:slug>/scoresheet/<uuid:pk>/",
+        "<slug:contest_slug>/scoresheet/<uuid:pk>/",
         views.ScoreSheetView.as_view(),
         name="scoresheet_view",
     ),
     path(
-        "<str:slug>/scoresheet/<uuid:pk>/edit/",
+        "<slug:contest_slug>/scoresheet/<uuid:pk>/edit/",
         views.ScoreSheetEdit.as_view(),
         name="scoresheet_edit",
     ),
     path(
-        "<str:slug>/entry/<uuid:entry>/scoresheet/",
+        "<slug:contest_slug>/entry/<uuid:entry>/scoresheet/",
         views.ScoreSheetCreate.as_view(),
         name="scoresheet_create",
     ),
     path(
-        "<str:contest_slug>/results/",
+        "<slug:contest_slug>/results/",
         views.MedalsListView.as_view(),
         name="contest_results",
     ),

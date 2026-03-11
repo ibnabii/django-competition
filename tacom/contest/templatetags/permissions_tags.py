@@ -39,7 +39,6 @@ def can_any(context):
         return False
 
     contest = getattr(request, "contest", None)
-
     for capability in CONTEST_CAPABILITIES:
         # print(name)
         # try:

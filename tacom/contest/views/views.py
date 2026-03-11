@@ -996,7 +996,7 @@ class ScoreSheetCreate(
         return context
 
 
-class MedalsListView(ListView):
+class MedalsListView(ListView, ContestContextMixin):
     template_name = "contest/medal_list_by_style.html"
     context_object_name = "entries"
 

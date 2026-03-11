@@ -3,22 +3,22 @@ from django.urls import path
 
 urlpatterns = [
     path(
-        "judges/<str:slug>/",
+        "judges/<slug:contest_slug>/",
         views.MainJudgeApplicationView.as_view(),
         name="judge_application",
     ),
     path(
-        "judges/<str:slug>/application/",
+        "judges/<slug:contest_slug>/application/",
         views.JudgeApplicationWidgetView.as_view(),
         name="judge_application_widget",
     ),
     path(
-        "judges/<str:slug>/application/apply/",
+        "judges/<slug:contest_slug>/application/apply/",
         views.JudgeApplicationCreateView.as_view(),
         name="judge_widget_apply",
     ),
     path(
-        "judges/<str:slug>/application/cancel/",
+        "judges/<slug:contest_slug>/application/cancel/",
         views.JudgeApplicationCancelView.as_view(),
         name="judge_widget_cancel",
     ),

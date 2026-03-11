@@ -12,66 +12,70 @@
         </button>
 
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item dropdown me-0">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         {% bs_icon 'person-lines-fill' size='1.5em' %}
                     </a>
 
                     <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownProfile">
                         {% if user.is_authenticated %}
-                            <li>
-                                <h4 class="dropdown-header">
-                                    {% translate "Logged in as:" %}<br/><small>{{ user.email }}</small>
-                                </h4>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'contest:profile' %}">
-                                    {# Translators: My profile button #}
-                                    {% translate "My profile" %}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'contest:add_entry' %}">
-                                    {# Translators: My profile button #}
-                                    {% translate "My entries" %}
-                                </a>
-                            </li>
-                            {%  if user.is_staff %}
-                            <li>
-                                <a class="dropdown-item" href="{% url 'admin:index' %}">
-                                    {# Translators: Link to the Django admin panel #}
-                                    {% translate "Django admin" %}
-                                </a>
-                            </li>
-                            {% endif %}
+                        <li>
+                            <h4 class="dropdown-header">
+                                {% translate "Logged in as:" %}<br/><small>{{ user.email }}</small>
+                            </h4>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'contest:profile' %}">
+                                {# Translators: My profile button #}
+                                {% translate "My profile" %}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'contest:add_entry' %}">
+                                {# Translators: My profile button #}
+                                {% translate "My entries" %}
+                            </a>
+                        </li>
+                        {% if user.is_staff %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">
+                                {# Translators: Link to the Django admin panel #}
+                                {% translate "Django admin" %}
+                            </a>
+                        </li>
+                        {% endif %}
 
-                            <li><hr class="dropdown-divider" /></li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account_logout' %}">
-                                    {# Translators: Logout button #}
-                                    {% translate "Logout" %}
-                                </a>
-                            </li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'account_logout' %}">
+                                {# Translators: Logout button #}
+                                {% translate "Logout" %}
+                            </a>
+                        </li>
                         {% else %}
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account_login' %}">
-                                    {# Translators: Login button #}
-                                    {% translate "Login" %}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account_signup' %}">
-                                    {# Translators: Register button #}
-                                    {% translate "Register" %}
-                                </a>
-                            </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'account_login' %}">
+                                {# Translators: Login button #}
+                                {% translate "Login" %}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'account_signup' %}">
+                                {# Translators: Register button #}
+                                {% translate "Register" %}
+                            </a>
+                        </li>
                         {% endif %}
                     </ul>
                 </li>
 
                 <li class="nav-item dropdown me-0">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         {% bs_icon 'translate' size='1.5em' %}
                     </a>
 
@@ -81,100 +85,108 @@
                         {% get_language_info_list for LANGUAGES as languages %}
 
                         <form action="{% url 'set_language' %}" method="post" id="lang-form">
-                        <input name="next" type="hidden" value="{{ request.path }}" />
-                        <input name="language" type="hidden">
-                        {% csrf_token %}
-                        {% for language  in languages %}
+                            <input name="next" type="hidden" value="{{ request.path }}"/>
+                            <input name="language" type="hidden">
+                            {% csrf_token %}
+                            {% for language in languages %}
                             <li>
                                 <button type="submit" class="dropdown-item text-capitalize"
-                                onclick="this.form.language.value='{{ language.code }}'">
+                                        onclick="this.form.language.value='{{ language.code }}'">
                                     {% if language.code == LANGUAGE_CODE %}
-                                        <strong>{{ language.name_local }}</strong>
+                                    <strong>{{ language.name_local }}</strong>
                                     {% else %}
-                                        {{ language.name_local }}
+                                    {{ language.name_local }}
                                     {% endif %}
                                 </button>
                             </li>
-                        {% endfor %}
-                        {% can "SYSTEM_TRANSLATE" as can_translate %}
-                        {% if can_translate %}
-                            <li><hr class="dropdown-divider" /></li>
+                            {% endfor %}
+                            {% can "SYSTEM_TRANSLATE" as can_translate %}
+                            {% if can_translate %}
+                            <li>
+                                <hr class="dropdown-divider"/>
+                            </li>
                             <li>
                                 <a class="dropdown-item" href="{% url 'rosetta-file-list' 'third-party' %}">
                                     {# Translators: Manage translations button in navbar #}
                                     {% translate "Manage translations" %}
                                 </a>
                             </li>
-                        {% endif %}
+                            {% endif %}
                         </form>
-                  </ul>
+                    </ul>
                 </li>
                 {% can_any as render_staff_menu %}
                 {% if render_staff_menu %}
                 <li class="nav-item dropdown me-0">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMgmt" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMgmt" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         {% translate "Contest Management" %}
                     </a>
                     <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownMgmt">
-{#                    Receiving deliveries#}
-                    {% can "ENTRY_RECEIVE" as is_reception%}
-                    {% if is_reception %}
-                            <li>
-                                <a class="dropdown-item" href="{% url 'contest:delivery_select' contest.slug %}">
-                                    {% translate "Deliveries" %}
-                                </a>
-                            </li>
-                    {% endif %}
-{#                    Manual payments#}
+                        {# Receiving deliveries#}
+                        {% can "ENTRY_RECEIVE" as is_reception%}
+                        {% if is_reception %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'contest:delivery_select' contest.slug %}">
+                                {% translate "Deliveries" %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {# Manual payments#}
                         {% can "ENTRY_PAYMENTS" as is_payment_mgmt%}
                         {% if is_payment_mgmt %}
-                            <li>
-                                <a class="dropdown-item" href="{% url 'contest:payment_list' contest.slug %}">
-                                    {% translate "Payments" %}
-                                </a>
-                            </li>
-                    {% endif %}
-{#                    Judging#}
-                    {# {% can_any_contest "JUDGE" as is_judge %} #}
-                    {% can "VIEW_JUDGING_ENTRIES_LIST" as is_judge %}
-                    {% if is_judge %}
-                            <li>
-                                <a class="dropdown-item" href="{% contest_url 'judging_list' %}">
-                                    {% translate "Judging" %}
-                                </a>
-                            </li>
-                    {% endif %}
-                    {% can "JUDGE_FINALS" as is_judge_final %}
-                    {% if is_judge_final %}
-                            <li>
-                                <a class="dropdown-item" href="{% url 'contest:judging_finals_list' contest.slug %}">
-                                    {% translate "Judging finals" %}
-                                </a>
-                            </li>
-                    {% endif %}
-                    {% can "JUDGE_BOS" as is_judge_bos %}
-                    {% if is_judge_bos %}
-                            <li>
-                                <a class="dropdown-item" href="{% url 'contest:judging_bos_view' contest.slug %}">
-                                    {% translate "Judging BOS" %}
-                                </a>
-                            </li>
-                    {% endif %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'contest:payment_list' contest.slug %}">
+                                {% translate "Payments" %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {# Judging#}
+                        {# {% can_any_contest "JUDGE" as is_judge %} #}
+                        {% can "VIEW_JUDGING_ENTRIES_LIST" as is_judge %}
+                        {% if is_judge %}
+                        <li>
+                            <a class="dropdown-item" href="{% contest_url 'judging_list' %}">
+                                {% translate "Judging" %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% can "JUDGE_FINALS" as is_judge_final %}
+                        {% if is_judge_final %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'contest:judging_finals_list' contest.slug %}">
+                                {% translate "Judging finals" %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% can "JUDGE_BOS" as is_judge_bos %}
+                        {% if is_judge_bos %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'contest:judging_bos_view' contest.slug %}">
+                                {% translate "Judging BOS" %}
+                            </a>
+                        </li>
+                        {% endif %}
 
                     </ul>
                 </li>
                 {% endif %}
-{#Regular links start here#}
+                {#Regular links start here#}
+                {% if contest %}
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contest:contest_detail' contest.slug %}">
+                        {{ contest.title }}
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <ul class="navbar-nav">
+                <li class="nav-item ms-auto">
                     <a class="nav-link" href="{% url 'home' %}">
-                        {# Translators: Link to homepage #}
                         {% translate "Home" %}
                     </a>
                 </li>
-
-
-
-
             </ul>
         </div>
     </div>

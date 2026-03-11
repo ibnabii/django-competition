@@ -40,7 +40,7 @@ CONTEST_ROLE_CAPABILITIES = {
         Capability.JUDGE_BOS,
         Capability.CONTEST_MANAGE_JUDGES,
     },
-    Role.MANAGER: {Capability.CONTEST_MANAGE_TEAM},
+    Role.MANAGER: {Capability.CONTEST_MANAGE_TEAM, Capability.CONTEST_MANAGE_JUDGES},
     Role.ENTRY_MANAGER: {Capability.ENTRY_RECEIVE, Capability.ENTRY_PAYMENTS},
     Role.ENTRY_CODER: {Capability.ENTRY_ENCODE, Capability.ENTRY_DECODE},
 }
