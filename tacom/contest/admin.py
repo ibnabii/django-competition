@@ -33,6 +33,11 @@ class ContestMembershipAdmin(admin.ModelAdmin): ...
 @admin.register(ContestMembershipRole)
 class ContestMembershipRoleAdmin(admin.ModelAdmin):
     list_display = ["membership__user", "membership__contest", "role"]
+    list_filter = [
+        "membership__contest",
+        "role",
+        "membership__user",
+    ]
 
 
 @admin.register(Style)
