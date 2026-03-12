@@ -727,7 +727,7 @@ class JudgingListView(
         return (
             Entry.objects.filter(is_received=True)
             .filter(is_paid=True)
-            .filter(category__contest__slug=self.kwargs["slug"])
+            .filter(category__contest=self.contest)
             .select_related("category__style", "brewer")
             .order_by("category__style__name", "code")
         )
