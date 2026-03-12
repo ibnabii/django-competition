@@ -1,5 +1,4 @@
 {%  load i18n %}
-{% load bootstrap_icons %}
 
 <h3 class="h3">{% translate "My entries:" %}</h3>
 {% regroup entries by category.contest as entries_by_contest %}
@@ -28,10 +27,10 @@
                     <table class="table">
                         <tr>
                             <th title="{% translate 'Is paid' %}" data-toggle="tooltip">
-                                 {% bs_icon 'cash-coin' size='1.5em' %}
+                                <i class="bi bi-cash-coin" style="font-size:1.5em"></i>
                             </th>
                             <th title="{% translate 'Is received' %}" data-toggle="tooltip">
-                                {% bs_icon 'truck' size='1.5em' %}
+                                <i class="bi bi-truck" style="font-size:1.5em"></i>
                             </th>
                             <th>
                                 {% translate "Style" %}
@@ -51,17 +50,17 @@
                         <tr>
                             <td>
                                 {% if entry.is_paid %}
-                                    {% bs_icon 'check' size='1.5em' %}
+                                    <i class="bi bi-check" style="font-size:1.5em"></i>
                                 {% else %}
-                                    {% bs_icon 'x' size='1.5em' %}
+                                    <i class="bi bi-x" style="font-size:1.5em"></i>
                                 {% endif %}
                             </td>
 
                             <td>
                                 {% if entry.is_received %}
-                                    {% bs_icon 'check' size='1.5em' %}
+                                    <i class="bi bi-check" style="font-size:1.5em"></i>
                                 {% else %}
-                                    {% bs_icon 'x' size='1.5em' %}
+                                    <i class="bi bi-x" style="font-size:1.5em"></i>
                                 {% endif %}
                             </td>
 
@@ -94,7 +93,7 @@
                                    title="{% translate 'Edit entry' %}"
                                    href="{% url 'contest:entry_edit' entry.id %}?next={{ request.path|urlencode }}"
                                 >
-                                    {% bs_icon 'pencil-square' %}
+                                    <i class="bi bi-pencil-square" style="font-size:1.5em"></i>
                                 </a>
                                 <a class="btn btn-outline-danger
                                     {% if not entry.can_be_deleted %}
@@ -105,7 +104,7 @@
                                    title="{% translate 'Delete entry' %}"
                                    href="{% url 'contest:entry_delete' entry.id %}?next={{ request.path|urlencode }}"
                                 >
-                                    {% bs_icon 'trash3' %}
+                                    <i class="bi bi-trash3" style="font-size:1.5em"></i>
                                 </a>
                                 <a class="btn btn-outline-primary {% if not contest.grouper.show_results %}
                                         disabled
@@ -114,7 +113,7 @@
                                    title="{% translate 'Score card' %}"
                                    href="{% url 'contest:entry_results' entry.id %}"
                                 >
-                                    {% bs_icon 'trophy' %}
+                                    <i class="bi bi-trophy" style="font-size:1.5em"></i>
                                 </a>
                             </td>
                         </tr>
