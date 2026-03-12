@@ -1,0 +1,18 @@
+{% extends 'contest/base.html' %}
+{% load i18n %}
+{% block content %}
+<h2 class="m-2">{% translate 'Judge application approval' %}: </h2>
+
+<div class="container">
+    {% include 'contest/judges/selection/_filters.html' %}
+</div>
+
+<div id="judge-list">
+    {% include "contest/judges/selection/_judge_list.html" %}
+</div>
+
+{% endblock %}
+
+{% block extrahead %}
+{% include 'contest/utils/sortable_table_header.html' %}
+{% endblock %}

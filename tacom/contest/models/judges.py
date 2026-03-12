@@ -14,7 +14,9 @@ class JudgeCertification(models.Model):
         XL = "XL", "XL"
         XXL = "XXL", "XXL"
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="judge_certification"
+    )
     is_mead_bjcp = models.BooleanField(default=False, verbose_name=_("BJCP Mead"))
     is_mjp = models.BooleanField(default=False, verbose_name=_("MJP"))
     is_other = models.BooleanField(default=False, verbose_name=_("Other"))

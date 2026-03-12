@@ -141,12 +141,24 @@
                             </a>
                         </li>
                         {% endif %}
+
+                        {# TEAM MANAGEMENT #}
+
+                        {% can "CONTEST_MANAGE_JUDGES" as can_manage_judges %}
+                        {% if can_manage_judges %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'contest:judge_selection_list' contest.slug %}">
+                                {% translate "Judge Applications" %}
+                            </a>
+                        </li>
+                        {% endif %}
+
                         {# Judging#}
                         {# {% can_any_contest "JUDGE" as is_judge %} #}
                         {% can "VIEW_JUDGING_ENTRIES_LIST" as is_judge %}
                         {% if is_judge %}
                         <li>
-                            <a class="dropdown-item" href="{% contest_url 'judging_list' %}">
+                            <a class="dropdown-item" href="{% url 'contest:judging_list' contest.slug %}">
                                 {% translate "Judging" %}
                             </a>
                         </li>

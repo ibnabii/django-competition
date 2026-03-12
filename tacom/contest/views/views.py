@@ -1089,7 +1089,7 @@ class JudgingFinalsListView(
 
     def get_queryset(self):
         categories = (
-            Category.objects.filter(contest__slug=self.kwargs["slug"])
+            Category.objects.filter(contest=self.contest)
             .annotate(
                 finals_count=Count(
                     Case(
@@ -1122,7 +1122,7 @@ class JudgingFinalsCategoryView(
     required_capability = Capability.JUDGE_FINALS
 
     def get_success_url(self):
-        return reverse("contest:judging_finals_list", args=(self.kwargs["slug"],))
+        return reverse("contest:judging_finals_list", args=(self.contest.slug,))
 
     def get_queryset(self):
         finals = Category.objects.get(id=self.kwargs["category_id"]).entries_in_final

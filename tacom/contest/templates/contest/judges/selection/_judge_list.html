@@ -1,0 +1,46 @@
+{% load i18n %}
+
+{% if judges %}
+<table class="table table-hover sortable" id="judge-table">
+    <thead>
+      <th scope="col" data-sort-method="number">#</th>
+      <th scope="col">{% translate "Judge" %}</th>
+      <th scope="col">MJP</th>
+      <th scope="col">BJCP</th>
+      <th scope="col">Status</th>
+    </thead>
+    <tbody>
+    {% for judge in judges %}
+        {% with cert=judge.user.judge_certification%}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{ judge.user }}</td>
+
+            <td>
+                {% if cert.mjp_level %}
+                    {{ cert.mjp_level }}
+                {% else %}
+                    <i class="bi bi-dash"></i>
+                {% endif %}
+            </td>
+
+            <td>
+                {% if cert.is_mead_bjcp %}
+                    <i class="bi bi-check"></i>
+                {% else %}
+                    <i class="bi bi-dash"></i>
+                {% endif %}
+            </td>
+
+            <td>{{ judge.status }}</td>
+        </tr>
+        {% endwith %}
+    {% endfor %}
+    </tbody>
+</table>
+<script>
+    new Tablesort(document.getElementById('judge-table'));
+</script>
+{% else %}
+<h4 class="m-4">{% translate 'No judges found' %}</h4>
+{% endif %}

@@ -23,6 +23,11 @@ urlpatterns = [
         name="judge_widget_cancel",
     ),
     path(
+        "judges_management/<slug:contest_slug>/applications/",
+        views.JudgeSelectionListView.as_view(),
+        name="judge_selection_list",
+    ),
+    path(
         "judge_certification/",
         views.JudgeCertificationDetailView.as_view(),
         name="judge_certification_read",

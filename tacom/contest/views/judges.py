@@ -2,6 +2,8 @@ from dataclasses import dataclass
 
 from contest.models import Contest
 from contest.models.judges import JudgeCertification, JudgeInCompetition
+from contest.permissions.capabilities import Capability
+from contest.permissions.mixins import CapabilityRequiredMixin
 from contest.views import UserFullProfileMixin
 from contest.views.contest import ContestContextMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,7 +13,7 @@ from django.urls import reverse_lazy
 from django.utils.functional import Promise, cached_property
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.generic import TemplateView, UpdateView
+from django.views.generic import TemplateView, UpdateView, ListView
 
 
 class JudgesCanRegisterMixin(ContestContextMixin, View):
@@ -219,3 +221,30 @@ class JudgeApplicationCancelView(
         self.application.delete()
         self.refresh_application_cache()
         return self.render_widget(request)
+
+
+class JudgeSelectionListView(ContestContextMixin, CapabilityRequiredMixin, ListView):
+    model = JudgeInCompetition
+    context_object_name = "judges"
+    required_capability = Capability.CONTEST_MANAGE_JUDGES
+
+    def get_queryset(self):
+        qs = JudgeInCompetition.objects.filter(contest=self.contest).select_related(
+            "user", "user__judge_certification"
+        )
+
+        search = self.request.GET.get("search")
+        category = self.request.GET.get("category")
+
+        if search:
+            qs = qs.filter(name__icontains=search)
+
+        if category:
+            qs = qs.filter(category=category)
+
+        return qs
+
+    def get_template_names(self):
+        if self.request.headers.get("HX-Request"):
+            return ["contest/judges/selection/_judge_list.html"]
+        return ["contest/judges/selection/judge_list_page.html"]

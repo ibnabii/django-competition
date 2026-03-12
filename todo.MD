@@ -17,6 +17,7 @@
 - [ ] Docs are tracked as git submodules
 - [ ] Change name of the slug to contest_slug in urls, middleware and mixins (remove mixins?) to avoid confusion with competition slug
 - [ ] Packages handling permissions
+- [ ] Cleanup bootstrap-icons usage
 # Dev
 ## User journey
 ### User profile
