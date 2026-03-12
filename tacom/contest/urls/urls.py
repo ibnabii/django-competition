@@ -106,7 +106,7 @@ urlpatterns = [
         name="payment_list",
     ),
     path(
-        "m<slug:contest_slug>/gmt/payments/<uuid:pk>/",
+        "<slug:contest_slug>/gmt/payments/<uuid:pk>/",
         views.PaymentReceivedView.as_view(),
         name="payment_process",
     ),
