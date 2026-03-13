@@ -1,1 +1,61 @@
-filters
+{% load i18n %}
+<div class="container m-2 d-flex justify-content-end" id="judge-filters">
+    <div class="btn-group" role="group">
+        <button class="btn btn-outline-primary"
+                hx-get="{% url 'contest:judge_selection_list' contest.slug %}"
+                hx-target="#judge-list"
+                hx-push-url="true"
+                data-status=""
+        >
+            {% translate 'All' %}
+        </button>
+
+        <button class="btn btn-outline-primary"
+                hx-get="{% url 'contest:judge_selection_list' contest.slug %}?status=approved"
+                hx-target="#judge-list"
+                hx-push-url="true"
+                data-status="approved"
+        >
+            {% translate 'Approved' %}
+            <i class="bi bi-check text-bg-success" style="font-size: 1.2em"></i>
+        </button>
+
+        <button class="btn btn-outline-primary"
+                hx-get="{% url 'contest:judge_selection_list' contest.slug %}?status=rejected"
+                hx-target="#judge-list"
+                hx-push-url="true"
+                data-status="rejected"
+        >
+            {% translate 'Rejected' %}
+            <i class="bi bi-x text-bg-danger" style="font-size: 1.2em"></i>
+        </button>
+
+        <button class="btn btn-outline-primary"
+                hx-get="{% url 'contest:judge_selection_list' contest.slug %}?status=application"
+                hx-target="#judge-list"
+                hx-push-url="true"
+                data-status="application"
+        >
+            {% translate 'To decide' %}
+            <i class="bi bi-question text-bg-primary" style="font-size: 1.2em"></i>
+        </button>
+    </div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('status') || '';
+        const activeBtn = document.querySelector(`#judge-filters .btn[data-status="${status}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+        document.querySelectorAll('#judge-filters .btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove 'active' class from all buttons
+                document.querySelectorAll('#judge-filters .btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // Add 'active' class to the clicked button
+                button.classList.add('active');
+                console.log(button.innerText);
+            });
+        });
+    </script>
+</div>
