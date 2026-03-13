@@ -48,7 +48,7 @@ class JudgeCertificationTests(TestCase):
 
     def test_certification_update_view_form_valid_with_certifications(self):
         url = reverse("contest:judge_certification_edit")
-        data = {"is_mead_bjcp": True}
+        data = {"is_mead_bjcp": True, "tshirt_size": "M"}
         response = self.client.post(url, data)
         self.assertRedirects(response, reverse("contest:judge_certification_read"))
         self.assertTrue(JudgeCertification.objects.filter(user=self.user).exists())
@@ -56,7 +56,12 @@ class JudgeCertificationTests(TestCase):
     def test_certification_update_view_form_valid_without_certifications_deletes(self):
         JudgeCertification.objects.create(user=self.user, is_mead_bjcp=True)
         url = reverse("contest:judge_certification_edit")
-        data = {"is_mead_bjcp": False, "is_mjp": False, "is_other": False}
+        data = {
+            "is_mead_bjcp": False,
+            "is_mjp": False,
+            "is_other": False,
+            "tshirt_size": "M",
+        }
         response = self.client.post(url, data)
         self.assertRedirects(response, reverse("contest:judge_certification_read"))
         self.assertFalse(JudgeCertification.objects.filter(user=self.user).exists())
@@ -72,7 +77,8 @@ class JudgeApplicationWidgetTests(TestCase):
         )
         cls.user = UserFactory.create(profile=True)
         cls.url = reverse(
-            "contest:judge_application_widget", kwargs={"slug": cls.contest.slug}
+            "contest:judge_application_widget",
+            kwargs={"contest_slug": cls.contest.slug},
         )
 
     def setUp(self):

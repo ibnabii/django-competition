@@ -11,9 +11,13 @@ class PublishedContestListView(ListView):
     template_name = "contest/general/contest_list.html"
 
     def get(self, *args, **kwargs):
-        if self.queryset.count() == 1:
-            return redirect("contest:contest_detail", slug=self.queryset.first().slug)
-        return super().get(*args, **kwargs)
+        contests = self.get_queryset()
+        if len(contests) == 1:
+            return redirect(
+                "contest:contest_detail", contest_slug=self.queryset.first().slug
+            )
+        self.object_list = contests
+        return self.render_to_response(self.get_context_data())
 
 
 # TODO: finish disambiguation

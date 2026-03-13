@@ -383,7 +383,7 @@ class Contest(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("contest:contest_detail", kwargs={"slug": self.slug})
+        return reverse("contest:contest_detail", kwargs={"contest_slug": self.slug})
 
 
 class Category(models.Model):

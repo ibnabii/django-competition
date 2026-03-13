@@ -26,7 +26,7 @@ class FirstPageTests(TestCase):
         response = self.client.get("", follow=True)
         self.assertRedirects(
             response,
-            reverse("contest:contest_detail", kwargs={"slug": "published"}),
+            reverse("contest:contest_detail", kwargs={"contest_slug": "published"}),
             status_code=302,
             target_status_code=200,
             fetch_redirect_response=True,

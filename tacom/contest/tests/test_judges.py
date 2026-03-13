@@ -25,7 +25,7 @@ class JudgeRegistrationJourneyTests(TestCase):
     def test_no_registration_404(self):
         url = reverse(
             "contest:judge_application",
-            kwargs={"slug": self.contest_no_registration.slug},
+            kwargs={"contest_slug": self.contest_no_registration.slug},
         )
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
@@ -33,7 +33,7 @@ class JudgeRegistrationJourneyTests(TestCase):
     def test_application_redirect_to_login(self):
         url = reverse(
             "contest:judge_application",
-            kwargs={"slug": self.contest.slug},
+            kwargs={"contest_slug": self.contest.slug},
         )
 
         response = self.client.get(url, follow=True)
@@ -45,7 +45,7 @@ class JudgeRegistrationJourneyTests(TestCase):
         self.client.force_login(self.user_no_profile)
         url = reverse(
             "contest:judge_application",
-            kwargs={"slug": self.contest.slug},
+            kwargs={"contest_slug": self.contest.slug},
         )
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -56,7 +56,7 @@ class JudgeRegistrationJourneyTests(TestCase):
         self.client.force_login(self.user)
         url = reverse(
             "contest:judge_application",
-            kwargs={"slug": self.contest.slug},
+            kwargs={"contest_slug": self.contest.slug},
         )
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -102,10 +102,10 @@ class JudgeApplicationActionTests(TestCase):
         # User with full profile
         cls.user = UserFactory.create(profile=True)
         cls.apply_url = reverse(
-            "contest:judge_widget_apply", kwargs={"slug": cls.contest.slug}
+            "contest:judge_widget_apply", kwargs={"contest_slug": cls.contest.slug}
         )
         cls.cancel_url = reverse(
-            "contest:judge_widget_cancel", kwargs={"slug": cls.contest.slug}
+            "contest:judge_widget_cancel", kwargs={"contest_slug": cls.contest.slug}
         )
 
     def setUp(self):

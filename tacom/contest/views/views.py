@@ -168,7 +168,7 @@ class AddEntryView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
     def get_success_url(self):
         return reverse(
             "contest:add_entry_contest",
-            kwargs={"slug": self.contest.slug},
+            kwargs={"contest_slug": self.contest.slug},
         )
 
     def form_invalid(self, form):
@@ -209,7 +209,7 @@ class EditEntryView(UserPassesTestMixin, UpdateView):
         else:
             return reverse(
                 "contest:add_entry_contest",
-                kwargs={"slug": self.object.category.contest.slug},
+                kwargs={"constest_slug": self.object.category.contest.slug},
             )
 
     def form_valid(self, form):
@@ -259,7 +259,7 @@ class DeleteEntryView(UserPassesTestMixin, DeleteView):
         else:
             return reverse_lazy(
                 "contest:add_entry_contest",
-                kwargs={"slug": self.object.category.contest.slug},
+                kwargs={"constest_slug": self.object.category.contest.slug},
             )
 
     def handle_no_permission(self):
@@ -341,7 +341,7 @@ class AddPackageForPayment(AddPackageView, ContestContextMixin):
     def get_success_url(self):
         return reverse(
             "contest:payment_method_selection",
-            kwargs={"slug": self.contest.slug, "package_id": self.object.id},
+            kwargs={"constest_slug": self.contest.slug, "package_id": self.object.id},
         )
 
 
@@ -1209,7 +1209,7 @@ class JudgeBosSelect(CapabilityRequiredMixin, ContestJudgingBOSMixin, UpdateView
 
     def get_success_url(self):
         return reverse(
-            "contest:judging_bos_view", kwargs={"slug": self.get_object().slug}
+            "contest:judging_bos_view", kwargs={"constest_slug": self.get_object().slug}
         )
 
     def form_valid(self, form):

@@ -32,7 +32,7 @@ class ButtonsTests(TestCase):
                 contest = ContestFactory(_state=state)
                 url = reverse(
                     "contest:contest_detail",
-                    kwargs={"slug": contest.slug},
+                    kwargs={"contest_slug": contest.slug},
                 )
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, 200)

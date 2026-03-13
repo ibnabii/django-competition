@@ -13,6 +13,7 @@ class UserFactory(RandomLocaleDjangoModelFactory):
     class Meta:
         model = User
         exclude = ("profile", "judge")
+        skip_postgeneration_save = True
 
     email = factory.LazyAttribute(lambda o: o.faker.email())
     gdpr_consent = True
