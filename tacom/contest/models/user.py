@@ -49,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
 
     country = CountryField(verbose_name=_("Country"), blank=True)
-    phone = models.CharField(_("Phone number"), max_length=15, blank=True)
+    phone = models.CharField(_("Phone number"), max_length=25, blank=True)
     address = models.CharField(_("Address"), max_length=200, blank=True)
 
     class JudgingLanguage(models.TextChoices):

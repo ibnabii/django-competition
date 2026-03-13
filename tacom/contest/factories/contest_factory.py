@@ -195,7 +195,7 @@ class ContestFactory(RandomLocaleDjangoModelFactory):
         if not create:
             return
 
-        if extracted:
+        if extracted is not None:
             for category in extracted:
                 category.contest = self
                 category.save()

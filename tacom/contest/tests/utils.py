@@ -43,6 +43,21 @@ def delete_orphan_users():
     return deleted_count
 
 
+def delete_orphan_styles():
+    """
+    Deletes all Style objects not referenced by any Category.
+    """
+    from contest.models import Style
+
+    deleted_count, _ = Style.objects.filter(categories__isnull=True).delete()
+    return deleted_count
+
+
+def delete_orphans():
+    print("Deleting users: ", delete_orphan_users())
+    print("Deleting styles: ", delete_orphan_styles())
+
+
 def create_test_competition(
     title,
     categories_cnt=5,
@@ -83,9 +98,9 @@ def create_test_competition(
         for s in style_names
     ]
 
-    categories = [CategoryFactory(style=style) for style in styles]
+    contest = ContestFactory(title=title, _state=contest_state, categories=[])
 
-    contest = ContestFactory(title=title, _state=contest_state, categories=categories)
+    categories = [CategoryFactory(style=style, contest=contest) for style in styles]
 
     brewers = [UserFactory(profile=True) for _ in range(participants_cnt)]
 
