@@ -10,7 +10,7 @@ from contest.views import UserFullProfileMixin
 from contest.views.contest import ContestContextMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpRequest, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.functional import Promise, cached_property
 from django.utils.translation import gettext_lazy as _
@@ -252,7 +252,21 @@ class JudgeSelectionListView(ContestContextMixin, CapabilityRequiredMixin, ListV
         return context
 
 
-class JudgeInCompetitionUpdateView(UpdateView):
+class ManageJudgeInCompetitionMixin(CapabilityRequiredMixin):
+    """
+    Derives contest from the JudgeInCompetition pk and injects it into request.contest,
+    so that CapabilityRequiredMixin can enforce CONTEST_MANAGE_JUDGES on it.
+    """
+
+    required_capability = Capability.CONTEST_MANAGE_JUDGES
+
+    def dispatch(self, request, *args, **kwargs):
+        judge = get_object_or_404(JudgeInCompetition, pk=kwargs["pk"])
+        request.contest = judge.contest
+        return super().dispatch(request, *args, **kwargs)
+
+
+class JudgeInCompetitionUpdateView(ManageJudgeInCompetitionMixin, UpdateView):
     model = JudgeInCompetition
     template_name = "contest/judges/selection/_status_edit.html"
     fields = ["status"]
@@ -269,7 +283,7 @@ class JudgeInCompetitionUpdateView(UpdateView):
         )
 
 
-class JudgeInCompetitionStatusView(DetailView):
+class JudgeInCompetitionStatusView(ManageJudgeInCompetitionMixin, DetailView):
     model = JudgeInCompetition
     template_name = "contest/judges/selection/_status_view.html"
     fields = ["status"]
