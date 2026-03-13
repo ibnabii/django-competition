@@ -1042,7 +1042,7 @@ class PrivacyView(TemplateView):
 
 class PartnersGalleryView(TemplateView):
     template_name = "contest/partners_gallery_template.html"
-    items_per_row = 4
+    items_per_row = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

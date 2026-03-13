@@ -486,30 +486,30 @@ class JudgeApplicationAdmin(admin.ModelAdmin):
     list_filter = ("contest", "status")
     # list_select_related = ("user", "contest", "judge")
 
-    @admin.display(description="MJP", ordering="user__judgecertification__mjp_level")
+    @admin.display(description="MJP", ordering="user__judge_certification__mjp_level")
     def mjp_level(self, obj):
         try:
-            return obj.user.judgecertification.mjp_level
+            return obj.user.judge_certification.mjp_level
         except JudgeCertification.DoesNotExist:
             return "-"
 
     @admin.display(
         description="BJCP",
-        ordering="user__judgecertification__is_mead_bjcp",
+        ordering="user__judge_certification__is_mead_bjcp",
         boolean=True,
     )
     def bjcp(self, obj):
         try:
-            return obj.user.judgecertification.is_mead_bjcp
+            return obj.user.judge_certification.is_mead_bjcp
         except JudgeCertification.DoesNotExist:
             return False
 
     @admin.display(
-        description="Other", ordering="user__judgecertification__other_description"
+        description="Other", ordering="user__judge_certification__other_description"
     )
     def other(self, obj):
         try:
-            return obj.user.judgecertification.other_description
+            return obj.user.judge_certification.other_description
         except JudgeCertification.DoesNotExist:
             return "-"
 

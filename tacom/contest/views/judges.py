@@ -233,14 +233,9 @@ class JudgeSelectionListView(ContestContextMixin, CapabilityRequiredMixin, ListV
             "user", "user__judge_certification"
         )
 
-        search = self.request.GET.get("search")
-        category = self.request.GET.get("category")
-
-        if search:
-            qs = qs.filter(name__icontains=search)
-
-        if category:
-            qs = qs.filter(category=category)
+        status = self.request.GET.get("status")
+        if status:
+            qs = qs.filter(status=JudgeInCompetition.Status(status))
 
         return qs
 
@@ -248,3 +243,8 @@ class JudgeSelectionListView(ContestContextMixin, CapabilityRequiredMixin, ListV
         if self.request.headers.get("HX-Request"):
             return ["contest/judges/selection/_judge_list.html"]
         return ["contest/judges/selection/judge_list_page.html"]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["active_status"] = self.request.GET.get("status")
+        return context

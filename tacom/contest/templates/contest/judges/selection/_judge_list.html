@@ -7,6 +7,7 @@
       <th scope="col">{% translate "Judge" %}</th>
       <th scope="col">MJP</th>
       <th scope="col">BJCP</th>
+      <th scope="col">{% translate "Other" %}</th>
       <th scope="col">Status</th>
     </thead>
     <tbody>
@@ -24,12 +25,16 @@
                 {% endif %}
             </td>
 
-            <td>
+            <td data-sort="{{ cert.is_mead_bjcp|yesno:'1,0' }}">
                 {% if cert.is_mead_bjcp %}
                     <i class="bi bi-check"></i>
                 {% else %}
                     <i class="bi bi-dash"></i>
                 {% endif %}
+            </td>
+
+            <td data-bs-toggle="tooltip" title="{{ cert.other_description }}">
+                {{ cert.other_description|slice:":10" }}{% if cert.other_description|length > 10 %}…{% endif %}
             </td>
 
             <td>{{ judge.status }}</td>
@@ -40,6 +45,10 @@
 </table>
 <script>
     new Tablesort(document.getElementById('judge-table'));
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
 </script>
 {% else %}
 <h4 class="m-4">{% translate 'No judges found' %}</h4>
