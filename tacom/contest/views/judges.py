@@ -1,9 +1,11 @@
+import time
 from dataclasses import dataclass
 
 from contest.models import Contest
 from contest.models.judges import JudgeCertification, JudgeInCompetition
 from contest.permissions.capabilities import Capability
 from contest.permissions.mixins import CapabilityRequiredMixin
+from contest.utils import mail_judge_status_change
 from contest.views import UserFullProfileMixin
 from contest.views.contest import ContestContextMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -13,7 +15,7 @@ from django.urls import reverse_lazy
 from django.utils.functional import Promise, cached_property
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.generic import TemplateView, UpdateView, ListView
+from django.views.generic import TemplateView, UpdateView, ListView, DetailView
 
 
 class JudgesCanRegisterMixin(ContestContextMixin, View):
@@ -150,7 +152,7 @@ class JudgeApplicationPolicyMixin:
         """
         # Judge has to provide certification
         try:
-            self.request.user.judgecertification
+            self.request.user.judge_certification
         except JudgeCertification.DoesNotExist:
             return PolicyResult(
                 False,
@@ -248,3 +250,27 @@ class JudgeSelectionListView(ContestContextMixin, CapabilityRequiredMixin, ListV
         context = super().get_context_data(**kwargs)
         context["active_status"] = self.request.GET.get("status")
         return context
+
+
+class JudgeInCompetitionUpdateView(UpdateView):
+    model = JudgeInCompetition
+    template_name = "contest/judges/selection/_status_edit.html"
+    fields = ["status"]
+    context_object_name = "judge"
+
+    def form_valid(self, form):
+        self.object: JudgeInCompetition = form.save()
+        if self.object.status != JudgeInCompetition.Status.APPLICATION:
+            mail_judge_status_change(self.object)
+        return render(
+            self.request,
+            JudgeInCompetitionStatusView.template_name,
+            {self.context_object_name: self.object},
+        )
+
+
+class JudgeInCompetitionStatusView(DetailView):
+    model = JudgeInCompetition
+    template_name = "contest/judges/selection/_status_view.html"
+    fields = ["status"]
+    context_object_name = "judge"

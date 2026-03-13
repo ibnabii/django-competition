@@ -1,0 +1,12 @@
+{% load i18n %}
+Cześć {{username}},
+
+Ta wiadomość została wygenerowana automatycznie, prosimy nie odpowiadać na nią bezpośrednio.
+
+Dziękujemy za zainteresowanie naszym konkursem - {{ contest.title }}.
+Niestety w tym roku nie będziemy mogli zaproponować Ci miejsca przy stoliku sędziowskim.
+
+Doceniamy zaangażowanie i mamy nadzieję, że będziemy mieli okazję spotkać się w przyszłości przy okazji kolejnych edycji konkursu.
+
+Dziękujemy za zrozumienie,
+Załoga {{ contest.title }}

@@ -1,0 +1,90 @@
+<div
+        id="judge-status-{{ judge.id }}"
+        hx-trigger="keyup[key=='Escape'] from:body"
+        hx-get="{% url 'contest:judge_status_view' judge.id %}"
+        hx-target="#judge-status-{{ judge.id }}"
+>
+    {% csrf_token %}
+    <!-- Spinner -->
+    <span id="spinner-{{ judge.id }}" class="spinner-border spinner-border-sm text-primary"
+          style="display: none; margin-left: 0.5rem;"></span>
+
+
+    <div class="status-buttons">
+        <button
+                class="btn btn{% if judge.status != 'application' %}-outline{% endif %}-secondary m-0 p-0"
+                {% if judge.status != "application" %}
+                hx-post="{% url 'contest:judge_status_edit' judge.id %}"
+                hx-vals='{"status": "application"}'
+                {% else %}
+                hx-get="{% url 'contest:judge_status_view' judge.id %}"
+                {% endif %}
+                hx-target="#judge-status-{{ judge.id }}"
+
+        >
+            <i class="bi bi-question"></i>
+        </button>
+
+        <button
+                class="btn btn{% if judge.status != 'approved' %}-outline{% endif %}-success m-0 p-0"
+                {% if judge.status != "approved" %}
+                hx-post="{% url 'contest:judge_status_edit' judge.id %}"
+                hx-vals='{"status": "approved"}'
+                {% else %}
+                hx-get="{% url 'contest:judge_status_view' judge.id %}"
+                {% endif %}
+                hx-target="#judge-status-{{ judge.id }}"
+
+        >
+            <i class="bi bi-check"></i>
+        </button>
+
+        <button
+                class="btn btn{% if judge.status != 'rejected' %}-outline{% endif %}-danger m-0 p-0"
+                {% if judge.status != "rejected" %}
+                hx-post="{% url 'contest:judge_status_edit' judge.id %}"
+                hx-vals='{"status": "rejected"}'
+                {% else %}
+                hx-get="{% url 'contest:judge_status_view' judge.id %}"
+                {% endif %}
+                hx-target="#judge-status-{{ judge.id }}"
+
+        >
+            <i class="bi bi-x"></i>
+        </button>
+    </div>
+    <script>
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            event.detail.headers['X-CSRFToken'] = csrfToken;
+        });
+
+        // Show spinner and hide buttons on request start
+        document.body.addEventListener('htmx:beforeRequest', (event) => {
+            const container = event.target.closest('div[id^="judge-status-"]');
+            if (!container) return;
+
+            const spinner = container.querySelector('span[id^="spinner-"]');
+            const buttons = container.querySelector('.status-buttons');
+
+            if (spinner && buttons) {
+                spinner.style.display = 'inline-block';
+                buttons.style.display = 'none';
+            }
+        });
+
+        // Hide spinner and show buttons on request complete
+        document.body.addEventListener('htmx:afterRequest', (event) => {
+            const container = event.target.closest('div[id^="judge-status-"]');
+            if (!container) return;
+
+            const spinner = container.querySelector('span[id^="spinner-"]');
+            const buttons = container.querySelector('.status-buttons');
+
+            if (spinner && buttons) {
+                spinner.style.display = 'none';
+                buttons.style.display = 'flex';  // or 'inline-block' depending on your layout
+            }
+        });
+    </script>
+</div>

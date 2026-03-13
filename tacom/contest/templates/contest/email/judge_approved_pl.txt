@@ -1,0 +1,14 @@
+Cześć {{username}},
+
+Ta wiadomość została wygenerowana automatycznie, prosimy nie odpowiadać na nią bezpośrednio.
+
+Dziękujemy za zainteresowanie sędziowaniem w naszym konkursie - {{ contest.title }}.
+Z przyjemnością informujemy, że podjęliśmy decyzję o zaproszeniu Cię.
+
+Sędziowanie odbędzie się w dniach {{ contest.judging_date_from }} - {{ contest.judging_date_to }}.
+Więcej szczegółów prześlemy w późniejszym terminie.
+
+Będziemy wdzięczni za poinformowanie nas z wyprzedzeniem w przypadku jakichkolwiek zmian z Twojej strony.
+
+Pozdrawiamy,
+Załoga {{ contest.title }}

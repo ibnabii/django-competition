@@ -34,10 +34,12 @@
             </td>
 
             <td data-bs-toggle="tooltip" title="{{ cert.other_description }}">
-                {{ cert.other_description|slice:":10" }}{% if cert.other_description|length > 10 %}…{% endif %}
+                {{ cert.other_description|slice:":20" }}{% if cert.other_description|length > 20 %}…{% endif %}
             </td>
 
-            <td>{{ judge.status }}</td>
+            <td data-sort="{{ judge.status }}" id="judge-status-{{ judge.id }}">
+                {% include "contest/judges/selection/_status_view.html" with judge=judge %}
+            </td>
         </tr>
         {% endwith %}
     {% endfor %}

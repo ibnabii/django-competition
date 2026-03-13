@@ -1,0 +1,14 @@
+<button
+    hx-get="{% url 'contest:judge_status_edit' judge.id %}"
+    hx-target="#judge-status-{{ judge.id }}"
+    class="btn m-0 p-0
+    {% if judge.status == "application" %}
+    text-bg-secondary"><i class="bi bi-question"></i>
+    {% elif judge.status == "approved" %}
+    text-bg-success">
+    <i class="bi bi-check"></i>
+    {% elif judge.status == "rejected" %}
+    text-bg-danger">
+    <i class="bi bi-x"></i>
+    {% endif %}
+</button>

@@ -73,6 +73,41 @@ def mail_entry_status_change(entries, new_status):
     translation.activate(old_language)
 
 
+def mail_judge_status_change(judge):
+    from contest.models.judges import JudgeInCompetition
+
+    template = {
+        JudgeInCompetition.Status.APPROVED: "judge_approved",
+        JudgeInCompetition.Status.REJECTED: "judge_rejected",
+    }
+
+    new_status = judge.status
+    language = judge.user.language
+    template_txt = get_template(
+        "contest/email/" + template.get(new_status) + "_" + language + ".txt"
+    )
+    template_html = get_template(
+        "contest/email/" + template.get(new_status) + "_" + language + ".html"
+    )
+
+    user = judge.user
+    contest = judge.contest
+
+    context = {
+        "username": user.first_name,
+        "contest": contest,
+    }
+
+    subject = "KMP Bartnik - Judging"
+    from_email = "KMP Bartnik <KMP.Bartnik@gmail.com>"
+    to = user.email
+    text_content = template_txt.render(context)
+    html_content = template_html.render(context)
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+
+
 def rebate_code_generator():
     from contest.models import RebateCode
 

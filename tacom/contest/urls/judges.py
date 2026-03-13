@@ -28,6 +28,16 @@ urlpatterns = [
         name="judge_selection_list",
     ),
     path(
+        "judges_management/application/<pk>/edit",
+        views.JudgeInCompetitionUpdateView.as_view(),
+        name="judge_status_edit",
+    ),
+    path(
+        "judges_management/application/<pk>/",
+        views.JudgeInCompetitionStatusView.as_view(),
+        name="judge_status_view",
+    ),
+    path(
         "judge_certification/",
         views.JudgeCertificationDetailView.as_view(),
         name="judge_certification_read",
