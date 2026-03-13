@@ -365,7 +365,10 @@ class Contest(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             base_slug = slugify(self.title)
-            slug = base_slug
+            if base_slug != "":
+                slug = base_slug
+            else:
+                slug = f"contest-{self.id}"
             counter = 1
 
             while Contest.objects.filter(slug=slug).exclude(pk=self.pk).exists():
