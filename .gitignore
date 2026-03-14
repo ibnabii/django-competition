@@ -235,3 +235,5 @@ docs_src/build
 docs_src/node_modules
 
 tacom/db_backup
+
+.factory

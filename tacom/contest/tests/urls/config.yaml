@@ -1,0 +1,44 @@
+exclude:
+  apps:
+    - "admin"
+
+capability_class: "contest.permissions.capabilities.Capability"
+by_capability:
+#  BLEDNE:
+#    - routes:
+#        - names: ["home"]
+  JUDGE_FINALS:
+    - routes:
+        - names: ["home"]
+
+#In [74]: for pattern in pat.url_patterns:
+#    ...:     if isinstance(pattern, URLResolver):
+#    ...:         name=pattern.urlconf_name
+#    ...:         if isinstance(name, ModuleType):
+#    ...:             print("module ", name.__name__)
+#    ...:         elif isinstance(name, list):
+#    ...:             print("list")
+#    ...:         else:
+#    ...:              print(type(name), str(name))
+#    ...:         print("resolver ", pattern.app_name)
+#    ...:     if isinstance(pattern, ModuleType):
+#    ...:         print("module ", pattern.__name__)
+#    ...:     if isinstance(pattern, URLPattern):
+#    ...:         print("pattern", pattern.name)
+#    ...:
+#pattern account_change_password
+#list
+#resolver  admin
+#module  allauth.urls
+#resolver  None
+#module  contest.urls
+#resolver  contest
+#module  django.conf.urls.i18n
+#resolver  None
+#module  tinymce.urls
+#resolver  None
+#module  rosetta.urls
+#resolver  None
+#module  paypal.standard.ipn.urls
+#resolver  None
+#pattern home
