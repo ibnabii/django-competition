@@ -1,44 +1,205 @@
+# ── Exclusions ──────────────────────────────────────────────
 exclude:
   apps:
     - "admin"
+    - "debug_toolbar"
+  modules:
+    - "django.conf.urls.i18n"
+    - "paypal.standard.ipn.urls"
+    - "tinymce.urls"
+    - "rosetta.urls"
+    - "allauth.socialaccount.urls"
+  names:
+    - "account_logout"
+    - "account_email"
+    - "account_email_verification_sent"
+    - "account_confirm_email"
+    - "account_inactive"
+    - "account_signup"
+    - "account_reauthenticate"
+    - "account_reset_password"
+    - "account_reset_password_done"
+    - "account_reset_password_from_key"
+    - "account_reset_password_from_key_done"
+    - "account_confirm_login_code"
+    - "account_set_password"
+  namespaces:
+    - "rosetta"
 
+# ── Capability class ─────────────────────────────────────────
 capability_class: "contest.permissions.capabilities.Capability"
+
+# ── Data provider class ──────────────────────────────────────
+data_provider_class: "contest.tests.urls.data_provider.ContestDataProvider"
+
+# ── Method testing strategy ──────────────────────────────────
+method_strategy:
+  mode: "RESTRICT_TO_CONFIG"
+  methods: ["GET"]
+
+# ── Statistics ───────────────────────────────────────────────
+stats:
+  enabled: true
+  db_path: null
+  cleanup_on_start: false
+  soft_response_time_ms: 1000
+
+# ── Defaults ─────────────────────────────────────────────────
+defaults:
+  anonymous:
+    access_rules:
+      - any_success: true
+
+  logged_in:
+    access_rules:
+      - any_success: true
+    no_access_rules:
+      - status_codes: [302]
+        allowed_redirect_targets:
+          - names: ["account_login"]
+
+  by_capability:
+    access_rules:
+      - any_success: true
+    no_access_rules:
+      - status_codes: [302]
+        allowed_redirect_targets:
+          - name_space: "contest"
+            names: ["contest_detail", "contest_list"]
+
+  by_group:
+    access_rules:
+      - any_success: true
+    no_access_rules:
+      - status_codes: [302]
+        allowed_redirect_targets:
+          - names: ["account_login"]
+
+# ── Anonymous URLs ───────────────────────────────────────────
+anonymous:
+  - routes:
+      - names: ["home"]
+
+  - routes:
+      - names: ["account_login"]
+
+  - routes:
+      - name_space: "contest"
+        names:
+          - "contest_list"
+          - "contest_detail"
+          - "contest_rules"
+          - "contest_address"
+          - "style_detail"
+          - "privacy"
+          - "partners_gallery"
+
+# ── Logged-in URLs ───────────────────────────────────────────
+logged_in:
+  - routes:
+      - names: ["account_change_password"]
+
+  - routes:
+      - name_space: "contest"
+        names:
+          - "profile"
+          - "profile_edit"
+          - "add_entry_category"
+          - "judge_application"
+          - "judge_certification_read"
+          - "judge_certification_edit"
+
+
+
+# ── By capability ────────────────────────────────────────────
 by_capability:
-#  BLEDNE:
-#    - routes:
-#        - names: ["home"]
   JUDGE_FINALS:
     - routes:
-        - names: ["home"]
+        - name_space: "contest"
+          names:
+            - "judging_finals_list"
+            - "judging_finals_category"
 
-#In [74]: for pattern in pat.url_patterns:
-#    ...:     if isinstance(pattern, URLResolver):
-#    ...:         name=pattern.urlconf_name
-#    ...:         if isinstance(name, ModuleType):
-#    ...:             print("module ", name.__name__)
-#    ...:         elif isinstance(name, list):
-#    ...:             print("list")
-#    ...:         else:
-#    ...:              print(type(name), str(name))
-#    ...:         print("resolver ", pattern.app_name)
-#    ...:     if isinstance(pattern, ModuleType):
-#    ...:         print("module ", pattern.__name__)
-#    ...:     if isinstance(pattern, URLPattern):
-#    ...:         print("pattern", pattern.name)
-#    ...:
-#pattern account_change_password
-#list
-#resolver  admin
-#module  allauth.urls
-#resolver  None
-#module  contest.urls
-#resolver  contest
-#module  django.conf.urls.i18n
-#resolver  None
-#module  tinymce.urls
-#resolver  None
-#module  rosetta.urls
-#resolver  None
-#module  paypal.standard.ipn.urls
-#resolver  None
-#pattern home
+  JUDGE_BOS:
+    - routes:
+        - name_space: "contest"
+          names:
+            - "judging_bos_view"
+            - "judging_bos_select"
+
+  VIEW_JUDGING_ENTRIES_LIST:
+    - routes:
+        - name_space: "contest"
+          names:
+            - "judging_list"
+
+  VIEW_SCORESHEET:
+    - routes:
+        - name_space: "contest"
+          names:
+            - "scoresheet_view"
+
+  EDIT_SCORESHEET:
+    - routes:
+        - name_space: "contest"
+          names:
+            - "scoresheet_edit"
+            - "scoresheet_create"
+
+  ENTRY_PAYMENTS:
+    - routes:
+        - name_space: "contest"
+          names:
+            - "payment_list"
+
+  CONTEST_MANAGE_JUDGES:
+    - routes:
+        - name_space: "contest"
+          names:
+            - "judge_selection_list"
+            - "judge_status_edit"
+            - "judge_status_view"
+
+# ── Parked URLs (deferred / known issues) ────────────────────
+parked:
+  - name_space: "contest"
+    names:
+      # webhook (csrf-exempt, not user-facing)
+      - "payment_payu_notification"
+      # view has bug: self.kwargs["slug"] should be contest_slug
+      - "user_entry_list"
+      # ownership-based access (beyond framework scope for v1.0)
+      - "entry_edit"
+      - "entry_delete"
+      - "entry_results"
+      # complex payment flows requiring payment objects / payment methods
+      - "payment_method_selection"
+      - "payment_fake"
+      - "payment_transfer"
+      - "payment_payu"
+      - "payment_payu_redirect"
+      - "payment_paypal"
+      - "payment_paypal_success"
+      - "payment_paypal_failure"
+      # own-package check (beyond framework scope for v1.0)
+      - "labels_print"
+      # public contest results (no login required)
+      - "contest_results"
+      # delivery_process needs owned package
+      - "delivery_process"
+      # payment_process needs owned payment
+      - "payment_process"
+      # view has bug: self.kwargs["slug"] should be contest_slug (AddPackageView)
+      - "delivery_select"
+      # add_entry views: no LoginRequiredMixin, bugs with anonymous users
+      - "add_entry"
+      - "add_entry_contest"
+      # view has bug: AddPackageView uses self.kwargs["slug"] instead of contest_slug
+      - "payment_start"
+      - "labels_start"
+      # incomplete/buggy view (TODO in code)
+      - "disambiguation"
+      # HTMX widget views - no LoginRequiredMixin, expect embedded usage in logged-in pages
+      - "judge_application_widget"
+      - "judge_widget_apply"
+      - "judge_widget_cancel"
