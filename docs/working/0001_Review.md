@@ -1,0 +1,2 @@
+- Brak bazy danych
+- 

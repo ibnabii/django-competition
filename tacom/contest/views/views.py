@@ -209,7 +209,7 @@ class EditEntryView(UserPassesTestMixin, UpdateView):
         else:
             return reverse(
                 "contest:add_entry_contest",
-                kwargs={"constest_slug": self.object.category.contest.slug},
+                kwargs={"contest_slug": self.object.category.contest.slug},
             )
 
     def form_valid(self, form):
@@ -297,7 +297,9 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-class AddPackageView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
+class AddPackageView(
+    LoginRequiredMixin, UserFullProfileMixin, ContestContextMixin, CreateView
+):
     model = EntriesPackage
     template_name = "contest/package_update.html"
     success_url = reverse_lazy("contest:profile")
@@ -306,11 +308,9 @@ class AddPackageView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.owner = None
-        self.contest = None
 
     def get_form_kwargs(self):
         self.owner = self.request.user
-        self.contest = Contest.objects.get(slug=self.kwargs["slug"])
         kwargs = super().get_form_kwargs()
         kwargs["entries"] = Entry.objects.filter(category__contest=self.contest).filter(
             brewer=self.owner
@@ -331,7 +331,7 @@ class AddPackageView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
         return context
 
 
-class AddPackageForPayment(AddPackageView, ContestContextMixin):
+class AddPackageForPayment(AddPackageView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["entries"] = kwargs["entries"].filter(is_paid=False)
@@ -341,7 +341,7 @@ class AddPackageForPayment(AddPackageView, ContestContextMixin):
     def get_success_url(self):
         return reverse(
             "contest:payment_method_selection",
-            kwargs={"constest_slug": self.contest.slug, "package_id": self.object.id},
+            kwargs={"contest_slug": self.contest.slug, "package_id": self.object.id},
         )
 
 
@@ -357,9 +357,7 @@ class AddPackageForPrinting(AddPackageView):
         return reverse("contest:labels_print", kwargs={"package_id": self.object.id})
 
 
-class AddPackageOfDelivered(
-    CapabilityRequiredMixin, ContestContextMixin, AddPackageView
-):
+class AddPackageOfDelivered(CapabilityRequiredMixin, AddPackageView):
     required_capability = Capability.ENTRY_RECEIVE
     form_class = NewAdminPackage
 
