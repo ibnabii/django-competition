@@ -330,3 +330,23 @@ ALLOWED_HOSTS += PAYU_TEST_HOSTS
 # PayPal
 PAYPAL_RECEIVER_EMAIL = env("PAYPAL_RECEIVER_EMAIL")
 PAYPAL_TEST = env("PAYPAL_TEST", default=False)
+
+
+# Rosetta settings (translation helper)
+
+# with mine setup, if logged in user with no translators group tries to access rosetta, he's redirected to login
+# page (as rosetta defaults this to settings.LOGIN_URL). Then allauth verifies user is logged in, and redirects
+# them to next page (ie. back to rosetta), which as no transaltors group, sends him to login page in infinite loop
+# there's no real case for not logged in user to go to rosetta, so i just set home here
+ROSETTA_LOGIN_URL = "/"
+ROSETTA_EXCLUDED_APPLICATIONS = (
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "rosetta",
+    "django_recaptcha",
+    "django_countries",
+    "simple_history",
+    "debug_toolbar",
+)
+ROSETTA_EXCLUDED_PATHS = ("C:\\",)
