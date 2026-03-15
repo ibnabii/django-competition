@@ -2,13 +2,12 @@
 {% load i18n %}
 {% load static %}
 {% load user_flag %}
-{% load bootstrap_icons %}
 {% block content %}
 
     <div class="container">
         <a class="btn btn-primary float-start"
            href="{% url 'contest:user_entry_list' scoresheet.entry.category.contest.slug %}">
-            {% bs_icon 'card-list' size='1.5em' %} {% translate 'Back to list' %}
+            <i class="bi bi-card-list" style="font-size: 1.5em"></i> {% translate 'Back to list' %}
         </a>
 
         <br/><br/>
@@ -68,7 +67,7 @@
     <div class="container">
         <a class="btn btn-primary float-start"
            href="{% url 'contest:user_entry_list' scoresheet.entry.category.contest.slug %}">
-            {% bs_icon 'card-list' size='1.5em' %} {% translate 'Back to list' %}
+            <i class="bi bi-card-list" style="font-size: 1.5em"></i> {% translate 'Back to list' %}
         </a>
 
         <br/><br/>

@@ -3,7 +3,6 @@
 {% block content %}
 {% load i18n %}
 {% load static %}
-{% load bootstrap_icons %}
 {% load user_flag %}
     {% regroup entries by category.style as entries_by_style %}
     {% for style in entries_by_style %}

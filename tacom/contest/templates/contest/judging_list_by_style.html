@@ -3,7 +3,6 @@
 {% block content %}
 {% load i18n %}
 {% load static %}
-{% load bootstrap_icons %}
 {% load user_flag %}
     {% regroup entries by category.style as entries_by_style %}
     {% for style in entries_by_style %}
@@ -36,7 +35,7 @@
                         title="{% translate 'View score sheet' %}"
                         data-toggle="tooltip"
                     >
-                        {% bs_icon 'eye' size='1.5em' %}
+                        <i class="bi bi-eye" style="font-size: 1.5em"></i>
                     </a>
 
                     {% if entry.scoresheet %}
@@ -52,7 +51,7 @@
                            data-toggle="tooltip"
                        >
                     {% endif %}
-                        {% bs_icon 'pencil' size='1.5em' %}
+                        <i class="bi bi-pencil" style="font-size: 1.5em"></i>
                     </a>
 
                 </td>

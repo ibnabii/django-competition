@@ -1,8 +1,7 @@
 {% load i18n %}
-{% load bootstrap_icons %}
 <div id="certification">
     <div><a class="btn btn-primary" hx-get="{% url 'contest:judge_certification_edit' %}" hx-target="#certification"
-            hx-swap="outerHTML">{% bs_icon 'pencil-square' %}
+            hx-swap="outerHTML"><i class="bi bi-pencil-square"></i>
     </a></div>
     <div>
         <p class="m-2 ">{% translate 'No judge certification information' %}</p>

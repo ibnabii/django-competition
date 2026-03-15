@@ -1,17 +1,16 @@
 {% load i18n %}
-{% load bootstrap_icons %}
 {% load permissions_tags %}
 
 <div class="container">
     <a class="btn btn-primary float-start"
        href="{% url 'contest:judging_list' scoresheet.entry.category.contest.slug %}">
-        {% bs_icon 'card-list' size='1.5em' %} {% translate 'Back to list' %}
+        <i class="bi bi-card-list"></i> {% translate 'Back to list' %}
     </a>
     {% can "EDIT_SCORESHEET" as can_edit %}
     {% if can_edit %}
     <a class="btn btn-primary float-end"
        href="{% url 'contest:scoresheet_edit' contest.slug scoresheet.id %}">
-        {% bs_icon 'pencil' %} {% translate 'Edit' %}
+        <i class="bi bi-pencil"></i> {% translate 'Edit' %}
     </a>
     {% endif %}
     

@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.facebook',
     # "bootstrap5", # django-bootstrap-v5==1.0.11
     "django_bootstrap5",
-    "django_bootstrap_icons",
     "rosetta",
     # "captcha",  # in djagno_recaptcha 3.0.0
     "django_recaptcha",  # since djagno_recaptcha 4.0.0

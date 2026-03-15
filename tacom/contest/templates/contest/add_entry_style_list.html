@@ -1,17 +1,16 @@
 {% extends 'contest/base.html' %}
 {% block content %}
 {% load i18n %}
-{% load bootstrap_icons %}
 
 {% include 'contest/entries.html' %}
 <br />
 <a class="btn btn-outline-primary" href="{% url 'contest:payment_start' contest.slug %}">
-    {% bs_icon 'cash-coin' size='1.5em' %}
+    <i class="bi bi-cash-coin" style="font-size: 1.5em"></i>
     {% translate 'Pay for entries' %}
 </a>
 
 <a class="btn btn-outline-primary" href="{% url 'contest:labels_start' contest.slug %}">
-    {% bs_icon 'file-richtext' size='1.5em' %}
+    <i class="bi bi-file-richtext" style="font-size: 1.5em"></i>
     {% translate 'Print bottle labels' %}
 </a>
 
@@ -20,7 +19,7 @@
     href="{% url 'contest:contest_address' contest.slug %}"
     target="_blank"
 >
-    {% bs_icon 'truck' size='1.5em' %}
+    <i class="bi bi-truck" style="font-size: 1.5em"></i>
     {% translate 'Print delivery address' %}
 </a>
 
@@ -35,7 +34,7 @@
                 data-toggle="tooltip"
                 title="{%  translate "You will be able to register and pay for your entries as long as there is at least one slot left." %}"
             >
-                {% bs_icon 'info-circle-fill' size='0.8em'%}
+                <i class="bi bi-info-circle-fill" style="font-size: 0.8em"></i>
             </span>
         </h4>
     {% endif %}
@@ -47,7 +46,7 @@
                 data-toggle="tooltip"
                 title="{{ contest.entry_user_limit }} {% translate "is the maximum number of entries per participant in this competition" %}"
             >
-                {% bs_icon 'info-circle-fill' size='0.8em'%}
+                <i class="bi bi-info-circle-fill" style="font-size: 0.8em"></i>
             </span>
         </h4>
         <br/><br/>

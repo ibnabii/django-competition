@@ -40,7 +40,7 @@ method_strategy:
 # ── Statistics ───────────────────────────────────────────────
 stats:
   enabled: true
-  db_path: null
+  db_path: "./stats.db"
   cleanup_on_start: false
   soft_response_time_ms: 1000
 

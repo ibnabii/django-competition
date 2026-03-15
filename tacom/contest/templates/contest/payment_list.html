@@ -2,7 +2,6 @@
 
 {% block content %}
 {% load i18n %}
-{% load bootstrap_icons %}
     <table class="table">
         <tr>
             <th>
@@ -43,7 +42,7 @@
                        href="{% url 'contest:payment_process' contest.slug payment.id %}"
 
                     >
-                        {% bs_icon 'check2-square' size='1.5em'%}
+                        <i class="bi bi-check2-square" style="font-size: 1.5em"></i>
                     </a>
                 </td>
             </tr>
