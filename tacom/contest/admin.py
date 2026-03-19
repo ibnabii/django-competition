@@ -24,6 +24,12 @@ from .models import (
 from .models.judges import JudgeCertification, JudgeInCompetition
 from .models.membership import ContestMembership, ContestMembershipRole
 from .models.user import User
+from .models.configuration import Configuration
+
+
+@admin.register(Configuration)
+class ConfigurationAdmin(admin.ModelAdmin):
+    list_display = ["key", "value"]
 
 
 @admin.register(ContestMembership)

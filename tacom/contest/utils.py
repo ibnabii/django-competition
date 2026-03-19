@@ -8,6 +8,8 @@ from django.template.loader import get_template
 from django.urls import reverse
 from django.utils import translation
 
+from contest.models.configuration import Configuration, ConfigurationOption
+
 
 def code_generator():
     """
@@ -27,6 +29,17 @@ def open_contests():
     )
 
 
+def send_emails() -> bool:
+    try:
+        send = Configuration.objects.get(key=ConfigurationOption.SEND_EMAILS).value
+    except Configuration.DoesNotExist:
+        send = "TRUE"
+
+    if send.upper() == "FALSE":
+        return False
+    return True
+
+
 def get_client_ip(request):
     x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
     if x_forwarded_for:
@@ -37,6 +50,9 @@ def get_client_ip(request):
 
 
 def mail_entry_status_change(entries, new_status):
+    if not send_emails():
+        return
+
     template = {
         "PAID": "entries_paid",
         "RECEIVED": "entries_received",
@@ -74,6 +90,9 @@ def mail_entry_status_change(entries, new_status):
 
 
 def mail_judge_status_change(judge):
+    if not send_emails():
+        return
+
     from contest.models.judges import JudgeInCompetition
 
     template = {
