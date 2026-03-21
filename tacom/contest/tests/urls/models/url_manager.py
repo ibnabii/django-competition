@@ -20,8 +20,13 @@ from .config import (
 )
 
 UrlCategory = Literal[
-    "anonymous", "logged_in", "by_capability", "by_group",
-    "parked", "excluded", "missed"
+    "anonymous",
+    "logged_in",
+    "by_capability",
+    "by_group",
+    "parked",
+    "excluded",
+    "missed",
 ]
 
 _CATEGORY_DEFAULTS_KEY = {
@@ -39,7 +44,9 @@ class UrlManager(BaseModel):
     _excluded: list[DiscoveredUrl] = PrivateAttr(default_factory=list)
     _visits: list[VisitRecord] = PrivateAttr(default_factory=list)
     # (namespace, name) → (category, subcategory, RoutePolicy)
-    _category_map: dict[str, tuple[str, str | None, RoutePolicy]] = PrivateAttr(default_factory=dict)
+    _category_map: dict[str, tuple[str, str | None, RoutePolicy]] = PrivateAttr(
+        default_factory=dict
+    )
     # (category, subcategory_or_empty) → list[full_name]
     _category_urls: dict[tuple, list[str]] = PrivateAttr(default_factory=dict)
     # full_name → DiscoveredUrl
@@ -99,9 +106,8 @@ class UrlManager(BaseModel):
 
                 view = self._get_view(pattern.callback)
                 view_module = getattr(view, "__module__", "") or ""
-                view_name = (
-                    getattr(view, "__name__", "")
-                    or getattr(view, "__qualname__", "")
+                view_name = getattr(view, "__name__", "") or getattr(
+                    view, "__qualname__", ""
                 )
                 methods = self._extract_methods(view)
 
@@ -156,7 +162,9 @@ class UrlManager(BaseModel):
                 full_name = f"{ns}:{name}" if ns else name
                 self._parked_names.add(full_name)
 
-        def _register(full_name: str, category: str, subcategory: str | None, policy: RoutePolicy):
+        def _register(
+            full_name: str, category: str, subcategory: str | None, policy: RoutePolicy
+        ):
             self._category_map[full_name] = (category, subcategory, policy)
             key = (category, subcategory)
             if key not in self._category_urls:
@@ -281,10 +289,7 @@ class UrlManager(BaseModel):
         missed = []
         for url in self._discovered:
             fn = url.full_name
-            if (
-                fn not in self._category_map
-                and fn not in self._parked_names
-            ):
+            if fn not in self._category_map and fn not in self._parked_names:
                 missed.append(url)
         return missed
 
@@ -295,19 +300,17 @@ class UrlManager(BaseModel):
         missed = self.get_missed()
         if not missed:
             return "No missed URLs."
+        else:
+            by_module = {}
+            for url in missed:
+                by_module.setdefault(url.view_module, []).append(url)
 
-        by_module: dict[str, list[DiscoveredUrl]] = {}
-        for url in missed:
-            by_module.setdefault(url.view_module, []).append(url)
-
-        lines = [f"Missed URLs ({len(missed)} total):"]
-        for module, urls in sorted(by_module.items()):
-            lines.append(f"\n  Module: {module}")
-            for url in sorted(urls, key=lambda u: (u.namespace, u.name)):
-                ns_part = f"{url.namespace}:" if url.namespace else ""
-                lines.append(
-                    f"    {ns_part}{url.name:<40} {url.url_pattern}"
-                )
+            lines = [f"Missed URLs ({len(missed)} total):"]
+            for module, urls in sorted(by_module.items()):
+                lines.append(f"\n  Module: {module}")
+                for url in sorted(urls, key=lambda u: (u.namespace or "", u.name)):
+                    ns_part = f"{url.namespace}:" if url.namespace else ""
+                    lines.append(f"    {ns_part}{url.name:<40} {url.view_name}")
         return "\n".join(lines)
 
     def get_parked(self) -> list[DiscoveredUrl]:
@@ -387,6 +390,7 @@ class UrlManager(BaseModel):
             module_path, class_name = self.config.capability_class.rsplit(".", 1)
             try:
                 import importlib
+
                 mod = importlib.import_module(module_path)
                 cap_class = getattr(mod, class_name)
                 allowed = {c.name for c in cap_class}
@@ -417,6 +421,7 @@ class UrlManager(BaseModel):
         if not self.config.stats.enabled:
             return
         from .db import UrlManagerDb
+
         db = UrlManagerDb(config=self.config)
         db.persist_run(
             url_manager=self,
@@ -452,45 +457,49 @@ class UrlManager(BaseModel):
         outliers = []
         for url_key, avg_ms in url_avgs.items():
             if avg_ms > global_mean + global_std:
-                outliers.append({
-                    "url": url_key,
-                    "avg_ms": avg_ms,
-                    "global_mean": global_mean,
-                    "std_dev": global_std,
-                })
+                outliers.append(
+                    {
+                        "url": url_key,
+                        "avg_ms": avg_ms,
+                        "global_mean": global_mean,
+                        "std_dev": global_std,
+                    }
+                )
 
         inconsistent = []
         for url_key, times_list in url_times.items():
             if len(times_list) > 1:
                 url_std = stdev(times_list)
                 if url_std > global_std:
-                    inconsistent.append({
-                        "url": url_key,
-                        "min_ms": min(times_list),
-                        "max_ms": max(times_list),
-                        "std_dev": url_std,
-                    })
+                    inconsistent.append(
+                        {
+                            "url": url_key,
+                            "min_ms": min(times_list),
+                            "max_ms": max(times_list),
+                            "std_dev": url_std,
+                        }
+                    )
 
         threshold = self.config.stats.soft_response_time_ms
         warn_list = []
         if threshold > 0:
             for v in self._visits:
                 if v.response_time_ms > threshold:
-                    warn_list.append({
-                        "url": v.url_full_name,
-                        "method": v.method,
-                        "time_ms": v.response_time_ms,
-                        "threshold": threshold,
-                    })
+                    warn_list.append(
+                        {
+                            "url": v.url_full_name,
+                            "method": v.method,
+                            "time_ms": v.response_time_ms,
+                            "threshold": threshold,
+                        }
+                    )
 
         return {
             "total_visits": len(self._visits),
             "avg_response_time_ms": global_mean,
             "max_response_time_ms": max(times),
             "min_response_time_ms": min(times),
-            "slowest_urls": [
-                {"url": k, "avg_ms": v} for k, v in slowest
-            ],
+            "slowest_urls": [{"url": k, "avg_ms": v} for k, v in slowest],
             "outliers": outliers,
             "inconsistent": inconsistent,
             "warnings": warn_list,

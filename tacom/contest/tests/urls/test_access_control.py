@@ -1,6 +1,7 @@
 import pytest
 
 
+@pytest.mark.url_access
 @pytest.mark.django_db
 class TestAnonymousUrls:
     def test_anonymous_can_access(self, access_tester):
@@ -8,13 +9,15 @@ class TestAnonymousUrls:
         for url in um.get_urls("anonymous"):
             for method in um.get_effective_methods(url):
                 result = access_tester.test_access(
-                    url, "anonymous", method=method, user=None,
+                    url,
+                    "anonymous",
+                    method=method,
+                    user=None,
                 )
-                assert result.passed, (
-                    f"{url.full_name} [{method}]: {result.reason}"
-                )
+                assert result.passed, f"{url.full_name} [{method}]: {result.reason}"
 
 
+@pytest.mark.url_access
 @pytest.mark.django_db
 class TestLoggedInUrls:
     def test_logged_in_can_access(self, access_tester):
@@ -25,24 +28,27 @@ class TestLoggedInUrls:
             for user in ctx.authorized_users:
                 for method in um.get_effective_methods(url):
                     result = access_tester.test_access(
-                        url, "logged_in", method=method, user=user,
+                        url,
+                        "logged_in",
+                        method=method,
+                        user=user,
                     )
-                    assert result.passed, (
-                        f"{url.full_name} [{method}]: {result.reason}"
-                    )
+                    assert result.passed, f"{url.full_name} [{method}]: {result.reason}"
 
     def test_anonymous_cannot_access_logged_in(self, access_tester):
         um = access_tester.url_manager
         for url in um.get_urls("logged_in"):
             for method in um.get_effective_methods(url):
                 result = access_tester.test_denial(
-                    url, "logged_in", method=method, user=None,
+                    url,
+                    "logged_in",
+                    method=method,
+                    user=None,
                 )
-                assert result.passed, (
-                    f"{url.full_name} [{method}]: {result.reason}"
-                )
+                assert result.passed, f"{url.full_name} [{method}]: {result.reason}"
 
 
+@pytest.mark.url_access
 @pytest.mark.django_db
 class TestCapabilityUrls:
     def test_authorized_can_access(self, access_tester):
@@ -54,12 +60,15 @@ class TestCapabilityUrls:
                 for user in ctx.authorized_users:
                     for method in um.get_effective_methods(url):
                         result = access_tester.test_access(
-                            url, "by_capability", cap_name,
-                            method=method, user=user,
+                            url,
+                            "by_capability",
+                            cap_name,
+                            method=method,
+                            user=user,
                         )
-                        assert result.passed, (
-                            f"{url.full_name} [{method}] cap={cap_name}: {result.reason}"
-                        )
+                        assert (
+                            result.passed
+                        ), f"{url.full_name} [{method}] cap={cap_name}: {result.reason}"
 
     def test_unauthorized_cannot_access(self, access_tester):
         um = access_tester.url_manager
@@ -70,12 +79,15 @@ class TestCapabilityUrls:
                 for user in ctx.unauthorized_users:
                     for method in um.get_effective_methods(url):
                         result = access_tester.test_denial(
-                            url, "by_capability", cap_name,
-                            method=method, user=user,
+                            url,
+                            "by_capability",
+                            cap_name,
+                            method=method,
+                            user=user,
                         )
-                        assert result.passed, (
-                            f"{url.full_name} [{method}] cap={cap_name}: {result.reason}"
-                        )
+                        assert (
+                            result.passed
+                        ), f"{url.full_name} [{method}] cap={cap_name}: {result.reason}"
 
     def test_anonymous_cannot_access_capability_urls(self, access_tester):
         um = access_tester.url_manager
@@ -83,14 +95,18 @@ class TestCapabilityUrls:
             for url in um.get_urls("by_capability", cap_name):
                 for method in um.get_effective_methods(url):
                     result = access_tester.test_denial(
-                        url, "by_capability", cap_name,
-                        method=method, user=None,
+                        url,
+                        "by_capability",
+                        cap_name,
+                        method=method,
+                        user=None,
                     )
-                    assert result.passed, (
-                        f"{url.full_name} [{method}] cap={cap_name}: {result.reason}"
-                    )
+                    assert (
+                        result.passed
+                    ), f"{url.full_name} [{method}] cap={cap_name}: {result.reason}"
 
 
+@pytest.mark.url_access
 @pytest.mark.django_db
 class TestGroupUrls:
     def test_authorized_can_access(self, access_tester):
@@ -102,12 +118,15 @@ class TestGroupUrls:
                 for user in ctx.authorized_users:
                     for method in um.get_effective_methods(url):
                         result = access_tester.test_access(
-                            url, "by_group", group_name,
-                            method=method, user=user,
+                            url,
+                            "by_group",
+                            group_name,
+                            method=method,
+                            user=user,
                         )
-                        assert result.passed, (
-                            f"{url.full_name} [{method}] group={group_name}: {result.reason}"
-                        )
+                        assert (
+                            result.passed
+                        ), f"{url.full_name} [{method}] group={group_name}: {result.reason}"
 
     def test_unauthorized_cannot_access(self, access_tester):
         um = access_tester.url_manager
@@ -118,29 +137,33 @@ class TestGroupUrls:
                 for user in ctx.unauthorized_users:
                     for method in um.get_effective_methods(url):
                         result = access_tester.test_denial(
-                            url, "by_group", group_name,
-                            method=method, user=user,
+                            url,
+                            "by_group",
+                            group_name,
+                            method=method,
+                            user=user,
                         )
-                        assert result.passed, (
-                            f"{url.full_name} [{method}] group={group_name}: {result.reason}"
-                        )
+                        assert (
+                            result.passed
+                        ), f"{url.full_name} [{method}] group={group_name}: {result.reason}"
 
 
+@pytest.mark.url_access
 @pytest.mark.django_db
 class TestUrlCoverage:
     def test_no_missed_urls(self, access_tester):
         um = access_tester.url_manager
         missed = um.get_missed()
-        assert len(missed) == 0, (
-            f"Found {len(missed)} missed (unconfigured) URLs:\n"
-            f"{um.get_missed_report()}"
-        )
+        assert (
+            len(missed) == 0
+        ), f"Found {len(missed)} missed (unconfigured) URLs: {[":".join([url.namespace,url.name]) for url in missed]}\n"
 
     def test_parked_urls_warning(self, access_tester):
         um = access_tester.url_manager
         parked = um.get_parked()
         if parked:
             import warnings
+
             warnings.warn(
                 f"{len(parked)} URLs are parked (not tested): "
                 f"{[u.full_name for u in parked]}",
