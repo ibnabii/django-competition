@@ -2,11 +2,13 @@ from django.contrib.auth import get_user_model
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django.views.generic import ListView
 
 from contest.models.membership import ContestMembership
 from contest.permissions.capabilities import Capability
 from contest.permissions.mixins import CapabilityRequiredMixin
-from contest.permissions.roles import Role
+from contest.permissions.request_types import AppRequest
+from contest.permissions.roles import Role, LIST_ROLES_JUDGES, LIST_ROLES_TEAM
 from contest.utils import get_role_state
 from contest.views import ContestContextMixin
 
@@ -14,9 +16,17 @@ User = get_user_model()
 
 
 class ToggleContestRoleView(ContestContextMixin, CapabilityRequiredMixin, View):
-    required_capability = Capability.CONTEST_MANAGE_JUDGES
+    required_capability = [
+        Capability.CONTEST_MANAGE_JUDGES,
+        Capability.CONTEST_MANAGE_TEAM,
+    ]
+
+    allowed_roles: dict[Capability, list[Role]] = {
+        Capability.CONTEST_MANAGE_JUDGES: LIST_ROLES_JUDGES,
+        Capability.CONTEST_MANAGE_TEAM: LIST_ROLES_TEAM,
+    }
+
     template_name = "contest/widgets/role_switch.html"
-    allowed_roles = [Role.JUDGE, Role.JUDGE_FINALS, Role.JUDGE_BOS]
 
     def _render_switch(self, request):
         """Common method to render the switch with current value"""
@@ -32,22 +42,39 @@ class ToggleContestRoleView(ContestContextMixin, CapabilityRequiredMixin, View):
     def __init__(self, *args, **kwargs):
         self.user: User | None = None
         self.role: Role | None = None
+
         super().__init__(*args, **kwargs)
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request: AppRequest, *args, **kwargs):
         # Extract once, available in all HTTP methods
         user_id = kwargs.get("user_id")
         role_name = kwargs.get("role_name")
-        # Fetch objects
-        self.user = get_object_or_404(User, pk=user_id)
         # Convert role string to Role enum
         try:
             self.role = Role(role_name)
         except ValueError:
             raise Http404()
+
         # Validate role is allowed in view
-        if self.role not in self.allowed_roles:
+        if self.role not in {
+            role for roles in self.allowed_roles.values() for role in roles
+        }:
             raise Http404()
+
+        # Validate user has capability for the given role
+        capabilities = [
+            capability
+            for capability, roles in self.allowed_roles.items()
+            if self.role in roles
+        ]
+        if not any(
+            request.perm.can(capability, self.contest) for capability in capabilities
+        ):
+            raise Http404()
+
+        # Fetch objects
+        self.user = get_object_or_404(User, pk=user_id)
+
         # Continue normal dispatch
         return super().dispatch(request, *args, **kwargs)
 
@@ -62,3 +89,34 @@ class ToggleContestRoleView(ContestContextMixin, CapabilityRequiredMixin, View):
 
         # render updated switch
         return self._render_switch(request)
+
+
+class ManageTeamPageView(ContestContextMixin, CapabilityRequiredMixin, ListView):
+    required_capability = Capability.CONTEST_MANAGE_TEAM
+    template_name = "contest/team_management_page.html"
+    context_object_name = "memberships"
+    model = ContestMembership
+    managed_roles = LIST_ROLES_TEAM
+
+    def get_queryset(self):
+        return (
+            self.model.objects.filter(
+                contest=self.contest,
+                roles__role__in=[role.value for role in self.managed_roles],
+            )
+            .distinct()
+            .select_related("user")
+            .with_roles()
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["roles"] = self.managed_roles
+        context["role_map"] = {
+            membership.user.id: {
+                role.value: (role.value in [r.role for r in membership.roles.all()])
+                for role in context["roles"]
+            }
+            for membership in context.get("memberships", [])
+        }
+        return context

@@ -327,7 +327,7 @@ class JudgeContestPhaseListView(ContestContextMixin, CapabilityRequiredMixin, Li
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["roles"] = [Role.JUDGE, Role.JUDGE_FINALS, Role.JUDGE_BOS]
+        context["roles"] = LIST_ROLES_JUDGES
         context["role_map"] = {
             judge.user.id: {
                 role.value: (

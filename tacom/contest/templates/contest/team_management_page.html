@@ -1,0 +1,42 @@
+{% extends 'contest/base.html' %}
+{% load i18n %}
+{% block content %}
+<h2 class="m-2">{% translate 'Team management' %}: </h2>
+
+<div id="judge-list">
+    {% include "contest/team_management/_team_list.html" %}
+</div>
+
+<div class="container">
+    <h5>Role:</h5>
+    <dl>
+        <dt>MANAGER</dt>
+        <dd><ul>
+            <li>Zarządzanie zespołem (ta strona)</li>
+            <li>Zarządzanie sędziami</li>
+        </ul></dd>
+
+        <dt>ENTRY_MANAGER</dt>
+        <dd><ul>
+            <li>Potwierdzanie odbiorów przesyłek</li>
+            <li>Potwierdzanie płatności bezpośrednio na konto (ręczna weryfikacja)</li>
+        </ul></dd>
+
+        <dt>ENTRY_CODER</dt>
+        <dd><ul>
+            <li>Kodowanie zgłoszeń do sędziowania (uczestnik -> sędzia)</li>
+            <li>Rozkodowywanie zgłoszeń (sędzia -> uczestnik)</li>
+        </ul></dd>
+
+        <dt>HEAD_JUDGE</dt>
+        <dd><ul>
+            <li>Dostęp do wszystkich etapów sędziowania</li>
+            <li>Zarządzanie sędziami</li>
+        </ul></dd>
+    </dl>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+{% include 'contest/utils/sortable_table_header.html' %}
+{% endblock %}

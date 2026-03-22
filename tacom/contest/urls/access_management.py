@@ -8,4 +8,9 @@ urlpatterns = [
         views.ToggleContestRoleView.as_view(),
         name="toggle_contest_role",
     ),
+    path(
+        "<slug:contest_slug>/manage_team/",
+        views.ManageTeamPageView.as_view(),
+        name="manage_team",
+    ),
 ]

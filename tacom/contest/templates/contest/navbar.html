@@ -143,6 +143,15 @@
 
                         {# TEAM MANAGEMENT #}
 
+                        {% can "CONTEST_MANAGE_TEAM" as can_manage_team %}
+                        {% if can_manage_team %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'contest:manage_team' contest.slug %}">
+                                {% translate "Manage team" %}
+                            </a>
+                        </li>
+                        {% endif %}
+
                         {% can "CONTEST_MANAGE_JUDGES" as can_manage_judges %}
                         {% if can_manage_judges %}
                         <li>

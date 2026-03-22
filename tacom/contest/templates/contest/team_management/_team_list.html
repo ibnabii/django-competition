@@ -1,0 +1,43 @@
+{% load i18n %}
+{% load dict_extras %}
+
+{% if memberships %}
+<table class="table table-hover sortable" id="team-table">
+    <thead>
+    <th scope="col" data-sort-method="number">#</th>
+    <th scope="col">{% translate "Name" %}</th>
+    <th scope="col">{% translate "Last Name" %}</th>
+    <th scope="col">{% translate "Email" %}</th>
+    {% for role in roles %}
+        <th scope="col">{{ role.name }}</th>
+    {% endfor %}
+    </thead>
+    <tbody>
+    {% for m in memberships %}
+    <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{ m.user.first_name }}</td>
+        <td>{{ m.user.last_name }}</td>
+        <td>{{ m.user.email }}</td>
+        {% for role in roles %}
+            {% with role_map|dict_get:m.user.id|dict_get:role.value as has_role %}
+            <td data-sort="{{ has_role }}">
+                {% include "contest/widgets/role_switch.html" with role=role user=m.user contest_slug=contest.slug value=has_role %}
+            </td>
+            {% endwith %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    new Tablesort(document.getElementById('judge-table'));
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+{% else %}
+<h4 class="m-4">{% translate 'No judges found' %}</h4>
+{% endif %}
