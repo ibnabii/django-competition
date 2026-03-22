@@ -34,8 +34,8 @@ data_provider_class: "contest.tests.urls.data_provider.ContestDataProvider"
 
 # ── Method testing strategy ──────────────────────────────────
 method_strategy:
-  mode: "ALL_FROM_VIEW"
-  methods: ["GET"]
+  mode: "RESTRICT_TO_CONFIG"
+  methods: ["GET", "POST"]
 
 # ── Statistics ───────────────────────────────────────────────
 stats:
@@ -97,6 +97,7 @@ anonymous:
           - "style_detail"
           - "privacy"
           - "partners_gallery"
+          - "contest_results"
 
 # ── Logged-in URLs ───────────────────────────────────────────
 logged_in:
@@ -109,12 +110,17 @@ logged_in:
           - "profile"
           - "profile_edit"
           - "add_entry_category"
+          - "user_entry_list"
           - "judge_application"
           - "judge_certification_read"
           - "judge_certification_edit"
           - "judge_application_widget"
           - "judge_widget_apply"
           - "judge_widget_cancel"
+          - "add_entry"
+          - "add_entry_contest"
+          - "payment_start"
+          - "labels_start"
 
 
 
@@ -168,6 +174,30 @@ by_capability:
         - name_space: "contest"
           names:
             - "payment_list"
+    - routes:
+        - name_space: "contest"
+          names:
+            - "payment_process"
+      access_rules:
+        - status_codes: [200, 302]
+          allowed_redirect_targets:
+          - name_space: "contest"
+            names: ["contest:payment_list"]
+
+  ENTRY_RECEIVE:
+    - routes:
+        - name_space: "contest"
+          names:
+            - "delivery_select"
+    - routes:
+        - name_space: "contest"
+          names:
+            - "delivery_process"
+      access_rules:
+        - status_codes: [200, 302]
+          allowed_redirect_targets:
+          - name_space: "contest"
+            names: ["contest:delivery_process"]
 
   CONTEST_MANAGE_JUDGES:
     - routes:
@@ -186,8 +216,6 @@ parked:
     names:
       # webhook (csrf-exempt, not user-facing)
       - "payment_payu_notification"
-      # view has bug: self.kwargs["slug"] should be contest_slug
-      - "user_entry_list"
       # ownership-based access (beyond framework scope for v1.0)
       - "entry_edit"
       - "entry_delete"
@@ -203,19 +231,5 @@ parked:
       - "payment_paypal_failure"
       # own-package check (beyond framework scope for v1.0)
       - "labels_print"
-      # public contest results (no login required)
-      - "contest_results"
-      # delivery_process needs owned package
-      - "delivery_process"
-      # payment_process needs owned payment
-      - "payment_process"
-      # view has bug: self.kwargs["slug"] should be contest_slug (AddPackageView)
-      - "delivery_select"
-      # add_entry views: no LoginRequiredMixin, bugs with anonymous users
-      - "add_entry"
-      - "add_entry_contest"
-      # view has bug: AddPackageView uses self.kwargs["slug"] instead of contest_slug
-      - "payment_start"
-      - "labels_start"
       # incomplete/buggy view (TODO in code)
       - "disambiguation"

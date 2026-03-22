@@ -20,22 +20,23 @@ class PublishedContestListView(ListView):
         return self.render_to_response(self.get_context_data())
 
 
-# TODO: finish disambiguation
+# TODO: delete disambiguation
 class DisambiguationView(ListView):
-    queryset = Contest.published
-
-    def get(self, *args, **kwargs):
-        functionality = kwargs["functionality"]
-
-        # TODO: remove
-        print("DisambiguationView: ", functionality)
-
-        try:
-            if self.queryset.count() == 1:
-                return redirect(
-                    "contest:contest_detail", slug=self.queryset.first().slug
-                )
-
-            return redirect(f"contest:{functionality}", Contest.objects.get(id=17).slug)
-        except NoReverseMatch:
-            raise Http404()
+    # queryset = Contest.published
+    #
+    # def get(self, *args, **kwargs):
+    #     functionality = kwargs["functionality"]
+    #
+    #     # TODO: remove
+    #     print("DisambiguationView: ", functionality)
+    #
+    #     try:
+    #         if self.queryset.count() == 1:
+    #             return redirect(
+    #                 "contest:contest_detail", slug=self.queryset.first().slug
+    #             )
+    #
+    #         return redirect(f"contest:{functionality}", Contest.objects.get(id=17).slug)
+    #     except NoReverseMatch:
+    #         raise Http404()
+    pass

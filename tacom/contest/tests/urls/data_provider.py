@@ -6,6 +6,8 @@ from django.urls import reverse
 
 from .models.config import DiscoveredUrl, HttpMethod
 from .models.url_manager import UrlCategory
+from ...factories.entry_factory import EntryFactory
+from ...models import Payment
 
 
 @dataclass
@@ -97,6 +99,7 @@ class ContestDataProvider(BaseDataProvider):
 
         # Basic user (logged in, no capabilities)
         self.basic_user = UserFactory(profile=True)
+        self.participant_user = UserFactory(profile=True)
 
         # Entry owned by basic_user
         cat_a = self.contest_a.categories.first()
@@ -120,6 +123,9 @@ class ContestDataProvider(BaseDataProvider):
 
         # Payment owned by basic_user
         self._setup_payment()
+
+        # Payment to be received manualyu
+        self._setup_manual_payment()
 
         # ScoreSheet for an entry
         self._setup_scoresheet()
@@ -219,6 +225,26 @@ class ContestDataProvider(BaseDataProvider):
         except Exception:
             self.payment_a = None
             self.payment_method = None
+
+    def _setup_manual_payment(self):
+        from contest.models import Payment, PaymentMethod
+
+        method, _ = PaymentMethod.objects.get_or_create(
+            name="manual payment", name_pl="reczna wplata", code="transfer"
+        )
+
+        entry = EntryFactory(
+            category=self.contest_a.categories.first(), brewer=self.participant_user
+        )
+        self.manual_payment_a = Payment.objects.create(
+            method=method,
+            status=Payment.PaymentStatus.AWAITING,
+            user=self.participant_user,
+            contest=self.contest_a,
+            amount="10.00",
+            currency=self.contest_a.entry_fee_currency,
+        )
+        self.manual_payment_a.entries.add(entry)
 
     def _setup_scoresheet(self) -> None:
         from contest.models import ScoreSheet
@@ -354,6 +380,11 @@ class ContestDataProvider(BaseDataProvider):
                 "contest_slug": self.contest_a.slug,
                 "role_name": "judge",
                 "user_id": self.basic_user.id,
+            }
+        elif url.namespace == "contest" and url.name == "payment_process":
+            kwargs = {
+                "contest_slug": self.contest_a.slug,
+                "pk": self.manual_payment_a.id,
             }
         else:
             kwargs = {}

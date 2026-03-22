@@ -90,7 +90,9 @@ class UserOwnsPackageMixin(UserPassesTestMixin):
         raise Http404
 
 
-class UsersEntryListView(LoginRequiredMixin, UserFullProfileMixin, ListView):
+class UsersEntryListView(
+    LoginRequiredMixin, UserFullProfileMixin, ContestContextMixin, ListView
+):
     """
     Displays list of user's entries - priomary purpose is to let him view
     the results after the registration has ended
@@ -98,14 +100,6 @@ class UsersEntryListView(LoginRequiredMixin, UserFullProfileMixin, ListView):
 
     template_name = "contest/view_entry_list.html"
     context_object_name = "entries"
-
-    def __init__(self):
-        self.contest = None
-        super().__init__()
-
-    def dispatch(self, request, *args, **kwargs):
-        self.contest = get_object_or_404(Contest, slug=self.kwargs["slug"])
-        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         payu.update_user_payments_statuses(self.request.user)
@@ -676,6 +670,7 @@ class PaymentManagementView(CapabilityRequiredMixin, ContestContextMixin, ListVi
 
 class PaymentReceivedView(CapabilityRequiredMixin, ContestContextMixin, DeleteView):
     required_capability = Capability.ENTRY_PAYMENTS
+    model = Payment
 
     def get_object(self, queryset=None):
         return get_object_or_404(

@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 
 
-class AddEntryContestListView(ListView):
+class AddEntryContestListView(LoginRequiredMixin, ListView):
     """
     Allows selection of the contest, which user wants to register
     """

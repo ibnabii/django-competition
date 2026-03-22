@@ -51,7 +51,7 @@ class AccessTester:
         policy = self.url_manager.get_policy(url, category, subcategory)
         ctx = self.data_provider.get_test_context(url, category, subcategory)
         rules = policy.access_rules or []
-        print(ctx.resolved_url, end="... ")
+        print(method.value, "\t", ctx.resolved_url, end="... ")
         result = self._execute(
             ctx.resolved_url,
             method,
