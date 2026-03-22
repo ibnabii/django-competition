@@ -91,7 +91,7 @@ class JudgeCertificationDetailView(LoginRequiredMixin, TemplateView):
             )
 
 
-class JudgeApplicationContextMixin(ContestContextMixin):
+class JudgeApplicationContextMixin(ContestContextMixin, LoginRequiredMixin):
     request: HttpRequest
 
     @cached_property

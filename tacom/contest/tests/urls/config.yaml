@@ -112,6 +112,9 @@ logged_in:
           - "judge_application"
           - "judge_certification_read"
           - "judge_certification_edit"
+          - "judge_application_widget"
+          - "judge_widget_apply"
+          - "judge_widget_cancel"
 
 
 
@@ -216,7 +219,3 @@ parked:
       - "labels_start"
       # incomplete/buggy view (TODO in code)
       - "disambiguation"
-      # HTMX widget views - no LoginRequiredMixin, expect embedded usage in logged-in pages
-      - "judge_application_widget"
-      - "judge_widget_apply"
-      - "judge_widget_cancel"
