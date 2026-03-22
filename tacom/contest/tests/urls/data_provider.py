@@ -132,6 +132,7 @@ class ContestDataProvider(BaseDataProvider):
 
     def _ensure_category(self, contest) -> None:
         from contest.models import Category
+
         if not contest.categories.exists():
             try:
                 Category.objects.create(
@@ -145,8 +146,10 @@ class ContestDataProvider(BaseDataProvider):
 
     def _contest_defaults(self, slug: str) -> dict:
         from faker import Faker
+
         f = Faker("pl_PL")
         from datetime import date, timedelta
+
         today = date.today()
         return {
             "title": f"URL Test Contest {slug}",
@@ -176,6 +179,7 @@ class ContestDataProvider(BaseDataProvider):
 
     def _setup_package(self) -> None:
         from contest.models import EntriesPackage
+
         try:
             self.package_a = EntriesPackage.objects.filter(
                 owner=self.basic_user, contest=self.contest_a
@@ -191,6 +195,7 @@ class ContestDataProvider(BaseDataProvider):
 
     def _setup_payment(self) -> None:
         from contest.models import Payment, PaymentMethod
+
         try:
             method, _ = PaymentMethod.objects.get_or_create(
                 code="fake",
@@ -217,10 +222,9 @@ class ContestDataProvider(BaseDataProvider):
 
     def _setup_scoresheet(self) -> None:
         from contest.models import ScoreSheet
+
         try:
-            self.scoresheet_a = ScoreSheet.objects.filter(
-                entry=self.entry_a
-            ).first()
+            self.scoresheet_a = ScoreSheet.objects.filter(entry=self.entry_a).first()
             if not self.scoresheet_a:
                 self.scoresheet_a = ScoreSheet.objects.create(
                     entry=self.entry_a,
@@ -236,6 +240,7 @@ class ContestDataProvider(BaseDataProvider):
     def _setup_judge_application(self) -> None:
         from contest.models.judges import JudgeInCompetition
         from contest.factories.user_factory import UserFactory
+
         try:
             judge_user = UserFactory(profile=True, judge=True)
             self.judge_application = JudgeInCompetition.objects.filter(
@@ -256,6 +261,7 @@ class ContestDataProvider(BaseDataProvider):
         subcategory: str | None = None,
     ) -> TestContext:
         kwargs = self._url_kwargs(url)
+
         try:
             resolved_url = reverse(url.full_name, kwargs=kwargs)
         except Exception:
@@ -342,12 +348,20 @@ class ContestDataProvider(BaseDataProvider):
         return user
 
     def _url_kwargs(self, url: DiscoveredUrl) -> dict:
-        kwargs = {}
-        for match in _URL_PARAM_RE.finditer(url.url_pattern):
-            type_str, param_name = match.group(1), match.group(2)
-            value = self._resolve_param(param_name, type_str, url)
-            if value is not None:
-                kwargs[param_name] = value
+        # url-specific implementation:
+        if url.namespace == "contest" and url.name == "toggle_contest_role":
+            kwargs = {
+                "contest_slug": self.contest_a.slug,
+                "role_name": "judge",
+                "user_id": self.basic_user,
+            }
+        else:
+            kwargs = {}
+            for match in _URL_PARAM_RE.finditer(url.url_pattern):
+                type_str, param_name = match.group(1), match.group(2)
+                value = self._resolve_param(param_name, type_str, url)
+                if value is not None:
+                    kwargs[param_name] = value
         return kwargs
 
     def _resolve_param(self, param_name: str, type_str: str | None, url: DiscoveredUrl):
@@ -374,6 +388,7 @@ class ContestDataProvider(BaseDataProvider):
         # Fallback by type
         if type_str == "uuid":
             import uuid
+
             return uuid.uuid4()
         if type_str == "slug":
             return "test"
@@ -386,7 +401,12 @@ class ContestDataProvider(BaseDataProvider):
     def _resolve_pk_param(self, url: DiscoveredUrl):
         # For UUID pk params
         url_name = url.name
-        if url_name in ("entry_edit", "entry_delete", "entry_results", "add_entry_category"):
+        if url_name in (
+            "entry_edit",
+            "entry_delete",
+            "entry_results",
+            "add_entry_category",
+        ):
             if url_name == "add_entry_category":
                 cat = self.contest_a.categories.first()
                 return cat.id if cat else None

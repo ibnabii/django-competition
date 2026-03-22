@@ -34,7 +34,7 @@ data_provider_class: "contest.tests.urls.data_provider.ContestDataProvider"
 
 # ── Method testing strategy ──────────────────────────────────
 method_strategy:
-  mode: "RESTRICT_TO_CONFIG"
+  mode: "ALL_FROM_VIEW"
   methods: ["GET"]
 
 # ── Statistics ───────────────────────────────────────────────
@@ -48,21 +48,22 @@ stats:
 defaults:
   anonymous:
     access_rules:
-      - any_success: true
+#      - any_success: true
+      - status_codes: [200]
 
   logged_in:
     access_rules:
-      - any_success: true
+      - status_codes: [200]
     no_access_rules:
-      - status_codes: [302]
+      - status_codes: [302, 404]
         allowed_redirect_targets:
           - names: ["account_login"]
 
   by_capability:
     access_rules:
-      - any_success: true
+      - status_codes: [200]
     no_access_rules:
-      - status_codes: [302]
+      - status_codes: [302, 404]
         allowed_redirect_targets:
           - name_space: "contest"
             names: ["contest_detail", "contest_list"]
@@ -71,14 +72,17 @@ defaults:
     access_rules:
       - any_success: true
     no_access_rules:
-      - status_codes: [302]
+      - status_codes: [302, 404]
         allowed_redirect_targets:
           - names: ["account_login"]
 
 # ── Anonymous URLs ───────────────────────────────────────────
 anonymous:
   - routes:
-      - names: ["home"]
+      - names: [ "home" ]
+    access_rules:
+      - any_success: true
+
 
   - routes:
       - names: ["account_login"]
@@ -159,6 +163,9 @@ by_capability:
             - "judge_selection_list"
             - "judge_status_edit"
             - "judge_status_view"
+            - "judge_phases_list"
+            - "toggle_contest_role"
+
 
 # ── Parked URLs (deferred / known issues) ────────────────────
 parked:

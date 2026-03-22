@@ -51,10 +51,17 @@ class AccessTester:
         policy = self.url_manager.get_policy(url, category, subcategory)
         ctx = self.data_provider.get_test_context(url, category, subcategory)
         rules = policy.access_rules or []
+        print(ctx.resolved_url)
         return self._execute(
-            ctx.resolved_url, method, user, rules,
-            expected_access=True, url=url,
-            category=category, subcategory=subcategory, ctx=ctx,
+            ctx.resolved_url,
+            method,
+            user,
+            rules,
+            expected_access=True,
+            url=url,
+            category=category,
+            subcategory=subcategory,
+            ctx=ctx,
         )
 
     def test_denial(
@@ -69,9 +76,15 @@ class AccessTester:
         ctx = self.data_provider.get_test_context(url, category, subcategory)
         rules = policy.no_access_rules or []
         return self._execute(
-            ctx.resolved_url, method, user, rules,
-            expected_access=False, url=url,
-            category=category, subcategory=subcategory, ctx=ctx,
+            ctx.resolved_url,
+            method,
+            user,
+            rules,
+            expected_access=False,
+            url=url,
+            category=category,
+            subcategory=subcategory,
+            ctx=ctx,
         )
 
     # ═══════════════════════════════════════
@@ -122,9 +135,14 @@ class AccessTester:
             # Followed redirects
             if status < 400 and rule.allowed_redirect_targets:
                 final_url = response.request.get("PATH_INFO", "")
-                if self._check_redirect_target(final_url, rule.allowed_redirect_targets):
+                if self._check_redirect_target(
+                    final_url, rule.allowed_redirect_targets
+                ):
                     return True, f"Redirect to {final_url} matches allowed targets"
-                return False, f"Redirect to {final_url} not in allowed targets {[t.names for t in rule.allowed_redirect_targets]}"
+                return (
+                    False,
+                    f"Redirect to {final_url} not in allowed targets {[t.names for t in rule.allowed_redirect_targets]}",
+                )
 
             if status in rule.status_codes:
                 return True, f"Status {status} matches expected {rule.status_codes}"
@@ -154,8 +172,16 @@ class AccessTester:
     # ═══════════════════════════════════════
 
     def _execute(
-        self, resolved_url, method, user, rules,
-        expected_access, url, category, subcategory, ctx,
+        self,
+        resolved_url,
+        method,
+        user,
+        rules,
+        expected_access,
+        url,
+        category,
+        subcategory,
+        ctx,
     ) -> TestResult:
         user_type = self._setup_user(user)
         follow = self._should_follow(rules)
@@ -189,16 +215,18 @@ class AccessTester:
             final_url=final_url,
         )
 
-        self.url_manager.record_visit(VisitRecord(
-            url_full_name=url.full_name,
-            method=method,
-            user_type=user_type,
-            status_code=response.status_code,
-            response_time_ms=elapsed_ms,
-            followed_redirects=follow,
-            redirect_chain=redirect_chain,
-            timestamp=datetime.now(timezone.utc),
-        ))
+        self.url_manager.record_visit(
+            VisitRecord(
+                url_full_name=url.full_name,
+                method=method,
+                user_type=user_type,
+                status_code=response.status_code,
+                response_time_ms=elapsed_ms,
+                followed_redirects=follow,
+                redirect_chain=redirect_chain,
+                timestamp=datetime.now(timezone.utc),
+            )
+        )
 
         return result
 
