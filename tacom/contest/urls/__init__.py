@@ -1,3 +1,4 @@
+from .access_management import urlpatterns as access_management_patterns
 from .contest import urlpatterns as contest_patterns
 from .entry_registration import url_patterns as entry_registartion_patterns
 from .general import urlpatterns as general_patterns
@@ -12,4 +13,5 @@ urlpatterns = [
     *contest_patterns,
     *judges_patterns,
     *entry_registartion_patterns,
+    *access_management_patterns,
 ]

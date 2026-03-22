@@ -1,0 +1,16 @@
+<div class="form-check form-switch">
+    <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+            {% if value %}checked{% endif %}
+            hx-post="{% url 'contest:toggle_contest_role' contest_slug user.id role.value %}"
+            hx-trigger="change"
+            hx-vals='js:{"csrfmiddlewaretoken": "{{ csrf_token }}", "enabled": String(this.checked)}'
+            hx-target="closest div"
+            hx-swap="outerHTML"
+            hx-disabled-elt="this"
+            style="cursor: pointer;"
+    />
+</div>

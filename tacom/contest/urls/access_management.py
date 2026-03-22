@@ -1,0 +1,11 @@
+import contest.views.access_management as views
+from django.urls import path
+
+urlpatterns = [
+    # Capability switch
+    path(
+        "<slug:contest_slug>/<int:user_id>/<str:role_name>/toggle",
+        views.ToggleContestRoleView.as_view(),
+        name="toggle_contest_role",
+    ),
+]

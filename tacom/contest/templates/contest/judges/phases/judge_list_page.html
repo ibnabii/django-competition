@@ -1,0 +1,14 @@
+{% extends 'contest/base.html' %}
+{% load i18n %}
+{% block content %}
+<h2 class="m-2">{% translate 'Judging phases access' %}: </h2>
+
+<div id="judge-list">
+    {% include "contest/judges/phases/_judge_list.html" %}
+</div>
+
+{% endblock %}
+
+{% block extrahead %}
+{% include 'contest/utils/sortable_table_header.html' %}
+{% endblock %}

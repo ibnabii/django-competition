@@ -1,10 +1,14 @@
-import time
 from dataclasses import dataclass
+
+from django.contrib.auth import get_user_model
+from django.db.models import Prefetch
 
 from contest.models import Contest
 from contest.models.judges import JudgeCertification, JudgeInCompetition
+from contest.models.membership import ContestMembership
 from contest.permissions.capabilities import Capability
 from contest.permissions.mixins import CapabilityRequiredMixin
+from contest.permissions.roles import Role, LIST_ROLES_JUDGES
 from contest.utils import mail_judge_status_change
 from contest.views import UserFullProfileMixin
 from contest.views.contest import ContestContextMixin
@@ -276,6 +280,14 @@ class JudgeInCompetitionUpdateView(ManageJudgeInCompetitionMixin, UpdateView):
         self.object: JudgeInCompetition = form.save()
         if self.object.status != JudgeInCompetition.Status.APPLICATION:
             mail_judge_status_change(self.object)
+
+        # drop Judge roles if the user had them previously
+        if self.object.status == JudgeInCompetition.Status.REJECTED:
+            for role in LIST_ROLES_JUDGES:
+                ContestMembership.set_role(
+                    self.object.user, self.object.contest, role, False
+                )
+
         return render(
             self.request,
             JudgeInCompetitionStatusView.template_name,
@@ -288,3 +300,43 @@ class JudgeInCompetitionStatusView(ManageJudgeInCompetitionMixin, DetailView):
     template_name = "contest/judges/selection/_status_view.html"
     fields = ["status"]
     context_object_name = "judge"
+
+
+class JudgeContestPhaseListView(ContestContextMixin, CapabilityRequiredMixin, ListView):
+    model = JudgeInCompetition
+    context_object_name = "judges"
+    required_capability = Capability.CONTEST_MANAGE_JUDGES
+    template_name = "contest/judges/phases/judge_list_page.html"
+
+    def get_queryset(self):
+        qs = (
+            JudgeInCompetition.objects.filter(contest=self.contest)
+            .filter(status=JudgeInCompetition.Status.APPROVED)
+            .select_related("user")
+            .prefetch_related(
+                Prefetch(
+                    "user__contest_memberships",
+                    queryset=ContestMembership.objects.filter(
+                        contest=self.contest
+                    ).with_roles(),
+                    to_attr="membership",
+                )
+            )
+        )
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["roles"] = [Role.JUDGE, Role.JUDGE_FINALS, Role.JUDGE_BOS]
+        context["role_map"] = {
+            judge.user.id: {
+                role.value: (
+                    role.value in [r.role for r in judge.user.membership[0].roles.all()]
+                    if judge.user.membership
+                    else False
+                )
+                for role in context["roles"]
+            }
+            for judge in context.get("judges", [])
+        }
+        return context

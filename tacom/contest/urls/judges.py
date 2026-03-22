@@ -2,6 +2,8 @@ import contest.views.judges as views
 from django.urls import path
 
 urlpatterns = [
+    #############################################################
+    # Individual Judge Application
     path(
         "judges/<slug:contest_slug>/",
         views.MainJudgeApplicationView.as_view(),
@@ -22,6 +24,9 @@ urlpatterns = [
         views.JudgeApplicationCancelView.as_view(),
         name="judge_widget_cancel",
     ),
+    #############################################################
+    # Judge Management
+    # Applications
     path(
         "judges_management/<slug:contest_slug>/applications/",
         views.JudgeSelectionListView.as_view(),
@@ -37,6 +42,14 @@ urlpatterns = [
         views.JudgeInCompetitionStatusView.as_view(),
         name="judge_status_view",
     ),
+    # Contest phase access management
+    path(
+        "judges_management/<slug:contest_slug>/phases/",
+        views.JudgeContestPhaseListView.as_view(),
+        name="judge_phases_list",
+    ),
+    #############################################################
+    # Judge Certification
     path(
         "judge_certification/",
         views.JudgeCertificationDetailView.as_view(),

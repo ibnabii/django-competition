@@ -1,4 +1,4 @@
-from contest.permissions.roles import CONTEST_ROLE_CAPABILITIES
+from contest.permissions.roles import CONTEST_ROLE_CAPABILITIES, Role
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -38,6 +38,36 @@ class ContestMembership(models.Model):
 
     def __str__(self):
         return f"{self.user} @ {self.contest}"
+
+    @classmethod
+    def set_role(cls, user, contest, role: Role, enabled: bool):
+        role = role.value
+        if enabled:
+            # check if it's a role
+            Role(role)
+
+            membership, _ = cls.objects.get_or_create(
+                user=user,
+                contest=contest,
+            )
+
+            ContestMembershipRole.objects.get_or_create(
+                membership=membership,
+                role=role,
+            )
+        else:
+            try:
+                membership = cls.objects.get(user=user, contest=contest)
+            except cls.DoesNotExist:
+                return
+
+            ContestMembershipRole.objects.filter(
+                membership=membership,
+                role=role,
+            ).delete()
+
+            if not membership.roles.exists():
+                membership.delete()
 
 
 class ContestMembershipRole(models.Model):

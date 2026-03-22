@@ -1,14 +1,20 @@
 from datetime import date
 from random import choices
 from string import ascii_uppercase, digits
+from typing import TYPE_CHECKING
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.urls import reverse
 from django.utils import translation
 
 from contest.models.configuration import Configuration, ConfigurationOption
+from contest.models.membership import ContestMembership
+from contest.permissions.roles import Role
+
+User = get_user_model()
 
 
 def code_generator():
@@ -135,3 +141,19 @@ def rebate_code_generator():
         code = "".join(choices(ascii_uppercase + digits, k=10))
         if not RebateCode.objects.filter(code=code).exists():
             return code
+
+
+if TYPE_CHECKING:
+    from contest.models import Contest
+
+
+def get_role_state(user: User, contest: "Contest", role: Role) -> bool:
+    """
+    Returns True if the user has this role in the contest, False otherwise.
+    """
+    try:
+        membership = ContestMembership.objects.get(user=user, contest=contest)
+    except ContestMembership.DoesNotExist:
+        return False
+
+    return membership.roles.filter(role=role.value).exists()

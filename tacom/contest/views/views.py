@@ -1207,7 +1207,7 @@ class JudgeBosSelect(CapabilityRequiredMixin, ContestJudgingBOSMixin, UpdateView
 
     def get_success_url(self):
         return reverse(
-            "contest:judging_bos_view", kwargs={"constest_slug": self.get_object().slug}
+            "contest:judging_bos_view", kwargs={"contest_slug": self.get_object().slug}
         )
 
     def form_valid(self, form):
