@@ -51,8 +51,8 @@ class AccessTester:
         policy = self.url_manager.get_policy(url, category, subcategory)
         ctx = self.data_provider.get_test_context(url, category, subcategory)
         rules = policy.access_rules or []
-        print(ctx.resolved_url)
-        return self._execute(
+        print(ctx.resolved_url, end="... ")
+        result = self._execute(
             ctx.resolved_url,
             method,
             user,
@@ -63,6 +63,8 @@ class AccessTester:
             subcategory=subcategory,
             ctx=ctx,
         )
+        print(result.status_code)
+        return result
 
     def test_denial(
         self,
@@ -193,10 +195,20 @@ class AccessTester:
         )
 
         start = time.perf_counter()
-        response = self._make_request(resolved_url, method, follow, data=request_data)
-        elapsed_ms = (time.perf_counter() - start) * 1000
+        # Direct:
+        response = self._make_request(
+            resolved_url, method, follow=False, data=request_data
+        )
+        passed, reason = self._validate(response, rules, follow=False)
 
-        passed, reason = self._validate(response, rules, follow)
+        # Direct didn't pass, but we can try following
+        if not passed and follow:
+            response = self._make_request(
+                resolved_url, method, follow, data=request_data
+            )
+            passed, reason = self._validate(response, rules, follow)
+
+        elapsed_ms = (time.perf_counter() - start) * 1000
 
         redirect_chain = [u for u, _ in getattr(response, "redirect_chain", [])]
         final_url = response.request.get("PATH_INFO") if follow else None

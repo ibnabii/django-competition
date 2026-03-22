@@ -129,7 +129,17 @@ by_capability:
         - name_space: "contest"
           names:
             - "judging_bos_view"
+
+    # bos_select (after editing) redirects to bos_view
+    - routes:
+        - name_space: "contest"
+          names:
             - "judging_bos_select"
+      access_rules:
+        - status_codes: [200, 302]
+          allowed_redirect_targets:
+          - name_space: "contest"
+            names: ["contest:judging_bos_view"]
 
   VIEW_JUDGING_ENTRIES_LIST:
     - routes:

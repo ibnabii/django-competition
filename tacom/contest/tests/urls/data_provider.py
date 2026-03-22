@@ -353,7 +353,7 @@ class ContestDataProvider(BaseDataProvider):
             kwargs = {
                 "contest_slug": self.contest_a.slug,
                 "role_name": "judge",
-                "user_id": self.basic_user,
+                "user_id": self.basic_user.id,
             }
         else:
             kwargs = {}
