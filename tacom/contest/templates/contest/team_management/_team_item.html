@@ -1,0 +1,14 @@
+{% load dict_extras %}
+<tr>
+    <th scope="row">{{forloop.counter}}</th>
+    <td>{{ m.user.first_name }}</td>
+    <td>{{ m.user.last_name }}</td>
+    <td>{{ m.user.email }}</td>
+    {% for role in roles %}
+        {% with role_map|dict_get:m.user.id|dict_get:role.value as has_role %}
+            <td data-sort="{{ has_role }}">
+                {% include "contest/widgets/role_switch.html" with role=role user=m.user contest_slug=contest.slug value=has_role %}
+            </td>
+        {% endwith %}
+    {% endfor %}
+</tr>

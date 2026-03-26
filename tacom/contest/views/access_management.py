@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views import View
@@ -120,3 +121,57 @@ class ManageTeamPageView(ContestContextMixin, CapabilityRequiredMixin, ListView)
             for membership in context.get("memberships", [])
         }
         return context
+
+
+class UserSearchView(ContestContextMixin, CapabilityRequiredMixin, View):
+    template_name = "contest/team_management/_team_form_dropdown.html"
+    required_capability = Capability.CONTEST_MANAGE_TEAM
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("user_search", "").strip()
+        users = User.objects.none()
+
+        if query:
+            users = (
+                User.objects.filter(
+                    Q(first_name__icontains=query)
+                    | Q(last_name__icontains=query)
+                    | Q(email__icontains=query)
+                )
+                .exclude(contest_memberships__contest=self.contest)
+                .order_by("first_name", "last_name")[:10]
+            )
+
+        return render(
+            request,
+            self.template_name,
+            {
+                "users": users,
+                "query": query,
+            },
+        )
+
+
+class UserAddView(ContestContextMixin, CapabilityRequiredMixin, View):
+    template_name = "contest/team_management/_team_item.html"
+    required_capability = Capability.CONTEST_MANAGE_TEAM
+
+    def post(self, request, *args, **kwargs):
+        user_id = request.POST.get("user_id")
+
+        if not user_id:
+            raise Http404()
+
+        user = get_object_or_404(User, id=user_id)
+        roles = ManageTeamPageView.managed_roles
+        m = ContestMembership(user=user, contest=self.contest)
+        return render(
+            request,
+            self.template_name,
+            {
+                "m": m,
+                "contest": self.contest,
+                "roles": roles,
+                "role_map": {user.id: {role.value: False for role in roles}},
+            },
+        )

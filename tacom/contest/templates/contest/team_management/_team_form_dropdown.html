@@ -1,0 +1,8 @@
+{% for user in users %}
+  <a href="#"
+     class="list-group-item list-group-item-action"
+     data-user-id="{{ user.id }}"
+     data-user-label="{{ user.first_name }} {{ user.last_name }}">
+    {{ user.first_name }} {{ user.last_name }} ({{ user.email }})
+  </a>
+{% endfor %}

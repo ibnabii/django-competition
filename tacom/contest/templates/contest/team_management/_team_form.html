@@ -1,0 +1,70 @@
+{% load i18n %}
+<tr data-sortable=0 class="form-row" id="add_user">
+    <td></td>
+    <td colspan="{{ roles|length|add:3 }}">
+        <form hx-post="{% url 'contest:user_add' contest.slug %}" hx-target="#team_list_tbody" hx-swap="beforeend">
+            {% csrf_token %}
+            <!-- One-line layout -->
+            <div class="d-flex gap-3 align-items-start">
+
+                <!-- Search input (takes full width) -->
+                <div class="flex-grow-1">
+                    <input type="text"
+                           name="user_search"
+                           class="form-control"
+                           placeholder="{% translate " Add user..." %}"
+                    hx-get="{% url 'contest:user_search' contest.slug %}"
+                    hx-trigger="keyup changed delay:300ms"
+                    hx-target="#user-results"
+                    hx-swap="innerHTML"
+                    autocomplete="off">
+
+                </div>
+
+                <!-- Buttons -->
+
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="
+                  const form = this.closest('form');
+                  form.reset();
+                  document.getElementById('selected-user-id').value = '';
+                  document.getElementById('user-results').innerHTML = '';
+                ">
+                    {% translate "Clear" %}
+                </button>
+
+            </div>
+
+            <!-- Hidden selected user -->
+            <input type="hidden" name="user_id" id="selected-user-id">
+
+
+
+            <!-- Results dropdown -->
+            <!--            <div id="user-results"-->
+            <!--                 class="list-group position-absolute mt-1 shadow"-->
+            <!--                 style="z-index: 1000;"></div>-->
+            <div id="user-results"
+                 class="list-group position-absolute mt-1 shadow"
+                 style="z-index: 1000;"
+                 hx-on:click="
+                   const item = event.target.closest('[data-user-id]');
+                   if (!item) return;
+
+                   const form = this.closest('form');
+
+                   // set values
+                   form.querySelector('#selected-user-id').value = item.dataset.userId;
+                   form.querySelector('[name=user_search]').value = '';
+
+                   // clear dropdown
+                   this.innerHTML = '';
+
+                   // submit via HTMX
+                   htmx.trigger(form, 'submit');
+                 ">
+            </div>
+        </form>
+    </td>
+</tr>

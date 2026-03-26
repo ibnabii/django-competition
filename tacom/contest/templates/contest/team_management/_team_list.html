@@ -1,38 +1,29 @@
 {% load i18n %}
-{% load dict_extras %}
+
 
 {% if memberships %}
 <table class="table table-hover sortable" id="team-table">
     <thead>
+    <tr>
     <th scope="col" data-sort-method="number">#</th>
-    <th scope="col">{% translate "Name" %}</th>
-    <th scope="col">{% translate "Last Name" %}</th>
+    <th scope="col">{% translate "First name" %}</th>
+    <th scope="col">{% translate "Last name" %}</th>
     <th scope="col">{% translate "Email" %}</th>
     {% for role in roles %}
         <th scope="col">{{ role.name }}</th>
     {% endfor %}
-    </thead>
-    <tbody>
-    {% for m in memberships %}
-    <tr>
-        <th scope="row">{{forloop.counter}}</th>
-        <td>{{ m.user.first_name }}</td>
-        <td>{{ m.user.last_name }}</td>
-        <td>{{ m.user.email }}</td>
-        {% for role in roles %}
-            {% with role_map|dict_get:m.user.id|dict_get:role.value as has_role %}
-            <td data-sort="{{ has_role }}">
-                {% include "contest/widgets/role_switch.html" with role=role user=m.user contest_slug=contest.slug value=has_role %}
-            </td>
-            {% endwith %}
-        {% endfor %}
     </tr>
+    </thead>
+    <tbody id="team_list_tbody">
+    {% for m in memberships %}
+        {% include "contest/team_management/_team_item.html" with nr=forloop.counter %}
     {% endfor %}
     </tbody>
+    <tbody id="add_user_tbody">{% include "contest/team_management/_team_form.html" %}</tbody>
 </table>
 
 <script>
-    new Tablesort(document.getElementById('judge-table'));
+    new Tablesort(document.getElementById('team-table'));
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
