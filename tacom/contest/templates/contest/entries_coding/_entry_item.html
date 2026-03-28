@@ -1,0 +1,38 @@
+{% load i18n %}
+<tr>
+    <th scope="row">{{ nr }}</th>
+    <td>{{ entry.category.style.name }}</td>
+    <td>{{ entry.code }}</td>
+    <td>{{ entry.secret_code }}</td>
+    <td>
+        <input type="checkbox" class="entry-checkbox" name="selected_entries" value="{{ entry.id }}"
+               data-bs-toggle="tooltip"
+               title="{% translate 'Select this entry for bulk code generation' %}">
+    </td>
+    <td class="d-flex justify-content-center gap-2">
+        <button class="btn btn-primary bi bi-repeat p-1 m-0" style="font-size: 0.8em"
+                data-bs-toggle="tooltip"
+                title="{% translate 'Generate new code for this entry' %}"
+                hx-post="{% url 'contest:codes_item' contest.slug entry.id %}"
+                hx-vals='{"nr": {{ nr }} }'
+                hx-target="closest tr"
+                hx-swap="outerHTML"
+                hx-params="csrfmiddlewaretoken, nr"
+        >
+        </button>
+        <input type="text" maxlength="4" class="form-control"
+               style="width: 5em; font-size: 0.8em; text-transform: uppercase"
+               hx-post="{% url 'contest:codes_item' contest.slug entry.id %}"
+               hx-target="closest tr"
+               hx-swap="outerHTML"
+               hx-vals='js:{"nr": {{ nr }}, "new_code": $("#input-{{ entry.id }}").val() }'
+               id="input-{{ entry.id }}"
+               hx-params="csrfmiddlewaretoken, nr, new_code"
+               hx-trigger="go-input-{{entry.id}} from:body"
+               data-bs-toggle="tooltip"
+               title="{% translate 'Enter new juding code for this entry and press enter. Will save only if code is valid (4 letters and unique)' %}"
+               placeholder="code"
+        >
+
+    </td>
+</tr>

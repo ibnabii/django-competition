@@ -1,0 +1,14 @@
+{% extends 'contest/base.html' %}
+{% load i18n %}
+{% block content %}
+<h2 class="m-2">{% translate 'Entry codes' %}: </h2>
+
+<div id="entry-list">
+    {% include "contest/entries_coding/_entry_list.html" %}
+</div>
+
+{% endblock %}
+
+{% block extrahead %}
+{% include 'contest/utils/sortable_table_header.html' %}
+{% endblock %}

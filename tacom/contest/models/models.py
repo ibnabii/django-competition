@@ -639,7 +639,7 @@ class Entry(models.Model):
             return maximum_code + 1
         return 1000
 
-    def _generate_secret_code(self, max_attempts=400_000):
+    def generate_secret_code(self, max_attempts=400_000):
         def _random_ascii(length):
             from string import ascii_uppercase
             from random import choices
@@ -660,7 +660,7 @@ class Entry(models.Model):
         if not self.code:
             self.code = self._generate_code()
         if not self.secret_code:
-            self.secret_code = self._generate_secret_code()
+            self.secret_code = self.generate_secret_code()
         else:
             # Validate
             if (

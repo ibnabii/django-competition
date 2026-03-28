@@ -140,6 +140,14 @@
                             </a>
                         </li>
                         {% endif %}
+                        {% can "ENTRY_ENCODE" as can_encode %}
+                        {% if can_encode %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'contest:codes_list' contest.slug %}">
+                                {% translate "Entries codes" %}
+                            </a>
+                        </li>
+                        {% endif %}
 
                         {# TEAM MANAGEMENT #}
 
