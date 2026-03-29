@@ -41,6 +41,26 @@ class EntriesListView(ContestContextMixin, CapabilityRequiredMixin, ListView):
         return redirect(request.path)
 
 
+class EntriesListViewPrintable(EntriesListView):
+    template_name = "contest/entry_coding_page_print.html"
+
+    def get_queryset(self):
+        ALLOWED_SORTS = {"code", "-code", "secret_code", "-secret_code", "category"}
+
+        sort_by = self.request.GET.get("sort_by", "code")
+        if sort_by not in ALLOWED_SORTS:
+            sort_by = "code"
+        if sort_by == "category":
+            sort_by = "category__style__name"
+
+        qs = (
+            Entry.objects.filter(category__contest=self.contest)
+            .order_by(sort_by)
+            .select_related("category", "category__style")
+        )
+        return qs
+
+
 class EntryNewCodeView(ContestContextMixin, CapabilityRequiredMixin, DetailView):
     model = Entry
     required_capability = Capability.ENTRY_ENCODE

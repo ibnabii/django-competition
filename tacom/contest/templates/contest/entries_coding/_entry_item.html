@@ -4,6 +4,8 @@
     <td>{{ entry.category.style.name }}</td>
     <td>{{ entry.code }}</td>
     <td>{{ entry.secret_code }}</td>
+
+    {% if not hide_actions %}
     <td>
         <input type="checkbox" class="entry-checkbox" name="selected_entries" value="{{ entry.id }}"
                data-bs-toggle="tooltip"
@@ -33,6 +35,6 @@
                title="{% translate 'Enter new juding code for this entry and press enter. Will save only if code is valid (4 letters and unique)' %}"
                placeholder="code"
         >
-
+    {% endif %}
     </td>
 </tr>

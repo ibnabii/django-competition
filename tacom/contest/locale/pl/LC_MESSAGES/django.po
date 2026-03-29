@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-26 21:34+0100\n"
-"PO-Revision-Date: 2026-03-26 21:35+0100\n"
+"POT-Creation-Date: 2026-03-29 14:39+0200\n"
+"PO-Revision-Date: 2026-03-29 14:42+0200\n"
 "Last-Translator: Jane Kowalski <admin@admin.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -57,7 +57,7 @@ msgstr "Opłaty"
 
 #: .\contest\admin.py:147
 #: .\contest\templates\contest\judging_finals_list.html:22
-#: .\contest\templates\contest\navbar.html:198
+#: .\contest\templates\contest\navbar.html:206
 msgid "Judging"
 msgstr "Sędziowanie"
 
@@ -461,10 +461,14 @@ msgid "code"
 msgstr "kod"
 
 #: .\contest\models\models.py:477
+#: .\contest\templates\contest\entries_coding\_entry_list.html:12
+#: .\contest\templates\contest\entry_coding_page_print.html:13
 msgid "Judging code"
 msgstr "Kod do sędziowania"
 
 #: .\contest\models\models.py:483
+#: .\contest\templates\contest\entries_coding\_entry_list.html:10
+#: .\contest\templates\contest\entry_coding_page_print.html:11
 #: .\contest\templates\contest\judging_bos_list.html:11
 #: .\contest\templates\contest\judging_bos_list.html:25
 #: .\contest\templates\contest\judging_finals_list.html:13
@@ -973,6 +977,7 @@ msgid "Additional information"
 msgstr "Informacje dodatkowe"
 
 #: .\contest\templates\contest\entries.html:45
+#: .\contest\templates\contest\entries_coding\_entry_list.html:18
 #: .\contest\templates\contest\judging_list_by_style.html:16
 #: .\contest\templates\contest\payment_list.html:23
 msgid "Actions"
@@ -993,6 +998,56 @@ msgstr "Karta oceny"
 #: .\contest\templates\contest\entries.html:126
 msgid "You do not have any entries"
 msgstr "Brak zgłoszeń"
+
+#: .\contest\templates\contest\entries_coding\_entry_item.html:12
+msgid "Select this entry for bulk code generation"
+msgstr "Zaznacz to zgłoszenie do zmiany kodu sędziowskiego"
+
+#: .\contest\templates\contest\entries_coding\_entry_item.html:17
+msgid "Generate new code for this entry"
+msgstr "Wygeneruj nowy kod sędziowski"
+
+#: .\contest\templates\contest\entries_coding\_entry_item.html:35
+msgid ""
+"Enter new juding code for this entry and press enter. Will save only if code"
+" is valid (4 letters and unique)"
+msgstr ""
+"Wpisz nowy kod sędziowski i naciśnij Enter. Zapisze się tylko, jeśli kod "
+"jest prawidłowy, tzn ma 4 litery i jest unikalny."
+
+#: .\contest\templates\contest\entries_coding\_entry_list.html:11
+#: .\contest\templates\contest\entry_coding_page_print.html:12
+#| msgid "Participant"
+msgid "Participant code"
+msgstr "Kod uczestnika"
+
+#: .\contest\templates\contest\entries_coding\_entry_list.html:16
+msgid "Select all entries for bulk code generation"
+msgstr "Zaznacz wszystkie zgłoszenia do zmiany kodu sędziowskiego"
+
+#: .\contest\templates\contest\entries_coding\_entry_list.html:28
+#| msgid "Create copies of selected objects"
+msgid "Regenerate codes for selected entries"
+msgstr "Zmień kody sędziowskie dla wybranych zgłoszeń"
+
+#: .\contest\templates\contest\entries_coding\_entry_list.html:88
+#| msgid "No entries found."
+msgid "No entries found"
+msgstr "Nic nie znaleziono."
+
+#: .\contest\templates\contest\entry_coding_page.html:6
+msgid "Print sorted by participant code"
+msgstr "Drukuj wg kodów uczestnika"
+
+#: .\contest\templates\contest\entry_coding_page.html:9
+msgid "Print sorted by judging code"
+msgstr "Drukuj wg kodów sędziowskich"
+
+#: .\contest\templates\contest\entry_coding_page.html:13
+#: .\contest\templates\contest\entry_coding_page_print.html:5
+#| msgid "Entries"
+msgid "Entry codes"
+msgstr "Kodowanie zgłoszeń"
 
 #: .\contest\templates\contest\entry_confirm_delete.html:7
 msgid "Are you sure you want to delete following entry?"
@@ -1230,32 +1285,36 @@ msgstr "Dostawy"
 msgid "Payments"
 msgstr "Płatności"
 
-#: .\contest\templates\contest\navbar.html:150
-#| msgid "Manage Judges"
+#: .\contest\templates\contest\navbar.html:147
+#| msgid "Entries"
+msgid "Entries codes"
+msgstr "Kodowanie zgłoszeń"
+
+#: .\contest\templates\contest\navbar.html:158
 msgid "Manage team"
 msgstr "Zarządzanie zespołem"
 
-#: .\contest\templates\contest\navbar.html:166
+#: .\contest\templates\contest\navbar.html:174
 msgid "Manage Judges"
 msgstr "Zarządzanie sędziami"
 
-#: .\contest\templates\contest\navbar.html:175
+#: .\contest\templates\contest\navbar.html:183
 msgid "Judge Applications"
 msgstr "Zatwierdzanie sędziów"
 
-#: .\contest\templates\contest\navbar.html:181
+#: .\contest\templates\contest\navbar.html:189
 msgid "Phase assignment"
 msgstr "Etapy sędziowania"
 
-#: .\contest\templates\contest\navbar.html:206
+#: .\contest\templates\contest\navbar.html:214
 msgid "Judging finals"
 msgstr "Sędziowanie finału"
 
-#: .\contest\templates\contest\navbar.html:214
+#: .\contest\templates\contest\navbar.html:222
 msgid "Judging BOS"
 msgstr "Sędziowanie BOS"
 
-#: .\contest\templates\contest\navbar.html:235
+#: .\contest\templates\contest\navbar.html:243
 msgid "Home"
 msgstr "Home"
 
@@ -1393,7 +1452,6 @@ msgid "Clear"
 msgstr "Wyczyść"
 
 #: .\contest\templates\contest\team_management_page.html:4
-#| msgid "Contest Management"
 msgid "Team management"
 msgstr "Zarządzanie zespołem"
 

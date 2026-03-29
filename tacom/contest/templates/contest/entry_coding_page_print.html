@@ -1,0 +1,25 @@
+{% load i18n %}
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+<h2 class="m-2">{% translate 'Entry codes' %}: </h2>
+
+<table id="entry-table" class="table table-striped-columns">
+    <thead>
+    <tr>
+        <th scope="col" data-sort-method="number">#</th>
+        <th scope="col">{% translate "Category" %}</th>
+        <th scope="col">{% translate "Participant code" %}</th>
+        <th scope="col">{% translate "Judging code" %}</th>
+    </tr>
+    </thead>
+    <tbody id="entry_list_tbody" class="table-group-divider">
+    {% for entry in entries %}
+    {% include "contest/entries_coding/_entry_item.html" with nr=forloop.counter hide_actions=True %}
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    window.onload = () => window.print();
+</script>

@@ -1,6 +1,15 @@
 {% extends 'contest/base.html' %}
 {% load i18n %}
 {% block content %}
+<div class="d-flex flex-column align-items-start gap-2">
+    <a href="{% url 'contest:codes_list_print' contest.slug %}" class="btn btn-outline-primary bi bi-printer" target="_blank">
+        {% translate 'Print sorted by participant code' %}
+    </a>
+    <a href="{% url 'contest:codes_list_print' contest.slug %}?sort_by=secret_code" class="btn btn-outline-primary bi bi-printer" target="_blank">
+        {% translate 'Print sorted by judging code' %}
+    </a>
+
+</div>
 <h2 class="m-2">{% translate 'Entry codes' %}: </h2>
 
 <div id="entry-list">

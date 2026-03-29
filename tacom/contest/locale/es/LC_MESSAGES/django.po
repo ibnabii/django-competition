@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-26 21:34+0100\n"
-"PO-Revision-Date: 2026-03-26 21:37+0100\n"
+"POT-Creation-Date: 2026-03-29 14:39+0200\n"
+"PO-Revision-Date: 2026-03-29 14:47+0200\n"
 "Last-Translator: Jane Kowalski <admin@admin.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -57,7 +57,7 @@ msgstr "Cuotas"
 
 #: .\contest\admin.py:147
 #: .\contest\templates\contest\judging_finals_list.html:22
-#: .\contest\templates\contest\navbar.html:198
+#: .\contest\templates\contest\navbar.html:206
 msgid "Judging"
 msgstr "Jurado"
 
@@ -468,10 +468,14 @@ msgid "code"
 msgstr "código"
 
 #: .\contest\models\models.py:477
+#: .\contest\templates\contest\entries_coding\_entry_list.html:12
+#: .\contest\templates\contest\entry_coding_page_print.html:13
 msgid "Judging code"
 msgstr "Codigo de juzgar"
 
 #: .\contest\models\models.py:483
+#: .\contest\templates\contest\entries_coding\_entry_list.html:10
+#: .\contest\templates\contest\entry_coding_page_print.html:11
 #: .\contest\templates\contest\judging_bos_list.html:11
 #: .\contest\templates\contest\judging_bos_list.html:25
 #: .\contest\templates\contest\judging_finals_list.html:13
@@ -981,6 +985,7 @@ msgid "Additional information"
 msgstr "Información adicional"
 
 #: .\contest\templates\contest\entries.html:45
+#: .\contest\templates\contest\entries_coding\_entry_list.html:18
 #: .\contest\templates\contest\judging_list_by_style.html:16
 #: .\contest\templates\contest\payment_list.html:23
 msgid "Actions"
@@ -1001,6 +1006,56 @@ msgstr "Tarjeta de puntuación"
 #: .\contest\templates\contest\entries.html:126
 msgid "You do not have any entries"
 msgstr "No tiene inscripciones."
+
+#: .\contest\templates\contest\entries_coding\_entry_item.html:12
+msgid "Select this entry for bulk code generation"
+msgstr "Seleccione esta entrada para la generación masiva de código."
+
+#: .\contest\templates\contest\entries_coding\_entry_item.html:17
+msgid "Generate new code for this entry"
+msgstr "Generar nuevo código para esta entrada"
+
+#: .\contest\templates\contest\entries_coding\_entry_item.html:35
+msgid ""
+"Enter new juding code for this entry and press enter. Will save only if code"
+" is valid (4 letters and unique)"
+msgstr ""
+"Introduce el nuevo código de evaluación para esta entrada y pulsa Intro. Se "
+"guardará solo si el código es válido (4 letras y único)."
+
+#: .\contest\templates\contest\entries_coding\_entry_list.html:11
+#: .\contest\templates\contest\entry_coding_page_print.html:12
+#| msgid "Participant"
+msgid "Participant code"
+msgstr "Código participante"
+
+#: .\contest\templates\contest\entries_coding\_entry_list.html:16
+msgid "Select all entries for bulk code generation"
+msgstr "Seleccione todas las entradas para la generación masiva de código."
+
+#: .\contest\templates\contest\entries_coding\_entry_list.html:28
+#| msgid "Create copies of selected objects"
+msgid "Regenerate codes for selected entries"
+msgstr "Regenerar códigos para las entradas seleccionadas"
+
+#: .\contest\templates\contest\entries_coding\_entry_list.html:88
+#| msgid "No entries found."
+msgid "No entries found"
+msgstr "No se encontraron nada."
+
+#: .\contest\templates\contest\entry_coding_page.html:6
+msgid "Print sorted by participant code"
+msgstr "Impresión ordenada por código participante"
+
+#: .\contest\templates\contest\entry_coding_page.html:9
+msgid "Print sorted by judging code"
+msgstr "Impresión ordenada por código juece"
+
+#: .\contest\templates\contest\entry_coding_page.html:13
+#: .\contest\templates\contest\entry_coding_page_print.html:5
+#| msgid "Entries"
+msgid "Entry codes"
+msgstr "Códigos de entradas"
 
 #: .\contest\templates\contest\entry_confirm_delete.html:7
 msgid "Are you sure you want to delete following entry?"
@@ -1237,32 +1292,36 @@ msgstr "Entregas"
 msgid "Payments"
 msgstr "Pagos"
 
-#: .\contest\templates\contest\navbar.html:150
-#| msgid "Manage Judges"
+#: .\contest\templates\contest\navbar.html:147
+#| msgid "Entries"
+msgid "Entries codes"
+msgstr "Códigos de entradas"
+
+#: .\contest\templates\contest\navbar.html:158
 msgid "Manage team"
 msgstr "Gestión de equipo"
 
-#: .\contest\templates\contest\navbar.html:166
+#: .\contest\templates\contest\navbar.html:174
 msgid "Manage Judges"
 msgstr "Gestionar jueces"
 
-#: .\contest\templates\contest\navbar.html:175
+#: .\contest\templates\contest\navbar.html:183
 msgid "Judge Applications"
 msgstr "Aprobación de los jueces"
 
-#: .\contest\templates\contest\navbar.html:181
+#: .\contest\templates\contest\navbar.html:189
 msgid "Phase assignment"
 msgstr "Etapas de evaluación"
 
-#: .\contest\templates\contest\navbar.html:206
+#: .\contest\templates\contest\navbar.html:214
 msgid "Judging finals"
 msgstr "Finales de evaluación"
 
-#: .\contest\templates\contest\navbar.html:214
+#: .\contest\templates\contest\navbar.html:222
 msgid "Judging BOS"
 msgstr "Evaluación Mejor de la Exposición"
 
-#: .\contest\templates\contest\navbar.html:235
+#: .\contest\templates\contest\navbar.html:243
 msgid "Home"
 msgstr "Inicio"
 
@@ -1400,7 +1459,6 @@ msgid "Clear"
 msgstr "Borrar"
 
 #: .\contest\templates\contest\team_management_page.html:4
-#| msgid "Contest Management"
 msgid "Team management"
 msgstr "Gestión de equipo"
 
