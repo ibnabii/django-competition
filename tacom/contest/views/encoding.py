@@ -43,6 +43,8 @@ class EntriesListView(ContestContextMixin, CapabilityRequiredMixin, ListView):
 
 class EntriesListViewPrintable(EntriesListView):
     template_name = "contest/entry_coding_page_print.html"
+    http_method_names = ["get"]
+    post = None
 
     def get_queryset(self):
         ALLOWED_SORTS = {"code", "-code", "secret_code", "-secret_code", "category"}

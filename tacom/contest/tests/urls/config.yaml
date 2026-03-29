@@ -53,7 +53,7 @@ defaults:
 
   logged_in:
     access_rules:
-      - status_codes: [200]
+      - status_codes: [200, 405]
     no_access_rules:
       - status_codes: [302, 404]
         allowed_redirect_targets:
@@ -61,7 +61,7 @@ defaults:
 
   by_capability:
     access_rules:
-      - status_codes: [200]
+      - status_codes: [200, 405]
     no_access_rules:
       - status_codes: [302, 404]
         allowed_redirect_targets:
@@ -197,7 +197,7 @@ by_capability:
         - status_codes: [200, 302]
           allowed_redirect_targets:
           - name_space: "contest"
-            names: ["contest:delivery_process"]
+            names: ["delivery_process"]
 
   CONTEST_MANAGE_JUDGES:
     - routes:
@@ -209,6 +209,29 @@ by_capability:
             - "judge_phases_list"
             - "toggle_contest_role"
 
+  CONTEST_MANAGE_TEAM:
+    - routes:
+        - name_space: "contest"
+          names:
+            - "manage_team"
+            - "user_search"
+            - "user_add"
+
+  ENTRY_ENCODE:
+    - routes:
+        - name_space: "contest"
+          names:
+            - "codes_list_print"
+            - "codes_item"
+    - routes:
+        - name_space: "contest"
+          names:
+            - "codes_list"
+      access_rules:
+        - status_codes: [200, 302]
+          allowed_redirect_targets:
+          - name_space: "contest"
+            names: ["codes_list"]
 
 # ── Parked URLs (deferred / known issues) ────────────────────
 parked:

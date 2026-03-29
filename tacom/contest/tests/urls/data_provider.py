@@ -411,7 +411,7 @@ class ContestDataProvider(BaseDataProvider):
             return self.package_a.id if self.package_a else None
         if param_name == "payment_id":
             return self.payment_a.id if self.payment_a else None
-        if param_name == "entry":
+        if param_name in ["entry", "entry_id"]:
             return self.entry_a.id
         if param_name == "pk":
             return self._resolve_pk_param(url)
@@ -458,6 +458,8 @@ class ContestDataProvider(BaseDataProvider):
             if method in (HttpMethod.POST, HttpMethod.PUT, HttpMethod.PATCH):
                 form_data = self._minimal_form_data(url, method)
                 data[method.value] = form_data
+        if url.namespace == "contest" and url.name == "user_add":
+            data[HttpMethod.POST.value].update({"user_id": self.basic_user.id})
         return data
 
     def _minimal_form_data(self, url: DiscoveredUrl, method: HttpMethod) -> dict:

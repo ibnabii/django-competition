@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
@@ -160,6 +161,15 @@ class UserAddView(ContestContextMixin, CapabilityRequiredMixin, View):
         user_id = request.POST.get("user_id")
 
         if not user_id:
+            raise Http404()
+
+        # check if id is of valid type:
+        field = User._meta.pk  # primary key field
+
+        try:
+            # Convert using Django's internal logic
+            field.to_python(user_id)
+        except (ValueError, TypeError, ValidationError):
             raise Http404()
 
         user = get_object_or_404(User, id=user_id)
