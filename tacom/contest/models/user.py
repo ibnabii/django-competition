@@ -90,6 +90,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     @cached_property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
+    @cached_property
     def profile_complete(self):
         return (
             self.first_name
