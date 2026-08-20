@@ -34,11 +34,12 @@ class PublishedContestManager(models.Manager):
 
 class RegistrableContestManager(PublishedContestManager):
     def get_queryset(self):
+        today = date.today()
         return (
             super()
             .get_queryset()
-            .filter(registration_date_from__lte=date.today())
-            .filter(registration_date_to__gte=date.today())
+            .filter(Q(registration_date_from__isnull=True) | Q(registration_date_from__lte=today))
+            .filter(Q(registration_date_to__isnull=True) | Q(registration_date_to__gte=today))
         )
 
 

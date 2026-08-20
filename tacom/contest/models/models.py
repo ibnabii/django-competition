@@ -295,9 +295,11 @@ class Contest(models.Model):
 
     @cached_property
     def is_registrable(self):
+        today = date.today()
         return (
             self.is_published
-            and self.registration_date_from <= date.today() <= self.registration_date_to
+            and (self.registration_date_from is None or self.registration_date_from <= today)
+            and (self.registration_date_to is None or self.registration_date_to >= today)
             and (self.entry_global_limit is None or self.global_limit_left)
         )
 
