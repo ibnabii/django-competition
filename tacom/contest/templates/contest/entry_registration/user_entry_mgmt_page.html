@@ -1,0 +1,66 @@
+{% extends 'contest/base.html' %}
+{% load i18n %}
+{% block content %}
+{% include 'contest/entry_registration/_registrable_contests_list.html'%}
+<h2 class="h2">{% translate "My competitions" %}</h2>
+<div class="container mt-4">
+
+    {% for contest in user_contests %}
+    <div class="card my-3">
+        <div class="card-header">
+            <a
+                    class="btn"
+                    data-bs-toggle="collapse"
+                    href="#contest{{ contest.slug}}"
+                    hx-get="{% url 'contest:add_entry_contest_embedded' contest.slug %}"
+                    hx-target="#content{{contest.slug}}"
+                    hx-swap="innerHTML"
+                    {% if forloop.first %}
+                    aria-expanded="true"
+                    hx-trigger="load"
+                    {% endif %}
+            >
+
+                <h3 class="h3">{{ contest.title }}</h3>
+            </a>
+        </div>
+
+        <div id="contest{{ contest.slug}}" class="collapse
+                {% if forloop.counter == 1 %}
+                show
+                {% endif %}
+            ">
+            <div class="card-body container" id="content{{contest.slug}}">
+                Loading...
+            </div>
+        </div>
+    </div>
+    <!--        <div class="accordion-item">-->
+    <!--            <h2 class="accordion-header">-->
+    <!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
+    <!--                        data-bs-target="#{{contest.slug}}"-->
+    <!--                        hx-get="{% url 'contest:contest_detail' contest.slug %}"-->
+    <!--                        hx-target="#content_{{contest.slug}}"-->
+    <!--                        {% if forloop.first %}-->
+    <!--                        aria-expanded="true"-->
+    <!--                        hx-trigger="load"-->
+    <!--                        {% endif %}-->
+    <!--                        aria-controls="{{contest.slug}}">-->
+    <!--                    {{contest.title}}-->
+    <!--                </button>-->
+    <!--            </h2>-->
+    <!--            <div id="{{contest.slug}}"-->
+    <!--                 class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"-->
+    <!--                 data-bs-parent="#contestAccordion"-->
+    <!--            >-->
+    <!--                <div class="accordion-body bg-light" id="content_{{contest.slug}}">-->
+    <!--                    Loading...-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    {% empty %}
+    <p>{% translate "You have no entries" %}</p>
+    {% endfor %}
+
+</div>
+{% endblock content %}

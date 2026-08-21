@@ -121,6 +121,7 @@ logged_in:
           - "add_entry_contest"
           - "payment_start"
           - "labels_start"
+          - "add_entry_contest_embedded"
 
 
 

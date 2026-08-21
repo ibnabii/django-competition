@@ -24,8 +24,9 @@ class ContestContextMixin(ContextMixin):
 
     @cached_property
     def contest(self) -> Contest:
-        slug = self.kwargs.get(self.slug_url_kwarg)
-        return get_object_or_404(Contest, slug=slug)
+        # slug = self.kwargs.get(self.slug_url_kwarg)
+        # return get_object_or_404(Contest, slug=slug)
+        return self.request.contest
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

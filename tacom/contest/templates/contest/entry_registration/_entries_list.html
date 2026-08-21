@@ -1,0 +1,116 @@
+{%  load i18n %}
+
+{% if entries|length == 0 %}
+<h3 class="h3">{% translate "You do not have any entries" %}</h3>
+{% else %}
+
+<h3 class="h3">{% translate "My entries:" %}</h3>
+<div class="container">
+    <div class="card">
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip(({
+                    'delay': {show: 1000, hide: 300}
+                }))
+            })
+        </script>
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <th title="{% translate 'Is paid' %}" data-toggle="tooltip">
+                        <i class="bi bi-cash-coin" style="font-size:1.5em"></i>
+                    </th>
+                    <th title="{% translate 'Is received' %}" data-toggle="tooltip">
+                        <i class="bi bi-truck" style="font-size:1.5em"></i>
+                    </th>
+                    <th>
+                        {% translate "Style" %}
+                    </th>
+                    <th>
+                        {% translate "Name" %}
+                    </th>
+                    <th>
+                        {% translate "Additional information" %}
+                    </th>
+                    <th>
+                        {% translate "Actions" %}
+                    </th>
+                </tr>
+
+                {% for entry in entries %}
+                <tr>
+                    <td>
+                        {% if entry.is_paid %}
+                        <i class="bi bi-check" style="font-size:1.5em"></i>
+                        {% else %}
+                        <i class="bi bi-x" style="font-size:1.5em"></i>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if entry.is_received %}
+                        <i class="bi bi-check" style="font-size:1.5em"></i>
+                        {% else %}
+                        <i class="bi bi-x" style="font-size:1.5em"></i>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {{ entry.category.style }}
+                    </td>
+
+                    <td>
+                        {{ entry.name }}
+                    </td>
+
+                    <td>
+                                    <span
+                                            data-toggle="tooltip"
+                                            title="{{ entry.extra_info | linebreaks }}"
+                                            data-bs-html="true"
+                                    >
+                                        {{ entry.extra_info | truncatechars:30 }}
+                                    </span>
+                    </td>
+
+                    <td>
+
+                        <a class="btn btn-outline-primary
+                                        {% if not contest.is_registrable %}
+                                            disabled
+                                        {% endif %}
+                                        "
+                           data-toggle="tooltip"
+                           title="{% translate 'Edit entry' %}"
+                           href="{% url 'contest:entry_edit' entry.id %}?next={{ next_url|urlencode }}"
+                        >
+                            <i class="bi bi-pencil-square" style="font-size:1.5em"></i>
+                        </a>
+                        <a class="btn btn-outline-danger
+                                        {% if not entry.can_be_deleted %}
+                                            disabled
+                                        {% endif %}
+                                        "
+                           data-toggle="tooltip"
+                           title="{% translate 'Delete entry' %}"
+                           href="{% url 'contest:entry_delete' entry.id %}?next={{ next_url|urlencode }}"
+                        >
+                            <i class="bi bi-trash3" style="font-size:1.5em"></i>
+                        </a>
+                        <a class="btn btn-outline-primary {% if not contest.grouper.show_results %}
+                                            disabled
+                                        {% endif %}"
+                           data-toggle="tooltip"
+                           title="{% translate 'Score card' %}"
+                           href="{% url 'contest:entry_results' entry.id %}"
+                        >
+                            <i class="bi bi-trophy" style="font-size:1.5em"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}

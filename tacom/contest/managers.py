@@ -42,6 +42,15 @@ class RegistrableContestManager(PublishedContestManager):
             .filter(Q(registration_date_to__isnull=True) | Q(registration_date_to__gte=today))
         )
 
+class ReceptionNotClosedContestManager(PublishedContestManager):
+    def get_queryset(self):
+        today = date.today()
+        return (
+            super()
+            .get_queryset()
+            .filter(Q(delivery_date_to__isnull=True) | Q(delivery_date_to__gte=today))
+        )
+
 
 class CategoryManager(models.Manager):
     def full(self, user):

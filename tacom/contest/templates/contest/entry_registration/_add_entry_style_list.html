@@ -1,0 +1,75 @@
+{% load i18n %}
+{% if can_add %}
+<h3 class="h3 mt-2">{% translate "Select style in which you would like to register an entry" %}</h3>
+
+
+{#    Display info about remaining global limit #}
+{% if contest_limit_left %}
+<div class="container">
+    <h4 class="h4">
+        {% translate "Number of slots left in the contest" %}: {{ contest_limit_left }}
+        <span
+                data-toggle="tooltip"
+                title="{%  translate " You will be able to register and pay for your entries as long as there is at
+                least one slot left." %}"
+        >
+        <i class="bi bi-info-circle-fill" style="font-size: 0.8em"></i>
+        </span>
+    </h4>
+    {% endif %}
+    {# Display info about remaining participant limit #}
+    {% if user_limit_left %}
+    <h4 class="h4">
+        {% translate "Number of slots left towards participant limit" %}: {{ user_limit_left }}
+        <span
+                data-toggle="tooltip"
+                title="{{ contest.entry_user_limit }} {% translate " is the maximum number of entries per participant in
+                this competition" %}"
+        >
+        <i class="bi bi-info-circle-fill" style="font-size: 0.8em"></i>
+        </span>
+    </h4>
+    <br/><br/>
+    {% endif %}
+    <table class="table">
+        {% for category in categories %}
+        {% if forloop.counter == 1 %}
+
+        <tr>
+            <th>{% translate 'Style' %}</th>
+            <th>{% translate 'Maximum entries per brewer' %}</th>
+            <th>{% translate 'Style description' %}</th>
+        </tr>
+        {% endif %}
+        <tr>
+            <td>
+
+                <a class="btn btn-outline-primary"
+                   href="{% url 'contest:add_entry_category' category.id %}?next={{ next_url|urlencode }}">
+                    {{ category.style.name }}
+                </a>
+            </td>
+            <td>
+                {{ category.entries_limit }}
+            </td>
+            <td>
+                <a href="{% url 'contest:style_detail' category.style.slug %}">
+                    {% translate "style details" %}
+                </a>
+            </td>
+        </tr>
+
+
+        {% empty %}
+        {% translate "You cannot add entries for this contest" %}
+
+        {% endfor %}
+    </table>
+</div>
+{% else %}
+<div class="container mt-2">
+    <h3 class="h3">{% translate "You cannot register entries anymore."%} </h3>
+    <h4 class="h4">{{ limit_exhausted_info }}</h4>
+</div>
+
+{% endif %}

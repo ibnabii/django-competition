@@ -1,0 +1,10 @@
+{% load i18n %}
+{% include 'contest/entry_registration/_entries_list.html' %}
+
+{% if contest.is_reception_not_closed %}
+    {% include 'contest/entry_registration/_contest_actions.html' %}
+{% endif %}
+
+{% if contest.is_registrable %}
+    {% include 'contest/entry_registration/_add_entry_style_list.html' %}
+{% endif %}

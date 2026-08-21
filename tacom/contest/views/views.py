@@ -69,7 +69,7 @@ class UserFullProfileMixin(UserPassesTestMixin):
 
     def test_func(self):
         if not self.request.user.is_authenticated:
-            return True
+            return False
         return self.request.user.profile_complete
 
     def handle_no_permission(self):
@@ -160,10 +160,14 @@ class AddEntryView(LoginRequiredMixin, UserFullProfileMixin, CreateView):
         return form_kwargs
 
     def get_success_url(self):
-        return reverse(
-            "contest:add_entry_contest",
-            kwargs={"contest_slug": self.contest.slug},
-        )
+        next_url = self.request.GET.get("next")
+        if next_url:
+            return next_url
+        else:
+            return reverse(
+                "contest:add_entry_contest",
+                kwargs={"contest_slug": self.contest.slug},
+            )
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form, error=True))
@@ -197,7 +201,7 @@ class EditEntryView(UserPassesTestMixin, UpdateView):
         return form_kwargs
 
     def get_success_url(self):
-        next_url = self.request.POST.get("next")
+        next_url = self.request.GET.get("next")
         if next_url:
             return next_url
         else:

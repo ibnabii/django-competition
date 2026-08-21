@@ -13,6 +13,7 @@ from contest.managers import (
     PublishedContestManager,
     RegistrableContestManager,
     StyleManager,
+    ReceptionNotClosedContestManager,
 )
 from contest.utils import (
     mail_entry_status_change,
@@ -285,6 +286,7 @@ class Contest(models.Model):
     objects = ContestManager()
     published = PublishedContestManager()
     registrable = RegistrableContestManager()
+    reception_not_closed = ReceptionNotClosedContestManager()
 
     @cached_property
     def is_published(self):
@@ -301,6 +303,14 @@ class Contest(models.Model):
             and (self.registration_date_from is None or self.registration_date_from <= today)
             and (self.registration_date_to is None or self.registration_date_to >= today)
             and (self.entry_global_limit is None or self.global_limit_left)
+        )
+
+    @cached_property
+    def is_reception_not_closed(self):
+        today = date.today()
+        return (
+            self.is_published
+            and (self.delivery_date_to is None or self.delivery_date_to >= today)
         )
 
     @cached_property
@@ -588,8 +598,9 @@ class Entry(models.Model):
             ):
                 raise ValidationError(
                     _(
-                        f"You have reached entry limit for this category ({self.category.entries_limit})!"
+                        "You have reached the entry limit for this category (%(limit)s)!"
                     )
+                    % {"limit": self.category.entries_limit}
                 )
 
             # verify global limit
@@ -625,6 +636,7 @@ class Entry(models.Model):
     def can_be_edited(self):
         # return not self.is_received
         return self.category.contest.registration_date_to >= date.today()
+        # return self.category.contest.is_registrable
 
     def _generate_code(self):
         try:

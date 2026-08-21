@@ -1,0 +1,25 @@
+{% load i18n %}
+<div class="container mt-2">
+    {% if contest.is_registrable %}
+        <a class="btn btn-outline-primary" href="{% url 'contest:payment_start' contest.slug %}">
+    {% else %}
+        <a class="btn btn-outline-primary disabled" href="#">
+    {% endif %}
+    <i class="bi bi-cash-coin" style="font-size: 1.5em"></i>
+    {% translate 'Pay for entries' %}
+</a>
+
+<a class="btn btn-outline-primary" href="{% url 'contest:labels_start' contest.slug %}">
+    <i class="bi bi-file-richtext" style="font-size: 1.5em"></i>
+    {% translate 'Print bottle labels' %}
+</a>
+
+<a
+    class="btn btn-outline-primary"
+    href="{% url 'contest:contest_address' contest.slug %}"
+    target="_blank"
+>
+    <i class="bi bi-truck" style="font-size: 1.5em"></i>
+    {% translate 'Print delivery address' %}
+</a>
+</div>
