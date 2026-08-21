@@ -4,8 +4,9 @@
 
 
 {#    Display info about remaining global limit #}
-{% if contest_limit_left %}
 <div class="container">
+{% if contest_limit_left %}
+
     <h4 class="h4">
         {% translate "Number of slots left in the contest" %}: {{ contest_limit_left }}
         <span
