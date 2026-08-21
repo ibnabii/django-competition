@@ -95,3 +95,11 @@ class JudgeApplicationFactory(factory.django.DjangoModelFactory):
         if kwargs.get("contest") is None:
             raise ValueError("JudgeApplicationFactory requires a 'contest' argument.")
         return super()._create(model_class, *args, **kwargs)
+
+# UserFactory.reset_sequence(1)
+# UserFactory.create_batch(
+#     5,
+#     profile=True,
+#     first_name=factory.Sequence(lambda n: f"Test"),
+#     last_name=factory.Sequence(lambda n: f"User_{n}"),
+# )
