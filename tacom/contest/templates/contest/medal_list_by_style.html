@@ -4,40 +4,51 @@
 {% load i18n %}
 {% load static %}
 {% load user_flag %}
-    {% regroup entries by category.style as entries_by_style %}
-    {% for style in entries_by_style %}
-        <p class="display-6">{{ style.grouper }}</p>
-        <table class="table">
-        <tr>
-            <th class="col-1">{% translate 'Place' %}</th>
-            <th class="col-2">{% translate 'Brewer' %}</th>
-            <th class="col-2">{% translate 'Country' %}</th>
-            <th>{% translate 'Mead name' %}</th>
-        </tr>
-        {% for entry in style.list|dictsort:"place" %}
-            <tr>
-                <td>{{ entry.place }}</td>
-                <td>
-                    {{ entry.brewer.full_name }}</td>
-                <td>
-                    {{ entry.brewer.country.name }} <img src="{{ entry.brewer.country.flag }}"/>
-                </td>
-                <td>
-                    {{ entry.name }}
-                </td>
-            </tr>
-        {% endfor %}
-        </table>
-    {%  endfor %}
+{% regroup entries by category.style as entries_by_style %}
+{% for style in entries_by_style %}
+<p class="display-6">{{ style.grouper }}</p>
+<table class="table">
+    <tr>
+        <th class="col-1">{% translate 'Place' %}</th>
+        <th class="col-2">{% translate 'Brewer' %}</th>
+        <th class="col-2">{% translate 'Country' %}</th>
+        <th>{% translate 'Mead name' %}</th>
+    </tr>
+    {% for entry in style.list|dictsort:"place" %}
+    <tr>
+        <td>{{ entry.place }}</td>
+        <td>
+            {{ entry.brewer.full_name }}
+        </td>
+        <td>
+            {{ entry.brewer.country.name }} <img src="{{ entry.brewer.country.flag }}"/>
+        </td>
+        <td>
+            {{ entry.name }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{%  endfor %}
 
-    {% if best_of_show %}
-    <p class="display-5">Best Of Show</p>
-    <p class="lead">{% translate "From the meads that won 1st places in their categories we have selected one to be awarded the 'Best Of Show' title." %}</p>
-    <p class="lead">{% translate "The winner is:" %}</p>
-        <table class="table">
-        <tr><th>{% translate "Mead name" %}</th><td>{{ best_of_show.name }}</td></tr>
-        <tr><th>{% translate "Brewer" %}</th><td>{{ best_of_show.brewer }}</td></tr>
-        <tr><th>{% translate "Category" %}</th><td>{{ best_of_show.category.style.name }}</td></tr>
-        </table>
-    {% endif %}
+{% if best_of_show %}
+<p class="display-5">Best Of Show</p>
+<p class="lead">
+    {% translate "From the meads that won 1st places in their categories we have selected one to be awarded the 'Best Of Show' title." %}</p>
+<p class="lead">{% translate "The winner is:" %}</p>
+<table class="table">
+    <tr>
+        <th>{% translate "Mead name" %}</th>
+        <td>{{ best_of_show.name }}</td>
+    </tr>
+    <tr>
+        <th>{% translate "Brewer" %}</th>
+        <td>{{ best_of_show.brewer.full_name }}</td>
+    </tr>
+    <tr>
+        <th>{% translate "Category" %}</th>
+        <td>{{ best_of_show.category.style.name }}</td>
+    </tr>
+</table>
+{% endif %}
 {% endblock %}
